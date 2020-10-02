@@ -7,41 +7,7 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_ACCESS_KEY,
 });
 
-const params = {
-  Bucket: "newbucket111",
-  Key: "del2.txt",
-};
-
 var s3 = new AWS.S3();
-// Read in the file, convert it to base64, store to S3
-fs.readFile("del.txt", function (err, data) {
-  if (err) {
-    throw err;
-  }
-
-  var base64data = new Buffer(data, "binary");
-
-  s3.putObject(
-    {
-      Bucket: "newbucket111",
-      Key: "del2.txt",
-      Body: base64data,
-      ACL: "public-read",
-    },
-    function (resp) {
-      console.log(arguments);
-      console.log("Successfully uploaded package.");
-      s3download(params)
-        .then((data) => {
-          console.log("I am here");
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  );
-});
 
 const s3download = function (params) {
   return new Promise((resolve, reject) => {
@@ -62,10 +28,33 @@ const read = async (bucketName, fileName) => {
 
 const save = async (req, res, next) => {
   // bucketName, fileName, fcont
-  let bucketName = req.body.type;
+  let bucketName = "employeeznow" + req.body.type;
   let fileName = req.body.id + req.body.fname;
   let fcont = req.file;
-  next();
+
+  const params = {
+    Bucket: bucketName,
+    Key: fileName,
+  };
+  var base64data = new Buffer(fcont.buffer, "binary");
+  s3.putObject(
+    {
+      Bucket: "employeeznowresume",
+      Key: fileName,
+      Body: base64data,
+      ACL: "public-read",
+    },
+    function (err) {
+      if (err) {
+        return res.status(500).json({
+          error: "there is an error in saving data to S3",
+        });
+      }
+      return res.status(200).json({
+        file: "upload success",
+      });
+    }
+  );
 };
 
 const update = async (req, res, next) => {
