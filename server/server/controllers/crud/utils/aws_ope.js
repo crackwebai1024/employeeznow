@@ -1,7 +1,7 @@
 var AWS = require("aws-sdk");
 var fs = require("fs");
 
-// For dev purposes only
+// For dev purposes test only
 AWS.config.update({
   accessKeyId: process.env.AWS_KEY_ID,
   secretAccessKey: process.env.AWS_ACCESS_KEY,
