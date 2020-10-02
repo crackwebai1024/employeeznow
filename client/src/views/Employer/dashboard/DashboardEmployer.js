@@ -1,0 +1,273 @@
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Dialog from '@material-ui/core/Dialog';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import { loadEmployer } from '../../../store/actions/employer';
+import { currentUser } from '../../../store/actions/auth';
+import SearchForm from '../form/SearchForm';
+import { loadSearchQueries } from '../../../store/actions/searchQueries';
+import { searchProfessions } from '../../../store/actions/professions';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    marginBottom: '5rem',
+  },
+  companyName: {
+    border: `1px solid ${theme.palette.grey[200]}`,
+    boxShadow: `0px 7px 8px -4px rgba(96,152,224,0.2),0px 12px 17px 2px rgba(96,152,224,0.14),0px 5px 22px 4px rgba(96,152,224,0.12)`,
+    padding: '1.8rem 3rem',
+    marginTop: '1rem',
+    marginBottom: '3rem',
+  },
+  title: {
+    marginTop: '3rem',
+    marginBottom: '0.5rem',
+  },
+  generalEmail: {
+    marginTop: '0.5rem',
+  },
+  link: {
+    color: theme.palette.common.black,
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.common.darkBlue,
+    },
+    '&:visited': {
+      color: theme.palette.common.black,
+      textDecoration: 'none',
+    },
+  },
+  accountButton: {
+    marginLeft: '1rem',
+  },
+  dialog: {
+    marginTop: '5rem',
+    zIndex: 1303, // larger than header and footer
+  },
+  filterTitleContainer: {
+    marginTop: '2rem',
+    marginBottom: '0.5rem',
+  },
+  filterButttonContainer: {
+    marginTop: '0.5rem',
+  },
+}));
+
+const DashboardEmployer = ({
+  loadEmployer,
+  currentUser,
+  loadSearchQueries,
+  searchQueries,
+  searchProfessions,
+  slug,
+  employer,
+  history,
+}) => {
+  useEffect(() => {
+    loadEmployer() && currentUser() && loadSearchQueries();
+  }, []);
+
+  const {
+    name,
+    address,
+    generalEmail,
+    website,
+    firstName,
+    lastName,
+    title,
+    phone,
+    email,
+  } = employer;
+
+  const classes = useStyles();
+
+  //open dialog(modal) - sarch form modal
+  const [openSearchForm, setOpenSearchForm] = useState(false);
+
+  //update state when open/close dialog
+  const clickFormOpen = () => {
+    setOpenSearchForm(true);
+  };
+
+  const clickFormClose = () => {
+    setOpenSearchForm(false);
+  };
+
+  // search professions with saved search query
+  const handleSubmit = (e, index) => {
+    e.preventDefault();
+    const formData = searchQueries[index];
+    searchProfessions(formData, history, slug, index);
+  };
+
+  // Render search query button
+  const queryButton = searchQueries.length !== 0 && (
+    <>
+      <Grid item className={classes.filterTitleContainer}>
+        <Typography variant="h6" color="secondary">
+          YOUR SAVED SEARCH FILTER
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Typography variant="caption" component="div">
+          Click the button to use the saved filter for your employee search.
+        </Typography>
+        <Typography variant="caption" component="div">
+          If you want to create a new filter. Click NEW FILTER above.
+        </Typography>
+      </Grid>
+
+      <Grid item>
+        <Grid
+          container
+          className={classes.filterButttonContainer}
+          spacing={1}
+          justify="center"
+        >
+          {searchQueries.map((searchQuery, i) => (
+            <Grid item key={searchQuery._id}>
+              <Button
+                type="submit"
+                variant="outlined"
+                color="secondary"
+                size="small"
+                startIcon={<SearchOutlinedIcon />}
+                id={searchQuery._id}
+                onClick={(e) => handleSubmit(e, i)}
+              >
+                {searchQuery.name}
+              </Button>
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
+    </>
+  );
+
+  return (
+    <Container className={classes.container}>
+      <Grid container direction="column" alignItems="center">
+        {name && (
+          <Grid item className={classes.companyName}>
+            <Typography variant="h1">{name}</Typography>
+          </Grid>
+        )}
+
+        <Grid item>
+          {/* only signed employer can see the button  - need to check later */}
+          {localStorage.role === 'employer' ? (
+            <Grid container>
+              <Grid item>
+                <Button
+                  onClick={clickFormOpen}
+                  variant="contained"
+                  color="primary"
+                  className={classes.searchButton}
+                >
+                  {searchQueries.length === 0
+                    ? 'Create search filter'
+                    : 'New Filter'}
+                </Button>
+                <Dialog
+                  open={openSearchForm}
+                  onClose={clickFormClose}
+                  aria-labelledby="dialog-title"
+                  fullWidth
+                  className={classes.dialog}
+                >
+                  <SearchForm
+                    employerId={employer._id}
+                    history={history}
+                    slug={slug}
+                    setOpenSearchForm={setOpenSearchForm}
+                  />
+                </Dialog>
+              </Grid>
+
+              <Grid item>
+                {/* Employer account page */}
+                <Button
+                  component={Link}
+                  to={`/employers/${slug}/account`}
+                  variant="outlined"
+                  color="primary"
+                  className={classes.accountButton}
+                >
+                  Account
+                </Button>
+              </Grid>
+            </Grid>
+          ) : (
+            ''
+          )}
+        </Grid>
+        {queryButton}
+        {name && (
+          <Grid item>
+            <Typography variant="h6" className={classes.title}>
+              COMPANY INFORMATION
+            </Typography>
+            <Typography>
+              {address.street1} {address.street2}
+            </Typography>
+            <Typography>
+              {address.city} {address.state} {address.zipcode}
+            </Typography>
+
+            <Typography className={classes.generalEmail}>
+              Email: {generalEmail}
+            </Typography>
+
+            <Typography>
+              Website:{' '}
+              <a href="{website}" target="_blank" className={classes.link}>
+                {website}
+              </a>
+            </Typography>
+
+            <Typography>Phone: {phone}</Typography>
+
+            <Typography variant="h6" className={classes.title}>
+              CONTACT PERSON
+            </Typography>
+
+            <Typography>
+              {firstName} {lastName}
+            </Typography>
+
+            <Typography>{title}</Typography>
+            <Typography>Email: {email}</Typography>
+          </Grid>
+        )}
+      </Grid>
+    </Container>
+  );
+};
+
+const mapStateToProps = (state) => {
+  console.log(state.searchQueries);
+  return {
+    errorMessage: state.auth.error,
+    isAuthenticated: state.auth.isAuthenticated,
+    slug: state.auth.slug,
+    employer: state.employer,
+    searchQueries: state.searchQueries.searchQueries,
+  };
+};
+
+export default connect(mapStateToProps, {
+  loadEmployer,
+  currentUser,
+  loadSearchQueries,
+  searchProfessions,
+})(DashboardEmployer);
+
+// export default connect(mapStateToProps, { loadEmployer, currentUser })(
+//   withStyles(useStyles)(DashboardEmployer)
+// );
