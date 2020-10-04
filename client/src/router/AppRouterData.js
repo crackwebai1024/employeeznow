@@ -9,6 +9,7 @@ import EmployerAccount from '@views/Employee/Dashboard/EmployeeAccount';
 import Dashbaord from '@views/Employee/Dashboard/Dashboard';
 import SkillsForm from '@views/Employee/form/SkillsForm';
 import ProfessionDetailsForm from '@views/Employee/form/ProfessionDetailsForm';
+import ExperienceForm from '@views/Employee/form/ExperienceForm';
 import { getUser } from '@helpers/auth-helpers';
 
 const user = JSON.parse(getUser())
@@ -28,5 +29,6 @@ export const AppPrivateRouterData = [
   { 'path': `/employees/${user && user.slug}`, component: Dashbaord },
   { 'path': "/skills", component: SkillsForm },
   { 'path': "/professiondetails-form", component: ProfessionDetailsForm },
+  { 'path': "/work-experience", component: ExperienceForm },
   // { 'path': "", component: Dashbaord }
 ]
