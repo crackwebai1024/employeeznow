@@ -37,7 +37,7 @@ const updateByID = async (Model, role, id, req, res) => {
     console.log(user);
     delete req.body.id;
     req.body[role] = id;
-
+    console.log("**************", req.body);
     // check create or update
     if (user === null) {
       user = new Model(req.body);

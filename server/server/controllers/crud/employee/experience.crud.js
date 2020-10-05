@@ -6,7 +6,7 @@ const find_ByID = async (req, res) => {
   let experienceByID = await CRUD.find_ByID(
     EmployeeExperience,
     role,
-    req.body.id,
+    req.query.id,
     res
   );
   return res.status(200).json({
