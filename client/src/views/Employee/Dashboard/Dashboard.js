@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white'
   },
   container: {
-    width: 1100,
+    maxWidth: 1100,
   },
   header: {
     background: 'white',
@@ -135,6 +135,7 @@ function Dashboard(props) {
 
   // const theme = useTheme();
   // const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
+  console.log(employeeData)
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
@@ -195,8 +196,17 @@ function Dashboard(props) {
                 subheader=""
               />
               <CardContent>
-                <Grid container spacing={3}>
+                <Grid container direction="row">
+                  <Grid xs={3}>
+                    Primary Job :
+                      {employeeData.skill.primaryJob.title}
+                    {employeeData.skill.primaryJob.years} Years
+                    </Grid>
+                  <Grid item xs={6}>
+                    <Typography>
 
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <CardActions>
@@ -216,6 +226,7 @@ function Dashboard(props) {
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent className={classes.moreSkills}>
                   <Typography>
+
                   </Typography>
                 </CardContent>
               </Collapse>
@@ -289,8 +300,8 @@ function Dashboard(props) {
                     className={classes.button}
                   >
                     {employeeData.experience ? "Update My Work Experience" : "Add My Work Experience"}
-                    
-              </Button>
+
+                  </Button>
                 }
                 title="Work Experience"
                 subheader=""
@@ -298,7 +309,7 @@ function Dashboard(props) {
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {employeeData.experience && employeeData.experience.employee}
-                {/* "experience": {
+                  {/* "experience": {
         "primaryJob": {
             "current": false,
             "company": "EmployeezNow",
