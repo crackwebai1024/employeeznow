@@ -31,7 +31,7 @@ const PreferenceSchema = new mongoose.Schema({
       type: String,
     },
     dateToMove: {
-      type: Date,
+      type: String,
     },
   },
   randomShift: {

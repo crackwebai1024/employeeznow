@@ -6,11 +6,11 @@ const find_ByID = async (req, res) => {
   let preferenceByID = await CRUD.find_ByID(
     EmployeePreference,
     role,
-    req.body.id,
+    req.query.id,
     res
   );
   return res.status(200).json({
-    perference: preferenceByID,
+    preference: preferenceByID,
   });
 };
 

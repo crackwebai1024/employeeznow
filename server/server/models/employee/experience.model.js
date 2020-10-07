@@ -5,8 +5,8 @@ const ExperienceSchema = new mongoose.Schema({
     company: String,
     address: String,
     title: String,
-    startDate: Date,
-    endDate: Date,
+    startDate: String,
+    endDate: String,
     current: {
       type: Boolean,
       default: false,
@@ -16,16 +16,16 @@ const ExperienceSchema = new mongoose.Schema({
     company: String,
     address: String,
     title: String,
-    startDate: Date,
-    endDate: Date,
+    startDate: String,
+    endDate: String,
   },
   otherJob: [
     {
       company: String,
       address: String,
       title: String,
-      startDate: Date,
-      endDate: Date,
+      startDate: String,
+      endDate: String,
     },
   ],
   employee: {
