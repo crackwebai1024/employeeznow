@@ -9,7 +9,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-// import VideoDropZone from '../../UI/videoDropzone';
+import VideoDropZone from '@components/videoDropzone';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // props from parents
-const VideoGallery = ({ uploadVideo, videos, employee, slug }) => {
+const VideoGallery = ({videos = [], employee, slug }) => {
   // style material-ui
   const classes = useStyles();
   const theme = useTheme();
@@ -61,6 +61,10 @@ const VideoGallery = ({ uploadVideo, videos, employee, slug }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const uploadVideo = (a,v,b,c) => {
+    debugger
+  }
 
   //fileNames is blob url
   const [fileNames, setFileNames] = useState();
@@ -93,7 +97,7 @@ const VideoGallery = ({ uploadVideo, videos, employee, slug }) => {
           </Grid>
 
           {/* upload Video */}
-          {/* {localStorage.role === 'employee' && (
+          {localStorage.role === 'employee' && (
             <VideoDropZone
               fileNames={fileNames}
               setFileNames={setFileNames}
@@ -101,7 +105,7 @@ const VideoGallery = ({ uploadVideo, videos, employee, slug }) => {
               open={open}
               setOpen={setOpen}
             />
-          )} */}
+          )}
         </Grid>
 
         <Grid item>

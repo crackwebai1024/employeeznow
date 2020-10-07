@@ -114,10 +114,10 @@ const useStyles = makeStyles((theme) => ({
 
 ///*** This route should come from Dashboard (profession.js) because link has current profession data */
 const SkillsForm = ({
-  loading,
   history,
   profession,
   actions,
+  loading,
   skill,
   // loadProfession,
   // updateProfession,
@@ -394,7 +394,6 @@ const SkillsForm = ({
     const formData = createFormData();
 
     actions.updateSkillRequest(formData)
-    debugger
     _loadData()
     // updateProfession(formData, history, slug);
     // this will display when server errors happened... should not call here
@@ -402,6 +401,7 @@ const SkillsForm = ({
   };
 
   return (
+    !loading &&
     <Container maxWidth="sm" id="#">
       <Grid container direction="column" alignItems="center">
         <Grid item>
@@ -620,7 +620,7 @@ const SkillsForm = ({
                   key={`${sh}${i}`}
                   name="shift"
                   value={sh}
-                  checked = {shift.filter(shift => shift == sh)[0] ? true : false}
+                  checked = {shift.filter(shift => shift === sh)[0] ? true : false}
                   label={sh}
                   onChange={(e) => handleChange(e)}
                   className={classes.item}
@@ -704,7 +704,7 @@ const SkillsForm = ({
                       name="cuisine"
                       label={cu}
                       id={cu}
-                      value={cuisine.filter(cui => cui.type == cu)[0] ? cuisine.filter(cui => cui.type == cu)[0].years : ""}
+                      value={cuisine.filter(cui => cui.type === cu)[0] ? cuisine.filter(cui => cui.type === cu)[0].years : ""}
                       onChange={(e) => handleChange(e)}
                       min="0"
                       className={classes.styleandcuisineInput}
@@ -897,10 +897,10 @@ SkillsForm.propTypes = {
 
 const mapStateToProps = ({
   employee: {
-    skill
+    skill, loading
   },
 }) => ({
-  skill
+  skill, loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

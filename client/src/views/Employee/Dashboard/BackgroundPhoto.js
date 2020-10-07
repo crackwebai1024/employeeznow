@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
-import AddIcon from '@material-ui/icons/Add';
-// import PhotoDropZone from '../../UI/PhotoDropzone';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import PhotoDropZone from '@components/PhotoDropZone';
+import { getUser } from '@helpers/auth-helpers';
+import { actions as employeeActions } from '@store/employee';
+import { bindActionCreators } from 'redux';
+import image from '@assets/back.jpg';
+
 // import { uploadPhoto } from '../../../store/actions/employeePhoto';
 
 // set styles - material-ui
@@ -33,12 +40,31 @@ const useStyles = makeStyles((theme) => ({
     width: 28,
     height: 28,
   },
+  gridList: {
+    height: 300,
+    overflow: "hidden",
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: 'translateZ(0)',
+  },
+  titleBar: {
+    background: 'none'
+  },
+  icon: {
+    color: 'RGB(23,41, 64)',
+    background: 'white',
+    top: "10px",
+    margin: "10px",
+    '&:hover': {
+      background: "white",
+    },
+  },
 }));
 
 // props from parent - Dashboard
-const BackgourndPhoto = ({ background, uploadPhoto }) => {
+const BackgourndPhoto = ({ background, actions }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const user = JSON.parse(getUser())
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   // Dialog
@@ -49,56 +75,68 @@ const BackgourndPhoto = ({ background, uploadPhoto }) => {
     setOpen(true);
   };
 
+  useEffect(() => {
+    let data = {
+      id: user._id,
+      type: "background"
+    }
+    actions.getBackgroundImage(data)
+  }, [])
+
+  const uploadPhoto = (photoType, sendPhoto, fileNames, title) => {
+    const formData = new FormData();
+    formData.append("id", user._id)
+    formData.append("type", photoType)
+    formData.append("content", sendPhoto)
+    actions.uploadProfilePhoto({ formData, photoType })
+  }
   //fileNames is blob url - pass to dropzone, assign there, and display here
   const [bgfileNames, setbgFileNames] = useState();
-
+  console.log(background, "payload---")
   return (
-    <Grid
-      item
-      container
-      direction={matchesXS ? 'column-reverse' : 'column'}
-      className={classes.imageContainer}
-    >
-      {/* column 1 / 2 open dialog(modal) button */}
-
-      {/* upload Photo */}
-      {/* {localStorage.role === 'employee' && (
+    <Fragment>
+      {localStorage.role === 'employee' && (
         <PhotoDropZone
           fileNames={bgfileNames}
           setFileNames={setbgFileNames}
-          // connectFunc={uploadPhoto}
+          connectFunc={uploadPhoto}
           open={open}
           setOpen={setOpen}
           photoType="background"
         />
-      )} */}
-
-      {/* actual image should be passed from parent */}
-      <Grid item className={classes.image}>
-        {!bgfileNames ? (
-          //* display current picture
-          <img
-            src={background}
-            alt="profile background"
-            className={classes.image}
+      )}
+      <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+        <GridListTile cols={2} rows={2}>
+          <img src={background ? "data:image/jpeg;base64, " + background : image} alt="alt" />
+          <GridListTileBar
+            title=""
+            titlePosition="top"
+            actionIcon={
+              <IconButton onClick={handleClickOpen} aria-label={`star Morning`} className={classes.icon}>
+                <CameraAltIcon />
+              </IconButton>
+            }
+            actionPosition="right"
+            className={classes.titleBar}
           />
-        ) : (
-            //* display uploaded picture */
-            <img
-              src={bgfileNames.file}
-              alt="profile background"
-              className={classes.image}
-            />
-          )}
-        <div className={classes.openButton}>
-          <Avatar className={classes.openIcon}>
-            <AddIcon onClick={handleClickOpen} />
-          </Avatar>
-        </div>
-      </Grid>
-    </Grid>
+        </GridListTile>
+      </GridList>
+    </Fragment>
   );
 };
 
-// export default connect(null, { uploadPhoto })(BackgourndPhoto);
-export default connect(null, null)(BackgourndPhoto);
+const mapStateToProps = ({
+  employee: {
+    skill, loading, background
+  },
+}) => ({
+  skill, loading, background
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employeeActions,
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BackgourndPhoto);

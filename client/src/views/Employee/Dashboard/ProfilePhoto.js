@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/styles';
@@ -6,8 +6,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import AddIcon from '@material-ui/icons/Add';
-// import { uploadPhoto } from '../../../store/actions/employeePhoto';
-// import PhotoDropZone from '../../UI/PhotoDropzone';
+import { getUser } from '@helpers/auth-helpers';
+import { actions as employeeActions } from '@store/employee';
+import { bindActionCreators } from 'redux';
+import PhotoDropZone from '@components/PhotoDropZone';
+import { AccordionActions } from '@material-ui/core';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
@@ -50,133 +53,74 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfilePhoto = ({ profile, uploadPhoto }) => {
-  // style material-ui
+const ProfilePhoto = ({ profile, actions, photo }) => {
+  const user = JSON.parse(getUser());
   const classes = useStyles();
   const theme = useTheme();
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
-  // Dialog - open dropzone
   const [open, setOpen] = useState(false);
 
-  // Dialog open and close Funtdion
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  //fileNames is blob url
+  const uploadPhoto = (photoType, sendPhoto, fileNames, title) => {
+
+    const formData = new FormData();
+    formData.append("id", user._id)
+    formData.append("type", photoType)
+    formData.append("content", sendPhoto)
+    actions.uploadProfilePhoto({formData, photoType})
+  }
+
   const [fileNames, setFileNames] = useState();
 
-  // *** this page is shared both employee and employer.
-  //     visibility for employer is limited  *** ////
+  useEffect(() => {
+    actions.getProfilePhoto({
+      id : user._id,
+      type : 'photo'
+    })
+  }, [])
+
   return (
     <Grid item container direction={matchesXS ? 'column-reverse' : 'column'}>
-      {/* column 1 / 2 open dialog(modal) button */}
-      {localStorage.role === 'employee' && (
-        <Grid item className={classes.avatarContainer}>
-          <Avatar onClick={handleClickOpen} className={classes.avatar}/>
-        </Grid>
-      )}
 
-      {/* upload Photo */}
-      {/* {localStorage.role === 'employee' && (
+      {localStorage.role === 'employee' && (
         <PhotoDropZone
           fileNames={fileNames}
           setFileNames={setFileNames}
-          // connectFunc={uploadPhoto}
+          connectFunc={uploadPhoto}
           open={open}
           setOpen={setOpen}
-          photoType="profile"
+          photoType="photo"
         />
-      )} */}
+      )}
 
-      {/* dislplay profile picture */}
-      {/* {!fileNames && (
-        <Grid item className={classes.avatarContainer}>
-          <Avatar src={profile} alt="profile" className={classes.avatar} />
-        </Grid>
-      )} */}
-
-      {/* display uploaded picture */}
-      {/* {fileNames && (
-        <Grid item className={classes.avatarContainer}>
-          <Avatar
-            src={fileNames.file}
-            alt="profile"
-            className={classes.avatar}
-          />
-        </Grid>
-      )} */}
+      <Grid item className={classes.avatarContainer}>
+        <Avatar
+          src={photo && "data:image/jpeg;base64, " + photo}
+          onClick={handleClickOpen}
+          alt="profile"
+          className={classes.avatar}
+        />
+      </Grid>
     </Grid>
   );
 };
 
-ProfilePhoto.propTypes = {
-  uploadPhoto: PropTypes.func.isRequired,
-};
+const mapStateToProps = ({
+  employee: {
+    skill, loading, photo
+  },
+}) => ({
+  skill, loading, photo
+});
 
-// export default connect(null, { uploadPhoto })(ProfilePhoto);
-export default connect(null, null )(ProfilePhoto);
-// dropzone => moved to PhotoDropZone
-// dialog(modal) for dropzone
-//       {/* {localStorage.role === 'employee' && (
-//         <Dialog
-//           open={open}
-//           onClose={handleClose}
-//           aria-labelledby="dialog-title"
-//         >
-//           <DialogTitle id="dialog-title">
-//             {!fileNames ? 'Upload Profile Picture' : 'Upload Success!'}
-//           </DialogTitle>
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employeeActions,
+  }, dispatch),
+});
 
-//           <Dropzone onDrop={onDrop} accept="image/*">
-//             {({ getRootProps, getInputProps }) => (
-//               <div
-//                 {...getRootProps({ className: `${dropzoneStyle}` })}
-//                 // onDragOver={(e) => onDragOver(e)}
-//                 // onDragLeave={(e) => onDragLeave(e)}
-//                 multiple={false}
-//               >
-//                 <input {...getInputProps()} />
-//                 {!fileNames ? (
-//                   <div className={classes.dropzoneContainer}>
-//                     <DialogContent>
-//                       <Typography
-//                         variant="caption"
-//                         className={classes.dropzoneText}
-//                       >
-//                         Drag and Drop or Select a file
-//                       </Typography>
-//                     </DialogContent>
-//                   </div>
-//                 ) : (
-//                   <div className={classes.dropzoneContainer}>
-//                     <DialogContent>
-//                       <Typography
-//                         variant="caption"
-//                         className={classes.dropzoneText}
-//                       >
-//                         If you want to change the photo, drag and drop again
-//                       </Typography>
-//                     </DialogContent>
-//                   </div>
-//                 )}
-//               </div>
-//             )}
-//           </Dropzone>
-//           {fileNames && (
-//             <DialogActions>
-//               <form onSubmit={(e) => onSubmit(e)}>
-//                 <Button
-//                   type="submit"
-//                   variant="contained"
-//                   color="primary"
-//                   onClick={handleClose}
-//                 >
-//                   Confirm
-//                 </Button>
-//               </form>
-//             </DialogActions>
-//           )}
-//         </Dialog>
-//       )}
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePhoto);
