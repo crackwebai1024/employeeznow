@@ -11,3 +11,48 @@ export async function loadSkill(data) {
 export async function updateSkill(data) {
   return await Axios.post('/crud/employee/skill', data)
 }
+
+export async function updateJobExperience(data) {
+  return await Axios.post('/crud/employee/experience', data)
+}
+
+export async function loadExperienceData(data) {
+  return await Axios.get('/crud/employee/experience' + data)
+}
+
+export async function updatePreference(data) {
+  return await Axios.post('/crud/employee/preference', data)
+}
+
+export async function loadPreference(data) {
+  return await Axios.get('/crud/employee/preference' + data)
+}
+
+export async function uploadProfilePhoto(data) {
+  const config = {
+    headers: {
+      enctype: 'multipart/form-data',
+    },
+  };
+  return await Axios.post('/crud/employee/image', data, config)
+}
+
+export async function getProfilePhoto(data) {
+  return await Axios.get('/crud/employee/image' + data)
+}
+
+export async function getBackgroundImage(data) {
+  return await Axios.get('/crud/employee/image' + data)
+}
+
+export async function uploadPortfolioImage(data) {
+  return await Axios.post('/crud/employee/portfolio', data)
+}
+
+export async function getPortfolioImage(data) {
+  return await Axios.get('/crud/employee/portfolio' + data)
+}
+
+export async function deleteFolio(data) {
+  return await Axios.post('/crud/employee/portfolio/delete', data)
+}

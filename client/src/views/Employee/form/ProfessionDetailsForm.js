@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -16,8 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { jobTypes, roles } from '../professionTypes';
 import { actions as employeeActions } from '@store/employee';
 import { bindActionCreators } from 'redux';
-// import { createProfessionDetails } from '../../../store/actions/professionDetails';
-// import { uploadResume } from '../../../store/actions/document';
+import { getUser } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
@@ -86,16 +85,13 @@ const useStyles = makeStyles((theme) => ({
 const ProfessionDetailsForm = ({
   // createProfessionDetails,
   actions,
-  history,
+  preference,
+  loading,
   errorMessage,
 }) => {
   const [formData, setFormData] = useState({
-    primaryJob: { company: '', startDate: '', endDate: '', current: false },
-    secondaryJob: { company: '', startDate: '', endDate: '' },
     employmentStatus: '',
-    milesToWork: '',
     idealSalary: { amount: '', unit: 'hourly' },
-    dateOfBirth: '',
     planningToMove: { planning: false, location: '', dateToMove: '' },
     randomShift: false,
     randomShiftRole: [],
@@ -104,11 +100,7 @@ const ProfessionDetailsForm = ({
   });
 
   const {
-    dateOfBirth,
-    primaryJob,
-    secondaryJob,
     employmentStatus,
-    //milesToWork,
     idealSalary,
     planningToMove,
     randomShift,
@@ -131,11 +123,23 @@ const ProfessionDetailsForm = ({
   const theme = useTheme();
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
+  const user = JSON.parse(getUser())
+
   const units = [
     { value: 'hourly' },
     { value: 'weekly' },
     { value: 'annually' },
   ];
+
+  useEffect(() => {
+    actions.loadPreference({ id: user._id })
+  }, [])
+
+  useEffect(() => {
+    if (preference) {
+      setFormData(preference.preference)
+    }
+  }, [preference])
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log('id:', id, 'name:', name, 'value:', value, 'checked', checked);
@@ -145,14 +149,6 @@ const ProfessionDetailsForm = ({
       case 'employmentStatus': {
         return setFormData({ ...formData, [name]: value });
       }
-      // case 'milesToWork': {
-      //   // validation
-      //   if (value < 0) {
-      //     return setError({ milesToWork: 'Incorrect number' });
-      //   }
-      //   setError({ milesToWork: '' });
-      //   return setFormData({ ...formData, [name]: value });
-      // }
       case 'company':
       case 'startDate':
       case 'endDate':
@@ -216,14 +212,18 @@ const ProfessionDetailsForm = ({
         return formData;
     }
   };
-  console.log(formData);
+  console.log(formData, "formdata");
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // createProfessionDetails(formData, history);
+    let data = {
+      ...formData,
+      id: user._id
+    }
+    actions.updatePreference(data)
   };
 
   return (
+    !loading &&
     <Container maxWidth="sm">
       <Grid
         container
@@ -249,136 +249,6 @@ const ProfessionDetailsForm = ({
           direction="column"
           alignItems={matchesXS ? 'center' : 'flex-start'}
         >
-          {/* primary job */}
-          <Grid item>
-            <Typography gutterBottom variant="h6">
-              Primary Job
-            </Typography>
-          </Grid>
-
-          <Grid
-            container
-            justify="flex-start"
-            direction={matchesXS ? 'column' : 'row'}
-            alignItems="center"
-          >
-            <Grid item sm={4}>
-              <TextField
-                type="text"
-                name="company"
-                id="primaryJob"
-                label="Comany Name"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={primaryJob.company}
-                onChange={(e) => onChange(e)}
-              />
-            </Grid>
-
-            <Grid item sm={4}>
-              <TextField
-                type="date"
-                name="startDate"
-                id="primaryJob"
-                label="Start Date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={primaryJob.startDate}
-                onChange={(e) => onChange(e)}
-                className={classes.item}
-              />
-            </Grid>
-
-            <Grid item sm={4}>
-              <TextField
-                type="date"
-                name="endDate"
-                id="primaryJob"
-                label="End Date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={toDisabled ? '' : primaryJob.endDate}
-                disabled={toDisabled ? true : false}
-                onChange={(e) => onChange(e)}
-                className={classes.item}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="current"
-                  value={primaryJob.current}
-                  id="primaryJob"
-                  onChange={(e) => onChange(e)}
-                />
-              }
-              label="Current"
-            />
-          </Grid>
-
-          {/* secondary job */}
-          <Grid item className={classes.textContainer}>
-            <Typography gutterBottom variant="h6">
-              Secondary Job
-            </Typography>
-          </Grid>
-
-          <Grid
-            container
-            justify="flex-start"
-            direction={matchesXS ? 'column' : 'row'}
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={4}>
-              <TextField
-                type="text"
-                name="company"
-                id="secondaryJob"
-                label="Company Name"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={secondaryJob.company}
-                onChange={(e) => onChange(e)}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-              <TextField
-                type="date"
-                name="startDate"
-                id="secondaryJob"
-                label="Start Date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={secondaryJob.startDate}
-                onChange={(e) => onChange(e)}
-                className={classes.item}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-              <TextField
-                type="date"
-                name="endDate"
-                id="secondaryJob"
-                label="End Date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={secondaryJob.endDate}
-                onChange={(e) => onChange(e)}
-                className={classes.item}
-              />
-            </Grid>
-          </Grid>
 
           {/* employemnt status job */}
           <Grid item className={classes.textContainer}>
@@ -449,33 +319,12 @@ const ProfessionDetailsForm = ({
             </TextField>
           </Grid>
 
-          {/* date of birth */}
-          <Grid item className={classes.Container}>
-            <Typography gutterBottom variant="h6">
-              Date of Birth
-            </Typography>
-          </Grid>
-
-          <Grid item>
-            <TextField
-              type="date"
-              name="dateOfBirth"
-              id="dateOfBirth"
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={dateOfBirth}
-              onChange={(e) => onChange(e)}
-              className={classes.item}
-            />
-          </Grid>
-
           <Grid item>
             <FormControlLabel
               control={
                 <Checkbox
                   name="planning"
+                  checked={planningToMove.planning}
                   value={planningToMove.planning}
                   id="planningToMove"
                   onChange={(e) => onChange(e)}
@@ -519,8 +368,8 @@ const ProfessionDetailsForm = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
 
           {/* random shift */}
@@ -530,6 +379,7 @@ const ProfessionDetailsForm = ({
                 <Checkbox
                   name="randomShift"
                   id="randomShift"
+                  checked={randomShift}
                   value={randomShift}
                   onChange={(e) => onChange(e)}
                 />
@@ -550,6 +400,7 @@ const ProfessionDetailsForm = ({
                           <Checkbox
                             name="randomShiftRole"
                             id={role}
+                            checked={randomShiftRole.filter(r => r == role).length > 0 ? true : false}
                             value={randomShiftRole}
                             onChange={(e) => onChange(e)}
                           />
@@ -562,8 +413,8 @@ const ProfessionDetailsForm = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
 
           {/* new opportunity */}
@@ -573,6 +424,7 @@ const ProfessionDetailsForm = ({
                 <Checkbox
                   name="availability"
                   id="newOpportunity"
+                  checked = {newOpportunity.availability}
                   value={newOpportunity.availability}
                   onChange={(e) => onChange(e)}
                 />
@@ -609,8 +461,8 @@ const ProfessionDetailsForm = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
 
           {/* veteran status */}
@@ -620,6 +472,7 @@ const ProfessionDetailsForm = ({
                 <Checkbox
                   name="status"
                   id="veteran"
+                  checked = {veteran.status}
                   value={veteran.status}
                   onChange={(e) => onChange(e)}
                 />
@@ -644,8 +497,8 @@ const ProfessionDetailsForm = ({
                 />
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
 
           <Grid item>
@@ -677,10 +530,10 @@ ProfessionDetailsForm.propTypes = {
 
 const mapStateToProps = ({
   employee: {
-    employeeData
+    preference, loading
   },
 }) => ({
-  employeeData
+  preference, loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

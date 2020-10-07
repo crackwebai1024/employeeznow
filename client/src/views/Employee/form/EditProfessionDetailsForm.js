@@ -319,7 +319,7 @@ const EditProfessionDetailsForm = ({
       >
         <Grid item>
           <Typography variant="h1" className={classes.heading1}>
-            UPDATE JOB INTEREST
+            Job Experience
           </Typography>
         </Grid>
       </Grid>

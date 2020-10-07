@@ -325,7 +325,6 @@ const ProfessionForm = ({
         'error',
         'Invalid inputs. Please correct the value and try again'
       );
-      debugger
       return window.scrollTo(0, 0);
     }
     const formData = createFormData();
@@ -335,8 +334,6 @@ const ProfessionForm = ({
       id: id
     }
     actions.addSkillsRequest(data)
-    // createProfession(formData, history, slug);
-    // setAlert('success', 'Successfully registerd!');
   };
 
   return (

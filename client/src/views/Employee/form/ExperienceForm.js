@@ -12,9 +12,10 @@ import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { jobTypes, roles } from '../professionTypes';
 import { actions as employeeActions } from '@store/employee';
 import { bindActionCreators } from 'redux';
+import { jobTypes, roles } from '../professionTypes';
+import { getUser } from '@helpers/auth-helpers';
 // import {
 //   loadProfessionDetails,
 //   updateProfessionDetails,
@@ -61,19 +62,18 @@ const ExperienceForm = ({
   // loadProfessionDetails,
   // updateProfessionDetails,
   loading,
+  experience,
+  actions,
   errorMessage,
 }) => {
   const [formData, setFormData] = useState({
     primaryJob: { company: '', startDate: '', endDate: '', current: false },
     secondaryJob: { company: '', startDate: '', endDate: '' },
-    _id: '',
+    employmentStatus: '',
+    // milesToWork: '',
   });
 
-  // set error
-  // const [error, setError] = useState({
-  //   milesToWork: '',
-  // });
-
+  const user = JSON.parse(getUser())
   // material-ui
   const classes = useStyles();
   const theme = useTheme();
@@ -96,9 +96,21 @@ const ExperienceForm = ({
 
   // load profession details and set default
   useEffect(() => {
+    let data = {
+      id: user._id
+    }
+    actions.loadExperienceData(data)
+  }, []);
 
-  }, [loading]);
+  useEffect(() => {
+    if (experience){
+      if(experience.experience.primaryJob.current) {
+        setToDisabled(true)
+      }
+      setFormData(experience.experience)
+    }
 
+  }, [experience])
   // destructure
   const {
     primaryJob,
@@ -107,15 +119,89 @@ const ExperienceForm = ({
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log('id:', id, 'name:', name, 'value:', value, 'checked', checked);
-    return setFormData(formData)
+    switch (name) {
+      case 'dateOfBirth':
+      case 'employmentStatus': {
+        return setFormData({ ...formData, [name]: value });
+      }
+      // case 'milesToWork': {
+      //   // validation
+      //   if (value < 0) {
+      //     return setError({ milesToWork: 'Incorrect number' });
+      //   }
+      //   setError({ milesToWork: '' });
+      //   return setFormData({ ...formData, [name]: value });
+      // }
+      case 'endDate':
+      case 'company':
+      case 'startDate':
+      case 'amount':
+      case 'unit':
+      case 'location':
+      case 'dateToMove':
+      case 'title':
+      case 'veteranId': {
+        return setFormData({
+          ...formData,
+          [id]: { ...formData[id], [name]: value },
+        });
+      }
+      case 'current': {
+        setFormData((prevState) => ({
+          ...prevState,
+          [id]: { ...prevState[id], [name]: checked },
+        }));
+        setToDisabled(!toDisabled);
+        break;
+      }
+      case 'planning':
+      case 'availability':
+      case 'status': {
+        setFormData((prevState) => ({
+          ...prevState,
+          [id]: { ...prevState[id], [name]: checked },
+        }));
+        setToggleBox(!toggleBox);
+        break;
+      }
+      case 'randomShiftRole': {
+        const newArray = [...formData[name]];
+
+        //  uncheck - if the same shift already exists in state, the shift is removed from state
+        if (newArray.includes(id)) {
+          const idx = newArray.indexOf(id);
+          newArray.splice(idx, idx + 1);
+
+          return setFormData({
+            ...formData,
+            [name]: newArray,
+          });
+        }
+
+        newArray.push(id); // Set the new value
+        return setFormData({
+          ...formData,
+          [name]: newArray,
+        });
+      }
+
+      default:
+        return formData;
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData, "formdata")
+    // console.log(formData)
+    let data = {
+      ...formData,
+      id: user._id
+    }
+    actions.updateJobExperience(data)
   };
-
+  console.log(formData, "payload")
   return (
+    !loading &&
     <Container maxWidth="sm">
       <Grid
         container
@@ -124,7 +210,7 @@ const ExperienceForm = ({
       >
         <Grid item>
           <Typography variant="h1" className={classes.heading1}>
-            Experience
+            JOB EXPERIENCE
           </Typography>
         </Grid>
       </Grid>
@@ -157,6 +243,7 @@ const ExperienceForm = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={primaryJob.company}
                 onChange={(e) => onChange(e)}
               />
             </Grid>
@@ -170,6 +257,7 @@ const ExperienceForm = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={primaryJob.startDate}
                 onChange={(e) => onChange(e)}
                 className={classes.item}
               />
@@ -184,6 +272,7 @@ const ExperienceForm = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={toDisabled ? '' : primaryJob.endDate}
                 disabled={toDisabled ? true : false}
                 onChange={(e) => onChange(e)}
                 className={classes.item}
@@ -197,6 +286,8 @@ const ExperienceForm = ({
                 <Checkbox
                   name="current"
                   id="primaryJob"
+                  checked = {primaryJob.current}
+                  value={primaryJob.current}
                   onChange={(e) => onChange(e)}
                 />
               }
@@ -226,6 +317,7 @@ const ExperienceForm = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={secondaryJob.company}
                 onChange={(e) => onChange(e)}
               />
             </Grid>
@@ -239,6 +331,7 @@ const ExperienceForm = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={secondaryJob.startDate}
                 onChange={(e) => onChange(e)}
                 className={classes.item}
               />
@@ -253,23 +346,23 @@ const ExperienceForm = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
+                value={secondaryJob.endDate}
                 onChange={(e) => onChange(e)}
                 className={classes.item}
               />
             </Grid>
           </Grid>
 
-        </Grid>
-
-        <Grid item>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.button}
-          >
-            Save
+          <Grid item>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Save
             </Button>
+          </Grid>
         </Grid>
 
         {/* If authorization was failed */}
@@ -279,16 +372,16 @@ const ExperienceForm = ({
           </Grid>
         )}
       </form>
-    </Container >
+    </Container>
   );
 };
 
 const mapStateToProps = ({
   employee: {
-    skill
+    experience, loading
   },
 }) => ({
-  skill
+  experience, loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

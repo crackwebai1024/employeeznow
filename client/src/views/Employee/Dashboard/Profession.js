@@ -30,18 +30,18 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.blue,
   },
   wrapper: {
-    width: 300,
+    width: "100%",
     [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
   },
   title: {
     color: theme.palette.common.darkBlue,
-    fontSize: '0.75rem',
+    fontSize: '0.9rem',
   },
   item: {
     fontSize: '0.9rem',
-    textAlign: 'right',
+    textAlign: 'left',
     [theme.breakpoints.down('sm')]: {
       textAlign: 'left',
     },
@@ -80,142 +80,49 @@ const Profession = ({ profession }) => {
   const renderProfession = (
     <Grid
       container
-      direction={matchesSM ? 'row' : 'column'}
-      justify={matchesSM ? 'center' : undefined}
+      direction={'row'}
     >
-      <Grid item xs={12}>
-        {primaryJob.title && primaryJob.title !== '' && (
-          <Grid item container className={classes.wrapper} justify="flex-start">
-            <Grid item xs={3} md={4}>
-              <Typography className={classes.title}>Primary Job</Typography>
-            </Grid>
-
-            <Grid item xs={4} md={5}>
-              <Typography className={classes.item} variant="body1">
-                {primaryJob.title}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={5} md={3}>
-              <Typography
-                className={`${classes.item} ${classes.itemDate}`}
-                variant="body1"
-              >
-                {primaryJob.years} years
-              </Typography>
-            </Grid>
-          </Grid>
-        )}
-      </Grid>
-
-      <Grid item xs={12}>
-        {secondaryJob.title && secondaryJob.title !== '' && (
-          <Grid container className={classes.wrapper} justify="flex-start">
-            <Grid item xs={3} md={4}>
-              <Typography className={classes.title}>Scondary Job</Typography>
-            </Grid>
-
-            <Grid item xs={4} md={5}>
-              <Typography className={classes.item} variant="body1">
-                {secondaryJob.title}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={5} md={3}>
-              <Typography
-                className={`${classes.item} ${classes.itemDate}`}
-                variant="body1"
-              >
-                {secondaryJob.years} years
-              </Typography>
-            </Grid>
-          </Grid>
-        )}
-      </Grid>
 
       {/* style */}
+
       <Grid item xs={12}>
-        {style && style.length !== 0 ? (
-          <Grid container direction="column">
-            {style.map((st, i) => (
-              <Grid
-                item
-                container
-                className={classes.wrapper}
-                justify="flex-start"
-                key={`${st.type}${st.years}`}
-              >
-                {i === 0 ? (
-                  <Grid item xs={3} md={1}>
-                    <Typography className={classes.title}>Style</Typography>
-                  </Grid>
-                ) : (
-                  <Grid item xs={3} md={1} />
-                )}
-
-                <Grid item xs={4} md={8}>
-                  <Typography className={classes.item} variant="body1">
-                    {st.type}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={5} md={3}>
-                  <Typography
-                    className={`${classes.item} ${classes.itemDate}`}
-                    variant="body1"
-                  >
-                    {st.years} years
-                  </Typography>
-                </Grid>
-              </Grid>
-            ))}
+        <Grid container>
+          <Grid item xs={3} md={1}>
+            <Typography className={classes.title}>Style</Typography>
           </Grid>
-        ) : (
-          ''
-        )}
+          <Grid container item xs={9} md={11}>
+            {style && style.length !== 0 ?
+              style.map((style, i) => (
+                <Grid item container xs={12} md={6}>
+                  <Grid xs={8}>{style.type}</Grid>
+                  <Grid xs={4}>{style.years} years</Grid>
+                </Grid>
+              ))
+              : ""}
+          </Grid>
+        </Grid>
       </Grid>
 
+      <hr style={{ width: "100%" }} />
       {/* cuisine */}
       <Grid item xs={12}>
-        {cuisine && cuisine.length !== 0 ? (
-          <Grid container direction="column">
-            {cuisine.map((cu, i) => (
-              <Grid
-                item
-                container
-                className={classes.wrapper}
-                justify="flex-start"
-                key={`${cu.type}${cu.years}`}
-              >
-                {i === 0 ? (
-                  <Grid item xs={3} md={1}>
-                    <Typography className={classes.title}>Cuisine</Typography>
-                  </Grid>
-                ) : (
-                  <Grid item xs={3} md={1} />
-                )}
-                <Grid item xs={4} md={8}>
-                  <Typography className={classes.item} variant="body1">
-                    {cu.type}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={5} md={3}>
-                  <Typography
-                    className={`${classes.item} ${classes.itemDate}`}
-                    variant="body1"
-                  >
-                    {cu.years} years
-                  </Typography>
-                </Grid>
-              </Grid>
-            ))}
+        <Grid container>
+          <Grid item xs={3} md={1}>
+            <Typography className={classes.title}>Cuisine</Typography>
           </Grid>
-        ) : (
-          ''
-        )}
+          <Grid container item xs={9} md={11}>
+            {cuisine && cuisine.length !== 0 ?
+              cuisine.map((cu, i) => (
+                <Grid item container xs={12} md={6}>
+                  <Grid xs={8}>{cu.type}</Grid>
+                  <Grid xs={4}>{cu.years} years</Grid>
+                </Grid>
+              ))
+              : ""}
+          </Grid>
+        </Grid>
       </Grid>
-
+      <hr style={{ width: "100%" }} />
       {/* shift */}
       <Grid item xs={12}>
         {shift && shift.length !== 0 && (
@@ -245,39 +152,39 @@ const Profession = ({ profession }) => {
       </Grid>
 
       {/* wineKnowledge */}
-      <Grid item xs={12}>
-        {wineKnowledge && (
-          <Grid container className={classes.wrapper} justify="flex-start">
-            <Grid item xs={3} md={5}>
-              <Typography className={classes.title}>Wine Knowledge</Typography>
+      <Grid item container xs={12}>
+        <Grid container xs={12} md={6}>
+          {wineKnowledge && (
+            <Grid container className={classes.wrapper} justify="flex-start">
+              <Grid item xs={3} md={5}>
+                <Typography className={classes.title}>Wine Knowledge</Typography>
+              </Grid>
+              <Grid item xs={9} md={7}>
+                <Typography className={classes.item} variant="body1">
+                  {wineKnowledge}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={9} md={7}>
-              <Typography className={classes.item} variant="body1">
-                {wineKnowledge}
+          )}
+        </Grid>
+        <Grid xs={12} md={6}>
+          {cocktailKnowledge && (
+            <Grid container className={classes.wrapper} justify="flex-start">
+              <Grid item xs={3} md={5}>
+                <Typography className={classes.title}>
+                  Cocktail Knowldge
               </Typography>
+              </Grid>
+              <Grid item xs={9} md={7}>
+                <Typography className={classes.item} variant="body1">
+                  {cocktailKnowledge}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Grid>
-
-      {/* cocktailKnowledge */}
-      <Grid item xs={12}>
-        {cocktailKnowledge && (
-          <Grid container className={classes.wrapper} justify="flex-start">
-            <Grid item xs={3} md={5}>
-              <Typography className={classes.title}>
-                Cocktail Knowldge
-              </Typography>
-            </Grid>
-            <Grid item xs={9} md={7}>
-              <Typography className={classes.item} variant="body1">
-                {cocktailKnowledge}
-              </Typography>
-            </Grid>
-          </Grid>
-        )}
-      </Grid>
-
+      <hr style={{ width: "100%" }} />
       {/* systems */}
       <Grid item xs={12}>
         {systems && systems.length !== 0 && (
@@ -307,12 +214,12 @@ const Profession = ({ profession }) => {
           </Grid>
         )}
       </Grid>
-
+      <hr style={{ width: "100%" }} />
       {/* milesToWork */}
       <Grid item xs={12}>
         {milesToWork && (
           <Grid container className={classes.wrapper} justify="flex-start">
-            <Grid item xs={3} md={5}>
+            <Grid item xs={3} md={3}>
               <Typography className={classes.title}>Miles to Work</Typography>
             </Grid>
             <Grid item xs={9} md={7}>
@@ -325,7 +232,6 @@ const Profession = ({ profession }) => {
       </Grid>
     </Grid>
   );
-
   // *** this page is shared both employee and employer.
   //     visibility for employer is limited  *** ////
   return (
@@ -348,8 +254,8 @@ const Profession = ({ profession }) => {
       {matchesSM ? (
         <Container className={classes.container}>{renderProfession}</Container>
       ) : (
-        <Grid item>{renderProfession}</Grid>
-      )}
+          <Grid item>{renderProfession}</Grid>
+        )}
 
       {/* column 3 / 3  document page - currently documents are not necessary to upload*/}
       {/* <Grid item className={classes.docContainer}>
