@@ -5,6 +5,8 @@ import SkillCtrl from "../../controllers/crud/employee/skill.crud";
 import PrefCtrl from "../../controllers/crud/employee/preference.crud";
 import ExpCtrl from "../../controllers/crud/employee/experience.crud";
 import DocCtrl from "../../controllers/crud/employee/document.crud";
+import ImgCtrl from "../../controllers/crud/employee/img.crud";
+import PortCtrl from "../../controllers/crud/employee/portfolio.crud";
 import AWSCtrl from "../../controllers/crud/utils/aws_ope";
 
 const router = express.Router();
@@ -30,16 +32,20 @@ router
 // document file read
 router
   .route("/document")
-  .get(requireSignin, hasAuthorization, DocCtrl.find_ByID);
+  .get(requireSignin, hasAuthorization, DocCtrl.find_ByID)
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, DocCtrl.updateByID)
+  .delete(requireSignin, hasAuthorization, AWSCtrl.del, DocCtrl.updateByID);
 
-// document file create
 router
-  .route("/create/document")
-  .post(requireSignin, hasAuthorization, AWSCtrl.save, DocCtrl.updateByID);
+  .route(["/photo", "/background"])
+  .get(requireSignin, hasAuthorization, ImgCtrl.find_ByID)
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, ImgCtrl.updateByID)
+  .delete(requireSignin, hasAuthorization, AWSCtrl.del, ImgCtrl.updateByID);
 
-// document file update
 router
-  .route("/update/document")
-  .post(requireSignin, hasAuthorization, AWSCtrl.update, DocCtrl.updateByID);
+  .route("/portfolio")
+  .get(requireSignin, hasAuthorization, PortCtrl.find_ByID)
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, PortCtrl.updateByID)
+  .delete(requireSignin, hasAuthorization, AWSCtrl.del, PortCtrl.updateByID);
 
 export default router;

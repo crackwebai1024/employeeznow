@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const DocumentSchema = new mongoose.Schema({
   resume: {
     fname: String,
-    fcryptoName: String,
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -11,7 +10,6 @@ const DocumentSchema = new mongoose.Schema({
   },
   license: {
     fname: String,
-    fcryptoName: String,
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -19,15 +17,13 @@ const DocumentSchema = new mongoose.Schema({
   },
   deploma: {
     fname: String,
-    fcryptoName: String,
     createdAt: {
       type: Date,
       default: Date.now(),
     },
   },
-  referenceLetter: {
+  refletter: {
     fname: String,
-    fcryptoName: String,
     createdAt: {
       type: Date,
       default: Date.now(),

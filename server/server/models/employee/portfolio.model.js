@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const PortfolioSchema = new mongoose.Schema({
   portfolios: [
     {
+      index: String,
       fileName: String,
       note: String,
     },
