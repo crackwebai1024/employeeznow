@@ -136,7 +136,7 @@ const ProfessionDetailsForm = ({
   }, [])
 
   useEffect(() => {
-    if (preference) {
+    if (preference && preference.preference) {
       setFormData(preference.preference)
     }
   }, [preference])

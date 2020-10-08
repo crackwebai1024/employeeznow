@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   textContainer: {
     marginTop: '2rem',
   },
+  error : {
+    color : 'red'
+  },
   checkboxText: {
     marginTop: '1.5rem',
   },
@@ -70,9 +73,11 @@ const ExperienceForm = ({
     primaryJob: { company: '', startDate: '', endDate: '', current: false },
     secondaryJob: { company: '', startDate: '', endDate: '' },
     employmentStatus: '',
-    // milesToWork: '',
   });
-
+  const [error, setError] = useState({
+    primaryJob: '',
+    secondaryJob: ''
+  })
   const user = JSON.parse(getUser())
   // material-ui
   const classes = useStyles();
@@ -103,8 +108,8 @@ const ExperienceForm = ({
   }, []);
 
   useEffect(() => {
-    if (experience){
-      if(experience.experience.primaryJob.current) {
+    if (experience && experience.experience) {
+      if (experience.experience.primaryJob.current) {
         setToDisabled(true)
       }
       setFormData(experience.experience)
@@ -124,17 +129,42 @@ const ExperienceForm = ({
       case 'employmentStatus': {
         return setFormData({ ...formData, [name]: value });
       }
-      // case 'milesToWork': {
-      //   // validation
-      //   if (value < 0) {
-      //     return setError({ milesToWork: 'Incorrect number' });
-      //   }
-      //   setError({ milesToWork: '' });
-      //   return setFormData({ ...formData, [name]: value });
-      // }
       case 'endDate':
+        if (formData[id].startDate > value) {
+          setError({
+            ...error,
+            [id]: "Your end date can’t be earlier than your start date."
+          })
+        } else {
+          setError({
+            ...error,
+            [id]: ""
+          })
+        }
+        setFormData((prevState) => ({
+          ...prevState,
+          [id]: { ...prevState[id], [name]: value },
+        }));
+        break;
       case 'company':
-      case 'startDate':
+      case 'startDate': {
+        if (formData[id].endDate && formData[id].endDate < value) {
+          setError({
+            ...error,
+            [id]: "Your end date can’t be earlier than your start date."
+          })
+        } else {
+          setError({
+            ...error,
+            [id]: ""
+          })
+        }
+        setFormData((prevState) => ({
+          ...prevState,
+          [id]: { ...prevState[id], [name]: value },
+        }));
+        break;
+      }
       case 'amount':
       case 'unit':
       case 'location':
@@ -151,6 +181,13 @@ const ExperienceForm = ({
           ...prevState,
           [id]: { ...prevState[id], [name]: checked },
         }));
+        if(checked) {
+          setError({ ...error, [id] : ''})
+        } else {
+          if(formData[id].startDate > formData[id].endDate) {
+            setError({ ...error, [id]: 'Your end date can’t be earlier than your start date.'})
+          }
+        }
         setToDisabled(!toDisabled);
         break;
       }
@@ -193,13 +230,17 @@ const ExperienceForm = ({
   const onSubmit = (e) => {
     e.preventDefault();
     // console.log(formData)
+    if(error.primaryJob || error.secondaryJob) {
+      return
+    }
     let data = {
       ...formData,
       id: user._id
     }
     actions.updateJobExperience(data)
   };
-  console.log(formData, "payload")
+
+  console.log(formData, error, "payload")
   return (
     !loading &&
     <Container maxWidth="sm">
@@ -239,6 +280,7 @@ const ExperienceForm = ({
                 type="text"
                 name="company"
                 id="primaryJob"
+                required
                 label="Company Name"
                 InputLabelProps={{
                   shrink: true,
@@ -269,6 +311,7 @@ const ExperienceForm = ({
                 name="endDate"
                 id="primaryJob"
                 label="End Date"
+                error={error.primaryJob ? true : false}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -279,14 +322,16 @@ const ExperienceForm = ({
               />
             </Grid>
           </Grid>
-
+          <Grid item className={classes.error}>
+            {error.primaryJob && error.primaryJob}
+          </Grid>
           <Grid item>
             <FormControlLabel
               control={
                 <Checkbox
                   name="current"
                   id="primaryJob"
-                  checked = {primaryJob.current}
+                  checked={primaryJob.current}
                   value={primaryJob.current}
                   onChange={(e) => onChange(e)}
                 />
@@ -343,6 +388,7 @@ const ExperienceForm = ({
                 name="endDate"
                 id="secondaryJob"
                 label="End Date"
+                error={error.secondaryJob ? true : false}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -352,7 +398,9 @@ const ExperienceForm = ({
               />
             </Grid>
           </Grid>
-
+          <Grid item className={classes.error}>
+            {error.secondaryJob && error.secondaryJob}
+          </Grid>
           <Grid item>
             <Button
               type="submit"

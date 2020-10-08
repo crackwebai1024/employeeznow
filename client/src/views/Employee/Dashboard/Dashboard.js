@@ -192,7 +192,7 @@ function Dashboard(props) {
                 action={
                   <Button
                     component={Link}
-                    to={`/professiondetails-form`}
+                    to={`/${user && user.slug}/professiondetails-form`}
                     variant="outlined"
                     size="small"
                     className={classes.button}
@@ -225,7 +225,7 @@ function Dashboard(props) {
                 action={
                   <Button
                     component={Link}
-                    to={`/skills`}
+                    to={`/${user && user.slug}/skills`}
                     variant="outlined"
                     size="small"
                     className={classes.button}
@@ -284,7 +284,7 @@ function Dashboard(props) {
                 action={
                   <Button
                     component={Link}
-                    to={`/work-experience`}
+                    to={`/${user && user.slug}/work-experience`}
                     variant="outlined"
                     size="small"
                     className={classes.button}
