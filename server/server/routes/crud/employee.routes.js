@@ -1,6 +1,7 @@
 import express from "express";
 import authCtrl from "../../controllers/auth/common.auth";
 import EmpCtrl from "../../controllers/crud/employee/main.crud";
+import BsCtrl from "../../controllers/crud/employee/basic.crud";
 import SkillCtrl from "../../controllers/crud/employee/skill.crud";
 import PrefCtrl from "../../controllers/crud/employee/preference.crud";
 import ExpCtrl from "../../controllers/crud/employee/experience.crud";
@@ -13,7 +14,11 @@ const router = express.Router();
 const { requireSignin, hasAuthorization } = authCtrl;
 router.route("/databyid").get(requireSignin, hasAuthorization, EmpCtrl.read);
 
-// skill read, create, update(get for read, post for create and update)
+//basic, skill, preference, experience, read, create, update(get for read, post for create and update)
+router
+  .route("/basic")
+  .get(requireSignin, hasAuthorization, BsCtrl.find_ByID)
+  .post(requireSignin, hasAuthorization, BsCtrl.updateByID);
 router
   .route("/skill")
   .get(requireSignin, hasAuthorization, SkillCtrl.find_ByID)

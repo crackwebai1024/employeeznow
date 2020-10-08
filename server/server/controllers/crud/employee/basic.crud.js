@@ -6,9 +6,12 @@ const create = async (req, res, next) => {
 };
 
 const find_ByID = async (req, res) => {
+  console.log("----------", req.query.id);
   let role = "_id";
   let userBasicByID = await CRUD.find_ByID(Employee, role, req.query.id, res);
-  return userBasicByID;
+  return res.status(200).json({
+    basic: userBasicByID,
+  });
 };
 
 const updateByID = async (req, res) => {
