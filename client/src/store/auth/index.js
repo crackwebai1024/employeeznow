@@ -32,6 +32,7 @@ export const actions = createActions({
   LOGOUT_FAILURE: undefined,
 
   RESET_LOGIN_ERROR: undefined,
+
 });
 
 const reducer = handleActions(
@@ -65,6 +66,8 @@ const reducer = handleActions(
     [actions.logoutFailure, handlers.logoutFailure],
 
     [actions.resetLoginError, handlers.resetLoginError],
+
+    
   ]),
   initialState,
 );

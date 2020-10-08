@@ -10,6 +10,7 @@ const initialState = {
   loginError: null,
   isLoginLoading: false,
   registered: false,
+  
   registerError: '',
   isRegisterLoading: false,
   signupUser: {},

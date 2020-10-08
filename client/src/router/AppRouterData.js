@@ -25,6 +25,7 @@ export const AppRouterData = [
 ]
 
 export const AppPrivateRouterData = [
+  { "path": "/", component: Home },
   { 'path': `/employee/${user && user.slug}/account`, component: EmployerAccount },
   { 'path': `/employees/${user && user.slug}`, component: Dashbaord },
   { 'path': `/${user && user.slug}/skills`, component: SkillsForm },

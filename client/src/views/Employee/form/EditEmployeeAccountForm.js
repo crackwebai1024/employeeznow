@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +12,10 @@ import Typography from '@material-ui/core/Typography';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
+import { actions as employeeActions } from '@store/employee';
+import { actions as authActions } from '@store/auth';
+import { bindActionCreators } from 'redux';
+import { getUser } from '@helpers/auth-helpers';
 // import { updateEmployee } from '../../../store/actions/employee';
 
 const useStyles = makeStyles((theme) => ({
@@ -84,8 +88,10 @@ const EditEmployeeAccountForm = ({
     address,
     employeezNowId,
   },
-  // updateEmployee,
+  actions,
+  updateEmployee,
   errorMessage,
+  updateLoading,
   setOpenAccount,
   history,
   slug,
@@ -108,6 +114,7 @@ const EditEmployeeAccountForm = ({
 
   // material-ui
   const classes = useStyles();
+  const user = JSON.parse(getUser())
 
   // control address.state manually - check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
@@ -118,14 +125,15 @@ const EditEmployeeAccountForm = ({
     }
   };
 
-  const onSubmit = (formData) => {
+  const onSubmit = async (formData) => {
     const sendData = {
       ...formData,
+      id: user._id,
       address: { ...formData.address, state: updatedState },
     };
     console.log(sendData);
-    // if (!stateError) return updateEmployee(sendData, history, employeezNowId);
-    // setOpenAccount(false);
+    await actions.updateBasicInfoRequest(sendData)
+    setOpenAccount(false);
   };
 
   return (
@@ -387,7 +395,7 @@ const EditEmployeeAccountForm = ({
               <Grid item xs={12}>
                 <TextField
                   error={errors.cell ? true : false}
-                  helperText={errors.cell ? 'Phone number is required' : ''}
+                  helperText={errors.cell ? 'Phone number is Invalid' : ''}
                   required
                   variant="outlined"
                   margin="normal"
@@ -435,6 +443,18 @@ const EditEmployeeAccountForm = ({
             <Button
               type="submit"
               fullWidth
+              disabled={updateLoading ? true : false}
+              variant="outlined"
+              color="primary"
+              onClick={handleSubmit(onSubmit)}
+              className={classes.button}
+            >
+              CANCEL
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              disabled={updateLoading ? true : false}
               variant="contained"
               color="primary"
               onClick={handleSubmit(onSubmit)}
@@ -456,16 +476,19 @@ const EditEmployeeAccountForm = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    // error massage when auth was failed
-    errorMessage: state.auth.error,
-  };
-};
+const mapStateToProps = ({
+  employee: {
+    experience, loading, updateLoading, updateEmployee
+  },
+}) => ({
+  experience, loading, updateLoading, updateEmployee
+});
 
-// export default connect(mapStateToProps, { updateEmployee })(
-//   EditEmployeeAccountForm
-// );
-export default connect(mapStateToProps, null)(
-  EditEmployeeAccountForm
-);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employeeActions,
+    ...authActions
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditEmployeeAccountForm);

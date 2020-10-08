@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     fontSize: '0.8rem',
     padding: '0.3rem 1.5rem',
+    transition: '0.2s',
     '&:hover': {
       transform: 'translateY(-3px)',
       boxShadow: theme.shadows[1],
@@ -71,8 +72,10 @@ const useStyles = makeStyles((theme) => ({
   button1: {
     border: `1px solid ${theme.palette.secondary.main}`,
     color: theme.palette.secondary.main,
+    marginLeft: '1rem',
   },
   button2: {
+    border: `1px solid ${theme.palette.secondary.main}`,
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white,
     marginLeft: '1rem',
