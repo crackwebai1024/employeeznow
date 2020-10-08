@@ -6,6 +6,9 @@ export const actions = createActions({
   GET_USER_DATA_REQUEST: undefined,
   GET_USER_DATA_SUCCESS: undefined,
 
+  GET_USER_DOCUMENT_REQUEST : undefined,
+  GET_USER_DOCUMENT_SUCCESS: undefined,
+
   UPDATE_SKILL_REQUEST: undefined,
   UPDATE_SKILL_SUCCESS: undefined,
 
@@ -27,13 +30,19 @@ export const actions = createActions({
   UPLOAD_PORTFOLIO_IMAGE: undefined,
   GET_PORTFOLIO_IMAGE: undefined,
   DELETE_PORTFOLIO : undefined,
-  DELETE_FOLIO_SUCCESS:undefined
+  DELETE_FOLIO_SUCCESS:undefined,
+
+  UPLOAD_DOCUMENT_REQUEST: undefined,
+  UPLOAD_DOCUMENT_SUCCESS: undefined
 });
 
 const reducer = handleActions(
   new Map([
     [actions.getUserDataRequest, handlers.getUserDataRequest],
     [actions.getUserDataSuccess, handlers.getUserDataSuccess],
+
+    [actions.getUserDocumentRequest, handlers.getUserDocumentRequest],
+    [actions.getUserDocumentSuccess, handlers.getUserDocumentSuccess],
 
     [actions.loadSkillData, handlers.loadSkillData],
     [actions.updateSkillRequest, handlers.updateSkillRequest],
@@ -56,8 +65,10 @@ const reducer = handleActions(
 
     [actions.deletePortfolio, handlers.deletePortfolio],
     [actions.deleteFolioSuccess, handlers.deleteFolioSuccess],
-    
 
+    [actions.uploadDocumentRequest, handlers.uploadDocumentRequest],
+    [actions.uploadDocumentSuccess, handlers.uploadDocumentSuccess],
+    
   ]),
   initialState,
 );
