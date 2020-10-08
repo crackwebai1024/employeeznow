@@ -56,3 +56,7 @@ export async function getPortfolioImage(data) {
 export async function deleteFolio(data) {
   return await Axios.post('/crud/employee/portfolio/delete', data)
 }
+
+export async function uploadDocument(data) {
+  return await Axios.post('/crud/employee/document', data)
+}

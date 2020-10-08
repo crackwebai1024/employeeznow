@@ -68,7 +68,7 @@ function* onUpdatePreference({ payload }) {
   try {
     const res = yield call(EmployeeAPI.updatePreference, payload)
     if (res && res.data) {
-      yield put(types.success({ type: "preference", data: {preference : res.data} }))
+      yield put(types.success({ type: "preference", data: { preference: res.data } }))
     }
   } catch {
     yield put(types.failure)
@@ -170,11 +170,53 @@ function* onGetPortfolio({ payload }) {
 function* onDeleteFolio({ payload }) {
   try {
     const res = yield call(EmployeeAPI.deleteFolio, payload)
-    if(res && res.data) {
+    if (res && res.data) {
       yield put(types.deleteFolioSuccess(payload.folioID))
     }
   } catch {
 
+  }
+}
+
+function* onUploadDocument({ payload }) {
+  try {
+    const res = yield call(EmployeeAPI.uploadDocument, payload)
+    if (res && res.data) {
+      let documentName = payload.getAll("type")[0]
+      yield put(types.uploadDocumentSuccess({ content: _arrayBufferToBase64(res.data.content.data), type: payload.getAll("type")[0] }))
+    }
+  } catch {
+
+  }
+}
+
+function* onGetUserDocument({ payload }) {
+  try {
+    let documentArray = ["resume", "license", "deploma", "refletter"]
+    let requests = documentArray.map(document => {
+      return Axios.get('/crud/employee/document?id=' + `${payload.id}` + "&type=" + document)
+    })
+
+    const response = yield Promise.all(requests)
+      .then(responses => {
+        return responses.map(response => {
+          return {
+            content: response.data.content,
+            fname: response.data.fname
+          }
+        })
+      })
+
+    let document = {}
+      debugger
+    // document.append(response.map((res, i) => {
+    //   return {
+    //     [documentArray[i]]: _arrayBufferToBase64(res.content.Body.data),
+    //   }
+    // }))
+    yield put(types.getUserDocumentSuccess())
+  } catch {
+    debugger
   }
 }
 
@@ -191,7 +233,9 @@ const employeeSagas = [
   takeEvery(types.getBackgroundImage, onGetBackground),
   takeEvery(types.uploadPortfolioImage, onUploadPortfolio),
   takeEvery(types.getPortfolioImage, onGetPortfolio),
-  takeEvery(types.deletePortfolio, onDeleteFolio)
+  takeEvery(types.deletePortfolio, onDeleteFolio),
+  takeEvery(types.uploadDocumentRequest, onUploadDocument),
+  takeEvery(types.getUserDocumentRequest, onGetUserDocument)
 ];
 
 

@@ -111,14 +111,18 @@ const useStyles = makeStyles((theme) => ({
     color: "gray",
     fontWeight: 300,
     marginBottom: 40
+  },
+  input: {
+    display: 'none',
   }
 }));
 
 function Dashboard(props) {
-  const { actions, employeeData } = props
+  const { actions, employeeData, resumeLoading, licenseLoading, deplomaLoading, refletterLoading, referenceLetterLoading } = props
   const user = JSON.parse(getUser())
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [document, setDocument] = useState([])
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -129,15 +133,31 @@ function Dashboard(props) {
       id: user._id
     }
     actions.getUserDataRequest(data)
+    actions.getUserDocumentRequest(data)
   }, [])
+
+  const uploadDocument = (e, type) => {
+    setDocument({
+      ...document,
+      [type]: e.target.files[0].name
+    })
+    const formData = new FormData();
+    formData.append("id", user._id)
+    formData.append("type", type)
+    formData.append("content", e.target.files[0])
+    formData.append("fname", e.target.files[0].name)
+    actions.uploadDocumentRequest(formData)
+
+  }
 
   // const theme = useTheme();
   // const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
   const {
     skill,
-    experience
+    experience,
+    preference
   } = employeeData
-  console.log(employeeData, "payload")
+
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
@@ -147,7 +167,7 @@ function Dashboard(props) {
             <Grid className={classes.profilePhoto}>
               <ProfilePhoto />
             </Grid>
-            
+
             <Grid className={classes.section}>
               <Grid className={classes.name}>
                 {employeeData.basic &&
@@ -183,11 +203,17 @@ function Dashboard(props) {
                 subheader=""
               />
               <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  {employeeData.preference &&
-                    employeeData.preference.employee
-                  }
-                </Typography>
+                <Grid container item xs={12}>
+                  <Grid item xs={12} md={4}>
+                    {/* {preference} */}
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    {/* {preference} */}
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    {/* {preference} */}
+                  </Grid>
+                </Grid>
               </CardContent>
             </Card>
           </Grid>
@@ -246,6 +272,7 @@ function Dashboard(props) {
               </Grid>
             </Card>
           </Grid>
+
           <Grid className={classes.section}>
             <Card className={classes.section}>
               <CardHeader
@@ -324,6 +351,110 @@ function Dashboard(props) {
           <Grid className={classes.section}>
             <Portfolio />
           </Grid>
+
+          <Grid className={classes.section}>
+            <Card className={classes.section}>
+              <CardHeader
+                title="DOCUMENTS"
+                subheader=""
+              />
+              <CardContent>
+                <Grid className={classes.section}>
+                  <Card className={classes.section}>
+                    <CardHeader
+                      title="resume"
+                      subheader=""
+                    />
+                    <CardContent>
+                      <input
+                        accept="*"
+                        className={classes.input}
+                        id="contained-button-resume"
+                        multiple
+                        onChange={e => uploadDocument(e, "resume")}
+                        type="file"
+                      />
+                      <label htmlFor="contained-button-resume">
+                        <Button variant="contained" color="primary" component="span">
+                          Resume Upload
+                        </Button>
+                      </label>
+                      {resumeLoading ? "loading..." : document.resume && document.resume}
+                    </CardContent>
+                  </Card>
+
+                  <Card className={classes.section}>
+                    <CardHeader
+                      title="licence"
+                      subheader=""
+                    />
+                    <CardContent>
+                      <input
+                        accept="*"
+                        className={classes.input}
+                        id="contained-button-license"
+                        multiple
+                        onChange={e => uploadDocument(e, "license")}
+                        type="file"
+                      />
+                      <label htmlFor="contained-button-license">
+                        <Button variant="contained" color="primary" component="span">
+                          License Upload
+                        </Button>
+                      </label>
+                      {licenseLoading ? "loading..." : document.license && document.license}
+                    </CardContent>
+                  </Card>
+
+                  <Card className={classes.section}>
+                    <CardHeader
+                      title="deploma"
+                      subheader=""
+                    />
+                    <CardContent>
+                      <input
+                        accept="*"
+                        className={classes.input}
+                        id="contained-button-deploma"
+                        multiple
+                        onChange={e => uploadDocument(e, "deploma")}
+                        type="file"
+                      />
+                      <label htmlFor="contained-button-deploma">
+                        <Button variant="contained" color="primary" component="span">
+                          Deploma Upload
+                        </Button>
+                      </label>
+                      {deplomaLoading ? "loading..." : document.deploma && document.deploma}
+                    </CardContent>
+                  </Card>
+                  <Card className={classes.section}>
+                    <CardHeader
+                      title="refletter"
+                      subheader=""
+                    />
+                    <CardContent>
+                      <input
+                        accept="*"
+                        className={classes.input}
+                        id="contained-button-refletter"
+                        multiple
+                        onChange={e => uploadDocument(e, "refletter")}
+                        type="file"
+                      />
+                      <label htmlFor="contained-button-refletter">
+                        <Button variant="contained" color="primary" component="span">
+                          Refletter Upload
+                        </Button>
+                      </label>
+                      {refletterLoading ? "loading..." : document.refletter && document.refletter}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+
         </Container>
       </Fragment> :
       <Fragment>
@@ -334,10 +465,10 @@ function Dashboard(props) {
 
 const mapStateToProps = ({
   employee: {
-    employeeData
+    employeeData, resumeLoading, resume, licenseLoading, deplomaLoading, refletterLoading
   },
 }) => ({
-  employeeData
+  employeeData, resumeLoading, resume, licenseLoading, deplomaLoading, refletterLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({

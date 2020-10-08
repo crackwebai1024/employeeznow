@@ -11,6 +11,14 @@ export const getUserDataRequest = (state, { payload }) => ({
   ...state,
 })
 
+export const getUserDocumentRequest = (state, { payload }) => ({
+  ...state,
+})
+
+export const getUserDocumentSuccess = (state, { payload }) => ({
+  ...state,
+})
+
 export const getUserDataSuccess = (state, { payload }) => ({
   ...state,
   employeeData: payload
@@ -92,5 +100,22 @@ export const deleteFolioSuccess = (state, { payload }) => ({
   ...state,
   portfolios: state.portfolios.filter(folio => folio.index !== payload)
 })
+
+export const uploadDocumentRequest = (state, { payload }) => {
+  let loading = payload.getAll('type')[0] + "Loading"
+  return {
+  ...state,
+  [loading]: true
+}}
+
+export const uploadDocumentSuccess = (state, { payload }) => {
+  let type = payload.type
+  let loading = type + "Loading"
+  let content = payload.content
+  return {
+  ...state,
+  [type] : content,
+  [loading] : false,
+}}
 
 export default initialState;

@@ -92,7 +92,7 @@ const BackgourndPhoto = ({ background, actions }) => {
   }
   //fileNames is blob url - pass to dropzone, assign there, and display here
   const [bgfileNames, setbgFileNames] = useState();
-  console.log(background, "payload---")
+
   return (
     <Fragment>
       {localStorage.role === 'employee' && (
