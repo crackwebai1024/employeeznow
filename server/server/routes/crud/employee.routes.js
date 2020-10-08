@@ -29,23 +29,34 @@ router
   .get(requireSignin, hasAuthorization, ExpCtrl.find_ByID)
   .post(requireSignin, hasAuthorization, ExpCtrl.updateByID);
 
-// document file read
+// document file crud
 router
   .route("/document")
   .get(requireSignin, hasAuthorization, DocCtrl.find_ByID)
-  .post(requireSignin, hasAuthorization, AWSCtrl.save, DocCtrl.updateByID)
-  .delete(requireSignin, hasAuthorization, AWSCtrl.del, DocCtrl.updateByID);
-
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, DocCtrl.updateByID);
 router
-  .route(["/photo", "/background"])
-  .get(requireSignin, hasAuthorization, ImgCtrl.find_ByID)
-  .post(requireSignin, hasAuthorization, AWSCtrl.save, ImgCtrl.updateByID)
-  .delete(requireSignin, hasAuthorization, AWSCtrl.del, ImgCtrl.updateByID);
+  .route("/document/delete")
+  .post(requireSignin, hasAuthorization, AWSCtrl.del, DocCtrl.updateByID);
 
+// image file crud
+router
+  .route("/image")
+  .get(requireSignin, hasAuthorization, ImgCtrl.find_ByID)
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, ImgCtrl.updateByID);
+router
+  .route("/image/delete")
+  .post(requireSignin, hasAuthorization, AWSCtrl.del, ImgCtrl.updateByID);
+
+// portfolio crud
 router
   .route("/portfolio")
   .get(requireSignin, hasAuthorization, PortCtrl.find_ByID)
-  .post(requireSignin, hasAuthorization, AWSCtrl.save, PortCtrl.updateByID)
-  .delete(requireSignin, hasAuthorization, AWSCtrl.del, PortCtrl.updateByID);
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, PortCtrl.updateByID);
+router
+  .route("/portfolio/delete")
+  .post(requireSignin, hasAuthorization, AWSCtrl.del, PortCtrl.updateByID);
+router
+  .route("/portfolio/:fileid")
+  .get(requireSignin, hasAuthorization, PortCtrl.get_file_ByID);
 
 export default router;

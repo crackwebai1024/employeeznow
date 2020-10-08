@@ -42,10 +42,12 @@ const read = async (bucketName, id) => {
 
 const save = async (req, res, next) => {
   // bucketName, fileName, fcont
+  console.log("***************************", req);
+  let fileName = "";
   if (req.body.type !== "portfolio") {
-    let fileName = req.body.id + req.body.type;
+    fileName = req.body.id + req.body.type;
   } else {
-    let fileName = req.body.id + req.body.folioID + req.body.fname;
+    fileName = req.body.id + req.body.folioID + req.body.type;
   }
   let bucketName = "employeeznow" + req.body.type;
   let fcont = req.file;
@@ -55,12 +57,12 @@ const save = async (req, res, next) => {
     Key: fileName,
   };
 
-  var base64data = new Buffer(fcont.buffer, "binary");
+  // var base64data = new Buffer(fcont.buffer, "binary");
   s3.putObject(
     {
       Bucket: bucketName,
       Key: fileName,
-      Body: base64data,
+      Body: fcont.buffer,
       ACL: "public-read",
     },
     function (err) {
@@ -68,8 +70,9 @@ const save = async (req, res, next) => {
         return res.status(500).json({
           error: "there is an error in saving data to S3",
         });
+      } else {
+        next();
       }
-      next();
     }
   );
 };

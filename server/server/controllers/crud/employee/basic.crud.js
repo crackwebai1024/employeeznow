@@ -7,7 +7,7 @@ const create = async (req, res, next) => {
 
 const find_ByID = async (req, res) => {
   let role = "_id";
-  let userBasicByID = await CRUD.find_ByID(Employee, role, req.body.id, res);
+  let userBasicByID = await CRUD.find_ByID(Employee, role, req.query.id, res);
   return userBasicByID;
 };
 
