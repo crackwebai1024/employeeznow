@@ -54,6 +54,8 @@ function* onSignupConfirm({ payload }) {
       setToken(res.data.token)
       setUser(res.data.employee)
       setRole(payload.role)
+      debugger
+      window.location.pathname = `employees/${res.data[payload.role].slug}`
       yield put(types.signupConfirmSuccess(res.data.employee))
     }
   } catch {

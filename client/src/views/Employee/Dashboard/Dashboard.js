@@ -153,11 +153,12 @@ function Dashboard(props) {
   // const theme = useTheme();
   // const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
   const {
+    basic,
     skill,
     experience,
     preference
   } = employeeData
-
+  console.log(experience, "pyaload")
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
@@ -170,7 +171,7 @@ function Dashboard(props) {
 
             <Grid className={classes.section}>
               <Grid className={classes.name}>
-                {employeeData.basic &&
+                {basic &&
                   employeeData.basic.lastName + " " + employeeData.basic.firstName
                 }
                 <Button
@@ -229,47 +230,51 @@ function Dashboard(props) {
                     size="small"
                     className={classes.button}
                   >
-                    {employeeData.skill ? "Update Skills" : "Add Skills"}
+                    {skill ? "Update Skills" : "Add Skills"}
                   </Button>
                 }
                 title="Skills"
                 subheader=""
               />
-              <CardContent>
-                <Grid container direction="row">
-                  <Grid item xs={3}>
-                    Primary Job :
-                      {employeeData.skill.primaryJob.title}
-                    {employeeData.skill.primaryJob.years} Years
+              {skill &&
+                <Fragment>
+                  <CardContent>
+                    <Grid container direction="row">
+                      <Grid item xs={3}>
+                        Primary Job :
+                      {skill.primaryJob.title}
+                        {skill.primaryJob.years} Years
                     </Grid>
-                  <Grid item xs={6}>
-                    <Typography>
+                      <Grid item xs={6}>
+                        <Typography>
 
-                    </Typography>
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent className={classes.moreSkills}>
+                      <Typography>
+                        <Profession profession={employeeData.skill} />
+                      </Typography>
+                    </CardContent>
+                  </Collapse>
+                  <Grid item xs={12}>
+                    <CardActions>
+                      <IconButton
+                        className={clsx(classes.expand, {
+                          [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                      >
+                        <ExpandMoreIcon />
+                      </IconButton>
+                    </CardActions>
                   </Grid>
-                </Grid>
-              </CardContent>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent className={classes.moreSkills}>
-                  <Typography>
-                    <Profession profession={employeeData.skill} />
-                  </Typography>
-                </CardContent>
-              </Collapse>
-              <Grid item xs={12}>
-                <CardActions>
-                  <IconButton
-                    className={clsx(classes.expand, {
-                      [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                  >
-                    <ExpandMoreIcon />
-                  </IconButton>
-                </CardActions>
-              </Grid>
+                </Fragment>
+              }
             </Card>
           </Grid>
 
@@ -284,7 +289,7 @@ function Dashboard(props) {
                     size="small"
                     className={classes.button}
                   >
-                    {employeeData.experience ? "Update My Work Experience" : "Add My Work Experience"}
+                    {experience ? "Update My Work Experience" : "Add My Work Experience"}
 
                   </Button>
                 }
@@ -297,26 +302,34 @@ function Dashboard(props) {
                     <Typography className={classes.jobtitle}>
                       {skill && skill.primaryJob.title}
                     </Typography>
-                    <Typography className={classes.company}>
-                      {experience && experience.primaryJob.company}
-                    </Typography>
-                    <Typography className={classes.jobPeriod}>
-                      {experience && experience.primaryJob.startDate}&nbsp;~ &nbsp;
-                      {experience && experience.primaryJob.current ? "Present" :
-                        experience.primaryJob.endDate}
-                    </Typography>
+                    {experience &&
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {experience.primaryJob.company}
+                        </Typography>
+                        <Typography className={classes.jobPeriod}>
+                          {experience.primaryJob.startDate}&nbsp;~ &nbsp;
+                          {experience.primaryJob.current ? "Present" :
+                            experience.primaryJob.endDate}
+                        </Typography>
+                      </Fragment>
+                    }
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Typography className={classes.jobtitle}>
                       {employeeData.skill && employeeData.skill.secondaryJob.title}
                     </Typography>
-                    <Typography className={classes.company}>
-                      {experience && experience.secondaryJob.company}
-                    </Typography>
-                    <Typography className={classes.jobPeriod}>
-                      {experience && experience.secondaryJob.startDate}&nbsp;~ &nbsp;
-                      {experience && experience.secondaryJob.endDate}
-                    </Typography>
+                    {experience &&
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {experience.secondaryJob.company}
+                        </Typography>
+                        <Typography className={classes.jobPeriod}>
+                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
+                          {experience.secondaryJob.endDate}
+                        </Typography>
+                      </Fragment>
+                    }
                   </Grid>
                 </Grid>
 
