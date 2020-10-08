@@ -85,7 +85,7 @@ const PhotoDropZone = ({
   const [sendPhoto, setSendPhoto] = useState();
 
   const onDrop = (acceptedFiles) => {
-    console.log(acceptedFiles[0]);
+    console.log(acceptedFiles[0], "acceptedfile");
     //setFileNames(acceptedFiles.map((file) => file.name));  -- when there is multiple pictures
     const imgName = acceptedFiles.map((file) => file.name);
     console.log(imgName);
@@ -142,7 +142,7 @@ const PhotoDropZone = ({
         </div>
       )}
       {/* accept file max size 1MB (1048576 Bytes) */}
-      <Dropzone onDrop={onDrop} accept="image/*" minSize={0} maxSize={1048576}>
+      <Dropzone onDrop={onDrop} accept="image/*" minSize={0}>
 
         {({ getRootProps, getInputProps }) => (
           <div

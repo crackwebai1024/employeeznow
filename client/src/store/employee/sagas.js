@@ -208,7 +208,7 @@ function* onGetUserDocument({ payload }) {
       })
 
     let document = {}
-      debugger
+      // debugger
     // document.append(response.map((res, i) => {
     //   return {
     //     [documentArray[i]]: _arrayBufferToBase64(res.content.Body.data),
@@ -216,7 +216,7 @@ function* onGetUserDocument({ payload }) {
     // }))
     yield put(types.getUserDocumentSuccess())
   } catch {
-    debugger
+    // debugger
   }
 }
 
