@@ -33,6 +33,8 @@ export const actions = createActions({
 
   RESET_LOGIN_ERROR: undefined,
 
+  SIGNUPUSER_EMPTY: undefined,
+  
 });
 
 const reducer = handleActions(
@@ -66,8 +68,8 @@ const reducer = handleActions(
     [actions.logoutFailure, handlers.logoutFailure],
 
     [actions.resetLoginError, handlers.resetLoginError],
-
-    
+    [actions.signupuserEmpty, handlers.signupuserEmpty],
+        
   ]),
   initialState,
 );

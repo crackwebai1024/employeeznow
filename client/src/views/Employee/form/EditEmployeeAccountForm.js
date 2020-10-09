@@ -391,7 +391,7 @@ const EditEmployeeAccountForm = ({
               </Grid>
             </Grid>
 
-            <Grid item container direction="row" spacing={2}>
+            {/* <Grid item container direction="row" spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   error={errors.cell ? true : false}
@@ -414,7 +414,7 @@ const EditEmployeeAccountForm = ({
                   })}
                 />
               </Grid>
-            </Grid>
+            </Grid> */}
             <Grid item container direction="row" spacing={2}>
               <Grid item xs={12}>
                 <TextField

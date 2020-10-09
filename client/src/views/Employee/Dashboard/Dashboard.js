@@ -158,7 +158,7 @@ function Dashboard(props) {
     experience,
     preference
   } = employeeData
-  console.log(experience, "pyaload")
+  console.log(preference, "pyaload")
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
@@ -205,14 +205,13 @@ function Dashboard(props) {
               />
               <CardContent>
                 <Grid container item xs={12}>
-                  <Grid item xs={12} md={4}>
-                    {/* {preference} */}
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    {/* {preference} */}
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    {/* {preference} */}
+                  <Grid item xs={12} md={6}>
+                    {/* <Typography>{preference && "Status : " + preference.employmentStatus}</Typography>
+                    <Typography>{preference && "Salary : " + preference.idealSalary + "/" + preference.unit}</Typography>
+                    <Typography>{preference && "Planing to Move : " + preference.planningToMove.location} ({preference.planningToMove.dateToMove} )</Typography> */}
+                  </Grid> 
+                  <Grid item xs={12} md={6}>
+                  {/* <Typography>{preference && "Shift Availablity : " + preference.randomShiftRole.map(shift => shift)}</Typography> */}
                   </Grid>
                 </Grid>
               </CardContent>

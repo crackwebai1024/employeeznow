@@ -29,7 +29,6 @@ function* checkAuthorization({ payload }) {
 
 function* onEmailVerify({ payload }) {
   const data = payload
-  debugger
   try {
     const res = yield call(AuthAPI.employeeEmailVerify, data);
     if (res && res.data.success) {

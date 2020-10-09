@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -83,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
 const EmployeeForm = ({
   // signupEmployee,
   actions,
+  emailFailure,
+  signupLoading,
   phoneVerifyNeed,
   errorMessage,
   isAuthenticated,
@@ -95,7 +97,7 @@ const EmployeeForm = ({
 
   // address.state error customized check
   const [stateError, setStateError] = useState(false);
-
+  const [emailError, setEmailError] = useState('')
   // material-ui
   const classes = useStyles();
 
@@ -104,6 +106,12 @@ const EmployeeForm = ({
     register({ name: 'address.state', value: e.target.value })
     if (e.target.value) setStateError(false);
   };
+
+  useEffect(() => {
+    if (emailFailure)
+      setEmailError("Someone used this email. If you already registered, then please log in.")
+  }, [emailFailure])
+
 
   // connected to action
   const onSubmit = async (formData) => {
@@ -116,7 +124,6 @@ const EmployeeForm = ({
   if (isAuthenticated) {
     return <Redirect to={`/employees/${slug}`} />;
   }
-
   if (phoneVerifyNeed) {
     return <Redirect to='/signup/phoneverify' />
   }
@@ -338,8 +345,13 @@ const EmployeeForm = ({
                 })}
               />
             </Grid>
-
+            {emailError &&
+              <Grid item className={classes.invalidMessage}>
+                {emailError}
+              </Grid>
+            }
             <Button
+              disabled={signupLoading}
               type="submit"
               fullWidth
               variant="contained"
@@ -379,10 +391,10 @@ const EmployeeForm = ({
 
 const mapStateToProps = ({
   auth: {
-    phoneVerifyNeed
+    phoneVerifyNeed, signupLoading, emailFailure
   },
 }) => ({
-  phoneVerifyNeed
+  phoneVerifyNeed, signupLoading, emailFailure
 });
 
 const mapDispatchToProps = (dispatch) => ({

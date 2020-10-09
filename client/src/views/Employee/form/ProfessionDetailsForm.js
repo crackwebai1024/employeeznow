@@ -17,6 +17,7 @@ import { jobTypes, roles } from '../professionTypes';
 import { actions as employeeActions } from '@store/employee';
 import { bindActionCreators } from 'redux';
 import { getUser } from '@helpers/auth-helpers';
+import { FormControl } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1.5rem',
   },
   item: {
+    marginLeft: '2rem',
     '& .MuiInput-input': {
       color: theme.palette.grey[700],
     },
@@ -80,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
     marginBottom: '2rem',
   },
+  employmentStatus : {
+    width: '300px'
+  }
 }));
 
 const ProfessionDetailsForm = ({
@@ -258,25 +263,28 @@ const ProfessionDetailsForm = ({
           </Grid>
 
           <Grid item>
-            <Select
-              native
-              required
-              name="employmentStatus"
-              id="employmentStatus"
-              value={employmentStatus}
-              onChange={(e) => onChange(e)}
-            >
-              <option aria-label="none" value="" />
-              <option value="Unemployed and looking for">
-                Unemployed and looking for
+            <FormControl>
+              <Select
+                className={classes.employmentStatus}
+                native
+                required
+                name="employmentStatus"
+                id="employmentStatus"
+                value={employmentStatus}
+                onChange={(e) => onChange(e)}
+              >
+                <option aria-label="none" value="" />
+                <option value="Unemployed and looking for">
+                  Unemployed and looking for
               </option>
-              <option value="Employed and looking for">
-                Employed and looking for
+                <option value="Employed and looking for">
+                  Employed and looking for
               </option>
-              <option value="Employed and not looking for">
-                Employed and not looking for
+                <option value="Employed and not looking for">
+                  Employed and not looking for
               </option>
-            </Select>
+              </Select>
+            </FormControl>
           </Grid>
 
           {/* ideal salary */}
@@ -299,6 +307,7 @@ const ProfessionDetailsForm = ({
               value={idealSalary.amount}
               onChange={(e) => onChange(e)}
             />
+
             <TextField
               id="idealSalary"
               select
@@ -424,7 +433,7 @@ const ProfessionDetailsForm = ({
                 <Checkbox
                   name="availability"
                   id="newOpportunity"
-                  checked = {newOpportunity.availability}
+                  checked={newOpportunity.availability}
                   value={newOpportunity.availability}
                   onChange={(e) => onChange(e)}
                 />
@@ -472,7 +481,7 @@ const ProfessionDetailsForm = ({
                 <Checkbox
                   name="status"
                   id="veteran"
-                  checked = {veteran.status}
+                  checked={veteran.status}
                   value={veteran.status}
                   onChange={(e) => onChange(e)}
                 />

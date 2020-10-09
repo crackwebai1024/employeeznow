@@ -17,22 +17,35 @@ const initialState = {
   digicodeConfirmError: false,
   longinStatus: null,
   phoneVerifyNeed: false,
-  isSentPhoneNumber: false
+  isSentPhoneNumber: false,
+  isSingupUser: false
 };
 
 export const signupRequest = (state, { payload }) => ({
   ...state,
   signupUser: payload,
+  signupLoading: true,
+  isSingupUser: true,
+  emailFailure : false
+})
+
+export const signupuserEmpty = (state, { payload }) => ({
+  ...state,
+  isSingupUser: false,
+  phoneVerifyNeed: false
 })
 
 export const emailSuccess = (state, { payload }) => ({
   ...state,
-  phoneVerifyNeed: true
+  phoneVerifyNeed: true,
+  signupLoading: false,
 })
 
 export const emailFailure = (state, { payload }) => ({
   ...state,
-  phoneVerifyNeed: false
+  phoneVerifyNeed: false,
+  signupLoading: false,
+  emailFailure : true
 })
 
 export const phoneVerifyRequestRequest = (state, { payload }) => ({

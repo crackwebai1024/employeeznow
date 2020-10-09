@@ -31,11 +31,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '1.5rem',
   },
   button: {
-    marginTop: 30,
-    marginBottom: 25,
+    marginTop: '1.5rem',
   },
   linkContainer: {
     marginBottom: '8rem',
+  },
+  container: {
+    width: "80%"
   },
   link: {
     textDecoration: 'none',
@@ -82,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PhoneVerification = ({
-  errorMessage,
+  isSingupUser,
   isAuthenticated,
   user,
   digicodeConfirmError,
@@ -102,6 +104,7 @@ const PhoneVerification = ({
   const classes = useStyles();
 
   const handleDigit = (e) => {
+    setError('')
     setDigitCode(e)
   }
 
@@ -199,8 +202,16 @@ const PhoneVerification = ({
   if (isAuthenticated) {
     return <Redirect to={`/employees/${user.slug}`} />;
   }
-  if (_.isEmpty(signupUser)) {
-    return <Redirect to='/signup' />
+  if (!isSingupUser) {
+    return <Redirect to='/signup/employee' />
+  }
+
+  const onBack = () => {
+    actions.signupuserEmpty()
+  }
+
+  const onDigitBack = () => {
+    actions.phoneVerifyRequestFailure()
   }
 
   return (
@@ -213,26 +224,52 @@ const PhoneVerification = ({
         </Grid>
         <Grid item>
           <Typography className={classes.heading1}>{isSentPhoneNumber ? "6 Digit Code" : "Phone Verification"}</Typography>
-          <Typography className={classes.description}>Please take a moment to verify your phone number.</Typography>
         </Grid>
         {
           isSentPhoneNumber ?
             <Fragment>
-              <ReactCodeInput type='text' fields={6} {...props} onChange={handleDigit} />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={onSendDigitCode}
-                className={classes.button}
-              >
-                Confirm
+              <Typography className={classes.description}>We sent 6 digit code to your phone. Please Input the digit code.</Typography>
+              <ReactCodeInput type='text' fields={6} {...props} error={error} onChange={handleDigit} />
+              {error && (
+                <Grid item className={classes.invalidMessage}>
+                  {error}
+                </Grid>
+              )}
+              <Grid item container className={classes.container}>
+                <Grid xs={5} >
+                  <Button
+                    type="submit"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    onClick={onDigitBack}
+                    className={classes.button}
+                  >
+                    Back
+                  </Button>
+                </Grid>
+                <Grid xs={2}></Grid>
+                <Grid xs={5}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={onSendDigitCode}
+                    className={classes.button}
+                  >
+                    Confirm
             </Button>
+                </Grid>
+              </Grid>
             </Fragment> :
             <form onSubmit={(e) => e.preventDefault()}>
               <Grid item container direction="row" spacing={0}>
-
+                {/* {error && (
+                  <Grid item className={classes.invalidMessage}>
+                    {error}
+                  </Grid>
+                )} */}
                 <MuiPhoneNumber
                   name="phone"
                   label="Phone Number"
@@ -245,37 +282,49 @@ const PhoneVerification = ({
                   onChange={handlePhoneChange}
                   helperText={`${error ? "Invalid PhoneNumber" : ""}`}
                 />
+                <Grid item container>
+                  <Grid xs={5} >
+                    <Button
+                      type="submit"
+                      variant="outlined"
+                      color="primary"
+                      fullWidth
+                      onClick={onBack}
+                      className={classes.button}
+                    >
+                      Back
+                  </Button>
+                  </Grid>
+                  <Grid xs={2}></Grid>
+                  <Grid xs={5}>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={onConfirm}
+                      className={classes.button}
+                    >
+                      Send Code
+                  </Button>
+                  </Grid>
+                </Grid>
 
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={onConfirm}
-                  className={classes.button}
-                >
-                  Send Code
-            </Button>
                 {/* If authorization was failed */}
               </Grid>
             </form>
         }
       </Grid>
-      {error && (
-        <Grid item className={classes.invalidMessage}>
-          {error}
-        </Grid>
-      )}
     </Container>
   );
 };
 
 const mapStateToProps = ({
   auth: {
-    signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError
+    signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser
   },
 }) => ({
-  signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError
+  signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
