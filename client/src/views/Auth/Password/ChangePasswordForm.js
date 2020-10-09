@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-// import { updatePassword } from '../../../store/actions/auth';
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
@@ -30,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const ChangePassfordForm = ({
   slug,
   history,
+  setOpenPassword,
   // updatePassword,
   errorMessage,
 }) => {
@@ -131,6 +131,15 @@ const ChangePassfordForm = ({
         </DialogContent>
 
         <DialogActions>
+        <Button
+            fullWidth
+            variant="outlined"
+            color="primary"
+            onClick={e => setOpenPassword(false)}
+            className={classes.button}
+          >
+            CANCEL
+          </Button>
           <Button
             type="submit"
             fullWidth

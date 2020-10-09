@@ -33,7 +33,11 @@ export const actions = createActions({
   DELETE_FOLIO_SUCCESS:undefined,
 
   UPLOAD_DOCUMENT_REQUEST: undefined,
-  UPLOAD_DOCUMENT_SUCCESS: undefined
+  UPLOAD_DOCUMENT_SUCCESS: undefined,
+  
+  UPDATE_BASIC_INFO_REQUEST: undefined,
+  UPDATE_BASIC_INFO_SUCCESS: undefined
+  
 });
 
 const reducer = handleActions(
@@ -68,6 +72,9 @@ const reducer = handleActions(
 
     [actions.uploadDocumentRequest, handlers.uploadDocumentRequest],
     [actions.uploadDocumentSuccess, handlers.uploadDocumentSuccess],
+
+    [actions.updateBasicInfoRequest, handlers.updateBasicInfoRequest],
+    [actions.updateBasicInfoSuccess, handlers.updateBasicInfoSuccess],
     
   ]),
   initialState,

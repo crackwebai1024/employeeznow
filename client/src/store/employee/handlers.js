@@ -104,18 +104,36 @@ export const deleteFolioSuccess = (state, { payload }) => ({
 export const uploadDocumentRequest = (state, { payload }) => {
   let loading = payload.getAll('type')[0] + "Loading"
   return {
-  ...state,
-  [loading]: true
-}}
+    ...state,
+    [loading]: true
+  }
+}
 
 export const uploadDocumentSuccess = (state, { payload }) => {
   let type = payload.type
   let loading = type + "Loading"
   let content = payload.content
   return {
+    ...state,
+    [type]: content,
+    [loading]: false,
+  }
+}
+
+export const updateBasicInfoRequest = (state, { payload }) => ({
   ...state,
-  [type] : content,
-  [loading] : false,
-}}
+  updateLoading: true,
+  updateEmployee: false
+})
+
+export const updateBasicInfoSuccess = (state, { payload }) => ({
+  ...state,
+  employeeData: {
+    ...state.employeeData,
+    basic: payload
+  },
+  updateLoading: false,
+  updateEmployee: true
+})
 
 export default initialState;

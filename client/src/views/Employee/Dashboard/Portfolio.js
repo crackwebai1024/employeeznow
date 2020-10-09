@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.blue,
     borderColor: theme.palette.common.blue,
   },
+  note: {
+    fontSize: 20,
+    color: 'RGB(23,41, 64)',
+    padding: 10,
+    fontWeight: 500
+  },
   portfolio: {
     color: 'RGB(23,41, 64)',
     marginBottom: 20,
@@ -37,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: '100%',
-    height: 260,
+    height: 230,
   },
   gridList: {
     height: 300,
@@ -56,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     color: 'white',
-    '&:hover' : {
+    '&:hover': {
       color: "#333333"
     }
   }
@@ -69,6 +75,7 @@ function Portfolio({ actions, portfolios }) {
   const [open, setOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState();
   const [folioId, setFolioID] = useState()
+  const [currentFolioImage, setCurrentFolioImage] = useState()
 
   const uploadPhoto = (photoType, sendPhoto, fileNames, title) => {
     const formData = new FormData();
@@ -96,8 +103,9 @@ function Portfolio({ actions, portfolios }) {
     setOpen(true);
   };
 
-  const handleUpdateOpen = (id) => {
+  const handleUpdateOpen = (id, image) => {
     setUpdateOpen(true)
+    setCurrentFolioImage(image)
     setFolioID(id)
   }
 
@@ -110,10 +118,10 @@ function Portfolio({ actions, portfolios }) {
 
   const handleDeletePortfolio = (index) => {
     let data = {
-      type : "portfolio",
-      folioID : index,
-      role : "delete",
-      id : user._id
+      type: "portfolio",
+      folioID: index,
+      role: "delete",
+      id: user._id
     }
     actions.deletePortfolio(data)
   }
@@ -124,6 +132,7 @@ function Portfolio({ actions, portfolios }) {
         <Fragment>
           <PhotoDropZone
             fileNames={fileNames}
+
             setFileNames={setFileNames}
             connectFunc={uploadPhoto}
             open={open}
@@ -132,10 +141,12 @@ function Portfolio({ actions, portfolios }) {
           />
           <PhotoDropZone
             fileNames={fileNames}
+            image={currentFolioImage}
             setFileNames={setFileNames}
             connectFunc={updatePhoto}
             open={updateOpen}
             setOpen={setUpdateOpen}
+            headerTitle="Upload Portfolio"
             photoType="portfolio"
           />
         </Fragment>
@@ -167,12 +178,14 @@ function Portfolio({ actions, portfolios }) {
                           {p.image && <Fragment>
                             <img src={p.image && "data:image/jpeg;base64, " + p.image} className={classes.image}>
                             </img>
-                            {p.note}
+                            <Typography className={classes.note}>
+                              {p.note}
+                            </Typography>
                             <GridListTileBar
                               title=""
                               titlePosition="top"
                               actionIcon={<Fragment>
-                                <IconButton onClick={e => handleUpdateOpen(p.index)} aria-label={`star Morning`} >
+                                <IconButton onClick={e => handleUpdateOpen(p.index, p.image)} aria-label={`star Morning`} >
                                   <CreateIcon className={classes.icon} />
                                 </IconButton>
                                 <IconButton onClick={e => handleDeletePortfolio(p.index)} aria-label={`star Morning`} >

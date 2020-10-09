@@ -186,7 +186,6 @@ const SkillsForm = ({
         wineKnowledge,
         cocktailKnowledge,
         milesToWork,
-        openJob,
       } = skill
       setPrimaryJob(primaryJob)
       setSecondaryJob(secondaryJob)
@@ -202,7 +201,8 @@ const SkillsForm = ({
       setWineKnowledge(wineKnowledge)
       setCocktailKnowledge(cocktailKnowledge)
       setMilesToWork(milesToWork)
-      setOpenJob(openJob)
+      if(secondaryJob.title) 
+        setOpenJob(true)
     }
   }, [skill])
 

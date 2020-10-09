@@ -91,7 +91,9 @@ const ProfilePhoto = ({ profile, actions, photo }) => {
           fileNames={fileNames}
           setFileNames={setFileNames}
           connectFunc={uploadPhoto}
+          image = {photo}
           open={open}
+          headerTitle = "Upload Profile Photo"
           setOpen={setOpen}
           photoType="photo"
         />

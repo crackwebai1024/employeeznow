@@ -60,3 +60,7 @@ export async function deleteFolio(data) {
 export async function uploadDocument(data) {
   return await Axios.post('/crud/employee/document', data)
 }
+
+export async function updateBasicInfo(data) {
+  return await Axios.post('/crud/employee/basic', data)
+}

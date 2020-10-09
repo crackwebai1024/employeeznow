@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/browser';
 import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUser, setRole } from '@helpers/auth-helpers';
 import { actions, actions as types } from './index';
 import * as  AuthAPI from '@services/AuthAPI';
+import * as  EmployeeAPI from '@services/EmployeeAPI';
 
 function* onAuthenticate({ payload }) {
 

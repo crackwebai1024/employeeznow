@@ -121,7 +121,7 @@ function Dashboard(props) {
   const { actions, employeeData, resumeLoading, licenseLoading, deplomaLoading, refletterLoading, referenceLetterLoading } = props
   const user = JSON.parse(getUser())
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(true);
   const [document, setDocument] = useState([])
 
   const handleExpandClick = () => {
@@ -238,20 +238,6 @@ function Dashboard(props) {
               />
               {skill &&
                 <Fragment>
-                  <CardContent>
-                    <Grid container direction="row">
-                      <Grid item xs={3}>
-                        Primary Job :
-                      {skill.primaryJob.title}
-                        {skill.primaryJob.years} Years
-                    </Grid>
-                      <Grid item xs={6}>
-                        <Typography>
-
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
                   <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent className={classes.moreSkills}>
                       <Typography>
@@ -302,7 +288,7 @@ function Dashboard(props) {
                     <Typography className={classes.jobtitle}>
                       {skill && skill.primaryJob.title}
                     </Typography>
-                    {experience &&
+                    {experience && experience.primaryJob &&
                       <Fragment>
                         <Typography className={classes.company}>
                           {experience.primaryJob.company}
@@ -319,7 +305,7 @@ function Dashboard(props) {
                     <Typography className={classes.jobtitle}>
                       {employeeData.skill && employeeData.skill.secondaryJob.title}
                     </Typography>
-                    {experience &&
+                    {experience && 
                       <Fragment>
                         <Typography className={classes.company}>
                           {experience.secondaryJob.company}
@@ -335,28 +321,6 @@ function Dashboard(props) {
 
                 {/* {employeeData.experience && employeeData.experience.employee} */}
 
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid className={classes.section}>
-            <Card className={classes.section}>
-              <CardHeader
-                action={
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    className={classes.button}
-                  >
-                    Upload
-              </Button>
-                }
-                title="Work Video"
-                subheader=""
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                </Typography>
               </CardContent>
             </Card>
           </Grid>

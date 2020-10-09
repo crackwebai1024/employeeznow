@@ -233,6 +233,10 @@ const ExperienceForm = ({
     if(error.primaryJob || error.secondaryJob) {
       return
     }
+    
+    if(!formData.secondaryJob.company) {
+      return  
+    }
     let data = {
       ...formData,
       id: user._id
