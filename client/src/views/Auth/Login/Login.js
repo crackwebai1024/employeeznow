@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -15,12 +15,16 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { actions as authActions } from '@store/auth';
+import PasswordInput from '@components/PasswordInput'
 import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     background: theme.palette.common.blue,
+  },
+  eye: {
+    cursor: 'pointer',
   },
   form: {},
   heading1: {
@@ -52,7 +56,6 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
   const { register, handleSubmit, errors } = useForm({});
   const [error, setError] = useState('')
   const classes = useStyles();
-
   const onSubmit = (formData) => {
     actions.loginRequest(formData)
   };
@@ -62,12 +65,11 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
   }
 
   useEffect(() => {
-    debugger
-    if(loginStatus == "FAILURE"){
+    if (loginStatus == "FAILURE") {
       setError("Email or Password is not correct")
     }
   }, [loginStatus])
-
+  
   //Redirect to each account page after logged in
   if (isAuthenticated && localStorage.getItem('role') === 'employer') {
     return <Redirect to={`/employers/${slug}`} />;
@@ -140,26 +142,19 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
               pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
           />
-          <TextField
+          <PasswordInput
             error={errors.password ? true : false}
+            label="password"
             helperText={
               errors.password ? 'Passwords must be minimum 8 characters' : ''
             }
-            variant="outlined"
-            margin="normal"
-            onChange={handleInputChange}
-            required
-            fullWidth
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="password"
             inputRef={register({
               required: true,
               minLength: 8,
             })}
-          />
+            />
+
           <Button
             type="submit"
             fullWidth
@@ -170,7 +165,6 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
           >
             Log In
           </Button>
-
           {/* errorMassge when authentication is failed */}
           {error && (
             <Grid item className={classes.invalidMessage}>

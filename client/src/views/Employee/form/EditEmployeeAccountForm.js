@@ -446,7 +446,7 @@ const EditEmployeeAccountForm = ({
               disabled={updateLoading ? true : false}
               variant="outlined"
               color="primary"
-              onClick={handleSubmit(onSubmit)}
+              onClick={e => setOpenAccount(false)}
               className={classes.button}
             >
               CANCEL

@@ -150,7 +150,7 @@ const Profession = ({ profession }) => {
           </Grid>
         )}
       </Grid>
-
+      <hr style={{ width: "100%" }} />
       {/* wineKnowledge */}
       <Grid item container xs={12}>
         <Grid container xs={12} md={6}>
@@ -167,6 +167,8 @@ const Profession = ({ profession }) => {
             </Grid>
           )}
         </Grid>
+        <hr style={{ width: "100%" }} />
+
         <Grid xs={12} md={6}>
           {cocktailKnowledge && (
             <Grid container className={classes.wrapper} justify="flex-start">
@@ -184,6 +186,7 @@ const Profession = ({ profession }) => {
           )}
         </Grid>
       </Grid>
+
       <hr style={{ width: "100%" }} />
       {/* systems */}
       <Grid item xs={12}>

@@ -197,6 +197,7 @@ const PhotoDropZone = ({
             <Button className={classes.button}
               variant="outlined"
               color="primary"
+              onClick={e => handleClose()}
             >
               Cancel
             </Button>
