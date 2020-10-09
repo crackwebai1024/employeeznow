@@ -101,6 +101,8 @@ const BackgourndPhoto = ({ background, actions }) => {
           setFileNames={setbgFileNames}
           connectFunc={uploadPhoto}
           open={open}
+          image={background}
+          headerTitle = "Upload BackGround Image"
           setOpen={setOpen}
           photoType="background"
         />

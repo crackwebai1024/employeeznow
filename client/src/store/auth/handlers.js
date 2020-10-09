@@ -10,10 +10,11 @@ const initialState = {
   loginError: null,
   isLoginLoading: false,
   registered: false,
-  
+  loginStatus: null,
   registerError: '',
   isRegisterLoading: false,
   signupUser: {},
+  longinStatus: null,
   phoneVerifyNeed: false,
   isSentPhoneNumber: false
 };
@@ -98,7 +99,8 @@ export const logoutFailure = (state, { payload }) => ({ ...state, error: "Error"
 export const resetLoginError = (state) => ({ ...state, loginError: initialState.loginError, isLoading: false });
 
 export const loginRequest = (state, { payload }) => ({
-  ...state
+  ...state,
+  loginStatus : "PENDING"
 })
 export const loginSuccess = (state, { payload }) => ({
   ...state,
@@ -107,7 +109,9 @@ export const loginSuccess = (state, { payload }) => ({
 })
 export const loginFailure = (state, { payload }) => ({
   ...state,
-  isAuthenticated: false
+  isAuthenticated: false,
+  isAuthenticatedLoading: false,
+  loginStatus : "FAILURE"
 })
 
 export default initialState;

@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
     overflow: 'hidden'
   },
+  button: {
+    marginLeft: "1rem"
+  },
   avatar: {
     width: 300,
     marginLeft: '20px'
@@ -64,7 +67,9 @@ const PhotoDropZone = ({
   fileNames,
   setFileNames,
   connectFunc,
+  image,
   open,
+  headerTitle,
   setOpen,
   photoType, //Photo type (profile/background/photo)
   // setAlert,
@@ -74,7 +79,7 @@ const PhotoDropZone = ({
 
   // title for Photo
   const [title, setTitle] = useState('');
-
+  const [titleError, setTitleError] = useState('')
   const handleClose = () => {
     setOpen(false);
   };
@@ -102,16 +107,19 @@ const PhotoDropZone = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // if (photoType === 'photo' && !title) {
-    //   return window.alter('error', 'Please create a title');
-    // }
+    if (photoType === 'portfolio' && !title) {
+      return setTitleError("Please Input the Description")
+    }
     connectFunc(photoType, sendPhoto, fileNames, title);
+    handleClose()
   };
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="dialog-title">
       <DialogTitle id="dialog-title">
-        {!fileNames && 'Upload Photo'}
+        <Typography>
+          {headerTitle}
+        </Typography>
         {fileNames &&
           photoType === 'portfolio' &&
           'Almost there! Create image title and CONFIRM'}
@@ -122,20 +130,21 @@ const PhotoDropZone = ({
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           <img
-            src={fileNames && fileNames.file}
+            src={fileNames ? fileNames.file : "data:image/jpeg;base64, " + image}
             // onClick={handleClickOpen}
             alt="profile"
             className={classes.avatar}
           />
         </Grid>
       </DialogContent>
-      {fileNames && photoType === 'portfolio' && (
+      {photoType === 'portfolio' && (
         <div className={classes.inputContainer}>
           <TextField
-            error={title === '' ? true : false}
+            error={titleError === '' ? false : true}
             helperText={'Please add title'}
-            label="Title"
+            label="Description"
             required
+            fullWidth
             color="primary"
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -185,18 +194,24 @@ const PhotoDropZone = ({
       {fileNames && (
         <DialogActions>
           <form onSubmit={(e) => onSubmit(e)}>
-            <Button
+            <Button className={classes.button}
+              variant="outlined"
+              color="primary"
+            >
+              Cancel
+            </Button>
+            <Button className={classes.button}
               type="submit"
               variant="contained"
               color="primary"
-              onClick={handleClose}
             >
               Confirm
             </Button>
           </form>
         </DialogActions>
-      )}
-    </Dialog>
+      )
+      }
+    </Dialog >
   );
 };
 

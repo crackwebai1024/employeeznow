@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -16,7 +16,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { actions as authActions } from '@store/auth';
 import { bindActionCreators } from 'redux';
-// import { login } from '../../../store/actions/auth';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -49,14 +48,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ actions, errorMessage, isAuthenticated, slug }) => {
+const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) => {
   const { register, handleSubmit, errors } = useForm({});
-
+  const [error, setError] = useState('')
   const classes = useStyles();
 
   const onSubmit = (formData) => {
     actions.loginRequest(formData)
   };
+
+  const handleInputChange = () => {
+    setError('')
+  }
+
+  useEffect(() => {
+    debugger
+    if(loginStatus == "FAILURE"){
+      setError("Email or Password is not correct")
+    }
+  }, [loginStatus])
 
   //Redirect to each account page after logged in
   if (isAuthenticated && localStorage.getItem('role') === 'employer') {
@@ -116,6 +126,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug }) => {
             helperText={errors.email ? 'Invalid Email' : ''}
             variant="outlined"
             margin="normal"
+            onChange={handleInputChange}
             required
             fullWidth
             name="email"
@@ -136,6 +147,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug }) => {
             }
             variant="outlined"
             margin="normal"
+            onChange={handleInputChange}
             required
             fullWidth
             name="password"
@@ -160,9 +172,9 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug }) => {
           </Button>
 
           {/* errorMassge when authentication is failed */}
-          {errorMessage && (
+          {error && (
             <Grid item className={classes.invalidMessage}>
-              {errorMessage}
+              {error}
             </Grid>
           )}
         </form>
@@ -192,10 +204,10 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug }) => {
 
 const mapStateToProps = ({
   auth: {
-    signupUser, isSentPhoneNumber, isAuthenticated, user
+    signupUser, isSentPhoneNumber, isAuthenticated, user, loginStatus
   },
 }) => ({
-  signupUser, isSentPhoneNumber, isAuthenticated, user
+  signupUser, isSentPhoneNumber, isAuthenticated, user, loginStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({

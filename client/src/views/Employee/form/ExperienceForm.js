@@ -234,7 +234,7 @@ const ExperienceForm = ({
       return
     }
     
-    if(formData.secondaryJob.company) {
+    if(!formData.secondaryJob.company) {
       return  
     }
     let data = {
