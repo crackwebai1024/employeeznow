@@ -13,6 +13,7 @@ const create = async (Model, req, res, next) => {
       await next();
     }
   } catch (err) {
+    console.log(err);
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
     });

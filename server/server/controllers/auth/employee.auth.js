@@ -69,10 +69,14 @@ const isPhoneVerified = async (req, res, next) => {
 };
 
 const isValidEmail = async (req, res) => {
+  console.log("I am here");
+  console.log(req.body.email);
+  console.log(req.body);
   try {
     let employee = await Employee.findOne({
       email: req.body.email,
     });
+    console.log(employee);
     if (!employee)
       return res.status("200").json({
         success: "valid email",
