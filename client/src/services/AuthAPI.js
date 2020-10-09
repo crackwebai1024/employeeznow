@@ -1,7 +1,7 @@
 import Axios from '@lib/axios';
 
 export async function employeeEmailVerify(data) {
-  return await Axios.post('/auth/employee/isvalidemail', JSON.stringify(data));
+  return await Axios.post('/auth/employee/isvalidemail', data);
 }
 
 export async function phoneVerifyRequest(data) {

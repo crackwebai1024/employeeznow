@@ -41,8 +41,6 @@ import {
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    marginTop: '1.5rem',
-    marginBottom: '1rem',
     fontSize: '2rem',
     color: theme.palette.primary.main,
   },
@@ -88,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
   helperText: {
     marginTop: '1rem',
+    fontSize: 16
   },
   openContainer: {
     marginTop: '2rem',
@@ -99,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     backgroundColor: theme.palette.common.blue,
     cursor: 'pointer',
-    '&:hover' : {
+    '&:hover': {
       backgroundColor: 'RGB(88, 142, 222)'
     }
   },
@@ -158,7 +157,7 @@ const SkillsForm = ({
     setOpenJob(!openJob);
   };
 
-  function _loadData () {
+  function _loadData() {
     let data = {
       id: user._id
     }
@@ -201,7 +200,7 @@ const SkillsForm = ({
       setWineKnowledge(wineKnowledge)
       setCocktailKnowledge(cocktailKnowledge)
       setMilesToWork(milesToWork)
-      if(secondaryJob.title) 
+      if (secondaryJob.title)
         setOpenJob(true)
     }
   }, [skill])
@@ -278,7 +277,6 @@ const SkillsForm = ({
       }
       case 'systems': {
         const newArray = [...systems];
-
         // uncheck - if the same shift already exists in state, the shift is removed from state
         if (newArray.length !== 0 && newArray.includes(value)) {
           const idx = newArray.indexOf(value);
@@ -315,10 +313,13 @@ const SkillsForm = ({
         return setStyle(noDuplicateArray);
       }
       case 'cuisine': {
+        console.log(cuisine.length)
         if (value < 0) {
           return setCuisineYearsError('Invalid input. Years must be above 0');
         }
-
+        if (value == "" ? cuisine.length > 5 : cuisine.length > 4) {
+          return setCuisineYearsError("You cannot select more than 5 items.")
+        }
         setCuisineYearsError('');
 
         const newArray = [...cuisine];
@@ -348,7 +349,7 @@ const SkillsForm = ({
       case 'cocktailKnowledge': {
         return setCocktailKnowledge(id);
       }
-      case 'milesToWork' : {
+      case 'milesToWork': {
         return setMilesToWork(value)
       }
       default:
@@ -406,7 +407,7 @@ const SkillsForm = ({
       <Grid container direction="column" alignItems="center">
         <Grid item>
           <Typography variant="h1" className={classes.heading1}>
-            {/* UPDATE SKILLS */}
+            UPDATE SKILLS
           </Typography>
         </Grid>
 
@@ -620,7 +621,7 @@ const SkillsForm = ({
                   key={`${sh}${i}`}
                   name="shift"
                   value={sh}
-                  checked = {shift.filter(shift => shift === sh)[0] ? true : false}
+                  checked={shift.filter(shift => shift === sh)[0] ? true : false}
                   label={sh}
                   onChange={(e) => handleChange(e)}
                   className={classes.item}
@@ -696,6 +697,12 @@ const SkillsForm = ({
             </Typography>
 
             <FormControl component="fieldset">
+              <FormHelperText
+                error={cuisineYearsError.length !== 0}
+                className={classes.helperText}
+              >
+                {cuisineYearsError}
+              </FormHelperText>
               <Grid item container direction="row">
                 {cuisines.map((cu, i) => (
                   <Grid item key={`${cu}${i}`} xs={12} sm={6}>
@@ -721,12 +728,6 @@ const SkillsForm = ({
                     />
                   </Grid>
                 ))}
-                <FormHelperText
-                  error={cuisineYearsError.length !== 0}
-                  className={classes.helperText}
-                >
-                  {cuisineYearsError}
-                </FormHelperText>
               </Grid>
             </FormControl>
           </Grid>
@@ -791,7 +792,7 @@ const SkillsForm = ({
           <Grid item className={classes.titleContainer}>
             <Typography className={classes.title}>
               Please select all POS that you have at least one year of
-              experience working with:
+              experience working with (max 5 items):
             </Typography>
 
             <Grid item container direction="row">
@@ -802,7 +803,7 @@ const SkillsForm = ({
                       <Checkbox
                         id={pos}
                         value={pos}
-                        checked = {systems.filter(sys => sys === pos)[0] ? true : false}
+                        checked={systems.filter(sys => sys === pos)[0] ? true : false}
                         onChange={(e) => handleChange(e)}
                       />
                     }
@@ -819,7 +820,7 @@ const SkillsForm = ({
           <Grid item className={classes.titleContainer}>
             <Typography className={classes.title}>
               Select all reservation systems that you have at least one year of
-              experience working with:
+              experience working with (max 5 items):
             </Typography>
 
             <Grid item container direction="row">
@@ -829,7 +830,7 @@ const SkillsForm = ({
                     control={
                       <Checkbox
                         id={res}
-                        checked = {systems.filter(sys => sys === res)[0] ? true : false}
+                        checked={systems.filter(sys => sys === res)[0] ? true : false}
                         value={res}
                         onChange={(e) => handleChange(e)}
                       />

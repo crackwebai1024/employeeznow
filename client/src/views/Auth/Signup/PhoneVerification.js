@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -67,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
     },
   },
+  description: {
+    marginBottom: 15,
+    textAlign: 'center'
+  },
   emailInfo: {
     ...theme.typography.caption,
     marginTop: '-1.3rem',
@@ -81,6 +85,7 @@ const PhoneVerification = ({
   errorMessage,
   isAuthenticated,
   user,
+  digicodeConfirmError,
   isSentPhoneNumber,
   actions,
   signupUser,
@@ -92,7 +97,6 @@ const PhoneVerification = ({
   const [phone, setPhone] = useState('')
   const [countryCode, setCountryCode] = useState({})
   const [digitCode, setDigitCode] = useState("");
-  const [digitCodeError, setDigitCodeError] = useState("");
   const [phoneData, setPhoneData] = useState({})
   // material-ui
   const classes = useStyles();
@@ -101,16 +105,22 @@ const PhoneVerification = ({
     setDigitCode(e)
   }
 
+  useEffect(() => {
+    if (digicodeConfirmError)
+      setError("Please Input correct 6 Digit code!")
+  }, [digicodeConfirmError])
+
   const onSendDigitCode = () => {
-    if(digitCode.length == 6){
+    debugger
+    if (digitCode.length == 6) {
       let confirmedSixCode = {
-        sixDigitCode : digitCode
+        sixDigitCode: digitCode
       }
       let cellNumber = {
-        cell : '' + phoneData.countryCode + phoneData.phoneNumber
+        cell: '' + phoneData.countryCode + phoneData.phoneNumber
       }
       let role = {
-        role : "employee"
+        role: "employee"
       }
       let confirmData = {
         ...confirmedSixCode,
@@ -121,8 +131,8 @@ const PhoneVerification = ({
       }
       actions.signupConfirmRequest(confirmData)
     } else {
-      setDigitCodeError("Please Input 6 Digit")
-    } 
+      setError("Please Input 6 Digit")
+    }
   }
 
   const onConfirm = (e, data) => {
@@ -189,8 +199,8 @@ const PhoneVerification = ({
   if (isAuthenticated) {
     return <Redirect to={`/employees/${user.slug}`} />;
   }
-  if(_.isEmpty(signupUser)) {
-    return <Redirect to ='/signup' />
+  if (_.isEmpty(signupUser)) {
+    return <Redirect to='/signup' />
   }
 
   return (
@@ -203,11 +213,12 @@ const PhoneVerification = ({
         </Grid>
         <Grid item>
           <Typography className={classes.heading1}>{isSentPhoneNumber ? "6 Digit Code" : "Phone Verification"}</Typography>
+          <Typography className={classes.description}>Please take a moment to verify your phone number.</Typography>
         </Grid>
         {
           isSentPhoneNumber ?
             <Fragment>
-              <ReactCodeInput type='text' fields={6} {...props} onChange = {handleDigit}/>
+              <ReactCodeInput type='text' fields={6} {...props} onChange={handleDigit} />
               <Button
                 type="submit"
                 fullWidth
@@ -246,25 +257,25 @@ const PhoneVerification = ({
                   Send Code
             </Button>
                 {/* If authorization was failed */}
-                {errorMessage && (
-                  <Grid item className={classes.invalidMessage}>
-                    {errorMessage}
-                  </Grid>
-                )}
               </Grid>
             </form>
         }
       </Grid>
+      {error && (
+        <Grid item className={classes.invalidMessage}>
+          {error}
+        </Grid>
+      )}
     </Container>
   );
 };
 
 const mapStateToProps = ({
   auth: {
-    signupUser, isSentPhoneNumber, isAuthenticated, user
+    signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError
   },
 }) => ({
-  signupUser, isSentPhoneNumber, isAuthenticated, user
+  signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError
 });
 
 const mapDispatchToProps = (dispatch) => ({

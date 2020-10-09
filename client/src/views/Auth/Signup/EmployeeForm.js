@@ -9,6 +9,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
+import PasswordInput from '@components/PasswordInput'
 import Button from '@material-ui/core/Button';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -16,6 +17,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { countryOptions } from './AddressState'
+
+const invalidError = "This field is invalid!"
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -109,7 +112,6 @@ const EmployeeForm = ({
       actions.signupRequest(formData)
     }
   };
-
   // Redirect to employer account page after sign up
   if (isAuthenticated) {
     return <Redirect to={`/employees/${slug}`} />;
@@ -135,7 +137,7 @@ const EmployeeForm = ({
             <Grid item sm={12}>
               <TextField
                 error={errors.firstName ? true : false}
-                helperText={errors.firstName ? 'This filed is required' : ''}
+                helperText={errors.firstName ? invalidError : ''}
                 required
                 variant="outlined"
                 margin="normal"
@@ -151,7 +153,7 @@ const EmployeeForm = ({
             <Grid item sm={12}>
               <TextField
                 error={errors.middleName ? true : false}
-                helperText={errors.middleName ? 'This filed is required' : ''}
+                helperText={errors.middleName ? invalidError : ''}
                 variant="outlined"
                 margin="normal"
                 fullWidth
@@ -166,7 +168,7 @@ const EmployeeForm = ({
             <Grid item sm={12}>
               <TextField
                 error={errors.lastName ? true : false}
-                helperText={errors.lastName ? 'This filed is required' : ''}
+                helperText={errors.lastName ? invalidError : ''}
                 required
                 variant="outlined"
                 margin="normal"
@@ -184,7 +186,7 @@ const EmployeeForm = ({
                 error={errors.address && errors.address.street1 ? true : false}
                 helpertext={
                   errors.address && errors.address.street1
-                    ? 'This filed is required'
+                    ? invalidError
                     : ''
                 }
                 variant="outlined"
@@ -217,7 +219,7 @@ const EmployeeForm = ({
                 error={errors.address && errors.address.city ? true : false}
                 helpertext={
                   errors.address && errors.address.city
-                    ? 'This filed is required'
+                    ? invalidError
                     : ''
                 }
                 variant="outlined"
@@ -262,7 +264,7 @@ const EmployeeForm = ({
                 error={errors.address && errors.address.zipcode ? true : false}
                 helperText={
                   errors.address && errors.address.zipcode
-                    ? 'This filed is required'
+                    ? invalidError
                     : ''
                 }
                 required
@@ -286,7 +288,7 @@ const EmployeeForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.email ? true : false}
-                helperText={errors.email ? 'This filed is required' : ''}
+                helperText={errors.email ? invalidError : ''}
                 required
                 variant="outlined"
                 margin="normal"
@@ -304,18 +306,13 @@ const EmployeeForm = ({
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
+              <PasswordInput
                 error={errors.password ? true : false}
+                name="password"
+                label="Password"
                 helperText={
                   errors.password ? 'Password must be munimum 8 characters' : ''
                 }
-                required
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
                 id="password"
                 autoComplete="password"
                 inputRef={register({
@@ -326,19 +323,14 @@ const EmployeeForm = ({
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
+              <PasswordInput
                 error={errors.passwordConfirm ? true : false}
+                label="Password Confirm"
                 helperText={
                   errors.passwordConfirm ? 'Passwords do not match' : ''
                 }
-                required
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                name="passwordConfirm"
-                label="Password Confirm"
-                type="password"
                 id="passwordConfirm"
+                name="passwordConfirm"
                 autoComplete="passwordConfirm"
                 inputRef={register({
                   validate: (value) =>

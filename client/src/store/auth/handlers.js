@@ -14,6 +14,7 @@ const initialState = {
   registerError: '',
   isRegisterLoading: false,
   signupUser: {},
+  digicodeConfirmError: false,
   longinStatus: null,
   phoneVerifyNeed: false,
   isSentPhoneNumber: false
@@ -27,6 +28,11 @@ export const signupRequest = (state, { payload }) => ({
 export const emailSuccess = (state, { payload }) => ({
   ...state,
   phoneVerifyNeed: true
+})
+
+export const emailFailure = (state, { payload }) => ({
+  ...state,
+  phoneVerifyNeed: false
 })
 
 export const phoneVerifyRequestRequest = (state, { payload }) => ({
@@ -46,6 +52,7 @@ export const phoneVerifyRequestFailure = (state, { payload }) => ({
 
 export const signupConfirmRequest = (state, { payload }) => ({
   ...state,
+  digicodeConfirmError: false
 })
 
 export const signupConfirmSuccess = (state, { payload }) => ({
@@ -56,6 +63,7 @@ export const signupConfirmSuccess = (state, { payload }) => ({
 
 export const signupConfirmFailure = (state, { payload }) => ({
   ...state,
+  digicodeConfirmError : true 
 })
 
 export const authenticateRequest = (state) => ({
@@ -89,10 +97,6 @@ export const logoutRequest = (state) => ({ ...state, error: initialState.error, 
 export const logoutSuccess = () => ({
   ...initialState,
 });
-
-export const emailFailure = (state, { payload }) => ({
-  ...state,
-})
 
 export const logoutFailure = (state, { payload }) => ({ ...state, error: "Error", isLoading: false });
 
