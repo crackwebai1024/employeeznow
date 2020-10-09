@@ -19,6 +19,11 @@ router
   .route("/basic")
   .get(requireSignin, hasAuthorization, BsCtrl.find_ByID)
   .post(requireSignin, hasAuthorization, BsCtrl.updateByID);
+
+router
+  .route("/basic/setnewpwd")
+  .post(requireSignin, hasAuthorization, BsCtrl.updatePWD);
+
 router
   .route("/skill")
   .get(requireSignin, hasAuthorization, SkillCtrl.find_ByID)

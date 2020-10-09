@@ -45,7 +45,8 @@ const updateByID = async (Model, role, id, req, res) => {
     }
     console.log(user);
     await user.save();
-
+    user.hashed_password = undefined;
+    user.salt = undefined;
     if (req.file === undefined) {
       return res.status(200).json(user);
     } else {

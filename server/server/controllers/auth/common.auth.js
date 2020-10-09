@@ -151,7 +151,7 @@ const resetPassword = async (req, res) => {
   }
 
   if (role === "employer") {
-    user = Employee.findOne({
+    user = Employer.findOne({
       passwordResetToken: hashedToken,
       passwordResetExpires: { $gt: Date.now() },
     });
