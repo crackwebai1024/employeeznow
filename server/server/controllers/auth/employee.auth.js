@@ -68,28 +68,4 @@ const isPhoneVerified = async (req, res, next) => {
   await next();
 };
 
-const isValidEmail = async (req, res) => {
-  console.log("I am here");
-  console.log(req.body.email);
-  console.log(req.body);
-  try {
-    let employee = await Employee.findOne({
-      email: req.body.email,
-    });
-    console.log(employee);
-    if (!employee)
-      return res.status("200").json({
-        success: "valid email",
-      });
-    else
-      return res.status("403").json({
-        failed: "invalid email",
-      });
-  } catch (err) {
-    return res.status("500").json({
-      error: "server error",
-    });
-  }
-};
-
-export default { isValidPhone, isPhoneVerified, isValidEmail };
+export default { isValidPhone, isPhoneVerified };

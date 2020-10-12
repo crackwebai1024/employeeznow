@@ -3,7 +3,8 @@ import authEmployeeCtrl from "../../controllers/auth/employee.auth";
 import authCommonCtrl from "../../controllers/auth/common.auth";
 
 const router = express.Router();
-const { isPhoneVerified, isValidPhone, isValidEmail } = authEmployeeCtrl;
+const { isPhoneVerified, isValidPhone } = authEmployeeCtrl;
+const { isValidEmail } = authCommonCtrl;
 const { create, signIn } = authCommonCtrl;
 router.route("/isvalidemail").post(isValidEmail);
 router.route("/isvalidphone").get(isValidPhone);

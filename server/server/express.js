@@ -8,6 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import multer from "multer";
 import authEmployeeRoutes from "./routes/auth/employee.routes";
+import authEmployerRoutes from "./routes/auth/employer.routes";
 import authCommonRoutes from "./routes/auth/common.routes";
 import crudEmployeeRoutes from "./routes/crud/employee.routes";
 
@@ -36,6 +37,7 @@ app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
 // mount routes
 // auth routes before signin
 app.use("/api/auth/employee", authEmployeeRoutes);
+app.use("/api/auth/employer", authEmployerRoutes);
 app.use("/api/auth/common", authCommonRoutes);
 // data organization routes after signin
 app.use("/api/crud/employee", crudEmployeeRoutes);
