@@ -13,7 +13,11 @@ const createToken = (id) => {
 };
 
 const create = async (req, res, next) => {
-  await CRUD.create(Employee, req, res, next);
+  if (req.body.role === "employee") {
+    await CRUD.create(Employee, req, res, next);
+  } else {
+    await CRUD.create(Employer, req, res, next);
+  }
 };
 
 // check the user signin
@@ -195,6 +199,44 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const isValidEmail = async (req, res, next) => {
+  console.log("I am here");
+  console.log(req.body.email);
+  console.log(req.body);
+
+  let Model;
+  let role = req.body.role;
+
+  if (role === "employee") {
+    Model = Employee;
+  } else {
+    Model = Employer;
+  }
+
+  try {
+    let user = await Model.findOne({
+      email: req.body.email,
+    });
+    console.log(user);
+    if (!user && next === undefined) {
+      return res.status("200").json({
+        success: "valid email",
+      });
+    } else if (!user) {
+      console.log("I am here");
+      await next();
+    } else {
+      return res.status("403").json({
+        failed: "invalid email",
+      });
+    }
+  } catch (err) {
+    return res.status("500").json({
+      error: "server error",
+    });
+  }
+};
+
 export default {
   forgotPassword,
   resetPassword,
@@ -202,4 +244,5 @@ export default {
   create,
   requireSignin,
   hasAuthorization,
+  isValidEmail,
 };

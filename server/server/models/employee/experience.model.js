@@ -3,29 +3,22 @@ import mongoose from "mongoose";
 const ExperienceSchema = new mongoose.Schema({
   primaryJob: {
     company: String,
-    address: String,
     title: String,
     startDate: String,
     endDate: String,
+    description: String,
     current: {
       type: Boolean,
       default: false,
     },
   },
-  secondaryJob: {
-    company: String,
-    address: String,
-    title: String,
-    startDate: String,
-    endDate: String,
-  },
   otherJob: [
     {
       company: String,
-      address: String,
       title: String,
       startDate: String,
       endDate: String,
+      description: String,
     },
   ],
   employee: {

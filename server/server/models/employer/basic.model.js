@@ -5,19 +5,39 @@ import slugify from "slugify";
 
 const EmployeeSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Company name is required"],
+    },
+    generalEmail: {
+      type: String,
+      required: [true, "Email is required"],
+      lowercase: true,
+      validate: [validator.isEmail, "Please use a valid company email"],
+    },
+    website: {
+      type: String,
+      match: [
+        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+        "Please use a valid URL with HTTP or HTTPS",
+      ],
+    },
     firstName: {
       type: String,
       trim: true,
       required: [true, "First name is required"],
     },
-    middleName: {
-      type: String,
-      trim: true,
-    },
     lastName: {
       type: String,
       trim: true,
       required: [true, "Last name is required"],
+    },
+    title: {
+      type: String,
+    },
+    phone: {
+      type: String,
+      required: [true, "Please add a cell phone number"],
     },
     email: {
       type: String,
@@ -33,8 +53,8 @@ const EmployeeSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["employee", "admin"],
-      default: "employee",
+      enum: ["employer", "admin"],
+      default: "employer",
     },
     address: {
       street1: {
@@ -55,24 +75,9 @@ const EmployeeSchema = new mongoose.Schema(
       zipcode: {
         type: String,
         required: [true, "Please add a zipcode"],
+        minlength: [5, "Zipcode must be 5 digits"],
+        maxlength: [5, "Zipcode must be 5 digits"],
       },
-    },
-    locations: {
-      // GeoJson
-      type: {
-        type: String,
-        default: "Point",
-        enum: ["Point"],
-        select: false,
-      },
-      coordinates: {
-        type: [Number],
-        select: false,
-      },
-    },
-    cell: {
-      type: String,
-      required: [true, "Please add a cell phone number"],
     },
     slug: String,
     employeezNowId: {
