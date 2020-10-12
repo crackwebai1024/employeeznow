@@ -2,19 +2,19 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import { actions as authActions } from '@store/auth';
-import { bindActionCreators } from 'redux';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import Typography from '@material-ui/core/Typography';
 import MuiPhoneNumber from "material-ui-phone-number";
 import GoogleLibPhoneNumber from 'google-libphonenumber';
 import ReactCodeInput from 'react-code-input';
+import { actions as authActions } from '@store/auth';
+import { bindActionCreators } from 'redux';
+import { makeStyles } from '@material-ui/core/styles';
 import _ from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
@@ -114,7 +114,6 @@ const PhoneVerification = ({
   }, [digicodeConfirmError])
 
   const onSendDigitCode = () => {
-    debugger
     if (digitCode.length == 6) {
       let confirmedSixCode = {
         sixDigitCode: digitCode

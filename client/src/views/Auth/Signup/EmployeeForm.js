@@ -117,7 +117,11 @@ const EmployeeForm = ({
   const onSubmit = async (formData) => {
     if (!formData.address.state) return setStateError(true)
     if (formData) {
-      actions.signupRequest(formData)
+      let data = {
+        ...formData,
+        role : "employee"
+      }
+      actions.signupRequest(data)
     }
   };
   // Redirect to employer account page after sign up
@@ -404,4 +408,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmployeeForm);
-

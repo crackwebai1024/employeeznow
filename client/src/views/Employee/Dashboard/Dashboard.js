@@ -133,7 +133,7 @@ function Dashboard(props) {
       id: user._id
     }
     actions.getUserDataRequest(data)
-    actions.getUserDocumentRequest(data)
+    // actions.getUserDocumentRequest(data)
   }, [])
 
   const uploadDocument = (e, type) => {
@@ -328,7 +328,7 @@ function Dashboard(props) {
             <Portfolio />
           </Grid>
 
-          <Grid className={classes.section}>
+          {/* <Grid className={classes.section}>
             <Card className={classes.section}>
               <CardHeader
                 title="DOCUMENTS"
@@ -429,7 +429,7 @@ function Dashboard(props) {
                 </Grid>
               </CardContent>
             </Card>
-          </Grid>
+          </Grid> */}
 
         </Container>
       </Fragment> :
