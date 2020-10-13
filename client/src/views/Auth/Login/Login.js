@@ -56,6 +56,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
   const { register, handleSubmit, errors } = useForm({});
   const [error, setError] = useState('')
   const classes = useStyles();
+
   const onSubmit = (formData) => {
     actions.loginRequest(formData)
   };

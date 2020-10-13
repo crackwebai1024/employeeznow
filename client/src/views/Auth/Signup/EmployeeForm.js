@@ -395,10 +395,10 @@ const EmployeeForm = ({
 
 const mapStateToProps = ({
   auth: {
-    phoneVerifyNeed, signupLoading, emailFailure
+    phoneVerifyNeed, signupLoading, emailFailure, isEmailCodeError
   },
 }) => ({
-  phoneVerifyNeed, signupLoading, emailFailure
+  phoneVerifyNeed, signupLoading, emailFailure, isEmailCodeError
 });
 
 const mapDispatchToProps = (dispatch) => ({

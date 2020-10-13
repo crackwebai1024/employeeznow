@@ -15,6 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { actions as authActions } from '@store/auth';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
@@ -77,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
 const EmployerForm = ({
   // signupEmployer,
   errorMessage,
+  actions,
+  signupUser,
   isAuthenticated,
   slug,
 }) => {
@@ -93,19 +96,30 @@ const EmployerForm = ({
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
+    register({ name: "address.state", value: e.target.value })
     if (e.target.value) setStateError(false);
   };
 
   // connected to action
   const onSubmit = (formData) => {
     if (!formData.address.state) return setStateError(true);
-    // if (!stateError) return signupEmployer(formData, 'employer');
+    if (formData) {
+      let data = {
+        ...formData,
+        role: "employer"
+      }
+      actions.employerSignupRequest(data)
+    }
   };
 
   // Redirect to employer account page after sign up
   if (isAuthenticated) {
     return <Redirect to={`/employers/${slug}`} />;
   }
+  
+  if(!_.isEmpty(signupUser)) {
+    return <Redirect to ='/signup/emailverify' />
+  } 
 
   return (
     <Container component="main" maxWidth="sm">
@@ -216,20 +230,6 @@ const EmployerForm = ({
                   id="address.state"
                   key="address.state"
                   onChange={(e) => handleChange(e)}
-                  inputProps={{
-                    name: 'address.state',
-                    id: 'address.state',
-                    inputRef: (ref) => {
-                      if (!ref) return;
-                      register(
-                        // { required: !ref.value }  *does not work,
-                        {
-                          name: 'address.state',
-                          value: ref.value,
-                        }
-                      );
-                    },
-                  }}
                 >
                   <option aria-label="None" value="" />
                   <option value="AL">Alabama</option>
@@ -519,8 +519,8 @@ const EmployerForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
         </form>
 
@@ -536,10 +536,10 @@ const EmployerForm = ({
 
 const mapStateToProps = ({
   auth: {
-    phoneVerifyNeed, signupLoading, emailFailure
+    phoneVerifyNeed, signupUser
   },
 }) => ({
-  phoneVerifyNeed, signupLoading, emailFailure
+  phoneVerifyNeed, signupUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
