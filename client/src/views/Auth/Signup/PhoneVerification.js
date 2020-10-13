@@ -87,6 +87,7 @@ const PhoneVerification = ({
   isSingupUser,
   isAuthenticated,
   user,
+  veteranCardData,
   digicodeConfirmError,
   isSentPhoneNumber,
   actions,
@@ -131,7 +132,7 @@ const PhoneVerification = ({
         ...role,
         ...phoneData
       }
-      actions.signupConfirmRequest(confirmData)
+      actions.signupConfirmRequest({confirmData, veteranCardData})
     } else {
       setError("Please Input 6 Digit")
     }
@@ -320,10 +321,10 @@ const PhoneVerification = ({
 
 const mapStateToProps = ({
   auth: {
-    signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser
+    signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser, veteranCardData
   },
 }) => ({
-  signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser
+  signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser, veteranCardData
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -41,7 +41,16 @@ export const actions = createActions({
   EMPLOYER_EMAIL_VERIFY_FAILURE: undefined,
   EMPLOYER_EMAIL_CODE_SEND : undefined,
   EMAIL_CODE_SEND_FAILURE: undefined,
-  
+
+  FORGOT_PASSWORD_REQUEST: undefined,
+  FORGOT_PASSWORD_SUCCESS: undefined,
+  FORGOT_PASSWORD_FAILURE: undefined,
+
+  RESET_PASSWORD_REQUEST: undefined,
+  RESET_PASSWORD_SUCCESS: undefined,
+  RESET_PASSWORD_FAILURE: undefined,
+
+  SAVE_VETERAN_CARD: undefined
 });
 
 const reducer = handleActions(
@@ -83,6 +92,16 @@ const reducer = handleActions(
     [actions.employerEmailCodeSend, handlers.employerEmailCodeSend],
 
     [actions.emailCodeSendFailure, handlers.emailCodeSendFailure],
+
+    [actions.forgotPasswordRequest, handlers.forgotPasswordRequest],
+    [actions.forgotPasswordSuccess, handlers.forgotPasswordSuccess],
+    [actions.forgotPasswordFailure, handlers.forgotPasswordFailure],
+
+    [actions.resetPasswordRequest, handlers.resetPasswordRequest],
+    [actions.resetPasswordSuccess, handlers.resetPasswordSuccess],
+    [actions.resetPasswordFailure, handlers.resetPasswordFailure],
+    
+    [actions.saveVeteranCard, handlers.saveVeteranCard],
     
   ]),
   initialState,

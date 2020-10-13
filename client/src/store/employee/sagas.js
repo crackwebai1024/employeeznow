@@ -231,6 +231,17 @@ function* onUpdateBasicInfo({ payload }) {
   }
 }
 
+function* onUploadVeteranCard ({ payload }) {
+  try {
+    const res = yield call(EmployeeAPI.uploadDocument, payload)
+    if(res && res.data) {
+      debugger
+    }
+  } catch {
+
+  }
+}
+
 const employeeSagas = [
   takeEvery(types.getUserDataRequest, getUserData),
   takeEvery(types.loadSkillData, onLoadSkill),
@@ -247,7 +258,8 @@ const employeeSagas = [
   takeEvery(types.deletePortfolio, onDeleteFolio),
   takeEvery(types.uploadDocumentRequest, onUploadDocument),
   takeEvery(types.getUserDocumentRequest, onGetUserDocument),
-  takeEvery(types.updateBasicInfoRequest, onUpdateBasicInfo)
+  takeEvery(types.updateBasicInfoRequest, onUpdateBasicInfo),
+  takeEvery(types.uploadVeteranCard, onUploadVeteranCard)
 ];
 
 

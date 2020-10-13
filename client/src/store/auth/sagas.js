@@ -52,12 +52,18 @@ function* onPhoneVerify({ payload }) {
 
 function* onSignupConfirm({ payload }) {
   try {
-    const res = yield call(AuthAPI.signupConfirm, payload)
+    const res = yield call(AuthAPI.signupConfirm, payload.confirmData)
     if (res && res.data) {
       setToken(res.data.token)
       setUser(res.data.employee)
-      setRole(payload.role)
-      window.location.pathname = `employees/${res.data[payload.role].slug}`
+      setRole(payload.confirmData.role)
+      
+      let data = payload.veteranCardData
+      data.append("id", res.data.employee._id)
+      data.append("role", payload.confirmData.role)
+      
+      const response = yield call(AuthAPI.onUploadVeteranCard, data)
+      window.location.pathname = `employees/${res.data[payload.confirmData.role].slug}`
       yield put(types.signupConfirmSuccess(res.data.employee))
     }
   } catch {
@@ -113,6 +119,28 @@ function* onEmailCodeSend({ payload }) {
   }
 }
 
+function* onForgotPassword({ payload }) {
+  try {
+    const res = yield call(AuthAPI.onForgotPassword, payload)
+    if(res && res.data) {
+      yield put(types.forgotPasswordSuccess())
+    }
+  } catch {
+    yield put(types.forgotPasswordFailure())
+  }
+}
+
+function* onResetPassword({ payload }) {
+  try {
+    const res = yield call(AuthAPI.onResetPassword, payload)
+    if(res && res.data) {
+      yield put(types.resetPasswordSuccess())
+    }
+  } catch {
+    yield put(types.resetPasswordFailure())
+  }
+}
+
 const authSagas = [
   takeEvery(types.loginRequest, onLogin),
   takeEvery(types.signupRequest, onEmailVerify),
@@ -122,6 +150,8 @@ const authSagas = [
   takeEvery(types.logoutRequest, onLogout),
   takeEvery(types.employerSignupRequest, onEmployerSignup),
   takeEvery(types.employerEmailCodeSend, onEmailCodeSend),
+  takeEvery(types.forgotPasswordRequest, onForgotPassword),
+  takeEvery(types.resetPasswordRequest, onResetPassword),
 ];
 
 export function* watchUnauthorized() {

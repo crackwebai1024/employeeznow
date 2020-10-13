@@ -21,3 +21,15 @@ export async function onEmployerSignup(data) {
 export async function EmployerSendCode(data) {
   return await Axios.post('/auth/employer/sendcode', data)
 }
+
+export async function onForgotPassword(data) {
+  return await Axios.post('/auth/common/forgotpassword', data)
+}
+
+export async function onResetPassword(data) {
+  return await Axios.post('/auth/common/resetpassword', data)
+}
+
+export async function onUploadVeteranCard(data) {
+  return await Axios.post('/crud/employee/document', data)
+}

@@ -16,6 +16,9 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import PublishIcon from '@material-ui/icons/Publish';
 import { countryOptions } from './AddressState'
 
 const invalidError = "This field is invalid!"
@@ -29,6 +32,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1.3rem',
     backgroundColor: 'transparent',
   },
+  uploadButton: {
+    marginTop: '1rem'
+  },
+  uploadImage: {
+    width: "150px",
+    height: "150px"
+  },
   heading1: {
     ...theme.typography.h1,
     marginBottom: '1.5rem',
@@ -39,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
   },
   linkContainer: {
     marginBottom: '8rem',
+  },
+  input: {
+    display: 'none',
   },
   link: {
     textDecoration: 'none',
@@ -97,9 +110,28 @@ const EmployeeForm = ({
 
   // address.state error customized check
   const [stateError, setStateError] = useState(false);
-  const [emailError, setEmailError] = useState('')
+  const [emailError, setEmailError] = useState('');
+  const [veteran, setVeteran] = useState({ status: false, veteranId: "" });
+  const [veteranError, setVeteranError] = useState("")
+  const [veteranCard, setVeteranCard] = useState(null)
   // material-ui
   const classes = useStyles();
+
+  const onChange = (e) => {
+    console.log(e.target.name)
+    if (e.target.name == 'status')
+      return setVeteran({
+        ...veteran,
+        status: !veteran.status
+      })
+
+    if (e.target.name == 'veteranId') {
+      setVeteran({
+        ...veteran,
+        veteranId: e.target.value
+      })
+    }
+  }
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
@@ -112,14 +144,31 @@ const EmployeeForm = ({
       setEmailError("Someone used this email. If you already registered, then please log in.")
   }, [emailFailure])
 
-
+  const uploadVeteranCard = (e, type) => {
+    const formData = new FormData();
+    formData.append("type", type)
+    formData.append("content", e.target.files[0])
+    formData.append("fname", e.target.files[0].name)
+    setVeteranCard(formData);
+  }
   // connected to action
   const onSubmit = async (formData) => {
+    if (veteran.status && veteran.veteranId == "") {
+      return setVeteranError("This field is required")
+    }
+    if (veteran.status && veteranCard == null) {
+      return setVeteranError("please Upload Veteran Card Image!")
+    }
     if (!formData.address.state) return setStateError(true)
+
+    veteranCard.append("veteranId", veteran.veteranId);
+
+    actions.saveVeteranCard(veteranCard)
+
     if (formData) {
       let data = {
         ...formData,
-        role : "employee"
+        role: "employee"
       }
       actions.signupRequest(data)
     }
@@ -131,7 +180,7 @@ const EmployeeForm = ({
   if (phoneVerifyNeed) {
     return <Redirect to='/signup/phoneverify' />
   }
-
+  console.log(veteranCard && veteranCard.getAll("fname")[0])
   return (
     <Container component="main" maxWidth="sm">
       <Grid container direction="column" justify="center" alignItems="center">
@@ -348,6 +397,69 @@ const EmployeeForm = ({
                     value === password.current || 'The passwords do not match',
                 })}
               />
+            </Grid>
+            <Grid>
+              {/* veteran status */}
+              <Grid item>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="status"
+                      id="veteran"
+                      checked={veteran.status}
+                      value={veteran.status}
+                      onChange={(e) => onChange(e)}
+                    />
+                  }
+                  label="Are you a veteran ?"
+                  className={classes.checkboxText}
+                />
+
+                {veteran.status ? (
+                  <Grid item container direction="column" justify="center" alignItems="center">
+                    <img
+                      className={classes.uploadImage}
+                      src={veteranCard && URL.createObjectURL(veteranCard.getAll("content")[0])}>
+                    </img>
+                    <Grid>
+                      <input
+                        accept="*"
+                        className={classes.input}
+                        id="contained-button-license"
+                        multiple
+                        onChange={e => uploadVeteranCard(e, "veteran")}
+                        type="file"
+                      />
+                    </Grid>
+                    <Grid>
+                      <label htmlFor="contained-button-license">
+                        <Button color="primary" component="span" className={classes.uploadButton}>
+                          <PublishIcon />Upload Image
+                        </Button>
+                      </label>
+                    </Grid>
+                    {/* formData.append("fname", e.target.files[0].name) */}
+                    <TextField
+                      type="text"
+                      name="veteranId"
+                      helperText={
+                        veteranError ? veteranError : ''
+                      }
+                      error={veteranError ? true : false}
+                      id="veteran"
+                      label="Veteran ID"
+                      required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      value={veteran.veteranId}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </Grid>
+                ) : (
+                    ''
+                  )}
+              </Grid>
             </Grid>
             {emailError &&
               <Grid item className={classes.invalidMessage}>

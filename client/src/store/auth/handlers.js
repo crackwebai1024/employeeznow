@@ -19,7 +19,9 @@ const initialState = {
   phoneVerifyNeed: false,
   isSentPhoneNumber: false,
   isSingupUser: false,
-  isEmailCodeError: ""
+  isEmailCodeError: "",
+  changepassword: null,
+  resetPassword: null
 };
 
 export const signupRequest = (state, { payload }) => ({
@@ -158,5 +160,40 @@ export const emailCodeSendFailure = (state) => ({
   isEmailCodeError: "6 Digit Code is Wrong!"
 });
 
+export const forgotPasswordRequest = (state) => ({
+  ...state,
+  loading: true
+});
+
+export const forgotPasswordSuccess = (state) => ({
+  ...state,
+  loading: false,
+  changepassword: "SUCCESS"
+});
+
+export const forgotPasswordFailure = (state) => ({
+  ...state,
+  loading: false,
+  changepassword: "FAILURE"
+});
+
+export const resetPasswordRequest = (state) => ({
+  ...state,
+})
+
+export const resetPasswordSuccess = (state) => ({
+  ...state,
+  resetPassword: "SUCCESS"
+})
+
+export const resetPasswordFailure = (state) => ({
+  ...state,
+  resetPassword: "FAILURE"
+})
+
+export const saveVeteranCard = (state, { payload }) => ({
+  ...state,
+  veteranCardData: payload
+})
 
 export default initialState;

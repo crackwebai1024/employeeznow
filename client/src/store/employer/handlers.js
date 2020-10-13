@@ -16,7 +16,7 @@ export const getEmployerSuccess = (state, { payload }) => {
 
 export const getEmployerFailure = (state) => ({
   ...state,
-  // get employer dat failed.
+  // get employer data failed.
 });
 
 export default initialState;

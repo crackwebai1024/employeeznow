@@ -136,4 +136,8 @@ export const updateBasicInfoSuccess = (state, { payload }) => ({
   updateEmployee: true
 })
 
+export const uploadVeteranCard = (state, { payload }) => ({
+  ...state,
+})
+
 export default initialState;
