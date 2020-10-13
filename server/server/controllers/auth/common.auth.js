@@ -53,6 +53,7 @@ const signIn = async (req, res) => {
       user = await Employer.findOne({ email: req.body.email });
     }
 
+    console.log(user, req.body.email);
     if (!user) {
       return res.status("401").json({
         error: `${role} not found`,
@@ -140,7 +141,7 @@ const forgotPassword = async (req, res) => {
 
 /*reset password*/
 const resetPassword = async (req, res) => {
-  const { token, newPassword, role } = req.body;
+  const { token, newPassword, newPasswordConfirm, role } = req.body;
 
   // Encrypt request token and compare with db
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
@@ -170,7 +171,7 @@ const resetPassword = async (req, res) => {
 
   console.log(user.firstName);
   user.password = newPassword;
-  user.passwordConfirm = newPassword;
+  user.passwordConfirm = newPasswordConfirm;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   user.passwordChangedAt = Date.now();
