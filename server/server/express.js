@@ -11,6 +11,7 @@ import authEmployeeRoutes from "./routes/auth/employee.routes";
 import authEmployerRoutes from "./routes/auth/employer.routes";
 import authCommonRoutes from "./routes/auth/common.routes";
 import crudEmployeeRoutes from "./routes/crud/employee.routes";
+import crudEmployerRoutes from "./routes/crud/employer.routes";
 
 const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
@@ -41,6 +42,7 @@ app.use("/api/auth/employer", authEmployerRoutes);
 app.use("/api/auth/common", authCommonRoutes);
 // data organization routes after signin
 app.use("/api/crud/employee", crudEmployeeRoutes);
+app.use("/api/crud/employer", crudEmployerRoutes);
 
 // app.post("/api/crud/employee/update/document/resume", function (req, res) {
 //   console.log(req.body.fileName);
