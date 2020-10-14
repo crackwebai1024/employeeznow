@@ -108,6 +108,8 @@ const EmployeeForm = ({
   const password = useRef({});
   password.current = watch('password', '');
 
+  const email = useRef({})
+  email.current = watch("email", "");
   // address.state error customized check
   const [stateError, setStateError] = useState(false);
   const [emailError, setEmailError] = useState('');
@@ -361,6 +363,28 @@ const EmployeeForm = ({
                 inputRef={register({
                   required: true,
                   pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                })}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                error={errors.emailConfirm ? true : false}
+                helperText={errors.emailConfirm ? invalidError : ''}
+                required
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                name="emailConfirm"
+                label="Email Address Confirm"
+                type="email"
+                id="email"
+                autoComplete="email"
+                inputRef={register({
+                  required: true,
+                  pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  validate: (value) =>
+                    value === email.current || 'The email do not match',
                 })}
               />
             </Grid>

@@ -54,7 +54,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
   },
   button: {
-    marginLeft: "1rem"
+    marginLeft: "1rem",
+    width: "100%"
   },
 }));
 
