@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal + 1, //zIndex of modal default + 1
   },
   logoContainer: {
+    width: "25rem",
     '&:hover': {
       backgroundColor: 'transparent',
     },
