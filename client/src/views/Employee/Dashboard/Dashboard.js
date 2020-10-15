@@ -329,7 +329,7 @@ function Dashboard(props) {
             <Portfolio />
           </Grid>
 
-          {/* <Grid className={classes.section}>
+          <Grid className={classes.section}>
             <Card className={classes.section}>
               <CardHeader
                 title="DOCUMENTS"
@@ -337,7 +337,7 @@ function Dashboard(props) {
               />
               <CardContent>
                 <Grid className={classes.section}>
-                  <Card className={classes.section}>
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="resume"
                       subheader=""
@@ -358,9 +358,9 @@ function Dashboard(props) {
                       </label>
                       {resumeLoading ? "loading..." : document.resume && document.resume}
                     </CardContent>
-                  </Card>
+                  </Card> */}
 
-                  <Card className={classes.section}>
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="licence"
                       subheader=""
@@ -381,9 +381,9 @@ function Dashboard(props) {
                       </label>
                       {licenseLoading ? "loading..." : document.license && document.license}
                     </CardContent>
-                  </Card>
+                  </Card> */}
 
-                  <Card className={classes.section}>
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="deploma"
                       subheader=""
@@ -404,8 +404,8 @@ function Dashboard(props) {
                       </label>
                       {deplomaLoading ? "loading..." : document.deploma && document.deploma}
                     </CardContent>
-                  </Card>
-                  <Card className={classes.section}>
+                  </Card> */}
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="refletter"
                       subheader=""
@@ -426,11 +426,11 @@ function Dashboard(props) {
                       </label>
                       {refletterLoading ? "loading..." : document.refletter && document.refletter}
                     </CardContent>
-                  </Card>
+                  </Card> */}
                 </Grid>
               </CardContent>
             </Card>
-          </Grid> */}
+          </Grid>
 
         </Container>
       </Fragment> :

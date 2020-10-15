@@ -61,12 +61,11 @@ const useStyles = makeStyles((theme) => ({
 const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
 
   const classes = useStyles();
-
   //open dialog(modal) - sarch form modal
   const [openSearchForm, setOpenSearchForm] = useState(false);
   const [employer, getEmployer] = useState({})
 
-  const { name, address, generalEmail, website, firstName, lastName, title, phone, email } = employer;
+  const { name, address, generalEmail, website, firstName, lastName, title, phone, email } = employerData;
 
   const user = JSON.parse(getUser());
 
@@ -78,9 +77,8 @@ const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
   }, [])
 
   useEffect(() => {
-    
     if(employerData) {
-      debugger
+      
     }
   }, [employerData])
   //update state when open/close dialog
@@ -174,26 +172,26 @@ const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
                   fullWidth
                   className={classes.dialog}
                 >
-                  {/* <SearchForm
+                  <SearchForm
                     employerId={employer._id}
-                    history={history}
-                    slug={slug}
+                    // history={history}
+                    slug={user.slug}
                     setOpenSearchForm={setOpenSearchForm}
-                  /> */}
+                  />
                 </Dialog>
               </Grid>
 
               <Grid item>
                 {/* Employer account page */}
-                {/* <Button
+                <Button
                   component={Link}
-                  to={`/employers/${slug}/account`}
+                  to={`/employers/${user.slug}/account`}
                   variant="outlined"
                   color="primary"
                   className={classes.accountButton}
                 >
                   Account
-                </Button> */}
+                </Button>
               </Grid>
             </Grid>
           ) : (
@@ -243,19 +241,8 @@ const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   console.log(state.searchQueries);
-//   return {
-//     errorMessage: state.auth.error,
-//     isAuthenticated: state.auth.isAuthenticated,
-//     slug: state.auth.slug,
-//     employer: state.employer,
-//     searchQueries: state.searchQueries.searchQueries,
-//   };
-// };
-
 const mapStateToProps = ({
-  employee: {
+  employer: {
     employerData
   },
 }) => ({

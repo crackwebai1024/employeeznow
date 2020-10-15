@@ -7,12 +7,10 @@ export const getEmployerData = (state) => ({
   ...state,
 });
 
-export const getEmployerSuccess = (state, { payload }) => {
-  debugger
-  return {
+export const getEmployerSuccess = (state, { payload }) => ({
   ...state,
   employerData : payload,
-}};
+});
 
 export const getEmployerFailure = (state) => ({
   ...state,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,7 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import { updateEmployer } from '../../../store/actions/employer';
+import { actions as employerActions } from '@store/employer';
+import { bindActionCreators } from 'redux';
+import { getUser } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -73,42 +75,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditEmployerAccountForm = ({
-  employer: {
-    _id,
-    name,
-    address,
-    generalEmail,
-    website,
-    firstName,
-    lastName,
-    title,
-    phone,
-    email,
-    employeezNowId,
-  },
-  updateEmployer,
-  errorMessage,
-  history,
-}) => {
-  const { register, handleSubmit, errors } = useForm({
-    // add current value in the input value
-    defaultValues: {
-      name,
-      address,
-      generalEmail,
-      website,
-      firstName,
-      lastName,
-      title,
-      phone,
-      email,
-    },
-  });
-
+const EditEmployerAccountForm = ({ employerData, actions }) => {
+  const [formData, setFormData] = useState({})
+  const { register, handleSubmit, errors } = useForm({ formData });
+  const user = JSON.parse(getUser())
   // address.state error customized check
   const [stateError, setStateError] = useState('');
-  const [updatedState, setUpdatedState] = useState(address.state); //default value - avoid submitting empty string
+  const [updatedState, setUpdatedState] = useState({}); //default value - avoid submitting empty string
 
   // material-ui
   const classes = useStyles();
@@ -128,8 +101,22 @@ const EditEmployerAccountForm = ({
       address: { ...formData.address, state: updatedState },
     };
     console.log(sendData);
-    if (!stateError) return updateEmployer(sendData, history, employeezNowId);
+    // if (!stateError) return updateEmployer(sendData, history, employeezNowId);
   };
+
+  useEffect(() => {
+    let data = {
+      id: user._id
+    }
+    actions.getEmployerData(data);
+  }, [])
+
+  useEffect(() => {
+    if (employerData) {
+      setFormData(employerData)
+      debugger
+    }
+  }, [employerData])
 
   return (
     <div>
@@ -235,9 +222,9 @@ const EditEmployerAccountForm = ({
                   // helpertext={stateError ? 'Please select state' : ''}
                   className={classes.formControl}
                 >
-                  {address.state === '' && (
+                  {/* {address.state === '' && (
                     <InputLabel htmlFor="address.state">State</InputLabel>
-                  )}
+                  )} */}
 
                   <Select
                     native
@@ -246,7 +233,7 @@ const EditEmployerAccountForm = ({
                     key="address.state"
                     onChange={(e) => handleChange(e)}
                     className={classes.stateInput}
-                    defaultValue={address.state}
+                    defaultValue={employerData.address && employerData.address.state}
                     inputProps={{
                       name: 'address.state',
                       id: 'address.state',
@@ -320,8 +307,8 @@ const EditEmployerAccountForm = ({
                     <Typography variant="caption">State is requreid</Typography>
                   </Grid>
                 ) : (
-                  ''
-                )}
+                    ''
+                  )}
               </Grid>
 
               <Grid item sm={4} xs={6}>
@@ -518,220 +505,29 @@ const EditEmployerAccountForm = ({
           </DialogActions>
 
           {/* If authorization was failed */}
-          {errorMessage && (
+          {/* {errorMessage && (
             <Grid item className={classes.invalidMessage}>
               {errorMessage}
             </Grid>
-          )}
+          )} */}
         </form>
       </Grid>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    // error massage when auth was failed
-    errorMessage: state.auth.error,
-  };
-};
+const mapStateToProps = ({
+  employer: {
+    employerData
+  },
+}) => ({
+  employerData
+});
 
-export default connect(mapStateToProps, { updateEmployer })(
-  EditEmployerAccountForm
-);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employerActions,
+  }, dispatch),
+});
 
-/* 
-        {/* <div>
-          <label htmlFor="name">
-            <input type="text" name="name" ref={register({ required: true })} />
-          </label>
-          {errors.name && <p>Please enter a company name</p>}
-        </div>
-
-        <div>address</div>
-        <div>
-          <label htmlFor="street1">
-            <span>street 1</span>
-            <input
-              type="text"
-              name="address.street1"
-              id="street1"
-              ref={register({
-                required: 'Please enter street address',
-                minLength: 2,
-              })}
-            />
-          </label>
-          <ErrorMessage errors={errors} name="address.street1" as="p" />
-        </div>
-
-        <div>
-          <label htmlFor="street2">
-            <span>street 2</span>
-            <input
-              type="text"
-              name="address.street2"
-              id="street2"
-              ref={register}
-            />
-          </label>
-        </div>
-
-        <div>
-          <label htmlFor="city">
-            <span>city</span>
-            <input
-              type="text"
-              name="address.city"
-              id="city"
-              ref={register({
-                required: 'Please enter city',
-                minLength: 3,
-              })}
-            />
-          </label>
-          <ErrorMessage errors={errors} name="address.city" as="p" />
-        </div>
-
-        <div>
-          <label htmlFor="state">
-            <span>state</span>
-
-            <select
-              name="address.state"
-              id="state"
-              ref={register({ required: 'Pleae select state' })}
-            >
-              <option value="">-- Select a State --</option>
-              <option value="AL">Alabama</option>
-             
-            </select>
-          </label>
-          <ErrorMessage errors={errors} name="address.state" as="p" />
-        </div>
-
-        <div>
-          <label htmlFor="zipcode">
-            <span>zip code</span>
-            <input
-              type="text"
-              name="address.zipcode"
-              id="zipcode"
-              ref={register({
-                required: true,
-                minLength: 5,
-                maxLength: 5,
-                pattern: /^[0-9]*$/,
-              })}
-            />
-          </label>
-          <ErrorMessage
-            errors={errors}
-            name="address.zipcode"
-            as="p"
-            message="Please enter valid zip code"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="generalEmail">
-            <span>general generalEmail</span>
-            <input
-              type="email"
-              name="generalEmail"
-              id="generalEmail"
-              ref={register({
-                required: true,
-                minLength: 3,
-                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              })}
-            />
-          </label>
-          {errors.email && <p>Please enter a valid email</p>}
-        </div>
-
-        <div>
-          <label htmlFor="website">
-            <span>website</span>
-            <input
-              type="url"
-              name="website"
-              id="website"
-              ref={register({
-                require: true,
-                pattern: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
-              })}
-            />
-          </label>
-          {errors.website && <p>Please enter a valid url</p>}
-        </div>
-
-        <div>Contact Person</div>
-        <div>
-          <label htmlFor="firstName">
-            <span>first name</span>
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              ref={register({ required: true })}
-            />
-          </label>
-          {errors.firstName && <p>Please enter your first name</p>}
-        </div>
-
-        <div>
-          <label htmlFor="lastName">
-            <span>last name</span>
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              ref={register({ required: true })}
-            />
-          </label>
-          {errors.lastName && <p>Please enter your last name</p>}
-        </div>
-
-        <div>
-          <label htmlFor="title">
-            title
-            <input type="text" name="title" id="title" ref={register} />
-          </label>
-        </div>
-
-        <div>
-          <label htmlFor="phone">
-            <span>phone</span>
-            <input
-              type="tel"
-              name="phone"
-              id="phone"
-              ref={register({
-                required: true,
-                minLength: 10,
-                maxLength: 10,
-                pattern: /^[0-9]*$/,
-              })}
-            />
-          </label>
-          {errors.phone && <p>Please enter a valid phone number (10 digits)</p>}
-        </div>
-
-        <div>
-          <label htmlFor="email">
-            <span>contact email</span>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              ref={register({
-                required: true,
-                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-              })}
-            />
-          </label>
-          {errors.contactEmail && <p>Please enter a valid email</p>}
-        </div>
-
-        <input type="submit" value="Update" onClick={handleSubmit(onSubmit)} /> */
+export default connect(mapStateToProps, mapDispatchToProps)(EditEmployerAccountForm);

@@ -91,7 +91,8 @@ const ExperienceForm = ({
   errorMessage,
 }) => {
   const [formData, setFormData] = useState({
-    primaryJob: { jobTitle: "", company: '', startDate: '', endDate: '', description: "", current: false },
+    primaryJob: { jobTitle: "", company: '', startDate: '', endDate: '', description: "", years: 0, current: false },
+    secondaryJob: { jobTitle: "", company: '', startDate: '', endDate: '', description: "", years: 0 },
     employmentStatus: '',
   });
 
@@ -149,7 +150,8 @@ const ExperienceForm = ({
   }, [experience])
   // destructure
   const {
-    primaryJob
+    primaryJob,
+    secondaryJob
   } = formData;
 
   const onChange = ({ target: { id, name, value, checked } }) => {
@@ -171,9 +173,15 @@ const ExperienceForm = ({
             [id]: ""
           })
         }
+        let years = 0
+        if (formData[id].startDate && formData[id].endDate) {
+          let start = new Date(formData[id].startDate)
+          let end = new Date(formData[id].endDate)
+          years = (end - start) / 86400000 / 365
+        }
         setFormData((prevState) => ({
           ...prevState,
-          [id]: { ...prevState[id], [name]: value },
+          [id]: { ...prevState[id], [name]: value, years: years },
         }));
         break;
       case 'startDate': {
@@ -188,9 +196,15 @@ const ExperienceForm = ({
             [id]: ""
           })
         }
+        let years = 0
+        if (formData[id].startDate && formData[id].endDate) {
+          let start = new Date(formData[id].startDate)
+          let end = new Date(formData[id].endDate)
+          years = (end - start) / 86400000 / 365
+        }
         setFormData((prevState) => ({
           ...prevState,
-          [id]: { ...prevState[id], [name]: value },
+          [id]: { ...prevState[id], [name]: value, years: years },
         }));
         break;
       }
@@ -238,6 +252,7 @@ const ExperienceForm = ({
     }
     let submitData = {
       primaryJob: data.primaryJob,
+      secondaryJob: data.secondaryJob,
       otherJob: otherJobs,
       id: user._id
     }
@@ -247,6 +262,14 @@ const ExperienceForm = ({
   const handleInput = (e, key) => {
     let data = otherJobs
     data[key][e.target.name] = e.target.value
+    if (data[key].startDate && data[key].endDate) {
+      let start = new Date(data[key].startDate)
+      let end = new Date(data[key].endDate)
+      let years = Number((end - start) / 86400000 / 365)
+      debugger
+      data[key].years = years
+    }
+
     setOtherJobs(data)
     setReload(!reload)
   }
@@ -283,7 +306,7 @@ const ExperienceForm = ({
           {/* primary job */}
           <Grid item>
             <Typography gutterBottom variant="h6">
-              Primary Job
+              Current/Last Job
             </Typography>
           </Grid>
 
@@ -337,6 +360,7 @@ const ExperienceForm = ({
           <Grid item className={classes.error}>
             {error.primaryJob && error.primaryJob}
           </Grid>
+
           <Grid item>
             <FormControlLabel
               control={
@@ -348,12 +372,68 @@ const ExperienceForm = ({
               label="Current"
             />
           </Grid>
+
+          <Grid item>
+            <Typography gutterBottom variant="h6">
+              Previous Job
+            </Typography>
+          </Grid>
+
+          <Grid
+            container justify="flex-start" direction={matchesXS ? 'column' : 'row'} alignItems="center"
+          >
+            <Grid container>
+              <Grid item sm={3}>
+                <TextField type="text" name="title" id="secondaryJob"
+                  label="Job Title" InputLabelProps={{ shrink: true }}
+                  value={secondaryJob.title} onChange={(e) => onChange(e)}
+                />
+
+              </Grid>
+              <Grid item sm={3}>
+                <TextField type="text" name="company" id="secondaryJob" required
+                  label="Company Name" InputLabelProps={{ shrink: true }}
+                  value={secondaryJob.company} onChange={(e) => onChange(e)}
+                />
+              </Grid>
+
+              <Grid item sm={3}>
+                <TextField type="date" name="startDate" id="secondaryJob"
+                  label="Start Date" InputLabelProps={{ shrink: true }}
+                  value={secondaryJob.startDate} onChange={(e) => onChange(e)}
+                  className={classes.item}
+                />
+              </Grid>
+
+              <Grid item sm={3}>
+                <TextField type="date" name="endDate" id="secondaryJob"
+                  label="End Date" error={error.secondaryJob ? true : false}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => onChange(e)} className={classes.item}
+                />
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={12} sm={12}>
+                <TextField id="secondaryJob" name="description" label="Description"
+                  multiline fullWidth InputLabelProps={{ shrink: true }}
+                  value={secondaryJob.description} onChange={(e) => onChange(e)}
+                  rows={4} className={classes.description} variant="outlined"
+                />
+              </Grid>
+            </Grid>
+
+          </Grid>
+          <Grid item className={classes.error}>
+            {error.secondaryJob && error.secondaryJob}
+          </Grid>
+
           {/* other job */}
           {otherJobs.map((otherjob, key) => {
             return <Fragment>
               <Grid item className={classes.textContainer}>
                 <Typography gutterBottom variant="h6">
-                  Other Job {key + 1}
+                  Previous Job
                 </Typography>
               </Grid>
               <Grid container justify="flex-start" alignItems="center">
