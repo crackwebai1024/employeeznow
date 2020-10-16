@@ -180,11 +180,11 @@ const resetPassword = async (req, res) => {
     await user.save();
     console.log("after save");
     // Log the user in
-    const token = createToken(user.employeezNowId);
-    console.log("after token");
-    res.cookie("t", token, {
-      expire: new Date() + 3600,
-    });
+    // const token = createToken(user.employeezNowId);
+    // console.log("after token");
+    // res.cookie("t", token, {
+    //   expire: new Date() + 3600,
+    // });
 
     return res.status(200).json({
       token,
@@ -218,8 +218,8 @@ const isValidEmail = async (req, res, next) => {
     let user = await Model.findOne({
       email: req.body.email,
     });
-    console.log(user);
-    if (!user && next === undefined) {
+    console.log(user, next);
+    if (!user && req.body.role === "employee") {
       return res.status("200").json({
         success: "valid email",
       });
