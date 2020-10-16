@@ -15,9 +15,11 @@ export default function SelfInterviewSection() {
   return (
     <Fragment>
       <Grid item xs={12} md={6}>
-        <video width="320" height="240" controls>
-          {/* <source src="https://vimeo.com/414927401" /> */}
-        </video>
+      <div style={{padding:"50.65% 0 0 0", position:"relative"}}>
+        <iframe src="https://player.vimeo.com/video/414927401" style={{position:"absolute", top:0, left:0, width: "100%", height:"100%"}} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+        </iframe>
+      </div>
+      <script src="https://player.vimeo.com/api/player.js"></script>
       </Grid>
       <Grid item xs={12} md={6}>
         <Typography>
@@ -30,7 +32,7 @@ export default function SelfInterviewSection() {
         </Typography>
       </Grid>
       <Grid item xs={12} md={12}>
-        <Typography style={{width:'fit-content', margin: 'auto'}}>
+        <Typography style={{ width: 'fit-content', margin: 'auto' }}>
           <ul>
             <li>I got into hospitality…</li>
             <li>I love the hospitality industry because…</li>
