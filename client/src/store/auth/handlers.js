@@ -18,7 +18,10 @@ const initialState = {
   longinStatus: null,
   phoneVerifyNeed: false,
   isSentPhoneNumber: false,
-  isSingupUser: false
+  isSingupUser: false,
+  isEmailCodeError: "",
+  changepassword: null,
+  resetPassword: null
 };
 
 export const signupRequest = (state, { payload }) => ({
@@ -26,7 +29,7 @@ export const signupRequest = (state, { payload }) => ({
   signupUser: payload,
   signupLoading: true,
   isSingupUser: true,
-  emailFailure : false
+  emailFailure: false
 })
 
 export const signupuserEmpty = (state, { payload }) => ({
@@ -45,7 +48,7 @@ export const emailFailure = (state, { payload }) => ({
   ...state,
   phoneVerifyNeed: false,
   signupLoading: false,
-  emailFailure : true
+  emailFailure: true
 })
 
 export const phoneVerifyRequestRequest = (state, { payload }) => ({
@@ -76,7 +79,7 @@ export const signupConfirmSuccess = (state, { payload }) => ({
 
 export const signupConfirmFailure = (state, { payload }) => ({
   ...state,
-  digicodeConfirmError : true 
+  digicodeConfirmError: true
 })
 
 export const authenticateRequest = (state) => ({
@@ -100,9 +103,9 @@ export const isAuthenticatedSuccess = (state, { payload }) => ({
   ...state,
 
 });
+
 export const isAuthenticatedFailure = (state) => ({
   ...state,
-
 });
 
 export const logoutRequest = (state) => ({ ...state, error: initialState.error, isLoading: false });
@@ -117,7 +120,7 @@ export const resetLoginError = (state) => ({ ...state, loginError: initialState.
 
 export const loginRequest = (state, { payload }) => ({
   ...state,
-  loginStatus : "PENDING"
+  loginStatus: "PENDING"
 })
 export const loginSuccess = (state, { payload }) => ({
   ...state,
@@ -128,7 +131,69 @@ export const loginFailure = (state, { payload }) => ({
   ...state,
   isAuthenticated: false,
   isAuthenticatedLoading: false,
-  loginStatus : "FAILURE"
+  loginStatus: "FAILURE"
+})
+
+export const employerSignupRequest = (state) => ({
+  ...state,
+});
+
+export const employerEmailVerify = (state, { payload }) => ({
+  ...state,
+  signupUser: payload,
+  emailFailure: false
+});
+
+export const employerEmailVerifyFailure = (state, { payload }) => ({
+  ...state,
+  emailFailure: true,
+  signupUser: {}
+});
+
+export const employerEmailCodeSend = (state) => ({
+  ...state,
+  isEmailCodeError: ""
+});
+
+export const emailCodeSendFailure = (state) => ({
+  ...state,
+  isEmailCodeError: "6 Digit Code is Wrong!"
+});
+
+export const forgotPasswordRequest = (state) => ({
+  ...state,
+  loading: true
+});
+
+export const forgotPasswordSuccess = (state) => ({
+  ...state,
+  loading: false,
+  changepassword: "SUCCESS"
+});
+
+export const forgotPasswordFailure = (state) => ({
+  ...state,
+  loading: false,
+  changepassword: "FAILURE"
+});
+
+export const resetPasswordRequest = (state) => ({
+  ...state,
+})
+
+export const resetPasswordSuccess = (state) => ({
+  ...state,
+  resetPassword: "SUCCESS"
+})
+
+export const resetPasswordFailure = (state) => ({
+  ...state,
+  resetPassword: "FAILURE"
+})
+
+export const saveVeteranCard = (state, { payload }) => ({
+  ...state,
+  veteranCardData: payload
 })
 
 export default initialState;

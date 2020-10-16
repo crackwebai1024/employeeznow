@@ -36,8 +36,10 @@ export const actions = createActions({
   UPLOAD_DOCUMENT_SUCCESS: undefined,
   
   UPDATE_BASIC_INFO_REQUEST: undefined,
-  UPDATE_BASIC_INFO_SUCCESS: undefined
+  UPDATE_BASIC_INFO_SUCCESS: undefined,
   
+  UPLOAD_VETERAN_CARD: undefined
+
 });
 
 const reducer = handleActions(
@@ -75,6 +77,8 @@ const reducer = handleActions(
 
     [actions.updateBasicInfoRequest, handlers.updateBasicInfoRequest],
     [actions.updateBasicInfoSuccess, handlers.updateBasicInfoSuccess],
+
+    [actions.uploadVeteranCard, handlers.uploadVeteranCard],
     
   ]),
   initialState,

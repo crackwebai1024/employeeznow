@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal + 1, //zIndex of modal default + 1
   },
   logoContainer: {
+    width: "25rem",
     '&:hover': {
       backgroundColor: 'transparent',
     },
@@ -133,7 +134,7 @@ const Header = ({
   const employeeRoutes = [
     { name: 'Home', link: '/', activeIndex: 0, icon: <HomeOutlinedIcon /> },
     {
-      name: 'About Us',
+      name: 'Learn More',
       link: '/about',
       activeIndex: 1,
       icon: <BusinessOutlinedIcon />,
@@ -181,7 +182,7 @@ const Header = ({
   const noAuthRoutes = [
     { name: 'Home', link: '/', activeIndex: 0, icon: <HomeOutlinedIcon /> },
     {
-      name: 'About Us',
+      name: 'Learn More',
       link: '/about',
       activeIndex: 1,
       icon: <BusinessOutlinedIcon />,

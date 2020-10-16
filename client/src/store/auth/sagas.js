@@ -3,7 +3,6 @@ import * as Sentry from '@sentry/browser';
 import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUser, setRole } from '@helpers/auth-helpers';
 import { actions, actions as types } from './index';
 import * as  AuthAPI from '@services/AuthAPI';
-import * as  EmployeeAPI from '@services/EmployeeAPI';
 
 function* onAuthenticate({ payload }) {
 
@@ -52,15 +51,19 @@ function* onPhoneVerify({ payload }) {
 }
 
 function* onSignupConfirm({ payload }) {
-
   try {
-    const res = yield call(AuthAPI.signupConfirm, payload)
-    if(res && res.data){
+    const res = yield call(AuthAPI.signupConfirm, payload.confirmData)
+    if (res && res.data) {
       setToken(res.data.token)
       setUser(res.data.employee)
-      setRole(payload.role)
-      debugger
-      window.location.pathname = `employees/${res.data[payload.role].slug}`
+      setRole(payload.confirmData.role)
+      
+      let data = payload.veteranCardData
+      data.append("id", res.data.employee._id)
+      data.append("role", payload.confirmData.role)
+      
+      const response = yield call(AuthAPI.onUploadVeteranCard, data)
+      window.location.pathname = `employees/${res.data[payload.confirmData.role].slug}`
       yield put(types.signupConfirmSuccess(res.data.employee))
     }
   } catch {
@@ -71,15 +74,70 @@ function* onSignupConfirm({ payload }) {
 function* onLogin({ payload }) {
   try {
     const res = yield call(AuthAPI.onLogin, payload)
-    if(res && res.data){
+    if (res && res.data) {
       setToken(res.data.token)
       setUser(res.data[payload.role])
       setRole(payload.role)
-      window.location.pathname = `employees/${res.data[payload.role].slug}`
+      if (payload.role == "employee") {
+        window.location.pathname = `employees/${res.data[payload.role].slug}`
+      } else if (payload.role == "employer") {
+        window.location.pathname = `employers/${res.data[payload.role].slug}`
+      }
       yield put(types.loginSuccess(res.data.employee))
     }
   } catch {
     yield put(types.loginFailure())
+  }
+}
+
+function* onEmployerSignup({ payload }) {
+  try {
+    let data = {
+      email: payload.email
+    }
+    const res = yield call(AuthAPI.EmployerSendCode, data)
+    if (res && res.data) {
+      yield put(types.employerEmailVerify(payload))
+    }
+  } catch {
+    yield put(types.employerEmailVerifyFailure())
+  }
+}
+
+function* onEmailCodeSend({ payload }) {
+  try {
+    const res = yield call(AuthAPI.onEmployerSignup, payload)
+    if (res && res.data) {
+      setToken(res.data.token)
+      setUser(res.data.employer)
+      setRole(payload.role)
+      window.location.pathname = `employers/${res.data[payload.role].slug}`
+      yield put(types.signupConfirmSuccess(res.data.employer))
+    }
+  } catch {
+    yield put(types.emailCodeSendFailure())
+  }
+}
+
+function* onForgotPassword({ payload }) {
+  try {
+    const res = yield call(AuthAPI.onForgotPassword, payload)
+    if(res && res.data) {
+      yield put(types.forgotPasswordSuccess())
+    }
+  } catch {
+    yield put(types.forgotPasswordFailure())
+  }
+}
+
+function* onResetPassword({ payload }) {
+  try {
+    const res = yield call(AuthAPI.onResetPassword, payload)
+    if(res && res.data) {
+      yield put(types.resetPasswordSuccess())
+    }
+  } catch {
+    yield put(types.resetPasswordFailure())
   }
 }
 
@@ -90,6 +148,10 @@ const authSagas = [
   takeEvery(types.phoneVerifyRequestRequest, onPhoneVerify),
   takeEvery(types.isAuthenticatedRequest, onIsAuthenticated),
   takeEvery(types.logoutRequest, onLogout),
+  takeEvery(types.employerSignupRequest, onEmployerSignup),
+  takeEvery(types.employerEmailCodeSend, onEmailCodeSend),
+  takeEvery(types.forgotPasswordRequest, onForgotPassword),
+  takeEvery(types.resetPasswordRequest, onResetPassword),
 ];
 
 export function* watchUnauthorized() {

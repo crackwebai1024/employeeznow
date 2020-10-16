@@ -7,12 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { actions as employerActions } from '@store/employer';
+import { bindActionCreators } from 'redux';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import { loadEmployer } from '../../../store/actions/employer';
-import { currentUser } from '../../../store/actions/auth';
+import { getUser } from '@helpers/auth-helpers';
 import SearchForm from '../form/SearchForm';
-import { loadSearchQueries } from '../../../store/actions/searchQueries';
-import { searchProfessions } from '../../../store/actions/professions';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -59,37 +58,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DashboardEmployer = ({
-  loadEmployer,
-  currentUser,
-  loadSearchQueries,
-  searchQueries,
-  searchProfessions,
-  slug,
-  employer,
-  history,
-}) => {
-  useEffect(() => {
-    loadEmployer() && currentUser() && loadSearchQueries();
-  }, []);
-
-  const {
-    name,
-    address,
-    generalEmail,
-    website,
-    firstName,
-    lastName,
-    title,
-    phone,
-    email,
-  } = employer;
+const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
 
   const classes = useStyles();
-
   //open dialog(modal) - sarch form modal
   const [openSearchForm, setOpenSearchForm] = useState(false);
+  const [employer, getEmployer] = useState({})
 
+  const { name, address, generalEmail, website, firstName, lastName, title, phone, email } = employerData;
+
+  const user = JSON.parse(getUser());
+
+  useEffect(() => {
+    let data = {
+      id: user._id
+    }
+    actions.getEmployerData(data);
+  }, [])
+
+  useEffect(() => {
+    if(employerData) {
+      
+    }
+  }, [employerData])
   //update state when open/close dialog
   const clickFormOpen = () => {
     setOpenSearchForm(true);
@@ -103,7 +94,7 @@ const DashboardEmployer = ({
   const handleSubmit = (e, index) => {
     e.preventDefault();
     const formData = searchQueries[index];
-    searchProfessions(formData, history, slug, index);
+    // searchProfessions(formData, history, slug, index);
   };
 
   // Render search query button
@@ -183,8 +174,8 @@ const DashboardEmployer = ({
                 >
                   <SearchForm
                     employerId={employer._id}
-                    history={history}
-                    slug={slug}
+                    // history={history}
+                    slug={user.slug}
                     setOpenSearchForm={setOpenSearchForm}
                   />
                 </Dialog>
@@ -194,7 +185,7 @@ const DashboardEmployer = ({
                 {/* Employer account page */}
                 <Button
                   component={Link}
-                  to={`/employers/${slug}/account`}
+                  to={`/employers/${user.slug}/account`}
                   variant="outlined"
                   color="primary"
                   className={classes.accountButton}
@@ -204,8 +195,8 @@ const DashboardEmployer = ({
               </Grid>
             </Grid>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </Grid>
         {queryButton}
         {name && (
@@ -250,24 +241,19 @@ const DashboardEmployer = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state.searchQueries);
-  return {
-    errorMessage: state.auth.error,
-    isAuthenticated: state.auth.isAuthenticated,
-    slug: state.auth.slug,
-    employer: state.employer,
-    searchQueries: state.searchQueries.searchQueries,
-  };
-};
+const mapStateToProps = ({
+  employer: {
+    employerData
+  },
+}) => ({
+  employerData
+});
 
-export default connect(mapStateToProps, {
-  loadEmployer,
-  currentUser,
-  loadSearchQueries,
-  searchProfessions,
-})(DashboardEmployer);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employerActions,
+  }, dispatch),
+});
 
-// export default connect(mapStateToProps, { loadEmployer, currentUser })(
-//   withStyles(useStyles)(DashboardEmployer)
-// );
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardEmployer);
+

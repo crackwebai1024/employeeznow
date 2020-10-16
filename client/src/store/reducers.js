@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
-import employee from './employee'
+import employee from './employee';
+import employer from './employer';
 const rootReducer = combineReducers({
   auth,
-  employee
+  employee,
+  employer
 });
 
 export default rootReducer;

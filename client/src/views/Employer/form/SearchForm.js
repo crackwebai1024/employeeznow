@@ -16,9 +16,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { loadSearchQueries } from '../../../store/actions/searchQueries';
-import { createSearchQuery } from '../../../store/actions/searchQuery';
-import { searchAndSavefilterProfessions } from '../../../store/actions/professions';
+// import { loadSearchQueries } from '../../../store/actions/searchQueries';
+// import { createSearchQuery } from '../../../store/actions/searchQuery';
+// import { searchAndSavefilterProfessions } from '../../../store/actions/professions';
 
 import {
   usaStates,
@@ -62,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
 const SearchForm = ({
   employerId,
   slug,
-  searchQueries,
+  // searchQueries,
   history,
-  loadSearchQueries,
+  // loadSearchQueries,
   searchAndSavefilterProfessions,
 }) => {
   const classes = useStyles();
@@ -223,7 +223,7 @@ const SearchForm = ({
                   native: true,
                 }}
               >
-                <option value=""></option>/>
+                <option value=""></option>
                 {usaStates.map((usaState) => (
                   <option value={usaState.value} key={usaState.value}>
                     {usaState.label}
@@ -337,7 +337,7 @@ const SearchForm = ({
                 native: true,
               }}
             >
-              <option value=""></option>/>
+              <option value=""></option>
               {jobTypes.map((jobType) => (
                 <option key={jobType} value={jobType}>
                   {jobType}
@@ -369,7 +369,7 @@ const SearchForm = ({
                 native: true,
               }}
             >
-              <option value=""></option>/>
+              <option value=""></option>
               {jobTypes.map((jobType) => (
                 <option key={jobType} value={jobType}>
                   {jobType}
@@ -399,7 +399,7 @@ const SearchForm = ({
                 native: true,
               }}
             >
-              <option value=""></option>/>
+              <option value=""></option>
               {styles.map((st) => (
                 <option key={st} value={st}>
                   {st}
@@ -429,7 +429,7 @@ const SearchForm = ({
                 native: true,
               }}
             >
-              <option value=""></option>/>
+              <option value=""></option>
               {cuisines.map((cu) => (
                 <option key={cu} value={cu}>
                   {cu}
@@ -463,7 +463,7 @@ const SearchForm = ({
                 native: true,
               }}
             >
-              <option value=""></option>/>
+              <option value=""></option>
               {wineKnowledges.map((wine) => (
                 <option key={wine} value={wine}>
                   {wine}
@@ -499,7 +499,7 @@ const SearchForm = ({
                 native: true,
               }}
             >
-              <option value=""></option>/>
+              <option value=""></option>
               {cocktailKnowledges.map((cocktail) => (
                 <option key={cocktail} value={cocktail}>
                   {cocktail}
@@ -629,7 +629,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  loadSearchQueries,
-  createSearchQuery,
-  searchAndSavefilterProfessions,
+  // loadSearchQueries,
+  // createSearchQuery,
+  // searchAndSavefilterProfessions,
 })(SearchForm);

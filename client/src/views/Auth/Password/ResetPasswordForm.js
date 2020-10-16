@@ -1,120 +1,215 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { router } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { resetPassword } from '../../../store/actions/auth';
+import { Link, Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { actions as authActions } from '@store/auth';
+import Alert from '@material-ui/lab/Alert';
+import PasswordInput from '@components/PasswordInput'
+import { bindActionCreators } from 'redux';
 
-const ResetPasswordForm = ({
-  resetPassword,
-  errorMessage,
-  isAuthenticated,
-  slug,
-  match,
-}) => {
-  // user is redirected to this route via email (forgotpassword)
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    margin: theme.spacing(1),
+    background: theme.palette.common.blue,
+  },
+  eye: {
+    cursor: 'pointer',
+  },
+  form: {
+    width: '30rem'
+  },
+  heading1: {
+    ...theme.typography.h1,
+    marginBottom: '1.5rem',
+  },
+  button: {
+    marginTop: 30,
+    marginBottom: 25,
+  },
+  linkContainer: {
+    marginBottom: '8rem',
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.common.blue,
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
+  },
+  invalidMessage: {
+    textAlign: 'center',
+    color: theme.palette.error.main,
+    marginBottom: '2rem',
+  },
+}));
+
+const Login = ({ actions, resetPassword, loading, slug }) => {
   const { register, handleSubmit, errors, watch } = useForm({});
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+  const classes = useStyles();
+
   const password = useRef({});
   password.current = watch('password', '');
 
   const onSubmit = (formData) => {
-    // get token from params and send it to backend
-    resetPassword(formData, match.params.token);
+    let token = window.location.pathname.split("/")[2];
+    let data = {
+      role: formData.role,
+      newPasswordConfirm : formData.password,
+      newPassword : formData.password,
+      token
+    }
+
+    actions.resetPasswordRequest(data)
   };
 
-  //Redirect to each account page after logged in
-  if (isAuthenticated && localStorage.getItem('role') === 'employer') {
-    return <Redirect to={`/employers/${slug}`} />;
+  const handleInputChange = () => {
+    setError('')
   }
 
-  if (isAuthenticated && localStorage.getItem('role') === 'employee') {
-    return <Redirect to={`/employees/${slug}`} />;
-  }
+  useEffect(() => {
+    if (resetPassword == "SUCCESS") {
+      setSuccess(true)
+    } else if (resetPassword == "FAILURE") {
+      setError("Something Wrong!")
+      setSuccess(false)
+    }
+  }, [resetPassword])
 
   return (
-    <div>
-      <h1>Reset Password</h1>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <div>
-          <label htmlFor="employer">
-            <span>Employer</span>
-            <input
-              type="radio"
-              name="role"
-              id="employer"
-              value="employer"
-              ref={register}
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="employee">
-            <span>Employee</span>
-            <input
-              type="radio"
-              name="role"
-              id="employee"
-              value="employee"
-              ref={register}
-            />
-          </label>
-        </div>
+    <Container>
+      {success && <Alert severity="success">This is a success alert — check it out!</Alert>}
+      <Grid container direction="column" className={classes.container} alignItems="center">
+        <Grid item>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+        </Grid>
+        <Grid item>
+          <Typography variant="h1" className={classes.heading1}>
+            Reset Password
+          </Typography>
+        </Grid>
 
-        <div>
-          <label htmlFor="password">
-            <span>password</span>
-            <input
-              type="password"
+        <form onSubmit={(e) => e.preventDefault()} className={classes.form}>
+          <RadioGroup aria-label="role">
+            <Grid item container direction="row" justify="center">
+              <Grid item>
+                <FormControlLabel
+                  control={<Radio value="employer" />}
+                  label="EMPLOYER"
+                  name="role"
+                  id="employer"
+                  inputRef={register({ required: true })}
+                />
+              </Grid>
+              <Grid item>
+                <FormControlLabel
+                  control={<Radio value="employee" />}
+                  label="EMPLOYEE"
+                  name="role"
+                  id="employee"
+                  inputRef={register({ required: true })}
+                />
+              </Grid>
+            </Grid>
+            <FormHelperText
+              error={errors.role ? true : false}
+              style={{ textAlign: 'center' }}
+            >
+              {errors.role ? 'Please select your role' : ''}
+            </FormHelperText>
+          </RadioGroup>
+
+          <Grid item xs={12}>
+            <PasswordInput
+              error={errors.password ? true : false}
               name="password"
+              label="Password"
+              helperText={
+                errors.password ? 'Password must be munimum 8 characters' : ''
+              }
               id="password"
-              placeholder="Password"
-              autoComplete="on"
-              ref={register({
-                required: 'You must specify a password',
-                minLength: {
-                  value: 8,
-                  message: 'Password must have at leaset 8 charactors',
-                },
+              autoComplete="password"
+              inputRef={register({
+                required: true,
+                minLength: 8,
               })}
             />
-          </label>
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
+          </Grid>
 
-        <div>
-          <label htmlFor="passwordConfirm">
-            <span>password confirm</span>
-            <input
-              type="password"
-              name="passwordConfirm"
+          <Grid item xs={12}>
+            <PasswordInput
+              error={errors.passwordConfirm ? true : false}
+              label="Password Confirm"
+              helperText={
+                errors.passwordConfirm ? 'Passwords do not match' : ''
+              }
               id="passwordConfirm"
-              placeholder="Password Confirm"
-              autoComplete="on"
-              ref={register({
+              name="passwordConfirm"
+              autoComplete="passwordConfirm"
+              inputRef={register({
                 validate: (value) =>
                   value === password.current || 'The passwords do not match',
               })}
             />
-          </label>
-          {errors.passwordConfirm && <p>{errors.passwordConfirm.message}</p>}
-        </div>
-
-        <input type="submit" value="Confirm" onClick={handleSubmit(onSubmit)} />
-
-        {/* If authorization was failed */}
-        {errorMessage ? <div>{errorMessage}</div> : ''}
-      </form>
-    </div>
+          </Grid>
+          <Grid item container>
+            <Grid xs={5}>
+            </Grid>
+            <Grid xs={2}></Grid>
+            <Grid xs={5}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={loading}
+                color="primary"
+                onClick={handleSubmit(onSubmit)}
+                className={classes.button}
+              >
+                Change Password
+              </Button>
+            </Grid>
+          </Grid>
+          {/* errorMassge when authentication is failed */}
+          {error && (
+            <Grid item className={classes.invalidMessage}>
+              {error}
+            </Grid>
+          )}
+        </form>
+      </Grid>
+    </Container>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    // error massage when auth was failed
-    errorMessage: state.auth.error,
-    isAuthenticated: state.auth.isAuthenticated,
-    slug: state.auth.slug,
-    userId: state.auth.userId,
-  };
-};
+const mapStateToProps = ({
+  auth: {
+    resetPassword, loading, changepassword, user, loginStatus
+  },
+}) => ({
+  resetPassword, loading, changepassword, user, loginStatus
+});
 
-export default connect(mapStateToProps, { resetPassword })(ResetPasswordForm);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...authActions,
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

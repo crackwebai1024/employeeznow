@@ -147,7 +147,6 @@ function Dashboard(props) {
     formData.append("content", e.target.files[0])
     formData.append("fname", e.target.files[0].name)
     actions.uploadDocumentRequest(formData)
-
   }
 
   // const theme = useTheme();
@@ -209,9 +208,9 @@ function Dashboard(props) {
                     {/* <Typography>{preference && "Status : " + preference.employmentStatus}</Typography>
                     <Typography>{preference && "Salary : " + preference.idealSalary + "/" + preference.unit}</Typography>
                     <Typography>{preference && "Planing to Move : " + preference.planningToMove.location} ({preference.planningToMove.dateToMove} )</Typography> */}
-                  </Grid> 
+                  </Grid>
                   <Grid item xs={12} md={6}>
-                  {/* <Typography>{preference && "Shift Availablity : " + preference.randomShiftRole.map(shift => shift)}</Typography> */}
+                    {/* <Typography>{preference && "Shift Availablity : " + preference.randomShiftRole.map(shift => shift)}</Typography> */}
                   </Grid>
                 </Grid>
               </CardContent>
@@ -285,7 +284,7 @@ function Dashboard(props) {
                 <Grid item container xs={12}>
                   <Grid item xs={12} md={6}>
                     <Typography className={classes.jobtitle}>
-                      {skill && skill.primaryJob.title}
+                      {experience && experience.primaryJob.title}
                     </Typography>
                     {experience && experience.primaryJob &&
                       <Fragment>
@@ -300,22 +299,24 @@ function Dashboard(props) {
                       </Fragment>
                     }
                   </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Typography className={classes.jobtitle}>
-                      {employeeData.skill && employeeData.skill.secondaryJob.title}
-                    </Typography>
-                    {experience && 
-                      <Fragment>
-                        <Typography className={classes.company}>
-                          {experience.secondaryJob.company}
+                  {experience &&
+                    experience.otherJob.map(job =>
+                      <Grid item xs={12} md={6}>
+                        <Typography className={classes.jobtitle}>
+                          {job.title}
                         </Typography>
-                        <Typography className={classes.jobPeriod}>
-                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
-                          {experience.secondaryJob.endDate}
-                        </Typography>
-                      </Fragment>
-                    }
-                  </Grid>
+                        <Fragment>
+                          <Typography className={classes.company}>
+                            {job.company}
+                          </Typography>
+                          <Typography className={classes.jobPeriod}>
+                            {job.startDate}&nbsp;~ &nbsp;
+                                          {job.endDate}
+                          </Typography>
+                        </Fragment>
+                      </Grid>
+                    )
+                  }
                 </Grid>
 
                 {/* {employeeData.experience && employeeData.experience.employee} */}
@@ -328,7 +329,7 @@ function Dashboard(props) {
             <Portfolio />
           </Grid>
 
-          {/* <Grid className={classes.section}>
+          <Grid className={classes.section}>
             <Card className={classes.section}>
               <CardHeader
                 title="DOCUMENTS"
@@ -336,7 +337,7 @@ function Dashboard(props) {
               />
               <CardContent>
                 <Grid className={classes.section}>
-                  <Card className={classes.section}>
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="resume"
                       subheader=""
@@ -357,9 +358,9 @@ function Dashboard(props) {
                       </label>
                       {resumeLoading ? "loading..." : document.resume && document.resume}
                     </CardContent>
-                  </Card>
+                  </Card> */}
 
-                  <Card className={classes.section}>
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="licence"
                       subheader=""
@@ -380,9 +381,9 @@ function Dashboard(props) {
                       </label>
                       {licenseLoading ? "loading..." : document.license && document.license}
                     </CardContent>
-                  </Card>
+                  </Card> */}
 
-                  <Card className={classes.section}>
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="deploma"
                       subheader=""
@@ -403,8 +404,8 @@ function Dashboard(props) {
                       </label>
                       {deplomaLoading ? "loading..." : document.deploma && document.deploma}
                     </CardContent>
-                  </Card>
-                  <Card className={classes.section}>
+                  </Card> */}
+                  {/* <Card className={classes.section}>
                     <CardHeader
                       title="refletter"
                       subheader=""
@@ -425,11 +426,11 @@ function Dashboard(props) {
                       </label>
                       {refletterLoading ? "loading..." : document.refletter && document.refletter}
                     </CardContent>
-                  </Card>
+                  </Card> */}
                 </Grid>
               </CardContent>
             </Card>
-          </Grid> */}
+          </Grid>
 
         </Container>
       </Fragment> :
@@ -444,7 +445,7 @@ const mapStateToProps = ({
     employeeData, resumeLoading, resume, licenseLoading, deplomaLoading, refletterLoading
   },
 }) => ({
-  employeeData, resumeLoading, resume, licenseLoading, deplomaLoading, refletterLoading
+  employeeData, resumeLoading, resume, licenseLoading, deplomaLoading, refletterLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

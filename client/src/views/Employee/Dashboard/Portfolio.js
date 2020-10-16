@@ -32,6 +32,13 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     fontWeight: 500
   },
+  imageBox: {
+    position: 'absolute',
+    top: "0px",
+    boxShadow: 'inset 0 0 15px',
+    width: "100%",
+    height: 230,
+  },
   portfolio: {
     color: 'RGB(23,41, 64)',
     marginBottom: 20,
@@ -178,6 +185,8 @@ function Portfolio({ actions, portfolios }) {
                           {p.image && <Fragment>
                             <img src={p.image && "data:image/jpeg;base64, " + p.image} className={classes.image}>
                             </img>
+                            <Box className={classes.imageBox}>
+                            </Box>
                             <Typography className={classes.note}>
                               {p.note}
                             </Typography>

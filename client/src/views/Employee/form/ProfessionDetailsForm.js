@@ -474,42 +474,6 @@ const ProfessionDetailsForm = ({
               )}
           </Grid>
 
-          {/* veteran status */}
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="status"
-                  id="veteran"
-                  checked={veteran.status}
-                  value={veteran.status}
-                  onChange={(e) => onChange(e)}
-                />
-              }
-              label="Are you a veteran ?"
-              className={classes.checkboxText}
-            />
-
-            {veteran.status ? (
-              <Grid item>
-                <TextField
-                  type="text"
-                  name="veteranId"
-                  id="veteran"
-                  label="Veteran ID"
-                  required
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={veteran.veteranId}
-                  onChange={(e) => onChange(e)}
-                />
-              </Grid>
-            ) : (
-                ''
-              )}
-          </Grid>
-
           <Grid item>
             <Button
               type="submit"
