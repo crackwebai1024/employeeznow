@@ -27,7 +27,14 @@ import VideoGallery from './VideoGallery';
 import { Link } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
-import Profession from './Profession'
+import Profession from './Profession';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,6 +121,10 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     display: 'none',
+  },
+  dialogContent: {
+    height: '65vh',
+    width: '80vw'
   }
 }));
 
@@ -123,6 +134,7 @@ function Dashboard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(true);
   const [document, setDocument] = useState([])
+  const [open, setOpen] = useState(true)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -149,6 +161,9 @@ function Dashboard(props) {
     actions.uploadDocumentRequest(formData)
   }
 
+  const handleClose = () => {
+    setOpen(false)
+  }
   // const theme = useTheme();
   // const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
   const {
@@ -162,6 +177,44 @@ function Dashboard(props) {
     !_.isEmpty(employeeData) ?
       <Fragment>
         <Container className={classes.container}>
+          <Dialog open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <Carousel>
+              <div className={classes.dialogContent}>
+                Your portfolio is an outlet for you to showcase yourself to possible employers!
+                  </div>
+              <div className={classes.dialogContent}>
+                Post pictures or at work videos that show your skills!
+                  </div>
+              <div className={classes.dialogContent}>
+                We recommend videos are less than a minute, you want to keep the employer’s attention
+                  </div>
+              <div className={classes.dialogContent}>
+                Give yourself the best chance to impress and video your Self-Interview
+                  </div>
+              <div className={classes.dialogContent}>
+                Give yourself the best chance to impress and video your self-interview
+                  </div>
+              <div className={classes.dialogContent}>
+                Answer the interview questions that you want to!
+                  </div>
+              <div className={classes.dialogContent}>
+                “I love hospitality because….
+                  </div>
+              <div className={classes.dialogContent}>
+                “My coworkers would describe me as ...
+                  </div>
+              <div className={classes.dialogContent}>
+                For suggested questions for your self-interview, go to the bottom of our About page.
+                  </div>
+              <div className={classes.dialogContent}>
+                Remember to not include your name or any contact Information, or we will have to cancel your profile.
+                  </div>
+            </Carousel>
+          </Dialog>
           <Grid className={classes.header}>
             <BackgroundPhoto />
             <Grid className={classes.profilePhoto}>

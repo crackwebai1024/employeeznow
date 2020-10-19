@@ -328,7 +328,6 @@ const Home = () => {
         <SelfInterviewSection />
       </Grid>
     </Container>
-
   );
 };
 
