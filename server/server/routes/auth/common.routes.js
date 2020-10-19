@@ -5,7 +5,7 @@ const router = express.Router();
 const { forgotPassword, resetPassword, signIn } = authCommonCtrl;
 
 router.route("/forgotpassword").post(forgotPassword);
-router.route("/resetpassword").patch(resetPassword);
+router.route("/resetpassword").post(resetPassword);
 router.route("/signin").post(signIn);
 
 export default router;

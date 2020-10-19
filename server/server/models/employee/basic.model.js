@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 import validator from "validator";
 import slugify from "slugify";
+const geocoder = require("../../utils/geocoder");
 
 const EmployeeSchema = new mongoose.Schema(
   {
@@ -181,6 +182,23 @@ EmployeeSchema.pre("save", function (next) {
       lower: true,
     }
   );
+  next();
+});
+
+// Geocoder - Get longtitude and latitude from address
+EmployeeSchema.pre("save", async function (next) {
+  const loc = await geocoder.geocode({
+    address: this.street1,
+    city: this.city,
+    state: this.state,
+    zipcode: this.zipcode,
+  });
+
+  this.locations = {
+    type: "Point",
+    coordinates: [loc[0].longitude, loc[0].latitude],
+  };
+
   next();
 });
 

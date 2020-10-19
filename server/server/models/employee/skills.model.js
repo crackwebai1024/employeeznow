@@ -6,18 +6,18 @@ const EmployeeSkillSchema = new mongoose.Schema(
       type: [String],
       enum: ["Breakfast", "Lunch", "Dinner"],
     },
-    primaryJob: {
-      title: {
-        type: String,
-      },
-      years: Number,
-    },
-    secondaryJob: {
-      title: {
-        type: String,
-      },
-      years: Number,
-    },
+    // primaryJob: {
+    //   title: {
+    //     type: String,
+    //   },
+    //   years: Number,
+    // },
+    // secondaryJob: {
+    //   title: {
+    //     type: String,
+    //   },
+    //   years: Number,
+    // },
     style: [
       {
         type: {

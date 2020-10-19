@@ -7,7 +7,7 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_ACCESS_KEY,
 });
 
-var s3 = new AWS.S3();
+var s3 = new AWS.S3({});
 
 // const s3download = function (params) {
 //   return new Promise((resolve, reject) => {
@@ -24,7 +24,7 @@ var s3 = new AWS.S3();
 
 const read = async (bucketName, id) => {
   const params = {
-    Bucket: "employeeznow" + bucketName,
+    Bucket: "mytestbucket626",
     Key: id + bucketName,
   };
   console.log(params);
@@ -49,9 +49,11 @@ const save = async (req, res, next) => {
   } else {
     fileName = req.body.id + req.body.folioID + req.body.type;
   }
-  let bucketName = "employeeznow" + req.body.type;
+
+  // let bucketName = "employeeznow" + req.body.type;
+  let bucketName = "mytestbucket626";
   let fcont = req.file;
-  console.log(fileName);
+  console.log(fileName, bucketName);
   const params = {
     Bucket: bucketName,
     Key: fileName,
@@ -67,6 +69,7 @@ const save = async (req, res, next) => {
     },
     function (err) {
       if (err) {
+        console.log(err);
         return res.status(500).json({
           error: "there is an error in saving data to S3",
         });
@@ -78,7 +81,8 @@ const save = async (req, res, next) => {
 };
 
 const del = async (req, res, next) => {
-  let bucketName = "employeeznow" + req.body.type;
+  // let bucketName = "employeeznow" + req.body.type;
+  let bucketName = "mytestbucket626";
   let fileName = req.body.id + req.body.type;
   s3.deleteObject(
     {

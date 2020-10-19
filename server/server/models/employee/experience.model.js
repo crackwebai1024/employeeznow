@@ -7,10 +7,19 @@ const ExperienceSchema = new mongoose.Schema({
     startDate: String,
     endDate: String,
     description: String,
+    years: Number,
     current: {
       type: Boolean,
       default: false,
     },
+  },
+  secondaryJob: {
+    company: String,
+    title: String,
+    startDate: String,
+    endDate: String,
+    description: String,
+    years: Number,
   },
   otherJob: [
     {
@@ -19,6 +28,7 @@ const ExperienceSchema = new mongoose.Schema({
       startDate: String,
       endDate: String,
       description: String,
+      years: Number,
     },
   ],
   employee: {

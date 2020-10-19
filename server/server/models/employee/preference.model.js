@@ -100,13 +100,6 @@ const PreferenceSchema = new mongoose.Schema({
       ],
     },
   },
-  veteran: {
-    status: {
-      type: Boolean,
-      defult: false,
-    },
-    veteranId: String,
-  },
   employee: {
     type: mongoose.Schema.ObjectId,
     ref: "Employee",

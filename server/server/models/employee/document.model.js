@@ -29,6 +29,14 @@ const DocumentSchema = new mongoose.Schema({
       default: Date.now(),
     },
   },
+  veteran: {
+    fname: String,
+    veteranId: String,
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
+  },
   employee: {
     type: mongoose.Schema.ObjectId,
     ref: "Employee",
