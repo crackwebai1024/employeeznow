@@ -20,5 +20,8 @@ router
   .route("/searchfilter")
   .get(requireSignin, hasAuthorization, SefCtrl.find_ByID)
   .post(requireSignin, hasAuthorization, SefCtrl.updateByID);
+router
+  .route("/searchfilter/delete")
+  .post(requireSignin, hasAuthorization, SefCtrl.deleteByID);
 
 export default router;
