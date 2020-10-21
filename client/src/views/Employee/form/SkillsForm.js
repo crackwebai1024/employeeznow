@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
@@ -14,13 +12,19 @@ import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { actions as employeeActions } from '@store/employee';
 import { bindActionCreators } from 'redux';
 import { getUser } from '@helpers/auth-helpers';
+import MenuItem from '@material-ui/core/MenuItem';
 import _ from 'lodash';
+
 
 import {
   jobTypes,
@@ -143,6 +147,31 @@ const SkillsForm = ({
   const [styleYearsError, setStyleYearsError] = useState('');
   const [cuisineYearsError, setCuisineYearsError] = useState('');
 
+  const [currency, setCurrency] = React.useState('EUR');
+
+  const handleChange1 = (event) => {
+    setCurrency(event.target.value);
+  };
+
+  const currencies = [
+    {
+      value: 'USD',
+      label: '$',
+    },
+    {
+      value: 'EUR',
+      label: '€',
+    },
+    {
+      value: 'BTC',
+      label: '฿',
+    },
+    {
+      value: 'JPY',
+      label: '¥',
+    },
+  ];
+
   // material-ui
   const classes = useStyles();
   const user = JSON.parse(getUser())
@@ -195,9 +224,10 @@ const SkillsForm = ({
       setWineKnowledge(wineKnowledge)
       setCocktailKnowledge(cocktailKnowledge)
       setMilesToWork(milesToWork)
-      if (secondaryJob.title)
+      if (secondaryJob && secondaryJob.title)
         setOpenJob(true)
     }
+
   }, [skill])
 
   const handleChange = ({ target: { id, name, value } }) => {
@@ -388,7 +418,7 @@ const SkillsForm = ({
       return window.scrollTo(0, 0);
     }
     const formData = createFormData();
-
+    debugger
     actions.updateSkillRequest(formData)
     _loadData()
     // updateProfession(formData, history, slug);
@@ -423,7 +453,7 @@ const SkillsForm = ({
                         <Radio
                           value={jobType}
                           id="primaryJob"
-                          checked={jobType === primaryJob.title}
+                          checked={jobType === primaryJob && primaryJob.title}
                           onChange={(e) => handleChange(e)}
                         />
                       }
@@ -472,7 +502,7 @@ const SkillsForm = ({
                 type="number"
                 name="primaryJob.years"
                 id="primaryJob"
-                value={primaryJob.years}
+                value={primaryJob && primaryJob.years}
                 onChange={(e) => handleChange(e)}
                 className={classes.yearsInput}
                 InputProps={{
@@ -851,21 +881,22 @@ const SkillsForm = ({
 
           <Grid item>
             <TextField
-              required
-              type="number"
-              name="milesToWork"
+              select
+              label="Miles To Work"
               id="milesToWork"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">miles</InputAdornment>
-                ),
-              }}
+              name="milesToWork"
               value={milesToWork}
               onChange={(e) => handleChange(e)}
-            />
+              helperText="Please select your currency"
+              variant="outlined"
+            >
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={7}>7</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={15}>15</MenuItem>
+              <MenuItem value={25}>25</MenuItem>
+            </TextField>
           </Grid>
 
           <Grid item>
