@@ -10,11 +10,13 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import KeyboardArrowUpOutlinedIcon from '@material-ui/icons/KeyboardArrowUpOutlined';
-import { loadSearchQuery } from '../../../store/actions/searchQuery';
-import {
-  loadProfessions,
-  searchAndSavefilterProfessions,
-} from '../../../store/actions/professions';
+import { actions as employerActions } from '@store/employer';
+import { bindActionCreators } from 'redux';
+import professions from './data';
+// import {
+//   loadProfessions,
+//   searchAndSavefilterProfessions,
+// } from '../../../store/actions/professions';
 import CandidateList from './CandidateList';
 import EditSearchForm from '../form/EditSearchForm';
 import Sidebar from './Sidebar';
@@ -55,15 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchResults = ({
-  professions,
-  count,
-  employer,
-  history,
-  loadProfessions,
-  searchQueries,
-  location,
-}) => {
+const SearchResults = () => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -78,7 +72,7 @@ const SearchResults = ({
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Define current searchQuery - index is from action
-  const currentSearchQuery = searchQueries[location.index];
+  // const currentSearchQuery = searchQueries[location.index];
   return (
     <Container className={classes.root}>
       <nav aria-label="mailbox folders">
@@ -102,7 +96,7 @@ const SearchResults = ({
           >
             <div className={classes.toolbar} />
             <Sidebar
-              searchQuery={currentSearchQuery}
+              searchQuery={[]}
               setMobileOpen={setMobileOpen}
               mobileOpen={mobileOpen}
             />
@@ -120,7 +114,7 @@ const SearchResults = ({
             open
           >
             <div className={classes.toolbar} />
-            <Sidebar searchQuery={currentSearchQuery} />
+            <Sidebar searchQuery={[]} />
           </Drawer>
         </Hidden>
       </nav>
@@ -146,32 +140,33 @@ const SearchResults = ({
               <Grid item>
                 <Typography>EMPLOYEES SEARCH </Typography>
               </Grid>
-              <Grid item>{count !== null ? `total: ${count}` : 0}</Grid>
+              {/* <Grid item>{count !== null ? `total: ${count}` : 0}</Grid> */}
               <Grid item>page 1</Grid>
             </Grid>
           </Grid>
           <Grid item>
             {/* search results - employee lists */}
-            {count
-              ? professions.map((profession) => (
+            {
+              true
+                ? professions.map((profession) => (
                   <CandidateList
-                    key={profession.results._id}
-                    id={profession.results._id} // This _id is professionId
-                    employeezNowId={profession.results.employeezNowId}
-                    employeeId={profession.results.employeeId}
-                    primaryTitle={profession.results.primaryJob.title}
-                    primaryYears={profession.results.primaryJob.years}
-                    secondaryTitle={profession.results.secondaryJob.title}
-                    secondaryYears={profession.results.secondaryJob.years}
-                    shift={profession.results.shift}
-                    style={profession.results.style}
-                    cuisine={profession.results.cuisine}
-                    wineKnowledge={profession.results.wineKnowledge}
-                    cocktailKnowledge={profession.results.cocktailKnowledge}
-                    systems={profession.results.systems}
+                    key={profession._id}
+                    id={profession._id} // This _id is professionId
+                    employeezNowId={profession.employeezNowId}
+                    employeeId={profession.employeeId}
+                    primaryTitle={profession.primaryJob.title}
+                    primaryYears={profession.primaryJob.years}
+                    secondaryTitle={profession.secondaryJob.title}
+                    secondaryYears={profession.secondaryJob.years}
+                    shift={profession.shift}
+                    style={profession.style}
+                    cuisine={profession.cuisine}
+                    wineKnowledge={profession.wineKnowledge}
+                    cocktailKnowledge={profession.cocktailKnowledge}
+                    systems={profession.systems}
                   />
                 ))
-              : 'There are no search results. Pleast try with different search.'}
+                : 'There are no search results. Pleast try with different search.'}
           </Grid>
         </Grid>
       </main>
@@ -179,17 +174,18 @@ const SearchResults = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state.professions);
-  return {
-    count: state.professions.count,
-    professions: state.professions.professions,
-    employer: state.employer,
-    searchQueries: state.searchQueries.searchQueries,
-  };
-};
-export default connect(mapStateToProps, {
-  loadSearchQuery,
-  loadProfessions,
-  searchAndSavefilterProfessions,
-})(SearchResults);
+const mapStateToProps = ({
+  employer: {
+    employerData, filter, searchLoading
+  },
+}) => ({
+  employerData, filter, searchLoading
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employerActions,
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);

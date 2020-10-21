@@ -14,6 +14,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 import { getUser } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
@@ -77,7 +78,9 @@ const useStyles = makeStyles((theme) => ({
 
 const EditEmployerAccountForm = ({ employerData, actions }) => {
   const [formData, setFormData] = useState({})
-  const { register, handleSubmit, errors } = useForm({ formData });
+  const { register, handleSubmit, errors, setValue } = useForm({
+    defaultValues: employerData
+  });
   const user = JSON.parse(getUser())
   // address.state error customized check
   const [stateError, setStateError] = useState('');
@@ -112,13 +115,13 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
   }, [])
 
   useEffect(() => {
-    if (employerData) {
-      setFormData(employerData)
-      debugger
+    if (!_.isEmpty(employerData)) {
+      setFormData({ defaultValues: employerData })      
     }
   }, [employerData])
 
   return (
+    !_.isEmpty(formData) &&
     <div>
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item>
@@ -143,6 +146,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   label="Company Name"
                   type="email"
                   id="name"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   autoComplete="name"
                   inputRef={register({
                     required: true,
@@ -171,6 +177,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   label="Street"
                   type="text"
                   id="street1"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   autoComplete="street1"
                   inputRef={register({ required: true, minLength: 2 })}
                 />
@@ -184,6 +193,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   name="address.street2"
                   label="Apt / Suite"
                   type="text"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   id="street2"
                   autoComplete="street2"
                   inputRef={register}
@@ -208,6 +220,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   name="address.city"
                   label="City"
                   type="text"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   id="city"
                   autoComplete="city"
                   inputRef={register({ required: true, minLength: 2 })}
@@ -218,6 +233,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                 <FormControl
                   required
                   size="small"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   error={stateError ? true : false}
                   // helpertext={stateError ? 'Please select state' : ''}
                   className={classes.formControl}
@@ -330,6 +348,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   label="Zip Code"
                   type="text"
                   id="zipcode"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   autoComplete="zipcode"
                   inputRef={register({
                     required: true,
@@ -357,6 +378,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   label="General Email Address"
                   type="email"
                   id="generalEmail"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   autoComplete="generalEmail"
                   inputRef={register({
                     required: true,
@@ -378,6 +402,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   type="url"
                   id="website"
                   autoComplete="website"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   inputRef={register({
                     required: true,
                     pattern: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
@@ -401,6 +428,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   type="text"
                   id="firstName"
                   autoComplete="firstName"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   // placeholder={firstName}
                   inputRef={register({ required: true })}
                 />
@@ -420,6 +450,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   type="text"
                   id="lastName"
                   autoComplete="lastName"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   inputRef={register({ required: true })}
                 />
               </Grid>
@@ -440,6 +473,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   type="email"
                   id="email"
                   autoComplete="email"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   inputRef={register({
                     required: true,
                     pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -460,6 +496,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   type="text"
                   id="title"
                   autoComplete="title"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   inputRef={register}
                 />
               </Grid>
@@ -480,6 +519,9 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   type="tel"
                   id="phone"
                   autoComplete="phone"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   inputRef={register({
                     required: true,
                     minLength: 10,

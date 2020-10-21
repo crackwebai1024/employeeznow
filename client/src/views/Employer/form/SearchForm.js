@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
+import { actions as employerActions } from '@store/employer';
+import { bindActionCreators } from 'redux';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
@@ -15,6 +17,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
+import Alert from '@material-ui/lab/Alert';
+import { getUser } from '@helpers/auth-helpers';
 
 // import { loadSearchQueries } from '../../../store/actions/searchQueries';
 // import { createSearchQuery } from '../../../store/actions/searchQuery';
@@ -59,36 +63,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchForm = ({
-  employerId,
-  slug,
-  // searchQueries,
-  history,
-  // loadSearchQueries,
-  searchAndSavefilterProfessions,
-}) => {
+const SearchForm = ({ actions, saveFilter, setOpenSearchForm }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const user = JSON.parse(getUser())
 
-  // useEffect(() => {
-  //   loadSearchQueries();
-  // }, []);
-
-  // react-hook-form setup
   const { register, handleSubmit, errors } = useForm();
 
-  // connected to action
   const onSubmit = (formData) => {
-    console.log(formData);
     const systems = [];
     systems.push(formData.pos, formData.reservation);
 
     delete formData.reservation;
-    const sendData = { ...formData, systems };
-    console.log(sendData);
-    //load filtered professios and save search query
-    searchAndSavefilterProfessions(sendData, history, slug, employerId);
+    const id = user._id
+    const sendData = { ...formData, systems, id };
+    // filter save request action
+    actions.saveFilterRequest(sendData)
   };
+
+  useEffect(() => {
+    if (saveFilter == "SUCCESS") {
+      setOpenSearchForm(false)
+    }
+  }, [saveFilter])
 
   // setData({
   //   searchAddress: {
@@ -620,16 +617,18 @@ const SearchForm = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    slug: state.auth.slug,
-    employerId: state.auth.userId,
-    searchQueries: state.searchQueries.searchQueries,
-  };
-};
+const mapStateToProps = ({
+  employer: {
+    saveFilter
+  },
+}) => ({
+  saveFilter
+});
 
-export default connect(mapStateToProps, {
-  // loadSearchQueries,
-  // createSearchQuery,
-  // searchAndSavefilterProfessions,
-})(SearchForm);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employerActions,
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

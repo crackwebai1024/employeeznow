@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.primary.main,
     //width: 'auto',
-    zIndex: 1302,
+    zIndex: -1,
     position: 'relative',
     // bottom: 0,
     //width: '100%',

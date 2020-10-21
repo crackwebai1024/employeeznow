@@ -16,6 +16,7 @@ import ProfessionDetailsForm from '@views/Employee/form/ProfessionDetailsForm';
 import ExperienceForm from '@views/Employee/form/ExperienceForm';
 import ForgotPassword from '@views/Auth/Password/ForgotPasswordForm';
 import ResetPasswordForm from '@views/Auth/Password/ResetPasswordForm';
+import SearchResults from '@views/Employer/SearchResult/SearchResults';
 import { getUser } from '@helpers/auth-helpers';
 
 
@@ -37,6 +38,7 @@ export const AppRouterData = [
 export const AppPrivateRouterData = [
   { "path": "/", component: Home },
   { "path": '/about', component: LearnMore },
+  { "path": '/search/:slug', component: SearchResults },
   { 'path': `/employee/${user && user.slug}/account`, component: EmployeeAccount },
   { 'path': `/employees/${user && user.slug}`, component: EmployeeDashbaord },
   { 'path': `/employers/${user && user.slug}`, component: EmployerDashbaord },

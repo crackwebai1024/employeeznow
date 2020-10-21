@@ -21,11 +21,6 @@ import { actions as employeeActions } from '@store/employee';
 import { bindActionCreators } from 'redux';
 import { getUser } from '@helpers/auth-helpers';
 import _ from 'lodash';
-// import {
-//   updateProfession,
-//   loadProfession,
-// } from '../../../store/actions/profession';
-// import setAlert from '../../../store/actions/alert';
 
 import {
   jobTypes,

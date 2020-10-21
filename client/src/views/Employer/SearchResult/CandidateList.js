@@ -52,7 +52,7 @@ const CandidateOverview = ({
   secondaryTitle,
   secondaryYears,
   shift,
-  style,
+  style=[],
   cuisine,
   wineKnowledge,
   cocktailKnowledge,
@@ -133,7 +133,7 @@ const CandidateOverview = ({
             )}
           </Grid>
 
-          <Grid item>
+          {/* <Grid item>
             {style.length !== 0 ? (
               <Grid container>
                 <Grid item>
@@ -158,9 +158,9 @@ const CandidateOverview = ({
             ) : (
               ''
             )}
-          </Grid>
+          </Grid> */}
 
-          {cuisine.length !== 0 ? (
+          {/* {cuisine.length !== 0 ? (
             <Grid item>
               <Grid container>
                 <Grid item>
@@ -185,7 +185,7 @@ const CandidateOverview = ({
             </Grid>
           ) : (
             ''
-          )}
+          )} */}
         </Grid>
       </CardContent>
 
