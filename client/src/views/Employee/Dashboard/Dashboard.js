@@ -27,7 +27,7 @@ import VideoGallery from './VideoGallery';
 import { Link } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
-import Profession from './Profession'
+import Profession from './Profession';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,6 +114,10 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     display: 'none',
+  },
+  dialogContent: {
+    height: '65vh',
+    width: '80vw'
   }
 }));
 
@@ -123,6 +127,7 @@ function Dashboard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(true);
   const [document, setDocument] = useState([])
+  const [open, setOpen] = useState(true)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -149,6 +154,9 @@ function Dashboard(props) {
     actions.uploadDocumentRequest(formData)
   }
 
+  const handleClose = () => {
+    setOpen(false)
+  }
   // const theme = useTheme();
   // const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
   const {
@@ -162,6 +170,12 @@ function Dashboard(props) {
     !_.isEmpty(employeeData) ?
       <Fragment>
         <Container className={classes.container}>
+          {/* <Dialog open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          </Dialog> */}
           <Grid className={classes.header}>
             <BackgroundPhoto />
             <Grid className={classes.profilePhoto}>

@@ -7,7 +7,21 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 const useStyles = makeStyles((theme) => ({
-
+  interviewText: {
+    maxWidth: '350px',
+    margin: 'auto',
+    fontSize: '20px',
+    textAlign: 'center',
+    fontWeight : 900,
+    fontFamily : 'calibri'
+  },
+  listText: {
+    fontSize : '20px',
+    marginTop: '80px',
+    fontWeight: 600,
+    margin: 'auto',
+    width: 'fit-content'
+  }
 }));
 
 export default function SelfInterviewSection() {
@@ -22,17 +36,17 @@ export default function SelfInterviewSection() {
       <script src="https://player.vimeo.com/api/player.js"></script>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Typography>
+        <Typography className={classes.interviewText}>
           Your EmployeezNow profile allows you to create and build a portfolio to show what
           you can do.  Upload pictures of your accomplishment,
           videos of your ‘at work’ skills and even your Self-Interview.
           Now you get to control the narrative and talk about the topics
-          and questions that best suit you.
+          and questions that best suit you.<br/> <br/> <br/>
           Here are some suggestions that you can use on your video.
         </Typography>
       </Grid>
       <Grid item xs={12} md={12}>
-        <Typography style={{ width: 'fit-content', margin: 'auto' }}>
+        <Typography className={classes.listText}>
           <ul>
             <li>I got into hospitality…</li>
             <li>I love the hospitality industry because…</li>

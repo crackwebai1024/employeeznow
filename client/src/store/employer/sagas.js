@@ -18,8 +18,47 @@ function* onGetEmployerData({ payload }) {
   }
 }
 
+function* onSaveFilter({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onSaveFilter, payload)
+    if (res && res.data) {
+      yield put(types.saveFilterSuccess())
+    }
+  } catch {
+    yield put(types.saveFilterFailure())
+  }
+}
+
+function* onGetfilterList({ payload }) {
+  try {
+    const queryString = `?id=${payload.id}`
+    const res = yield call(EmployerAPI.onGetfilterList, queryString)
+    if (res && res.data) {
+      yield put(types.getFilterListSuccess(res.data))
+    }
+  } catch {
+    yield put(types.getFilterListFailure())
+  }
+}
+
+function* onSearchEmployee({ payload }) {
+  // try {
+  //   const res = yield call(EmployerAPI.onSearchEmployee())
+  //   if (res && res.data) {
+  //     yield put(types.searchEmployeeSuccess())
+  //   }
+  // } catch {
+    yield put(types.searchEmployeeSuccess())
+  // }
+}
+
+
 const employerSagas = [
-  takeEvery(types.getEmployerData, onGetEmployerData)
+  takeEvery(types.getEmployerData, onGetEmployerData),
+  takeEvery(types.saveFilterRequest, onSaveFilter),
+  takeEvery(types.getFilterListRequest, onGetfilterList),
+  takeEvery(types.searchEmployee, onSearchEmployee)
+
 ];
 
 export default employerSagas;

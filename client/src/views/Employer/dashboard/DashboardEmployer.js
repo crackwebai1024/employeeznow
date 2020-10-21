@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -58,29 +58,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
+const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => {
 
   const classes = useStyles();
   //open dialog(modal) - sarch form modal
   const [openSearchForm, setOpenSearchForm] = useState(false);
+  const [searchQueries, setSearchQueries] = useState([])
   const [employer, getEmployer] = useState({})
+  const [reload, setReload] = useState(false)
 
   const { name, address, generalEmail, website, firstName, lastName, title, phone, email } = employerData;
 
   const user = JSON.parse(getUser());
+  const history = useHistory();
 
   useEffect(() => {
     let data = {
       id: user._id
     }
     actions.getEmployerData(data);
+    actions.getFilterListRequest(data)
   }, [])
 
   useEffect(() => {
-    if(employerData) {
+    if (filter) {
+      setSearchQueries(filter.filters)
+      setReload(!reload)
+    }
+  }, [filter])
+
+  useEffect(() => {
+    if(searchLoading === "SUCCESS") {
+      actions.initialLoading()
+      history.push("/home")
+    } else if(searchLoading === "REQUEST") {
       
     }
-  }, [employerData])
+  }, [searchLoading])
+
   //update state when open/close dialog
   const clickFormOpen = () => {
     setOpenSearchForm(true);
@@ -94,7 +109,7 @@ const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
   const handleSubmit = (e, index) => {
     e.preventDefault();
     const formData = searchQueries[index];
-    // searchProfessions(formData, history, slug, index);
+    actions.searchEmployee(formData)    
   };
 
   // Render search query button
@@ -243,10 +258,10 @@ const DashboardEmployer = ({ searchQueries = [], employerData, actions }) => {
 
 const mapStateToProps = ({
   employer: {
-    employerData
+    employerData, filter, searchLoading
   },
 }) => ({
-  employerData
+  employerData, filter, searchLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
