@@ -14,6 +14,7 @@ const createToken = (id) => {
 
 const create = async (req, res, next) => {
   if (req.body.role === "employee") {
+    console.log("=============");
     await CRUD.create(Employee, req, res, next);
   } else {
     await CRUD.create(Employer, req, res, next);

@@ -13,6 +13,8 @@ import authCommonRoutes from "./routes/auth/common.routes";
 import crudEmployeeRoutes from "./routes/crud/employee.routes";
 import crudEmployerRoutes from "./routes/crud/employer.routes";
 
+import searchEmployeeRoutes from "./routes/test.route";
+
 const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
 const upload = multer();
@@ -37,6 +39,7 @@ app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
 
 // mount routes
 // auth routes before signin
+app.use("/api/search", searchEmployeeRoutes);
 app.use("/api/auth/employee", authEmployeeRoutes);
 app.use("/api/auth/employer", authEmployerRoutes);
 app.use("/api/auth/common", authCommonRoutes);

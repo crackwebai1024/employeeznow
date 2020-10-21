@@ -188,9 +188,9 @@ EmployeeSchema.pre("save", function (next) {
 // Geocoder - Get longtitude and latitude from address
 EmployeeSchema.pre("save", async function (next) {
   const loc = await geocoder.geocode({
-    address: this.street1,
-    city: this.city,
-    state: this.state,
+    address: this.address.street1,
+    city: this.address.city,
+    state: this.address.state,
     zipcode: this.zipcode,
   });
 

@@ -1,6 +1,7 @@
 import Employee from "../../models/employee/basic.model";
 import errorHandler from "../../helpers/dbErrorHandler";
 import { Verification } from "twilio-phone-verification";
+import geocoder from "../../utils/geocoder";
 
 const verify = new Verification(process.env.PHONE_VERIFICATION_API_KEY);
 
@@ -53,6 +54,13 @@ const isPhoneVerified = async (req, res, next) => {
   let sixDigitCode = req.body.sixDigitCode;
   let phoneNumber = req.body.phoneNumber;
   let countryCode = req.body.countryCode;
+  const loc = await geocoder.geocode({
+    // address: this.street1,
+    // city: this.city,
+    // state: this.state,
+    zipcode: req.body.address.zipcode,
+  });
+  console.log(loc);
   // await verify
   //   .checkVerification(sixDigitCode, phoneNumber, countryCode)
   //   .then(async (res) => {
@@ -65,6 +73,7 @@ const isPhoneVerified = async (req, res, next) => {
   //       error: "Invalid 6 digit code. Please input correct phone number",
   //     });
   //   });
+  console.log("++++++++++++++++++++++++");
   await next();
 };
 
