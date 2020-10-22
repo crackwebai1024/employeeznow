@@ -20,6 +20,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { jobTypes, roles } from '../professionTypes';
 import { getUser } from '@helpers/auth-helpers';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import MenuItem from '@material-ui/core/MenuItem';
 // import {
 //   loadProfessionDetails,
 //   updateProfessionDetails,
@@ -91,8 +92,8 @@ const ExperienceForm = ({
   errorMessage,
 }) => {
   const [formData, setFormData] = useState({
-    primaryJob: { jobTitle: "", company: '', startDate: '', endDate: '', description: "", years: 0, current: false },
-    secondaryJob: { jobTitle: "", company: '', startDate: '', endDate: '', description: "", years: 0 },
+    primaryJob: { title: "", company: '', startDate: '', endDate: '', description: "", years: 0, current: false },
+    secondaryJob: { title: "", company: '', startDate: '', endDate: '', description: "", years: 0 },
     employmentStatus: '',
   });
 
@@ -160,7 +161,12 @@ const ExperienceForm = ({
       case 'employmentStatus': {
         return setFormData({ ...formData, [name]: value });
       }
-
+      case 'primaryJob': {
+        return setFormData({
+          ...formData,
+          [name]: value
+        })
+      }
       case 'endDate':
         if (formData[id].startDate > value) {
           setError({
@@ -256,6 +262,7 @@ const ExperienceForm = ({
       otherJob: otherJobs,
       id: user._id
     }
+
     actions.updateJobExperience(submitData)
   };
 
@@ -266,7 +273,6 @@ const ExperienceForm = ({
       let start = new Date(data[key].startDate)
       let end = new Date(data[key].endDate)
       let years = Number((end - start) / 86400000 / 365)
-      debugger
       data[key].years = years
     }
 
@@ -284,7 +290,15 @@ const ExperienceForm = ({
     setOtherJobs(otherJob)
     setReload(!reload)
   }
-  console.log(otherJobs, "payload")
+
+  const onJobTitleChange = (e, id) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: { ...prevState[id], title: e.target.value },
+    }));
+  }
+
+  console.log(primaryJob.title, "payload")
   return experience ?
     <Container maxWidth="md">
       <Grid
@@ -315,11 +329,25 @@ const ExperienceForm = ({
           >
             <Grid container>
               <Grid item sm={3}>
-                <TextField type="text" name="title" id="primaryJob"
-                  required label="Job Title" InputLabelProps={{ shrink: true }}
-                  value={primaryJob.title} onChange={(e) => onChange(e)}
-                />
-
+                {
+                  primaryJob &&
+                  <TextField
+                    required select
+                    label="Primary Job"
+                    id="primaryJob"
+                    name="title"
+                    value={primaryJob.title}
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(e) => onJobTitleChange(e, "primaryJob")}
+                    helperText="Please select your currency"
+                  >
+                    {jobTypes.map((job) => {
+                      return <MenuItem key="job" value={job} id="primaryJob">
+                        {job}
+                      </MenuItem>
+                    })}
+                  </TextField>
+                }
               </Grid>
               <Grid item sm={3}>
                 <TextField type="text" name="company" id="primaryJob" required
@@ -384,10 +412,20 @@ const ExperienceForm = ({
           >
             <Grid container>
               <Grid item sm={3}>
-                <TextField type="text" name="title" id="secondaryJob"
-                  label="Job Title" InputLabelProps={{ shrink: true }}
-                  value={secondaryJob.title} onChange={(e) => onChange(e)}
-                />
+                <TextField
+                  required select
+                  label="Primary Job" id="secondaryJob"
+                  name="title" value={secondaryJob.title}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => onJobTitleChange(e, "secondaryJob")}
+                  helperText="Please select your currency"
+                >
+                  {jobTypes.map((job) => {
+                    return <MenuItem key={`primary_${job}`} value={job} id="secondaryJob">
+                      {job}
+                    </MenuItem>
+                  })}
+                </TextField>
 
               </Grid>
               <Grid item sm={3}>
@@ -430,7 +468,7 @@ const ExperienceForm = ({
 
           {/* other job */}
           {otherJobs.map((otherjob, key) => {
-            return <Fragment>
+            return <Fragment key={key}>
               <Grid item className={classes.textContainer}>
                 <Typography gutterBottom variant="h6">
                   Previous Job
@@ -439,10 +477,20 @@ const ExperienceForm = ({
               <Grid container justify="flex-start" alignItems="center">
                 <Grid container>
                   <Grid item xs={12} sm={3}>
-                    <TextField type="text" name="title" label="Job Title"
+                    <TextField
+                      required select
+                      label="Job Title" id="secondaryJob"
+                      name="title" value={otherJobs[key].title}
                       InputLabelProps={{ shrink: true }}
-                      value={otherJobs[key].title} onChange={(e) => handleInput(e, key)}
-                    />
+                      onChange={(e) => handleInput(e, key)}
+                      helperText="Please select your currency"
+                    >
+                      {jobTypes.map((job) => {
+                        return <MenuItem key={job} value={job}>
+                          {job}
+                        </MenuItem>
+                      })}
+                    </TextField>
                   </Grid>
 
                   <Grid item xs={12} sm={3}>
