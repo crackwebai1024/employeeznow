@@ -4,38 +4,14 @@ import EmployeePreference from "../../models/employee/preference.model";
 import EmployeeSkill from "../../models/employee/skills.model";
 
 const aggtable = async (req, res) => {
+  let lng = -71;
+  let lat = 42;
+  console.log(lng, lat);
   const professions = await EmployeePreference.aggregate([
-    // {
-    //   // 1) find professions in range of zipcode and if shifts matches
-    //   $facet: {
-    //     matched: [
-    //       //get employee's address in radius
-    //       {
-    //         $lookup: {
-    //           from: "employees",
-    //           localField: "employee",
-    //           foreignField: "_id",
-    //           as: "employee",
-    //         },
-    //       },
-    //       { $unwind: "$employee" },
-    //       {
-    //         $lookup: {
-    //           from: "employeeskills",
-    //           localField: "employee._id",
-    //           foreignField: "employee",
-    //           as: "employee",
-    //         },
-    //       },
-    //       { $unwind: "$employee" },
-    //     ],
-    //   },
-    // },
     {
       // 1) find professions in range of zipcode and if shifts matches
       $facet: {
         matched: [
-          //get employee's address in radius
           {
             $lookup: {
               from: "employees",
@@ -50,13 +26,13 @@ const aggtable = async (req, res) => {
               from: "employeeskills",
               localField: "employee._id",
               foreignField: "employee",
-              as: "employee",
+              as: "employeeskill",
             },
           },
-          { $unwind: "$employee" },
+          { $unwind: "$employeeskill" },
           {
             $match: {
-              "employee.shift": ["Lunch"],
+              "employeeskill.shift": { $all: ["Lunch"] },
               // "employee.primaryJob.title": "Bartender",
               // "employee.secondJob.title": "waiter",
             },
@@ -65,7 +41,7 @@ const aggtable = async (req, res) => {
             $match: {
               "employee.locations": {
                 $geoWithin: {
-                  $centerSphere: [[lng, lat], "$milesToWork"],
+                  $centerSphere: [[lng, lat], 200 / 3963.2],
                 },
               },
             },

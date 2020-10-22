@@ -191,7 +191,7 @@ EmployeeSchema.pre("save", async function (next) {
     address: this.address.street1,
     city: this.address.city,
     state: this.address.state,
-    zipcode: this.zipcode,
+    zipcode: this.address.zipcode,
   });
 
   this.locations = {
