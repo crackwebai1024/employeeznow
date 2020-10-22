@@ -50,7 +50,6 @@ const save = async (req, res, next) => {
     fileName = req.body.id + req.body.folioID + req.body.type;
   }
 
-  // let bucketName = "employeeznow" + req.body.type;
   let bucketName = "mytestbucket626";
   let fcont = req.file;
   console.log(fileName, bucketName);
@@ -81,7 +80,6 @@ const save = async (req, res, next) => {
 };
 
 const del = async (req, res, next) => {
-  // let bucketName = "employeeznow" + req.body.type;
   let bucketName = "mytestbucket626";
   let fileName = req.body.id + req.body.type;
   s3.deleteObject(
