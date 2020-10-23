@@ -24,13 +24,16 @@ const findByID = async (req, res) => {
 
 const updateByID = async (req, res, next) => {
   req.body.employer = req.body.id;
+  console.log(req.body);
   try {
     let se_filter = await findByID(req, res);
+    console.log(se_filter);
     if (se_filter === null) {
       se_filter = new SearchFilter(req.body);
     } else {
       se_filter = extend(se_filter, req.body);
     }
+    console.log(se_filter);
     await se_filter.save();
 
     // test for creating, updating filter
@@ -39,6 +42,7 @@ const updateByID = async (req, res, next) => {
     });
     // await next();
   } catch (err) {
+    console.log(err);
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
     });

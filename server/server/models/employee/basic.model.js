@@ -68,6 +68,8 @@ const EmployeeSchema = new mongoose.Schema(
       },
       coordinates: {
         type: [Number],
+        index: "2d",
+        sparse: true,
         select: false,
       },
     },

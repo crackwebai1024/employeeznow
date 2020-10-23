@@ -16,9 +16,10 @@ import crudEmployerRoutes from "./routes/crud/employer.routes";
 import searchEmployeeRoutes from "./routes/search/search.route";
 import dotenv from "dotenv";
 
-// Config file
-dotenv.config();
 const CURRENT_WORKING_DIR = process.cwd();
+// Config file
+dotenv.config({ path: path.join(CURRENT_WORKING_DIR, "/.env") });
+
 const app = express();
 const upload = multer();
 // Morgan (logger)
@@ -50,10 +51,6 @@ app.use("/api/auth/common", authCommonRoutes);
 app.use("/api/crud/employee", crudEmployeeRoutes);
 app.use("/api/crud/employer", crudEmployerRoutes);
 
-// app.post("/api/crud/employee/update/document/resume", function (req, res) {
-//   console.log(req.body.fileName);
-//   console.log(req.file);
-// });
 // Catch unauthorised errors
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
