@@ -75,6 +75,7 @@ export const signupConfirmSuccess = (state, { payload }) => ({
   ...state,
   user: payload,
   isAuthenticated: true,
+  digicodeConfirmError: false
 })
 
 export const signupConfirmFailure = (state, { payload }) => ({

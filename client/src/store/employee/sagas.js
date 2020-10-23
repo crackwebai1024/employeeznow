@@ -235,7 +235,7 @@ function* onUploadVeteranCard ({ payload }) {
   try {
     const res = yield call(EmployeeAPI.uploadDocument, payload)
     if(res && res.data) {
-      debugger
+      
     }
   } catch {
 

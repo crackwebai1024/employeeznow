@@ -16,6 +16,9 @@ import { actions as employeeActions } from '@store/employee';
 import { actions as authActions } from '@store/auth';
 import { bindActionCreators } from 'redux';
 import { getUser } from '@helpers/auth-helpers';
+import PublishIcon from '@material-ui/icons/Publish';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 // import { updateEmployee } from '../../../store/actions/employee';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,9 +26,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1.3rem',
     backgroundColor: 'transparent',
   },
+  uploadImage: {
+    width: "150px",
+    height: "150px"
+  },
   heading1: {
     ...theme.typography.h1,
     marginBottom: '1.5rem',
+  },
+  uploadButton: {
+    marginTop: '1rem'
+  },
+  input: {
+    display: 'none',
   },
   button: {
     marginTop: 30,
@@ -112,6 +125,10 @@ const EditEmployeeAccountForm = ({
   const [stateError, setStateError] = useState('');
   const [updatedState, setUpdatedState] = useState(address.state); //default value - avoid submitting empty string
 
+  const [veteran, setVeteran] = useState({ status: false, veteranId: "" });
+  const [veteranError, setVeteranError] = useState("")
+  const [veteranCard, setVeteranCard] = useState(null)
+
   // material-ui
   const classes = useStyles();
   const user = JSON.parse(getUser())
@@ -125,7 +142,37 @@ const EditEmployeeAccountForm = ({
     }
   };
 
+  const uploadVeteranCard = (e, type) => {
+    const formData = new FormData();
+    formData.append("type", type)
+    formData.append("content", e.target.files[0])
+    formData.append("fname", e.target.files[0].name)
+    setVeteranCard(formData);
+  }
+
+  const onChange = (e) => {
+    console.log(e.target.name)
+    if (e.target.name == 'status')
+      return setVeteran({
+        ...veteran,
+        status: !veteran.status
+      })
+
+    if (e.target.name == 'veteranId') {
+      setVeteran({
+        ...veteran,
+        veteranId: e.target.value
+      })
+    }
+  }
+
   const onSubmit = async (formData) => {
+    if (veteran.status && veteran.veteranId == "") {
+      return setVeteranError("This field is required")
+    }
+    if (veteran.status && veteranCard == null) {
+      return setVeteranError("please Upload Veteran Card Image!")
+    }
     const sendData = {
       ...formData,
       id: user._id,
@@ -437,6 +484,65 @@ const EditEmployeeAccountForm = ({
                 />
               </Grid>
             </Grid>
+            <Grid item container direction="row" spacing={2}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="status"
+                    id="veteran"
+                    checked={veteran.status}
+                    value={veteran.status}
+                    onChange={(e) => onChange(e)}
+                  />
+                }
+                label="Are you a veteran ?"
+                className={classes.checkboxText}
+              />
+              {veteran.status ? (
+                <Grid item container direction="column" justify="center" alignItems="center">
+                  <img
+                    className={classes.uploadImage}
+                    src={veteranCard && URL.createObjectURL(veteranCard.getAll("content")[0])}>
+                  </img>
+                  <Grid>
+                    <input
+                      accept="*"
+                      className={classes.input}
+                      id="contained-button-license"
+                      multiple
+                      onChange={e => uploadVeteranCard(e, "veteran")}
+                      type="file"
+                    />
+                  </Grid>
+                  <Grid>
+                    <label htmlFor="contained-button-license">
+                      <Button color="primary" component="span" className={classes.uploadButton}>
+                        <PublishIcon />Upload Image
+                        </Button>
+                    </label>
+                  </Grid>
+                  {/* formData.append("fname", e.target.files[0].name) */}
+                  <TextField
+                    type="text"
+                    name="veteranId"
+                    helperText={
+                      veteranError ? veteranError : ''
+                    }
+                    error={veteranError ? true : false}
+                    id="veteran"
+                    label="Veteran ID"
+                    required
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={veteran.veteranId}
+                    onChange={(e) => onChange(e)}
+                  />
+                </Grid>
+              ) : (
+                  ''
+                )}
+            </Grid>
           </DialogContent>
 
           <DialogActions>
@@ -471,8 +577,8 @@ const EditEmployeeAccountForm = ({
             </Grid>
           )}
         </form>
-      </Grid>
-    </div>
+      </Grid >
+    </div >
   );
 };
 

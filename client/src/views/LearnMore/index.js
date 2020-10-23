@@ -160,7 +160,7 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     textAlign: 'center',
-    fontSize: '20px'
+    fontSize: '18px'
   },
   button: {
     borderRadius: '50px',
@@ -195,7 +195,7 @@ const LearnMore = () => {
         </Grid>
       </Grid>
 
-      <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
+      <Grid container ustify="center" spacing={5} style={{ marginTop: '100px' }}>
         <Grid item xs={12} md={12}>
           <Typography className={classes.bigTitle}>
             The process is quick and easy
@@ -273,7 +273,7 @@ const LearnMore = () => {
         </Grid>
       </Grid>
 
-      <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
+      <Grid container ustify="center" spacing={5} style={{ marginTop: '100px' }}>
         <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
           <Typography className={classes.bigTitle}>
             Profiles are reviewed and decisions are made
@@ -291,7 +291,7 @@ const LearnMore = () => {
           <Typography className={classes.iconTitle}>
             INVEST REQUEST
           </Typography>
-          <Typography>
+          <Typography className={classes.description}>
             Employers can send a request through <b>EmployeezNow</b> to inquire
             if the candidate would be interested in their specific job opportunity
           </Typography>
@@ -325,7 +325,7 @@ const LearnMore = () => {
           <Typography className={classes.iconTitle}>
             ONE TIME FEE
           </Typography>
-          <Typography>
+          <Typography className={classes.description}>
             Complete profiles are just $8.00 and that employer will have access to their
             purchased profiles indefinitely.
           </Typography>
@@ -339,10 +339,10 @@ const LearnMore = () => {
               width: '90%',
             }}
           />
-          <Typography style={{ textAlign: 'center' }}>
+          <Typography className={classes.iconTitle} >
             AUTOMATION
           </Typography>
-          <Typography>
+          <Typography className={classes.description}>
             <b>EmployeezNow</b> will keep all profiles current so employers know the information is accurate.
             Because <b>EmployeezNow</b> does the work for you the candidates, registering once until you are ready to retire!
           </Typography>
@@ -353,7 +353,7 @@ const LearnMore = () => {
         <ContestSection />
       </Grid>
 
-      <Grid container ustify="center" spacing={3} style={{ marginTop: '100px', textAlign: 'center' }}>
+      <Grid container ustify="center" spacing={5} style={{ marginTop: '100px', textAlign: 'center' }}>
         <Grid item xs={12}>
           <Typography className={classes.veteranSectionTitle}>
             Thank you for your service!

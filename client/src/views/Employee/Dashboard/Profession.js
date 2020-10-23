@@ -92,13 +92,12 @@ const Profession = ({ profession }) => {
           </Grid>
           <Grid container item xs={9} md={11}>
             {style && style.length !== 0 ?
-              style.map((style, i) => (
-                <Grid item container xs={12} md={6}>
-                  <Grid xs={8}>{style.type}</Grid>
-                  <Grid xs={4}>{style.years} years</Grid>
-                </Grid>
-              ))
-              : ""}
+              <Grid item container xs={12} md={6}>
+                <Grid item xs={8}>{style.type}</Grid>
+                <Grid item xs={4}>{style.years} years</Grid>
+              </Grid>
+              : ""
+            }
           </Grid>
         </Grid>
       </Grid>
@@ -113,9 +112,9 @@ const Profession = ({ profession }) => {
           <Grid container item xs={9} md={11}>
             {cuisine && cuisine.length !== 0 ?
               cuisine.map((cu, i) => (
-                <Grid item container xs={12} md={6}>
-                  <Grid xs={8}>{cu.type}</Grid>
-                  <Grid xs={4}>{cu.years} years</Grid>
+                <Grid item key={i} container xs={12} md={6}>
+                  <Grid item xs={8}>{cu.type}</Grid>
+                  <Grid item xs={4}>{cu.years} years</Grid>
                 </Grid>
               ))
               : ""}
@@ -153,9 +152,9 @@ const Profession = ({ profession }) => {
       <hr style={{ width: "100%" }} />
       {/* wineKnowledge */}
       <Grid item container xs={12}>
-        <Grid container xs={12} md={6}>
+        <Grid item container xs={12} md={6}>
           {wineKnowledge && (
-            <Grid container className={classes.wrapper} justify="flex-start">
+            <Grid item container className={classes.wrapper} justify="flex-start">
               <Grid item xs={3} md={5}>
                 <Typography className={classes.title}>Wine Knowledge</Typography>
               </Grid>
@@ -169,7 +168,7 @@ const Profession = ({ profession }) => {
         </Grid>
         <hr style={{ width: "100%" }} />
 
-        <Grid xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           {cocktailKnowledge && (
             <Grid container className={classes.wrapper} justify="flex-start">
               <Grid item xs={3} md={5}>

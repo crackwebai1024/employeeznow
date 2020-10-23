@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.common.blue,
   },
   moreSkills: {
-    background: "RGB(245, 245, 245)"
+    background: "RGB(250, 250, 250)"
   },
   card: {
     boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
@@ -118,6 +118,11 @@ const useStyles = makeStyles((theme) => ({
   dialogContent: {
     height: '65vh',
     width: '80vw'
+  },
+  title: {
+    color: theme.palette.common.darkBlue,
+    fontWeight: 400,
+    fontSize: '0.9rem'
   }
 }));
 
@@ -165,7 +170,8 @@ function Dashboard(props) {
     experience,
     preference
   } = employeeData
-  console.log(preference, "pyaload")
+
+  console.log(experience, "pyaload")
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
@@ -218,13 +224,41 @@ function Dashboard(props) {
               />
               <CardContent>
                 <Grid container item xs={12}>
-                  <Grid item xs={12} md={6}>
-                    {/* <Typography>{preference && "Status : " + preference.employmentStatus}</Typography>
-                    <Typography>{preference && "Salary : " + preference.idealSalary + "/" + preference.unit}</Typography>
-                    <Typography>{preference && "Planing to Move : " + preference.planningToMove.location} ({preference.planningToMove.dateToMove} )</Typography> */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {preference &&
+                      <Typography>
+                        {"" + preference.employmentStatus}
+                      </Typography>
+                    }
                   </Grid>
-                  <Grid item xs={12} md={6}>
-                    {/* <Typography>{preference && "Shift Availablity : " + preference.randomShiftRole.map(shift => shift)}</Typography> */}
+                  <Grid item xs={12} sm={6} md={4}>
+                    {preference &&
+                      <Typography>
+                        <b className={classes.title}>Expected : </b> US$ {preference.idealSalary.amount + "/" + preference.idealSalary.unit}
+                      </Typography>
+                    }
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    {preference &&
+                      <Typography>
+                        <b className={classes.title}>Planing to Move : </b>{preference.planningToMove.location} {preference.planningToMove.dateToMove}
+                      </Typography>
+                    }
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
+                    {preference &&
+                      <Typography>
+                        <b className={classes.title}>Shift Availablity : </b>
+                        {preference.randomShiftRole.map(shift => {
+                          return shift + ", "
+                        })}
+                      </Typography>
+                    }
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography>
+
+                    </Typography>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -252,9 +286,7 @@ function Dashboard(props) {
                 <Fragment>
                   <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent className={classes.moreSkills}>
-                      <Typography>
-                        <Profession profession={employeeData.skill} />
-                      </Typography>
+                      <Profession profession={employeeData.skill} />
                     </CardContent>
                   </Collapse>
                   <Grid item xs={12}>
@@ -313,9 +345,26 @@ function Dashboard(props) {
                       </Fragment>
                     }
                   </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Typography className={classes.jobtitle}>
+                      {experience && experience.secondaryJob.title}
+                    </Typography>
+                    {experience && experience.secondaryJob &&
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {experience.secondaryJob.company}
+                        </Typography>
+                        <Typography className={classes.jobPeriod}>
+                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
+                          {experience.secondaryJob.current ? "Present" :
+                            experience.secondaryJob.endDate}
+                        </Typography>
+                      </Fragment>
+                    }
+                  </Grid>
                   {experience &&
-                    experience.otherJob.map(job =>
-                      <Grid item xs={12} md={6}>
+                    experience.otherJob.map((job, i) =>
+                      <Grid item xs={12} md={6} key={i}>
                         <Typography className={classes.jobtitle}>
                           {job.title}
                         </Typography>

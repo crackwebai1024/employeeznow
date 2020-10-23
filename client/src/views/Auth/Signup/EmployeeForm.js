@@ -126,7 +126,7 @@ const EmployeeForm = ({
         ...veteran,
         status: !veteran.status
       })
-
+    
     if (e.target.name == 'veteranId') {
       setVeteran({
         ...veteran,
@@ -163,9 +163,11 @@ const EmployeeForm = ({
     }
     if (!formData.address.state) return setStateError(true)
 
-    veteranCard.append("veteranId", veteran.veteranId);
+    if (veteran.veteranId) {
+      veteranCard.append("veteranId", veteran.veteranId);
 
-    actions.saveVeteranCard(veteranCard)
+      actions.saveVeteranCard(veteranCard)
+    }
 
     if (formData) {
       let data = {

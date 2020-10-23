@@ -230,6 +230,7 @@ const SkillsForm = ({
 
   }, [skill])
 
+  
   const handleChange = ({ target: { id, name, value } }) => {
     console.log('id:', id, 'name:', name, 'value:', value);
 
@@ -319,23 +320,12 @@ const SkillsForm = ({
 
         setStyleYearsError('');
 
-        const newArray = [...style];
-
         // change years = 0 to '' - it is easier to remove data later
         const noZeroValue = value === '0' ? (value = '') : value;
-        newArray.push({ type: id, years: value });
+        const newArray = { type: id, years: noZeroValue }
         // update years if type exisits - Also if year is '', obj removed
-        const update = newArray.filter(function (obj) {
-          return obj.type === id ? (obj.years = noZeroValue) : obj;
-        });
 
-        // remove duplicate type and year (when input value has two digits ex.10, onChange triggers input twice)
-        const noDuplicateArray = update.filter(
-          (v, i, a) =>
-            a.findIndex((t) => t.type === v.type && t.years === v.years) === i
-        );
-
-        return setStyle(noDuplicateArray);
+        return setStyle(newArray);
       }
       case 'cuisine': {
         console.log(cuisine.length)
@@ -366,6 +356,7 @@ const SkillsForm = ({
         return setCuisine(noDuplicateArray);
       }
       case 'styleCurrent': {
+        setStyle({type : id, years: ''})
         return setStyleCurrent(id);
       }
       case 'wineKnowledge': {
@@ -418,7 +409,6 @@ const SkillsForm = ({
       return window.scrollTo(0, 0);
     }
     const formData = createFormData();
-    debugger
     actions.updateSkillRequest(formData)
     _loadData()
     // updateProfession(formData, history, slug);
@@ -453,7 +443,7 @@ const SkillsForm = ({
                         <Radio
                           value={jobType}
                           id="primaryJob"
-                          checked={jobType === primaryJob && primaryJob.title}
+                          checked={jobType === primaryJob.title}
                           onChange={(e) => handleChange(e)}
                         />
                       }
@@ -687,7 +677,7 @@ const SkillsForm = ({
                       type="number"
                       name="style"
                       label={st}
-                      values={style.years}
+                      value={st === styleCurrent ? style.years : ""}
                       onChange={(e) => handleChange(e)}
                       min="0"
                       className={classes.styleandcuisineInput}
@@ -887,7 +877,7 @@ const SkillsForm = ({
               name="milesToWork"
               value={milesToWork}
               onChange={(e) => handleChange(e)}
-              helperText="Please select your currency"
+              helperText="Please select the miles"
               variant="outlined"
             >
               <MenuItem value={2}>2</MenuItem>

@@ -213,7 +213,7 @@ const PhoneVerification = ({
   const onDigitBack = () => {
     actions.phoneVerifyRequestFailure()
   }
-
+debugger
   return (
     <Container component="main" maxWidth="sm">
       <Grid container direction="column" justify="center" alignItems="center">
