@@ -21,6 +21,7 @@ import { jobTypes, roles } from '../professionTypes';
 import { getUser } from '@helpers/auth-helpers';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 // import {
 //   loadProfessionDetails,
 //   updateProfessionDetails,
@@ -80,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
   },
   close: {
     cursor: "pointer",
+  },
+  menuItem: {
+    maxHeight: "500px",
   }
 }));
 
@@ -340,9 +344,15 @@ const ExperienceForm = ({
                     InputLabelProps={{ shrink: true }}
                     onChange={(e) => onJobTitleChange(e, "primaryJob")}
                     helperText="Please select your currency"
+                    PaperProps={{
+                      style: {
+                        maxHeight: 500,
+                        width: '20ch',
+                      },
+                    }}
                   >
                     {jobTypes.map((job) => {
-                      return <MenuItem key="job" value={job} id="primaryJob">
+                      return <MenuItem key={job} value={job} id="primaryJob">
                         {job}
                       </MenuItem>
                     })}
@@ -413,23 +423,24 @@ const ExperienceForm = ({
             <Grid container>
               <Grid item sm={3}>
                 <TextField
-                  required select
-                  label="Primary Job" id="secondaryJob"
+                  select
+                  label="Previous Job" id="secondaryJob"
                   name="title" value={secondaryJob.title}
                   InputLabelProps={{ shrink: true }}
                   onChange={(e) => onJobTitleChange(e, "secondaryJob")}
                   helperText="Please select your currency"
                 >
                   {jobTypes.map((job) => {
-                    return <MenuItem key={`primary_${job}`} value={job} id="secondaryJob">
+                    return <MenuItem key={`secondary_${job}`} value={job} id="secondaryJob">
                       {job}
                     </MenuItem>
                   })}
+
                 </TextField>
 
               </Grid>
               <Grid item sm={3}>
-                <TextField type="text" name="company" id="secondaryJob" required
+                <TextField type="text" name="company" id="secondaryJob"
                   label="Company Name" InputLabelProps={{ shrink: true }}
                   value={secondaryJob.company} onChange={(e) => onChange(e)}
                 />

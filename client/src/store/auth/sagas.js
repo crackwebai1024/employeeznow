@@ -58,11 +58,13 @@ function* onSignupConfirm({ payload }) {
       setUser(res.data.employee)
       setRole(payload.confirmData.role)
       
-      let data = payload.veteranCardData
-      data.append("id", res.data.employee._id)
-      data.append("role", payload.confirmData.role)
+      if(payload.veteranCardData) {
+        let data = payload.veteranCardData
+        data.append("id", res.data.employee._id)
+        data.append("role", payload.confirmData.role)
+        const response = yield call(AuthAPI.onUploadVeteranCard, data)
+      }
       
-      const response = yield call(AuthAPI.onUploadVeteranCard, data)
       window.location.pathname = `employees/${res.data[payload.confirmData.role].slug}`
       yield put(types.signupConfirmSuccess(res.data.employee))
     }

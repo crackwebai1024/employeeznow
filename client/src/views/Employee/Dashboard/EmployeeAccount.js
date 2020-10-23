@@ -30,9 +30,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1.5rem',
     },
   },
-  wrapper: {
-    width: 300,
-  },
+
   item: {
     textAlign: 'right',
   },
@@ -122,6 +120,7 @@ const EmployeeAccount = ({ employeeData, history, actions }) => {
     setOpenPassword(true);
   };
 
+  console.log(employeeData,"payload")
 
   return (
     !_.isEmpty(employeeData) ?

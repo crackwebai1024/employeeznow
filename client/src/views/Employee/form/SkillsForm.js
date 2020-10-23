@@ -230,6 +230,7 @@ const SkillsForm = ({
 
   }, [skill])
 
+  
   const handleChange = ({ target: { id, name, value } }) => {
     console.log('id:', id, 'name:', name, 'value:', value);
 
@@ -418,7 +419,6 @@ const SkillsForm = ({
       return window.scrollTo(0, 0);
     }
     const formData = createFormData();
-    debugger
     actions.updateSkillRequest(formData)
     _loadData()
     // updateProfession(formData, history, slug);
@@ -453,7 +453,7 @@ const SkillsForm = ({
                         <Radio
                           value={jobType}
                           id="primaryJob"
-                          checked={jobType === primaryJob && primaryJob.title}
+                          checked={jobType === primaryJob.title}
                           onChange={(e) => handleChange(e)}
                         />
                       }
@@ -687,7 +687,7 @@ const SkillsForm = ({
                       type="number"
                       name="style"
                       label={st}
-                      values={style.years}
+                      values={st.years}
                       onChange={(e) => handleChange(e)}
                       min="0"
                       className={classes.styleandcuisineInput}
@@ -887,7 +887,7 @@ const SkillsForm = ({
               name="milesToWork"
               value={milesToWork}
               onChange={(e) => handleChange(e)}
-              helperText="Please select your currency"
+              helperText="Please select the miles"
               variant="outlined"
             >
               <MenuItem value={2}>2</MenuItem>
