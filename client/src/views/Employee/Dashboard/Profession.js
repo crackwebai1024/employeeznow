@@ -92,13 +92,12 @@ const Profession = ({ profession }) => {
           </Grid>
           <Grid container item xs={9} md={11}>
             {style && style.length !== 0 ?
-              style.map((style, i) => (
-                <Grid item key={i} container xs={12} md={6}>
-                  <Grid item xs={8}>{style.type}</Grid>
-                  <Grid item xs={4}>{style.years} years</Grid>
-                </Grid>
-              ))
-              : ""}
+              <Grid item container xs={12} md={6}>
+                <Grid item xs={8}>{style.type}</Grid>
+                <Grid item xs={4}>{style.years} years</Grid>
+              </Grid>
+              : ""
+            }
           </Grid>
         </Grid>
       </Grid>
@@ -113,7 +112,7 @@ const Profession = ({ profession }) => {
           <Grid container item xs={9} md={11}>
             {cuisine && cuisine.length !== 0 ?
               cuisine.map((cu, i) => (
-                <Grid item key ={i} container xs={12} md={6}>
+                <Grid item key={i} container xs={12} md={6}>
                   <Grid item xs={8}>{cu.type}</Grid>
                   <Grid item xs={4}>{cu.years} years</Grid>
                 </Grid>

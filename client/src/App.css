@@ -1,4 +1,4 @@
 .MuiMenu-paper {
-  max-height: calc(100% - 200px) !important;
-  top: 150px !important;
+  max-height: 300px !important;
+  margin-top: 40px !important;
 }
