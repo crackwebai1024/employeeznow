@@ -13,8 +13,11 @@ import authCommonRoutes from "./routes/auth/common.routes";
 import crudEmployeeRoutes from "./routes/crud/employee.routes";
 import crudEmployerRoutes from "./routes/crud/employer.routes";
 
-import searchEmployeeRoutes from "./routes/test.route";
+import searchEmployeeRoutes from "./routes/search/search.route";
+import dotenv from "dotenv";
 
+// Config file
+dotenv.config();
 const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
 const upload = multer();

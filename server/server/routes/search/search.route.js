@@ -1,5 +1,5 @@
 import express from "express";
-import searchCtrl from "../controllers/search/search";
+import searchCtrl from "../../controllers/search/search";
 
 const router = express.Router();
 const { aggtable } = searchCtrl;

@@ -21,6 +21,7 @@ const create = async (Model, req, res, next) => {
 };
 
 const find_ByID = async (Model, role, id, res) => {
+  console.log(role, id);
   try {
     let user = await Model.findOne({ [role]: id });
     console.log(user);
