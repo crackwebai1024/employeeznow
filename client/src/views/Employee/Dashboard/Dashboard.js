@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     height: '65vh',
     width: '80vw'
   },
-  title : {
+  title: {
     color: theme.palette.common.darkBlue,
     fontWeight: 400,
     fontSize: '0.9rem'
@@ -171,7 +171,7 @@ function Dashboard(props) {
     preference
   } = employeeData
 
-  console.log(preference, "pyaload")
+  console.log(experience, "pyaload")
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
@@ -225,33 +225,33 @@ function Dashboard(props) {
               <CardContent>
                 <Grid container item xs={12}>
                   <Grid item xs={12} sm={6} md={4}>
-                    {preference && 
+                    {preference &&
                       <Typography>
                         {"" + preference.employmentStatus}
                       </Typography>
                     }
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
-                    {preference && 
+                    {preference &&
                       <Typography>
                         <b className={classes.title}>Expected : </b> US$ {preference.idealSalary.amount + "/" + preference.idealSalary.unit}
                       </Typography>
                     }
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
-                    {preference && 
+                    {preference &&
                       <Typography>
-                      <b className={classes.title}>Planing to Move : </b>{preference.planningToMove.location} {preference.planningToMove.dateToMove} 
+                        <b className={classes.title}>Planing to Move : </b>{preference.planningToMove.location} {preference.planningToMove.dateToMove}
                       </Typography>
                     }
                   </Grid>
                   <Grid item xs={12} sm={12} md={12}>
-                    {preference && 
+                    {preference &&
                       <Typography>
-                        <b className={classes.title}>Shift Availablity : </b> 
-                         {preference.randomShiftRole.map(shift => {
-                           return shift + ", "
-                          })}
+                        <b className={classes.title}>Shift Availablity : </b>
+                        {preference.randomShiftRole.map(shift => {
+                          return shift + ", "
+                        })}
                       </Typography>
                     }
                   </Grid>
@@ -341,6 +341,23 @@ function Dashboard(props) {
                           {experience.primaryJob.startDate}&nbsp;~ &nbsp;
                           {experience.primaryJob.current ? "Present" :
                             experience.primaryJob.endDate}
+                        </Typography>
+                      </Fragment>
+                    }
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Typography className={classes.jobtitle}>
+                      {experience && experience.secondaryJob.title}
+                    </Typography>
+                    {experience && experience.secondaryJob &&
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {experience.secondaryJob.company}
+                        </Typography>
+                        <Typography className={classes.jobPeriod}>
+                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
+                          {experience.secondaryJob.current ? "Present" :
+                            experience.secondaryJob.endDate}
                         </Typography>
                       </Fragment>
                     }

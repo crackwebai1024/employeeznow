@@ -150,6 +150,7 @@ const ExperienceForm = ({
         setToDisabled(true)
       }
       setFormData(experience.experience)
+      setOpen(false)
       setOtherJobs(experience.experience.otherJob)
     }
   }, [experience])
