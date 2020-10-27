@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 // Config file
 dotenv.config();
 
-// Connection URL
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoUri, {
   useNewUrlParser: true,
