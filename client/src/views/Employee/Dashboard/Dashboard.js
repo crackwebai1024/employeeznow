@@ -143,7 +143,6 @@ function Dashboard(props) {
       id: user._id
     }
     actions.getUserDataRequest(data)
-    // actions.getUserDocumentRequest(data)
   }, [])
 
   const uploadDocument = (e, type) => {
@@ -159,45 +158,25 @@ function Dashboard(props) {
     actions.uploadDocumentRequest(formData)
   }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
-  // const theme = useTheme();
-  // const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
-  const {
-    basic,
-    skill,
-    experience,
-    preference
-  } = employeeData
+  const { basic, skill, experience, preference } = employeeData
 
-  console.log(experience, "pyaload")
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
         <Container className={classes.container}>
-          {/* <Dialog open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-          </Dialog> */}
           <Grid className={classes.header}>
             <BackgroundPhoto />
             <Grid className={classes.profilePhoto}>
               <ProfilePhoto />
             </Grid>
-
             <Grid className={classes.section}>
               <Grid className={classes.name}>
                 {basic &&
                   employeeData.basic.lastName + " " + employeeData.basic.firstName
                 }
                 <Button
-                  component={Link}
+                  component={Link} variant="outlined" size="small"
                   to={`/employee/${user && user.slug}/account`}
-                  variant="outlined"
-                  size="small"
                   className={classes.accountButton}
                 >
                   Account
@@ -210,10 +189,8 @@ function Dashboard(props) {
               <CardHeader
                 action={
                   <Button
-                    component={Link}
+                    component={Link} variant="outlined" size="small"
                     to={`/${user && user.slug}/professiondetails-form`}
-                    variant="outlined"
-                    size="small"
                     className={classes.button}
                   >
                     {employeeData.preference ? "Update Personal Preference" : "Add Personal Preference"}
@@ -392,14 +369,14 @@ function Dashboard(props) {
             <Portfolio />
           </Grid>
 
-          <Grid className={classes.section}>
+          {/* <Grid className={classes.section}>
             <Card className={classes.section}>
               <CardHeader
                 title="DOCUMENTS"
                 subheader=""
               />
               <CardContent>
-                <Grid className={classes.section}>
+                <Grid className={classes.section}> */}
                   {/* <Card className={classes.section}>
                     <CardHeader
                       title="resume"
@@ -490,10 +467,10 @@ function Dashboard(props) {
                       {refletterLoading ? "loading..." : document.refletter && document.refletter}
                     </CardContent>
                   </Card> */}
-                </Grid>
+                {/* </Grid>
               </CardContent>
             </Card>
-          </Grid>
+          </Grid> */}
 
         </Container>
       </Fragment> :

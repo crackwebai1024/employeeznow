@@ -38,8 +38,7 @@ export const actions = createActions({
   UPDATE_BASIC_INFO_REQUEST: undefined,
   UPDATE_BASIC_INFO_SUCCESS: undefined,
   
-  UPLOAD_VETERAN_CARD: undefined
-
+  UPLOAD_VETERAN_CARD: undefined,
 });
 
 const reducer = handleActions(

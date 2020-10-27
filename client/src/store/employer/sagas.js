@@ -4,7 +4,8 @@ import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUs
 import { actions as types } from './index';
 import * as  EmployerAPI from '@services/EmployerAPI';
 import Axios from '@lib/axios';
-import { _arrayBufferToBase64 } from '@helpers/utils'
+import { _arrayBufferToBase64 } from '@helpers/utils';
+import { setFilterID } from '@helpers/auth-helpers';
 
 function* onGetEmployerData({ payload }) {
   try {
@@ -22,7 +23,12 @@ function* onSaveFilter({ payload }) {
   try {
     const res = yield call(EmployerAPI.onSaveFilter, payload)
     if (res && res.data) {
-      yield put(types.saveFilterSuccess())
+      setFilterID(res.data.filterID)
+      const data = {
+        filterID: res.data.filterID,
+        filterResult: res.data.searchresult
+      }
+      yield put(types.saveFilterSuccess(data))
     }
   } catch {
     yield put(types.saveFilterFailure())
@@ -34,7 +40,18 @@ function* onGetfilterList({ payload }) {
     const queryString = `?id=${payload.id}`
     const res = yield call(EmployerAPI.onGetfilterList, queryString)
     if (res && res.data) {
-      yield put(types.getFilterListSuccess(res.data))
+      let result = res.data.filters;
+      let addResult = result.map(re => {
+        let pos = re.systems[0]
+        let reservation = re.systems[1]
+        return {
+          ...re, pos, reservation
+        }
+      })
+      const data = {
+        filters : addResult
+      }
+      yield put(types.getFilterListSuccess(data))
     }
   } catch {
     yield put(types.getFilterListFailure())
@@ -42,23 +59,38 @@ function* onGetfilterList({ payload }) {
 }
 
 function* onSearchEmployee({ payload }) {
-  // try {
-  //   const res = yield call(EmployerAPI.onSearchEmployee())
-  //   if (res && res.data) {
-  //     yield put(types.searchEmployeeSuccess())
-  //   }
-  // } catch {
-    yield put(types.searchEmployeeSuccess())
-  // }
+  try {
+    const res = yield call(EmployerAPI.onSearchEmployee, payload)
+    if (res && res.data) {
+      const data = {
+        searchResult: res.data.searchresult,
+        filterID: payload.filterID
+      }
+      yield put(types.searchEmployeeSuccess(data))
+    }
+  } catch {
+    // yield put(types.searchEmployeeSuccess())
+  }
 }
 
+function* onGetSearchResult({ payload }) {
+  try {
+    const queryString = `?filterID=${payload.filterID}`
+    const res = yield call(EmployerAPI.onGetSearchResult, queryString)
+    if (res && res.data) {
+      yield put(types.getSearchResultSuccess(res.data.searchresult))
+    }
+  } catch {
+
+  }
+}
 
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
   takeEvery(types.saveFilterRequest, onSaveFilter),
   takeEvery(types.getFilterListRequest, onGetfilterList),
-  takeEvery(types.searchEmployee, onSearchEmployee)
-
+  takeEvery(types.searchEmployee, onSearchEmployee),
+  takeEvery(types.getSearchResult, onGetSearchResult)
 ];
 
 export default employerSagas;

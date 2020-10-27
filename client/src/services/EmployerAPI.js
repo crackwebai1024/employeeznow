@@ -13,5 +13,9 @@ export async function onGetfilterList(data) {
 }
 
 export async function onSearchEmployee(data) {
-  return await Axios.get('/crud/employer/searchfilter' +  data)
+  return await Axios.post('/crud/employer/searchfilter', data)
+}
+
+export async function onGetSearchResult(data) {
+  return await Axios.get('/search/searchresult' + data)
 }

@@ -9,8 +9,11 @@ import { _arrayBufferToBase64 } from '@helpers/utils'
 function* getUserData({ payload }) {
   try {
     let queryString = `?id=${payload.id}`
+    if(payload.employeeID) {
+      queryString += `&employeeID=${payload.employeeID}`
+    }
     const res = yield call(EmployeeAPI.getUserData, queryString)
-    if (res && res.data) {
+    if (res && res.data) {      
       yield put(types.getUserDataSuccess(res.data))
     }
   } catch {
@@ -191,23 +194,23 @@ function* onUploadDocument({ payload }) {
 }
 
 function* onGetUserDocument({ payload }) {
-  try {
-    let documentArray = ["resume", "license", "deploma", "refletter"]
-    let requests = documentArray.map(document => {
-      return Axios.get('/crud/employee/document?id=' + `${payload.id}` + "&type=" + document)
-    })
+  // try {
+  //   let documentArray = ["resume", "license", "deploma", "refletter"]
+  //   let requests = documentArray.map(document => {
+  //     return Axios.get('/crud/employee/document?id=' + `${payload.id}` + "&type=" + document)
+  //   })
 
-    const response = yield Promise.all(requests)
-      .then(responses => {
-        return responses.map(response => {
-          return {
-            content: response.data.content,
-            fname: response.data.fname
-          }
-        })
-      })
+  //   const response = yield Promise.all(requests)
+  //     .then(responses => {
+  //       return responses.map(response => {
+  //         return {
+  //           content: response.data.content,
+  //           fname: response.data.fname
+  //         }
+  //       })
+  //     })
 
-    let document = {}
+    // let document = {}
       // debugger
     // document.append(response.map((res, i) => {
     //   return {
@@ -215,9 +218,9 @@ function* onGetUserDocument({ payload }) {
     //   }
     // }))
     yield put(types.getUserDocumentSuccess())
-  } catch {
+  // } catch {
     // debugger
-  }
+  // }
 }
 
 function* onUpdateBasicInfo({ payload }) {

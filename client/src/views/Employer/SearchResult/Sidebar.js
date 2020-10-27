@@ -9,6 +9,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import DeleteIcon from '@material-ui/icons/Delete';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -26,16 +27,29 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import InboxIcon from '@material-ui/icons/Inbox';
 import Checkbox from '@material-ui/core/Checkbox';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { actions as employerActions } from '@store/employer';
+import { bindActionCreators } from 'redux';
+import { getUser } from '@helpers/auth-helpers';
+import { connect } from 'react-redux';
 import KeyboardArrowDownOutlinedIcon from '@material-ui/icons/KeyboardArrowDownOutlined';
 
 const useStyles = makeStyles((theme) => ({}));
 
-const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen }) => {
+const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFilterUpdate }) => {
   const classes = useStyles();
   const theme = useTheme();
-
+  const user = JSON.parse(getUser());
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const onFilterClick = (id) => {
+    const searchData = {
+      filterID: id,
+      id: user._id
+    }
+    actions.searchEmployee(searchData)
+  }
+
+  console.log(slug, "slug--")
   return (
     <div>
       {matchesSM && (
@@ -52,19 +66,36 @@ const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen }) => {
         aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
-            Searcn Filter
+            Search Filter
           </ListSubheader>
         }
       >
-        <ListItem button>
-          <ListItemIcon>
-            <EditOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary={searchQuery.name} secondary="current Filter" />
-        </ListItem>
+        {searchQuery.map((searchQuery, i) =>
+          <ListItem button onClick={e => onFilterClick(searchQuery._id)}>
+            <ListItemText primary={searchQuery.name} secondary={searchQuery._id === slug ? "Current Filter" : ""} />
+            <ListItemIcon>
+              <EditOutlinedIcon onClick={e => setFilterUpdate(searchQuery)} />
+              <DeleteIcon />
+            </ListItemIcon>
+          </ListItem>
+        )}
       </List>
     </div>
   );
 };
 
-export default Sidebar;
+const mapStateToProps = ({
+  employer: {
+    employerData, filter, searchLoading, filterResult
+  },
+}) => ({
+  employerData, filter, searchLoading, filterResult
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employerActions,
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

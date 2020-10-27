@@ -194,7 +194,7 @@ const CandidateOverview = ({
         <div className={classes.buttonContainer}>
           <Link
             to={{
-              pathname: `/candidate-${employeezNowId}`,
+              pathname: `/candidate/${id}`,
               data: { professionId: id, employeeId },
             }}
             className={classes.button}

@@ -17,6 +17,15 @@ export function deleteUser() {
 export function setRole(role) {
     localStorage.setItem('role', role)
 }
+export function getRole() {
+    return localStorage.getItem('role')
+}
+export function setFilterID(id) {
+    localStorage.setItem("currentFilterID", id)
+}
+export function getFilterID() {
+    return localStorage.getItem("currentFilterID")
+}
 export function deleteRole() {
     localStorage.removeItem('role')
 }
@@ -57,7 +66,7 @@ export function getUserSetting() {
 
     try {
         return JSON.parse(setting);
-    } catch{
+    } catch {
         return null;
     }
 

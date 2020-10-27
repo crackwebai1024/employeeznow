@@ -13,13 +13,10 @@ import { actions as employeeActions } from '@store/employee';
 import { bindActionCreators } from 'redux';
 import image from '@assets/back.jpg';
 
-// import { uploadPhoto } from '../../../store/actions/employeePhoto';
-
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
     maxHeight: 300,
-    //border: '2px solid red', //just for debug
     position: 'relative',
   },
   image: {
@@ -102,7 +99,7 @@ const BackgourndPhoto = ({ background, actions }) => {
           connectFunc={uploadPhoto}
           open={open}
           image={background}
-          headerTitle = "Upload BackGround Image"
+          headerTitle="Upload BackGround Image"
           setOpen={setOpen}
           photoType="background"
         />
@@ -110,17 +107,19 @@ const BackgourndPhoto = ({ background, actions }) => {
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
         <GridListTile cols={2} rows={2}>
           <img src={background ? "data:image/jpeg;base64, " + background : image} alt="alt" />
-          <GridListTileBar
-            title=""
-            titlePosition="top"
-            actionIcon={
-              <IconButton onClick={handleClickOpen} aria-label={`star Morning`} className={classes.icon}>
-                <CameraAltIcon />
-              </IconButton>
-            }
-            actionPosition="right"
-            className={classes.titleBar}
-          />
+          {localStorage.role === 'employee' &&
+            <GridListTileBar
+              title=""
+              titlePosition="top"
+              actionIcon={
+                <IconButton onClick={handleClickOpen} aria-label={`star Morning`} className={classes.icon}>
+                  <CameraAltIcon />
+                </IconButton>
+              }
+              actionPosition="right"
+              className={classes.titleBar}
+            />
+          }
         </GridListTile>
       </GridList>
     </Fragment>

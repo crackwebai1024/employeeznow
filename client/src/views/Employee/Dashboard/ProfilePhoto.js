@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme) => ({
   avatarContainer: {
     border: `3px solid ${theme.palette.common.blue}`,
     borderRadius: '50%',
+    background:'white',
     width: 166,
     zIndex: 1,
   },
   avatar: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
+    width: 160,
+    height: 160,
     border: '3px solid white',
   },
   openIcon: {
@@ -84,7 +85,7 @@ const ProfilePhoto = ({ profile, actions, photo }) => {
   }, [])
 
   return (
-    <Grid item container direction={matchesXS ? 'column-reverse' : 'column'}>
+    <Grid item container direction={matchesXS ? 'column-reverse' : 'column'} >
 
       {localStorage.role === 'employee' && (
         <PhotoDropZone

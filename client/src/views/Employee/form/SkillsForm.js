@@ -290,7 +290,6 @@ const SkillsForm = ({
       }
       case 'shift': {
         const newArray = [...shift];
-
         // uncheck - if the same shift already exists in state, the shift is removed from state
         if (newArray.length !== 0 && newArray.includes(value)) {
           const idx = newArray.indexOf(value);
@@ -324,7 +323,7 @@ const SkillsForm = ({
         const noZeroValue = value === '0' ? (value = '') : value;
         const newArray = { type: id, years: noZeroValue }
         // update years if type exisits - Also if year is '', obj removed
-
+        setStyleCurrent(id);
         return setStyle(newArray);
       }
       case 'cuisine': {
@@ -376,20 +375,7 @@ const SkillsForm = ({
   // create formData to send backend api
   const createFormData = () => {
     let formData = {};
-    formData = {
-      primaryJob,
-      secondaryJob,
-      shift,
-      style,
-      styleCurrent,
-      cuisine,
-      wineKnowledge,
-      cocktailKnowledge,
-      systems,
-      id: user._id,
-      employee,
-      milesToWork
-    };
+    formData = { primaryJob, secondaryJob, shift, style, styleCurrent, cuisine, wineKnowledge, cocktailKnowledge, systems, id: user._id,  employee, milesToWork };
     return formData;
   };
 
@@ -408,6 +394,7 @@ const SkillsForm = ({
       );
       return window.scrollTo(0, 0);
     }
+
     const formData = createFormData();
     actions.updateSkillRequest(formData)
     _loadData()
@@ -441,40 +428,13 @@ const SkillsForm = ({
                     <FormControlLabel
                       control={
                         <Radio
-                          value={jobType}
-                          id="primaryJob"
-                          checked={jobType === primaryJob.title}
-                          onChange={(e) => handleChange(e)}
+                          value={jobType} id="primaryJob" checked={jobType === primaryJob.title} onChange={(e) => handleChange(e)}
                         />
                       }
-                      label={jobType}
-                      className={classes.item}
+                      label={jobType} className={classes.item}
                     />
                   </Grid>
                 ))}
-
-                {/* Radio 'Other' field. Need a text input - create separate state from primryJob. Otherwise input was inserted to the text column*/}
-                {/* <Grid item>
-                  <FormControlLabel
-                    control={
-                      <Radio
-                        id="primaryOther"
-                        name="primaryJob.title"
-                        onChange={(e) => handleChange(e)}
-                      />
-                    }
-                    checked={checkbox}
-                    label="Other"
-                    className={classes.item}
-                  />
-                  <TextField
-                    type="text"
-                    name="primaryOther"
-                    value={primaryOther}
-                    id="primaryJob"
-                    onChange={(e) => handleChange(e)}
-                  />
-                </Grid> */}
               </Grid>
             </RadioGroup>
           </FormControl>
@@ -488,19 +448,12 @@ const SkillsForm = ({
             <Grid item>
               <TextField
                 error={primaryYearsError.length !== 0}
-                helperText={primaryYearsError}
-                type="number"
-                name="primaryJob.years"
-                id="primaryJob"
+                helperText={primaryYearsError} type="number" name="primaryJob.years" id="primaryJob"
                 value={primaryJob && primaryJob.years}
-                onChange={(e) => handleChange(e)}
-                className={classes.yearsInput}
+                onChange={(e) => handleChange(e)} className={classes.yearsInput}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment
-                      position="end"
-                      className={classes.adornment}
-                    >
+                    <InputAdornment position="end" className={classes.adornment} >
                       years
                     </InputAdornment>
                   ),
@@ -508,21 +461,11 @@ const SkillsForm = ({
               />
             </Grid>
           </Grid>
-
           {/* secondary job */}
           {/* open and close secondary job container */}
-          <Grid
-            item
-            container
-            alignItems="center"
-            spacing={1}
-            className={classes.openContainer}
-          >
+          <Grid item container alignItems="center" spacing={1} className={classes.openContainer} >
             <Grid item>
-              <Avatar
-                onClick={(e) => openSecodaryJob(e)}
-                className={classes.avatar}
-              >
+              <Avatar onClick={(e) => openSecodaryJob(e)} className={classes.avatar} >
                 {openJob ? <RemoveIcon /> : <AddIcon />}
               </Avatar>
             </Grid>
@@ -551,41 +494,11 @@ const SkillsForm = ({
                       <Grid item key={`${jobType}${i}`} sm={4} xs={6}>
                         <FormControlLabel
                           control={
-                            <Radio
-                              value={jobType}
-                              checked={jobType === secondaryJob.title}
-                              id="secondaryJob"
-                              onChange={(e) => handleChange(e)}
-                            />
-                          }
-                          label={jobType}
-                          className={classes.item}
+                            <Radio value={jobType} checked={jobType === secondaryJob.title} id="secondaryJob" onChange={(e) => handleChange(e)}/>
+                          } label={jobType} className={classes.item}
                         />
                       </Grid>
                     ))}
-                    {/* Radio 'Other' field. Need a text input */}
-                    {/* <Grid item>
-                      <FormControlLabel
-                        control={
-                          <Radio
-                            id="secondaryOther"
-                            name="secondaryJob.title"
-                            onChange={(e) => handleChange(e)}
-                            className={classes.item}
-                          />
-                        }
-                        checked={secondaryCheckbox}
-                        label="Other"
-                        className={classes.item}
-                      />
-                      <TextField
-                        type="text"
-                        name="secondaryOther"
-                        value={secondaryOther}
-                        id="secondaryJob"
-                        onChange={(e) => handleChange(e)}
-                      />
-                    </Grid> */}
                   </Grid>
                 </RadioGroup>
               </FormControl>
@@ -598,19 +511,12 @@ const SkillsForm = ({
                 <Grid item>
                   <TextField
                     error={secondaryYearsError.length !== 0}
-                    helperText={secondaryYearsError}
-                    type="number"
-                    name="secondaryJob.years"
-                    id="secondaryJob.years"
-                    value={secondaryJob.years}
-                    onChange={(e) => handleChange(e)}
-                    className={classes.yearsInput}
+                    helperText={secondaryYearsError}  type="number" name="secondaryJob.years"
+                    id="secondaryJob.years" value={secondaryJob.years}
+                    onChange={(e) => handleChange(e)}  className={classes.yearsInput}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          className={classes.adornment}
-                        >
+                        <InputAdornment position="end" className={classes.adornment} >
                           years
                         </InputAdornment>
                       ),
@@ -632,14 +538,9 @@ const SkillsForm = ({
             <Grid item>
               {shifts.map((sh, i) => (
                 <FormControlLabel
-                  control={<Checkbox id={sh} />}
-                  key={`${sh}${i}`}
-                  name="shift"
-                  value={sh}
-                  checked={shift.filter(shift => shift === sh)[0] ? true : false}
-                  label={sh}
-                  onChange={(e) => handleChange(e)}
-                  className={classes.item}
+                  control={<Checkbox id={sh} />} key={`${sh}${i}`} name="shift"
+                  value={sh} checked={shift.filter(shift => shift === sh)[0] ? true : false}
+                  label={sh} onChange={(e) => handleChange(e)} className={classes.item}
                 />
               ))}
             </Grid>
@@ -662,31 +563,16 @@ const SkillsForm = ({
                   <Grid item key={`${st}${i}`} sm={6}>
                     <FormControlLabel
                       control={
-                        <Radio
-                          size="small"
-                          id={st}
-                          checked={styleCurrent === st}
-                          onChange={(e) => handleChange(e)}
-                          className={classes.styleRadio}
-                        />
-                      }
-                      name="styleCurrent"
+                        <Radio size="small" id={st} checked={styleCurrent === st}
+                          onChange={(e) => handleChange(e)} className={classes.styleRadio} />
+                      } name="styleCurrent"
                     />
-                    <TextField
-                      id={st}
-                      type="number"
-                      name="style"
-                      label={st}
-                      value={st === styleCurrent ? style.years : ""}
-                      onChange={(e) => handleChange(e)}
-                      min="0"
-                      className={classes.styleandcuisineInput}
+                    <TextField id={st} type="number" name="style" label={st}
+                      value={st === styleCurrent ? style.years : ""} onChange={(e) => handleChange(e)}
+                      min="0" className={classes.styleandcuisineInput}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment
-                            position="end"
-                            className={classes.adornment}
-                          >
+                          <InputAdornment position="end" className={classes.adornment} >
                             years
                           </InputAdornment>
                         ),
@@ -721,21 +607,13 @@ const SkillsForm = ({
               <Grid item container direction="row">
                 {cuisines.map((cu, i) => (
                   <Grid item key={`${cu}${i}`} xs={12} sm={6}>
-                    <TextField
-                      type="number"
-                      name="cuisine"
-                      label={cu}
-                      id={cu}
-                      value={cuisine.filter(cui => cui.type === cu)[0] ? cuisine.filter(cui => cui.type === cu)[0].years : ""}
-                      onChange={(e) => handleChange(e)}
-                      min="0"
+                    <TextField type="number" name="cuisine" label={cu}
+                      id={cu} value={cuisine.filter(cui => cui.type === cu)[0] ? cuisine.filter(cui => cui.type === cu)[0].years : ""}
+                      onChange={(e) => handleChange(e)} min="0"
                       className={classes.styleandcuisineInput}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment
-                            position="end"
-                            className={classes.adornment}
-                          >
+                          <InputAdornment position="end" className={classes.adornment}>
                             years
                           </InputAdornment>
                         ),
@@ -758,17 +636,9 @@ const SkillsForm = ({
                   <Grid item key={wine}>
                     <FormControlLabel
                       control={
-                        <Radio
-                          id={wine}
-                          value={wine}
-                          checked={wineKnowledge === wine}
-                          onChange={(e) => handleChange(e)}
-                        />
+                        <Radio id={wine} value={wine} checked={wineKnowledge === wine} onChange={(e) => handleChange(e)}/>
                       }
-                      label={wine}
-                      name="wineKnowledge"
-                      className={classes.item}
-                    />
+                      label={wine} name="wineKnowledge" className={classes.item} />
                   </Grid>
                 ))}
               </Grid>
@@ -786,16 +656,8 @@ const SkillsForm = ({
                   <Grid item key={cocktail}>
                     <FormControlLabel
                       control={
-                        <Radio
-                          id={cocktail}
-                          value={cocktail}
-                          checked={cocktailKnowledge === cocktail}
-                          onChange={(e) => handleChange(e)}
-                        />
-                      }
-                      label={cocktail}
-                      name="cocktailKnowledge"
-                      className={classes.item}
+                        <Radio id={cocktail} value={cocktail} checked={cocktailKnowledge === cocktail} onChange={(e) => handleChange(e)} />
+                      } label={cocktail} name="cocktailKnowledge" className={classes.item}
                     />
                   </Grid>
                 ))}
@@ -815,17 +677,9 @@ const SkillsForm = ({
                 <Grid item key={pos} sm={4} xs={6}>
                   <FormControlLabel
                     control={
-                      <Checkbox
-                        id={pos}
-                        value={pos}
-                        checked={systems.filter(sys => sys === pos)[0] ? true : false}
-                        onChange={(e) => handleChange(e)}
-                      />
+                      <Checkbox id={pos} value={pos} checked={systems.filter(sys => sys === pos)[0] ? true : false} onChange={(e) => handleChange(e)} />
                     }
-                    name="systems"
-                    label={pos}
-                    className={classes.item}
-                  />
+                    name="systems" label={pos} className={classes.item}/>
                 </Grid>
               ))}
             </Grid>

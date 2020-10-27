@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import { getUser } from '@helpers/auth-helpers';
+import { getUser, getFilterID } from '@helpers/auth-helpers';
 import SearchForm from '../form/SearchForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +67,8 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
   const [employer, getEmployer] = useState({})
   const [reload, setReload] = useState(false)
 
+  const [currentSearchId, setCurrentSearchId] = useState()
+
   const { name, address, generalEmail, website, firstName, lastName, title, phone, email } = employerData;
 
   const user = JSON.parse(getUser());
@@ -88,11 +90,11 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
   }, [filter])
 
   useEffect(() => {
-    if(searchLoading === "SUCCESS") {
+    if (searchLoading === "SUCCESS") {
       actions.initialLoading()
-      history.push("/home")
-    } else if(searchLoading === "REQUEST") {
-      
+      history.push(`/search/${currentSearchId}`)
+    } else if (searchLoading === "REQUEST") {
+
     }
   }, [searchLoading])
 
@@ -109,7 +111,12 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
   const handleSubmit = (e, index) => {
     e.preventDefault();
     const formData = searchQueries[index];
-    actions.searchEmployee(formData)    
+    const data = {
+      id: user._id,
+      filterID: formData._id
+    }
+    setCurrentSearchId(formData._id)
+    actions.searchEmployee(data)
   };
 
   // Render search query button

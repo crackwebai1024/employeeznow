@@ -21,7 +21,12 @@ export const actions = createActions({
   SEARCH_EMPLOYEE: undefined,
   SEARCH_EMPLOYEE_SUCCESS: undefined,
 
-  INITIAL_LOADING: undefined
+  INITIAL_LOADING: undefined,
+
+  GET_SEARCH_RESULT: undefined,
+  GET_SEARCH_RESULT_SUCCESS: undefined,
+
+  SET_RETURN: undefined
 });
 
 const reducer = handleActions(
@@ -43,6 +48,10 @@ const reducer = handleActions(
     
     [actions.initialLoading, handlers.initialLoading],
     
+    [actions.getSearchResult, handlers.getSearchResult],
+    [actions.getSearchResultSuccess, handlers.getSearchResultSuccess],
+
+    [actions.setReturn, handlers.setReturn]
   ]),
   initialState,
 );

@@ -18,23 +18,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
+import _ from 'lodash';
 import { getUser } from '@helpers/auth-helpers';
 
-// import { loadSearchQueries } from '../../../store/actions/searchQueries';
-// import { createSearchQuery } from '../../../store/actions/searchQuery';
-// import { searchAndSavefilterProfessions } from '../../../store/actions/professions';
-
-import {
-  usaStates,
-  shifts,
-  jobTypes,
-  styles,
-  cuisines,
-  wineKnowledges,
-  cocktailKnowledges,
-  poss,
-  reservations,
-} from '../../Employee/professionTypes';
+import { usaStates, shifts, jobTypes, styles, cuisines, wineKnowledges, cocktailKnowledges, poss, reservations } from '../../Employee/professionTypes';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,62 +50,55 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchForm = ({ actions, saveFilter, setOpenSearchForm }) => {
+const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) => {
   const classes = useStyles();
   const theme = useTheme();
   const user = JSON.parse(getUser())
 
-  const { register, handleSubmit, errors } = useForm();
+  const [shift, setShift] = useState(searchFormData.shift)
+  const [reload, setReload] = useState(false)
+
+  const { register, handleSubmit, errors, setValue } = useForm({
+    defaultValues: searchFormData
+  });
 
   const onSubmit = (formData) => {
     const systems = [];
     systems.push(formData.pos, formData.reservation);
-
     delete formData.reservation;
     const id = user._id
     const sendData = { ...formData, systems, id };
     // filter save request action
-    actions.saveFilterRequest(sendData)
+    if(searchFormData) {
+      // return actions.updatefilterRequest(sendData)
+    }
+    debugger
+    // actions.saveFilterRequest(sendData)
   };
 
   useEffect(() => {
     if (saveFilter == "SUCCESS") {
+      const data = {
+        id: user._id
+      }
+      actions.getFilterListRequest(data)
       setOpenSearchForm(false)
     }
   }, [saveFilter])
 
-  // setData({
-  //   searchAddress: {
-  //    ...search
-  //   }
-  //   street: searchQueries[buttonId].street
-  //     ? searchQueries[buttonId].street
-  //     : '',
-  //   shift: searchQueries[buttonId].shift ? searchQueries[buttonId].shift : '',
-  //   primary: searchQueries[buttonId].primary
-  //     ? searchQueries[buttonId].primary
-  //     : '',
-  //   secondary: searchQueries[buttonId].secondary
-  //     ? searchQueries[buttonId].secondary
-  //     : '',
-  //   style: searchQueries[buttonId].style
-  //     ? searchQueries[buttonId].street
-  //     : '',
-  //   cuisine: searchQueries[buttonId].cuisine
-  //     ? searchQueries[buttonId].cuisine
-  //     : '',
-  //   wineKnowledge: searchQueries[buttonId].wineKnowledge
-  //     ? searchQueries[buttonId].wineKnowldge
-  //     : '',
-  //   cocktailKnowledge: searchQueries[buttonId].cocktailKnowledge
-  //     ? searchQueries[buttonId].cocktailKnowledge
-  //     : '',
-  //   pos: searchQueries[buttonId].pos ? searchQueries[buttonId].pos : 0,
-  //   reservation: searchQueries[buttonId].reservation
-  //     ? searchQueries[buttonId].reservation
-  //     : '',
-  //   name: searchQueries[buttonId].name ? searchQueries[buttonId].name : '',
-  // });
+  const handleChange = ({ target: { id, name, value, checked } }) => {
+    if(checked) {
+      shift.push(value)
+      setShift(shift)
+      setReload(!reload)
+    } else {
+      _.remove(shift, function(val){
+        return val == value
+      })
+      setShift(shift)
+      setReload(!reload)
+    }
+  }
 
   return (
     <Container maxWidth="sm">
@@ -148,45 +128,23 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm }) => {
 
             <Grid item>
               <TextField
-                fullWidth
-                margin="none"
-                name="searchAddress.street"
-                label="Street"
-                type="text"
-                id="street"
-                autoComplete="street"
-                size="small"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputRef={register}
+                fullWidth margin="none" name="searchAddress.street" label="Street"
+                type="text" id="street" autoComplete="street" size="small" inputRef={register}
+                InputLabelProps={{ shrink: true }}
               />
             </Grid>
 
             <Grid item>
               <TextField
-                error={
-                  errors.searchAddress && errors.searchAddress.city
-                    ? true
-                    : false
+                error={errors.searchAddress && errors.searchAddress.city
+                  ? true : false
                 }
-                helperText={
-                  errors.searchAddress && errors.searchAddress.city
-                    ? 'This filed is required'
-                    : ''
+                helperText={errors.searchAddress && errors.searchAddress.city
+                  ? 'This filed is required' : ''
                 }
-                required
-                fullWidth
-                margin="none"
-                name="searchAddress.city"
-                label="City"
-                type="text"
-                id="city"
-                autoComplete="city"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputRef={register({ required: true, minLength: 2 })}
+                required fullWidth margin="none" name="searchAddress.city" label="City"
+                type="text" id="city" autoComplete="city" inputRef={register({ required: true, minLength: 2 })}
+                InputLabelProps={{ shrink: true }}
               />
             </Grid>
 
@@ -283,10 +241,17 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm }) => {
                 <Grid item>
                   {shifts.map((sh, i) => (
                     <FormControlLabel
-                      control={<Checkbox id={sh} />}
+                      // control={<Checkbox id={sh} checked={searchFormData.shift.filter(shift => shift == sh).length > 0 ? true : false} />}
+                      control={
+                        <Checkbox id={sh}
+                          value={sh}
+                          checked={searchFormData && searchFormData.shift.filter(shift => shift == sh).length > 0 ? true : false}
+                          name={sh}
+                          onChange={(e) => handleChange(e)}
+                        />
+                      }
                       key={`${sh}${i}`}
                       name="shift"
-                      value={sh}
                       label={sh}
                       inputRef={register({
                         required: true,

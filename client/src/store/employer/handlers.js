@@ -1,8 +1,10 @@
 
 const initialState = {
   employerData: {},
-  saveFilter : 'NONE',
-  searchLoading: 'NONE'
+  saveFilter: 'NONE',
+  searchLoading: 'NONE',
+  filterResult: [],
+  return: false
 };
 
 export const getEmployerData = (state) => ({
@@ -23,13 +25,18 @@ export const getEmployerFailure = (state) => ({
 
 export const saveFilterRequest = (state) => ({
   ...state,
-  saveFilter : 'NONE',
+  saveFilter: 'NONE',
 });
 
-export const saveFilterSuccess = (state, { payload }) => ({
-  ...state,
-  saveFilter : 'SUCCESS'
-});
+export const saveFilterSuccess = (state, { payload }) => {
+  return {
+    ...state,
+    saveFilter: 'SUCCESS',
+    searchLoading: "SUCCESS",
+    filterID: payload.filterID,
+    filterResult: payload.filterResult,
+  }
+};
 
 export const saveFilterFailure = (state) => ({
   ...state,
@@ -52,7 +59,7 @@ export const getFilterListFailure = (state, { payload }) => ({
 
 export const searchEmployee = (state, { payload }) => ({
   ...state,
-  searchLoading : "REQUEST"
+  searchLoading: "REQUEST"
 })
 
 export const searchEmployeeFailure = (state, { payload }) => ({
@@ -62,7 +69,9 @@ export const searchEmployeeFailure = (state, { payload }) => ({
 
 export const searchEmployeeSuccess = (state, { payload }) => ({
   ...state,
-  searchLoading: "SUCCESS"
+  searchLoading: "SUCCESS",
+  filterResult: payload.searchResult,
+  filterID: payload.filterID
 })
 
 export const initialLoading = (state, { payload }) => ({
@@ -70,4 +79,19 @@ export const initialLoading = (state, { payload }) => ({
   searchLoading: "NONE"
 })
 
+export const getSearchResult = (state, { payload }) => ({
+  ...state,
+})
+
+export const getSearchResultSuccess = (state, { payload }) => {
+  return {
+    ...state,
+    filterResult: payload.searchresult,
+  }
+}
+
+export const setReturn = (state) => ({
+  ...state,
+  return: true
+})
 export default initialState;
