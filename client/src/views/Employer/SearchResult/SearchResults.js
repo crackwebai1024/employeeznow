@@ -125,10 +125,8 @@ const SearchResults = (props) => {
   const setFilterUpdateHandle = (data) => {
     setOpenSearchForm(true)
     setSearchFormdata(data)
-    console.log(data, "searchFormData")
   }
-
-  console.log(slug, "filterResult")
+  console.log(openSearchForm, "searchFormData")
   return (
     <Container className={classes.root}>
       <nav aria-label="mailbox folders">
@@ -228,18 +226,12 @@ const SearchResults = (props) => {
           </Grid>
         </Grid>
       </main>
-      <Dialog
-        open={openSearchForm}
-        onClose={clickFormClose}
-        aria-labelledby="dialog-title"
-        fullWidth
-        className={classes.dialog}
+      <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
+        fullWidth className={classes.dialog}
       >
-        <SearchForm
-          employerId={user._id}
+        <SearchForm employerId={user._id}
           searchFormData={searchFormData}
-          slug={user.slug}
-          setOpenSearchForm={setOpenSearchForm}
+          slug={slug} setOpenSearchForm={setOpenSearchForm}
         />
       </Dialog>
     </Container>

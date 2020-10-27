@@ -50,30 +50,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) => {
+const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, slug }) => {
   const classes = useStyles();
   const theme = useTheme();
   const user = JSON.parse(getUser())
 
-  const [shift, setShift] = useState(searchFormData.shift)
+  const [shift, setShift] = useState(searchFormData ? searchFormData.shift : [])
   const [reload, setReload] = useState(false)
 
   const { register, handleSubmit, errors, setValue } = useForm({
-    defaultValues: searchFormData
+    // defaultValues: searchFormData
   });
 
   const onSubmit = (formData) => {
     const systems = [];
+    debugger
     systems.push(formData.pos, formData.reservation);
     delete formData.reservation;
     const id = user._id
-    const sendData = { ...formData, systems, id };
     // filter save request action
-    if(searchFormData) {
-      // return actions.updatefilterRequest(sendData)
+    const sendData = {}
+    if (searchFormData) {
+      sendData = { ...formData, systems, id, slug };
+    } else {
+      sendData = { ...formData, systems, id };
     }
-    debugger
-    // actions.saveFilterRequest(sendData)
+    actions.saveFilterRequest(sendData)
   };
 
   useEffect(() => {
@@ -87,12 +89,12 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
   }, [saveFilter])
 
   const handleChange = ({ target: { id, name, value, checked } }) => {
-    if(checked) {
+    if (checked) {
       shift.push(value)
       setShift(shift)
       setReload(!reload)
     } else {
-      _.remove(shift, function(val){
+      _.remove(shift, function (val) {
         return val == value
       })
       setShift(shift)
@@ -100,6 +102,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
     }
   }
 
+  console.log(searchFormData, "searchFormData")
   return (
     <Container maxWidth="sm">
       <div className={classes.root}>
@@ -111,7 +114,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
           candidates!
         </Typography>
 
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container direction="column">
             {/* address */}
             <Grid item container alignItems="flex-end">
@@ -127,8 +130,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
             </Grid>
 
             <Grid item>
-              <TextField
-                fullWidth margin="none" name="searchAddress.street" label="Street"
+              <TextField fullWidth margin="none" name="searchAddress.street" label="Street"
                 type="text" id="street" autoComplete="street" size="small" inputRef={register}
                 InputLabelProps={{ shrink: true }}
               />
@@ -147,36 +149,18 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-
             <Grid item>
               <TextField
-                error={
-                  errors.searchAddress && errors.searchAddress.state
-                    ? true
-                    : false
+                error={errors.searchAddress && errors.searchAddress.state
+                  ? true : false
                 }
-                helperText={
-                  errors.searchAddress && errors.searchAddress.state
-                    ? 'This filed is required'
-                    : ''
+                helperText={errors.searchAddress && errors.searchAddress.state
+                  ? 'This filed is required' : ''
                 }
-                required
-                fullWidth
-                select
-                margin="none"
-                name="searchAddress.state"
-                label="State"
-                id="state"
-                autoComplete="state"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputRef={register({
-                  required: true,
-                })}
-                SelectProps={{
-                  native: true,
-                }}
+                required fullWidth select margin="none" name="searchAddress.state" label="State" id="state"
+                autoComplete="state" InputLabelProps={{ shrink: true }}
+                inputRef={register({ required: true })}
+                SelectProps={{ native: true }}
               >
                 <option value=""></option>
                 {usaStates.map((usaState) => (
@@ -186,30 +170,17 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
                 ))}
               </TextField>
             </Grid>
-
             <Grid item>
               <TextField
-                error={
-                  errors.searchAddress && errors.searchAddress.zipcode
-                    ? true
-                    : false
+                error={errors.searchAddress && errors.searchAddress.zipcode
+                  ? true : false
                 }
-                helperText={
-                  errors.searchAddress && errors.searchAddress.zipcode
-                    ? 'This filed is required'
-                    : ''
+                helperText={errors.searchAddress && errors.searchAddress.zipcode
+                  ? 'This filed is required' : ''
                 }
-                required
-                fullWidth
-                margin="none"
-                name="searchAddress.zipcode"
-                label="Zip Code"
-                type="text"
-                id="zipcode"
-                autoComplete="zipcode"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                required fullWidth margin="none" name="searchAddress.zipcode" label="Zip Code"
+                type="text" id="zipcode" autoComplete="zipcode"
+                InputLabelProps={{ shrink: true }}
                 inputRef={register({
                   required: true,
                   minLength: 5,
@@ -231,11 +202,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
               </Grid>
             </Grid>
 
-            <FormControl
-              component="fieldset"
-              required
-              error={errors.shift ? true : false}
-            >
+            <FormControl component="fieldset" required error={errors.shift ? true : false} >
               <FormLabel> </FormLabel>
               <FormGroup>
                 <Grid item>
@@ -244,18 +211,12 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
                       // control={<Checkbox id={sh} checked={searchFormData.shift.filter(shift => shift == sh).length > 0 ? true : false} />}
                       control={
                         <Checkbox id={sh}
-                          value={sh}
-                          checked={searchFormData && searchFormData.shift.filter(shift => shift == sh).length > 0 ? true : false}
-                          name={sh}
-                          onChange={(e) => handleChange(e)}
+                          value={sh} name={sh} onChange={(e) => handleChange(e)}
+                          // checked={searchFormData && searchFormData.shift.filter(shift => shift == sh).length > 0 ? true : false}
                         />
                       }
-                      key={`${sh}${i}`}
-                      name="shift"
-                      label={sh}
-                      inputRef={register({
-                        required: true,
-                      })}
+                      key={`${sh}${i}`} name="shift" label={sh}
+                      inputRef={register({ required: true })}
                     />
                   ))}
                 </Grid>
@@ -279,25 +240,12 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
 
             <TextField
               error={errors.primary && errors.primary ? true : false}
-              helperText={
-                errors.primary && errors.primary ? 'This filed is required' : ''
+              helperText={errors.primary && errors.primary ? 'This filed is required' : ''
               }
-              required
-              select
-              fullWidth
-              margin="none"
-              name="primary"
-              label="Primary Job"
-              id="primary"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              required select fullWidth margin="none" name="primary" label="Primary Job"
+              id="primary" inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value=""></option>
               {jobTypes.map((jobType) => (
@@ -309,27 +257,13 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
 
             <TextField
               error={errors.secondary && errors.secondary ? true : false}
-              helperText={
-                errors.secondary && errors.secondary
-                  ? 'This filed is required'
-                  : ''
+              helperText={errors.secondary && errors.secondary
+                ? 'This filed is required' : ''
               }
-              required
-              select
-              fullWidth
-              margin="none"
-              name="secondary"
-              label="Secondary Job"
-              id="secondary"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              required select fullWidth margin="none" name="secondary" label="Secondary Job"
+              id="secondary" inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value=""></option>
               {jobTypes.map((jobType) => (
@@ -341,25 +275,12 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
 
             <TextField
               error={errors.style && errors.style ? true : false}
-              helperText={
-                errors.style && errors.style ? 'This filed is required' : ''
+              helperText={errors.style && errors.style ? 'This filed is required' : ''
               }
-              required
-              select
-              fullWidth
-              margin="none"
-              name="style"
-              label="Style"
-              id="style"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              required select fullWidth margin="none" name="style" label="Style"
+              id="style" inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value=""></option>
               {styles.map((st) => (
@@ -371,25 +292,11 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
 
             <TextField
               error={errors.cuisine && errors.cuisine ? true : false}
-              helperText={
-                errors.cuisine && errors.cuisine ? 'This filed is required' : ''
-              }
-              required
-              select
-              fullWidth
-              margin="none"
-              name="cuisine"
-              label="Cuisine"
-              id="cuisine"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              helperText={errors.cuisine && errors.cuisine ? 'This filed is required' : ''}
+              required select fullWidth margin="none" name="cuisine" label="Cuisine"
+              id="cuisine" inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value=""></option>
               {cuisines.map((cu) => (
@@ -400,30 +307,13 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
             </TextField>
 
             <TextField
-              error={
-                errors.wineKnowledge && errors.wineKnowledge ? true : false
-              }
-              helperText={
-                errors.wineKnowledge && errors.wineKnowledge
-                  ? 'This filed is required'
-                  : ''
-              }
-              required
-              select
-              fullWidth
-              margin="none"
-              name="wineKnowledge"
-              label="Wine Knowledge"
-              id="wineKnowledge"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              error={errors.wineKnowledge && errors.wineKnowledge ? true : false}
+              helperText={errors.wineKnowledge && errors.wineKnowledge
+                ? 'This filed is required' : ''}
+              required select fullWidth margin="none" name="wineKnowledge" label="Wine Knowledge"
+              id="wineKnowledge" inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value=""></option>
               {wineKnowledges.map((wine) => (
@@ -434,32 +324,16 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
             </TextField>
 
             <TextField
-              error={
-                errors.cocktailKnowledge && errors.cocktailKnowledge
-                  ? true
-                  : false
+              error={errors.cocktailKnowledge && errors.cocktailKnowledge
+                ? true : false
               }
-              helperText={
-                errors.cocktailKnowledge && errors.cocktailKnowledge
-                  ? 'This filed is required'
-                  : ''
+              helperText={errors.cocktailKnowledge && errors.cocktailKnowledge
+                ? 'This filed is required' : ''
               }
-              required
-              select
-              fullWidth
-              margin="none"
-              name="cocktailKnowledge"
-              label="Cocktail Knowledge"
-              id="cocktailKnowledge"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              required select fullWidth margin="none" name="cocktailKnowledge" label="Cocktail Knowledge"
+              id="cocktailKnowledge" inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value=""></option>
               {cocktailKnowledges.map((cocktail) => (
@@ -471,24 +345,11 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
 
             <TextField
               error={errors.pos && errors.pos ? true : false}
-              helperText={
-                errors.pos && errors.pos ? 'This filed is required' : ''
-              }
-              select
-              fullWidth
-              required
-              margin="none"
-              name="pos"
-              label="POS"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              helperText={errors.pos && errors.pos ? 'This filed is required' : ''}
+              select fullWidth required margin="none" name="pos" label="POS"
+              inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value="" />
               {poss.map((pos) => (
@@ -500,26 +361,14 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
 
             <TextField
               error={errors.reservation && errors.reservation ? true : false}
-              helperText={
-                errors.reservation && errors.reservation
-                  ? 'This filed is required'
-                  : ''
+              helperText={errors.reservation && errors.reservation
+                ? 'This filed is required'
+                : ''
               }
-              select
-              fullWidth
-              required
-              margin="none"
-              name="reservation"
-              label="Reservation"
-              inputRef={register({
-                required: true,
-              })}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              SelectProps={{
-                native: true,
-              }}
+              select fullWidth required margin="none" name="reservation" label="Reservation"
+              inputRef={register({ required: true })}
+              InputLabelProps={{ shrink: true }}
+              SelectProps={{ native: true }}
             >
               <option value="" />
               {reservations.map((res) => (
@@ -547,30 +396,15 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData }) 
               </Typography>
               <TextField
                 error={errors.name && errors.name ? true : false}
-                helperText={
-                  errors.name && errors.name ? 'This filed is required' : ''
+                helperText={errors.name && errors.name ? 'This filed is required' : ''
                 }
-                required
-                fullWidth
-                margin="none"
-                name="name"
-                label="Name (ex. My 5th st Cafe)"
-                type="text"
-                id="name"
-                autoComplete="name"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                required fullWidth margin="none" name="name" label="Name (ex. My 5th st Cafe)" type="text"
+                id="name" autoComplete="name" InputLabelProps={{ shrink: true }}
                 inputRef={register({ required: true, mixLength: 10 })}
               />
             </Grid>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              color="primary"
-              onClick={handleSubmit(onSubmit)}
+            <Button type="submit" fullWidth variant="outlined" color="primary"
               className={classes.button}
             >
               Confirm

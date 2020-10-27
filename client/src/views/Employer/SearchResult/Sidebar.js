@@ -33,7 +33,17 @@ import { getUser } from '@helpers/auth-helpers';
 import { connect } from 'react-redux';
 import KeyboardArrowDownOutlinedIcon from '@material-ui/icons/KeyboardArrowDownOutlined';
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    marginLeft: '0.5rem'
+  },
+  red: {
+    color : 'red'
+  },
+  green : {
+    color: 'green'
+  }
+}));
 
 const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFilterUpdate }) => {
   const classes = useStyles();
@@ -49,7 +59,14 @@ const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFil
     actions.searchEmployee(searchData)
   }
 
-  console.log(slug, "slug--")
+  const removeFilter = (data) => {
+    const removeQuery = {
+      id: user._id,
+      filterID: data._id
+    }
+    actions.removeFilter({ removeQuery, searchQuery })
+  }
+
   return (
     <div>
       {matchesSM && (
@@ -71,11 +88,11 @@ const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFil
         }
       >
         {searchQuery.map((searchQuery, i) =>
-          <ListItem button onClick={e => onFilterClick(searchQuery._id)}>
+          <ListItem button onClick={e => onFilterClick(searchQuery._id)} key={i}>
             <ListItemText primary={searchQuery.name} secondary={searchQuery._id === slug ? "Current Filter" : ""} />
             <ListItemIcon>
-              <EditOutlinedIcon onClick={e => setFilterUpdate(searchQuery)} />
-              <DeleteIcon />
+              <EditOutlinedIcon onClick={e => setFilterUpdate(searchQuery)} className={`${classes.icon} ${classes.green}`} />
+              <DeleteIcon onClick={e => removeFilter(searchQuery)} className={`${classes.icon} ${classes.red}`} />
             </ListItemIcon>
           </ListItem>
         )}

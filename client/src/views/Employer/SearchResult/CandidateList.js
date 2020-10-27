@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   itemsContainer: {
+    borderRadius: '0px',
     [theme.breakpoints.down('sm')]: {
       paddingLeft: '2.5rem',
     },
@@ -52,7 +53,7 @@ const CandidateOverview = ({
   secondaryTitle,
   secondaryYears,
   shift,
-  style=[],
+  style,
   cuisine,
   wineKnowledge,
   cocktailKnowledge,
@@ -65,7 +66,7 @@ const CandidateOverview = ({
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Card key={id} style={{ margin: '2%' }}>
+    <Card key={id} style={{ margin: '2%', borderRadius: '0px' }}>
       <CardContent>
         <Typography variant="h6" color="primary">
           Candidate ID: {employeezNowId}
@@ -85,8 +86,8 @@ const CandidateOverview = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
 
           <Grid item>
@@ -104,8 +105,8 @@ const CandidateOverview = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
 
           <Grid item>
@@ -129,38 +130,31 @@ const CandidateOverview = ({
                 ))}
               </Grid>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </Grid>
 
-          {/* <Grid item>
-            {style.length !== 0 ? (
-              <Grid container>
-                <Grid item>
-                  <Typography className={classes.subtitle}>Style:</Typography>
-                </Grid>
-                <Grid item>
-                  <Grid item container direction={matchesSM ? 'column' : 'row'}>
-                    {style.map((st, i) => (
-                      <Grid item key={st._id}>
-                        <Typography
-                          variant="body2"
-                          className={classes.itemSpan}
-                        >
-                          {st.type} for {st.years} years
-                          {i !== style.length - 1 ? ',' : ''}
-                        </Typography>
-                      </Grid>
-                    ))}
+          <Grid item>
+            <Grid container>
+              <Grid item>
+                <Typography className={classes.subtitle}>Style:</Typography>
+              </Grid>
+              <Grid item>
+                <Grid item container direction={matchesSM ? 'column' : 'row'}>
+                  <Grid item>
+                    <Typography
+                      variant="body2"
+                      className={classes.itemSpan}
+                    >
+                      {style.type} for {style.years} years
+                    </Typography>
                   </Grid>
                 </Grid>
               </Grid>
-            ) : (
-              ''
-            )}
-          </Grid> */}
+            </Grid>
+          </Grid>
 
-          {/* {cuisine.length !== 0 ? (
+          {cuisine.length !== 0 ? (
             <Grid item>
               <Grid container>
                 <Grid item>
@@ -184,8 +178,8 @@ const CandidateOverview = ({
               </Grid>
             </Grid>
           ) : (
-            ''
-          )} */}
+              ''
+            )}
         </Grid>
       </CardContent>
 

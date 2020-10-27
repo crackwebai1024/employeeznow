@@ -26,7 +26,10 @@ export const actions = createActions({
   GET_SEARCH_RESULT: undefined,
   GET_SEARCH_RESULT_SUCCESS: undefined,
 
-  SET_RETURN: undefined
+  SET_RETURN: undefined,
+  REMOVE_FILTER: undefined,
+  REMOVE_FILTER_SUCCESS: undefined,
+  REMOVE_FILTER_FAILURE: undefined
 });
 
 const reducer = handleActions(
@@ -51,7 +54,11 @@ const reducer = handleActions(
     [actions.getSearchResult, handlers.getSearchResult],
     [actions.getSearchResultSuccess, handlers.getSearchResultSuccess],
 
-    [actions.setReturn, handlers.setReturn]
+    [actions.setReturn, handlers.setReturn],
+
+    [actions.removeFilter, handlers.removeFilter],
+    [actions.removeFilterSuccess, handlers.removeFilterSuccess],
+    [actions.removeFilterFailure, handlers.removeFilterFailure]
   ]),
   initialState,
 );

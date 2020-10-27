@@ -94,4 +94,18 @@ export const setReturn = (state) => ({
   ...state,
   return: true
 })
+
+export const removeFilter = (state) => ({
+  ...state
+})
+
+export const removeFilterSuccess = (state, { payload }) => ({
+  ...state,
+  filter: payload,
+})
+
+export const removeFilterFailure = (state) => ({
+  ...state
+})
+
 export default initialState;
