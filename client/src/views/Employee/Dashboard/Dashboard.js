@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white'
   },
   container: {
-    maxWidth: 1100,
+    
   },
   header: {
     background: 'white',
@@ -163,7 +163,7 @@ function Dashboard(props) {
   return (
     !_.isEmpty(employeeData) ?
       <Fragment>
-        <Container className={classes.container}>
+        <Container className={classes.container} maxWidth="md">
           <Grid className={classes.header}>
             <BackgroundPhoto />
             <Grid className={classes.profilePhoto}>

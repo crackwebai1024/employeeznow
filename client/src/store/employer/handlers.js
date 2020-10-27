@@ -25,7 +25,7 @@ export const getEmployerFailure = (state) => ({
 
 export const saveFilterRequest = (state) => ({
   ...state,
-  saveFilter: 'NONE',
+  saveFilter: 'REQUEST',
 });
 
 export const saveFilterSuccess = (state, { payload }) => {
@@ -45,7 +45,8 @@ export const saveFilterFailure = (state) => ({
 
 export const getFilterListRequest = (state, { payload }) => ({
   ...state,
-  searchLoading: 'NONE'
+  searchLoading: 'NONE',
+  saveFilter: 'NONE',
 });
 
 export const getFilterListSuccess = (state, { payload }) => ({
@@ -76,7 +77,8 @@ export const searchEmployeeSuccess = (state, { payload }) => ({
 
 export const initialLoading = (state, { payload }) => ({
   ...state,
-  searchLoading: "NONE"
+  searchLoading: "NONE",
+
 })
 
 export const getSearchResult = (state, { payload }) => ({

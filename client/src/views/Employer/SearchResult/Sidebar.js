@@ -17,15 +17,11 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import InboxIcon from '@material-ui/icons/Inbox';
-import Checkbox from '@material-ui/core/Checkbox';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
@@ -38,10 +34,13 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '0.5rem'
   },
   red: {
-    color : 'red'
+    color: 'red'
   },
-  green : {
+  green: {
     color: 'green'
+  },
+  dialog: {
+    borderRadius: '0px'
   }
 }));
 
@@ -51,6 +50,9 @@ const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFil
   const user = JSON.parse(getUser());
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const [openDelete, setOpenDelete] = useState(false)
+  const [removeData, setRemoveData] = useState({})
+
   const onFilterClick = (id) => {
     const searchData = {
       filterID: id,
@@ -59,12 +61,22 @@ const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFil
     actions.searchEmployee(searchData)
   }
 
-  const removeFilter = (data) => {
+  const clickClose = () => {
+    setOpenDelete(false)
+  }
+
+  const onDeleteFilter = () => {
     const removeQuery = {
       id: user._id,
-      filterID: data._id
+      filterID: removeData._id
     }
     actions.removeFilter({ removeQuery, searchQuery })
+    setOpenDelete(false)
+  }
+
+  const removeFilter = (data) => {
+    setRemoveData(data)
+    setOpenDelete(true)
   }
 
   return (
@@ -97,6 +109,24 @@ const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFil
           </ListItem>
         )}
       </List>
+      <Dialog open={openDelete} onClose={clickClose}
+        fullWidth className={classes.dialog}
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete Search Filter"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you really delete this item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={clickClose} color="primary" autoFocus>
+            CANCEL
+          </Button>
+          <Button onClick={onDeleteFilter} color="primary" >
+            DELETE
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

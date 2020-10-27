@@ -177,7 +177,7 @@ const EmailVerification = ({
   const onDigitBack = () => {
     actions.signupuserEmpty()
   }
-  console.log(isAuthenticated)
+  
   return (
     <Container component="main" maxWidth="sm">
       <Grid container direction="column" justify="center" alignItems="center">

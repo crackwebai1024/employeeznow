@@ -120,7 +120,6 @@ const EmployeeForm = ({
   const classes = useStyles();
 
   const onChange = (e) => {
-    console.log(e.target.name)
     if (e.target.name == 'status')
       return setVeteran({
         ...veteran,
@@ -184,7 +183,7 @@ const EmployeeForm = ({
   if (phoneVerifyNeed) {
     return <Redirect to='/signup/phoneverify' />
   }
-  console.log(veteranCard && veteranCard.getAll("fname")[0])
+  
   return (
     <Container component="main" maxWidth="sm">
       <Grid container direction="column" justify="center" alignItems="center">
