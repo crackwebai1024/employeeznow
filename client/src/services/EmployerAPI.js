@@ -23,3 +23,7 @@ export async function onGetSearchResult(data) {
 export async function onRemoveFilter(data) {
   return await Axios.post('/crud/employer/searchfilter/delete', data)
 }
+
+export async function onAskInterest(data) {
+  return await Axios.post('/mail/employee/interest', data)
+}

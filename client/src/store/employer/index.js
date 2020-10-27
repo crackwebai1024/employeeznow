@@ -29,7 +29,13 @@ export const actions = createActions({
   SET_RETURN: undefined,
   REMOVE_FILTER: undefined,
   REMOVE_FILTER_SUCCESS: undefined,
-  REMOVE_FILTER_FAILURE: undefined
+  REMOVE_FILTER_FAILURE: undefined,
+
+  ASK_INTEREST_REQUEST: undefined,
+  ASK_INTEREST_SUCCESS: undefined,
+  ASK_INTEREST_FAILURE: undefined,
+
+  ASK_INTEREST_STATUS_HIDDEN: undefined,
 });
 
 const reducer = handleActions(
@@ -58,7 +64,13 @@ const reducer = handleActions(
 
     [actions.removeFilter, handlers.removeFilter],
     [actions.removeFilterSuccess, handlers.removeFilterSuccess],
-    [actions.removeFilterFailure, handlers.removeFilterFailure]
+    [actions.removeFilterFailure, handlers.removeFilterFailure],
+
+    [actions.askInterestRequest, handlers.askInterestRequest],
+    [actions.askInterestSuccess, handlers.askInterestSuccess],
+    [actions.askInterestFailure, handlers.askInterestFailure],
+    [actions.askInterestStatusHidden, handlers.askInterestStatusHidden],
+
   ]),
   initialState,
 );

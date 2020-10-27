@@ -18,6 +18,14 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: 0,
     },
   },
+  wrapper: {
+    borderRadius: '0px',
+    borderBottom: "1px solid gray",
+    cursor: 'pointer',
+    '&:hover' : {
+      background: theme.palette.common.white
+    }
+  },
   subtitle: {
     color: theme.palette.common.blue,
     fontSize: '0.875rem',
@@ -44,21 +52,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const CandidateOverview = ({
-  id,
-  employeezNowId,
-  employeeId,
-  primaryTitle,
-  primaryYears,
-  secondaryTitle,
-  secondaryYears,
-  shift,
-  style,
-  cuisine,
-  wineKnowledge,
-  cocktailKnowledge,
-  systems,
-  //  history, //need history to pass the data at CardAction
+const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, primaryYears, secondaryTitle,
+  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems,
 }) => {
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
@@ -66,7 +61,7 @@ const CandidateOverview = ({
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Card key={id} style={{ margin: '2%', borderRadius: '0px' }}>
+    <Card key={id} className={classes.wrapper}>
       <CardContent>
         <Typography variant="h6" color="primary">
           Candidate ID: {employeezNowId}

@@ -145,14 +145,8 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
         >
           {searchQueries.map((searchQuery, i) => (
             <Grid item key={searchQuery._id}>
-              <Button
-                type="submit"
-                variant="outlined"
-                color="secondary"
-                size="small"
-                startIcon={<SearchOutlinedIcon />}
-                id={searchQuery._id}
-                onClick={(e) => handleSubmit(e, i)}
+              <Button type="submit" variant="outlined"  color="secondary" size="small" 
+                startIcon={<SearchOutlinedIcon />} id={searchQuery._id} onClick={(e) => handleSubmit(e, i)}
               >
                 {searchQuery.name}
               </Button>
@@ -177,22 +171,15 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
           {localStorage.role === 'employer' ? (
             <Grid container>
               <Grid item>
-                <Button
-                  onClick={clickFormOpen}
-                  variant="contained"
-                  color="primary"
+                <Button onClick={clickFormOpen} variant="contained" color="primary"
                   className={classes.searchButton}
                 >
                   {searchQueries.length === 0
                     ? 'Create search filter'
                     : 'New Filter'}
                 </Button>
-                <Dialog
-                  open={openSearchForm}
-                  onClose={clickFormClose}
-                  aria-labelledby="dialog-title"
-                  fullWidth
-                  className={classes.dialog}
+                <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
+                  fullWidth className={classes.dialog}
                 >
                   <SearchForm
                     employerId={employer._id}
@@ -205,12 +192,9 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
 
               <Grid item>
                 {/* Employer account page */}
-                <Button
-                  component={Link}
+                <Button component={Link}
                   to={`/employers/${user.slug}/account`}
-                  variant="outlined"
-                  color="primary"
-                  className={classes.accountButton}
+                  variant="outlined" color="primary" className={classes.accountButton}
                 >
                   Account
                 </Button>

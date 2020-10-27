@@ -6,8 +6,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { actions as employeeActions } from '@store/employee';
+import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
-import { getUser } from '@helpers/auth-helpers';
+import { getUser, getFilterID } from '@helpers/auth-helpers';
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -15,6 +16,7 @@ import CandidateDocuments from './CandidateDocuments'
 import ProfilePhoto from '../../Employee/Dashboard/ProfilePhoto';
 import BackgourndPhoto from '../../Employee/Dashboard/BackgroundPhoto';
 import CallToAction from '@components/CallToAction';
+import Alert from '@material-ui/lab/Alert';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
@@ -109,10 +111,13 @@ const useStyles = makeStyles((theme) => ({
   },
   contentItem: {
     padding: '0 1rem 0 1rem'
+  },
+  alert: {
+    marginBottom: '1rem'
   }
 }));
 
-const DashboardCandidate = ({ location, mployee, actions, errorMessage, background, match, employeeData }) => {
+const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, background, match, employeeData }) => {
   console.log(location.data);
   const { basic, document, experience, portfolio, preference, skill } = employeeData
   const classes = useStyles();
@@ -123,6 +128,7 @@ const DashboardCandidate = ({ location, mployee, actions, errorMessage, backgrou
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [value, setValue] = React.useState(4.5);
+  const currentFilterID = getFilterID()
   /* eslint-disable react/jsx-one-expression-per-line */
 
   useEffect(() => {
@@ -134,15 +140,34 @@ const DashboardCandidate = ({ location, mployee, actions, errorMessage, backgrou
   }, [])
 
   useEffect(() => {
-    if (employeeData) {
-
+    if (askInterestStatus) {
+      setTimeout(() => {
+        actions.askInterestStatusHidden()
+      }, 3000);
     }
-  }, [employeeData])
+  }, [askInterestStatus])
 
-  console.log(employeeData, "employeeData")
+  // ask about interested request
+  const onAskInterest = () => {
+    const data = {
+      employeeID: slug,
+      employerID: user._id,
+      filterID: currentFilterID
+    }
+    actions.askInterestRequest(data)
+  }
+
+  console.log(askInterestStatus, "employeeData")
   return (
     <Container className={classes.container} maxWidth="md">
       {/* Dashboard whole page column root */}
+      {
+        askInterestStatus == "SUCCESS" && <Alert severity="success" className={classes.alert}>Success</Alert>
+      }
+      {
+        askInterestStatus === "FAILURE" && <Alert severity="error" className={classes.alert}>Failure</Alert>
+      }
+
       <Grid className={classes.header}>
         <BackgourndPhoto />
         <Grid className={classes.profilePhoto}>
@@ -218,7 +243,7 @@ const DashboardCandidate = ({ location, mployee, actions, errorMessage, backgrou
         <CandidateDocuments />
         <Grid item container className={classes.callToAction}>
           <Grid item xs={12}>
-            <CallToAction />
+            <CallToAction onAskInterest={onAskInterest} />
           </Grid>
         </Grid>
         <Grid className={classes.section}>
@@ -237,13 +262,17 @@ const mapStateToProps = ({
   employee: {
     employeeData
   },
+  employer: {
+    askInterestStatus
+  }
 }) => ({
-  employeeData
+  employeeData, askInterestStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({
-    ...employeeActions
+    ...employeeActions,
+    ...employerActions
   }, dispatch),
 });
 

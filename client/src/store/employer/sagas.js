@@ -91,7 +91,7 @@ function* onRemoveFilter({ payload }) {
     if (res && res.data) {
       let newFilter = payload.searchQuery.filter(filter => filter._id !== payload.removeQuery.filterID)
       const data = {
-        filters : newFilter
+        filters: newFilter
       }
       yield put(types.removeFilterSuccess(data))
     }
@@ -100,6 +100,16 @@ function* onRemoveFilter({ payload }) {
   }
 }
 
+function* onAskInterest({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onAskInterest, payload)
+    if (res && res.data) {
+      yield put(types.askInterestSuccess(res.data.message))
+    }
+  } catch {
+    yield put(types.askInterestFailure())
+  }
+}
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
   takeEvery(types.saveFilterRequest, onSaveFilter),
@@ -107,6 +117,7 @@ const employerSagas = [
   takeEvery(types.searchEmployee, onSearchEmployee),
   takeEvery(types.getSearchResult, onGetSearchResult),
   takeEvery(types.removeFilter, onRemoveFilter),
+  takeEvery(types.askInterestRequest, onAskInterest)
 ];
 
 export default employerSagas;

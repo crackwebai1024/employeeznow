@@ -46,7 +46,7 @@ function ElevationScroll(props) {
 // Custom style setup
 const useStyles = makeStyles((theme) => ({
   appbar: {
-    height: '6rem',
+    height: '5rem',
     paddingLeft: '4rem',
     paddingRight: '4rem',
     zIndex: theme.zIndex.modal + 1, //zIndex of modal default + 1
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: '5rem',
+    // marginBottom: '1rem',
   },
   drawerIconContainer: {
     marginLeft: 'auto',
