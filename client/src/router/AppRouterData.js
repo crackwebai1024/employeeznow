@@ -18,6 +18,7 @@ import ExperienceForm from '@views/Employee/form/ExperienceForm';
 import ForgotPassword from '@views/Auth/Password/ForgotPasswordForm';
 import ResetPasswordForm from '@views/Auth/Password/ResetPasswordForm';
 import SearchResults from '@views/Employer/SearchResult/SearchResults';
+import Payment from '@views/Employer/Payment'
 import { getUser } from '@helpers/auth-helpers';
 
 
@@ -43,6 +44,7 @@ export const AppPrivateRouterEmployerData = [
   { 'path': `/employers/${user && user.slug}`, component: EmployerDashbaord },
   { 'path': `/employers/${user && user.slug}/account`, component: EmployerAccount },
   { 'path': `/candidate/:slug`, component: DashboardCandidate },
+  { 'path': `/payment`, component: Payment },
 ]
 
 export const AppPrivateRouteeEmployeeData = [

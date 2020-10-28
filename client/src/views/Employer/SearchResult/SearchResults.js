@@ -24,9 +24,13 @@ import Sidebar from './Sidebar';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    minHeight: '95vh',
     [theme.breakpoints.down('sm')]: {
       display: 'block',
     },
+  },
+  title : {
+    fontSize: 20,
   },
   drawer: {
     [theme.breakpoints.up('md')]: {
@@ -194,7 +198,7 @@ const SearchResults = (props) => {
           <Grid item>
             <Grid container className={classes.titleContainer}>
               <Grid item>
-                <Typography>EMPLOYEES SEARCH </Typography>
+                <Typography className={classes.title}>EMPLOYEES SEARCH </Typography>
               </Grid>
               {/* <Grid item>{count !== null ? `total: ${count}` : 0}</Grid> */}
               {/* <Grid item>page 1</Grid> */}

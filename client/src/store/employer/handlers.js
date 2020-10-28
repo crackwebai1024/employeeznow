@@ -5,7 +5,12 @@ const initialState = {
   searchLoading: 'NONE',
   filterResult: [],
   return: false,
-  askInterestStatus : ""
+  askInterestStatus: "",
+  formValues: {
+    service: "", facebook: "", twitter: "", firstname: "", lastname: "",
+    email: "", line1: "", line2: "", postal_code: "", city: "", country: null,
+    currency: null, amount: "",
+  }
 };
 
 export const getEmployerData = (state) => ({
@@ -113,14 +118,15 @@ export const removeFilterFailure = (state) => ({
 
 export const askInterestRequest = (state) => ({
   ...state,
-  askInterestStatus : ""
+  askInterestStatus: ""
 })
 
 export const askInterestSuccess = (state, { payload }) => {
   return {
-  ...state,
-  askInterestStatus: "SUCCESS"
-}}
+    ...state,
+    askInterestStatus: "SUCCESS"
+  }
+}
 
 export const askInterestFailure = (state) => ({
   ...state,
@@ -130,6 +136,11 @@ export const askInterestFailure = (state) => ({
 export const askInterestStatusHidden = (state) => ({
   ...state,
   askInterestStatus: ""
+})
+
+export const setFormValues = (state, { payload }) => ({
+  ...state,
+  formValues: payload
 })
 
 export default initialState;

@@ -10,6 +10,7 @@ export default createMuiTheme({
     common: {
       white: '#fcfcfc',
       blue: '#6098E0',
+      black: '#',
       darkBlue: '#2771E0',
       pink: '#FC0F59',
       yellow: '#FFF92D',

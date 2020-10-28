@@ -36,6 +36,8 @@ export const actions = createActions({
   ASK_INTEREST_FAILURE: undefined,
 
   ASK_INTEREST_STATUS_HIDDEN: undefined,
+
+  SET_FORM_VALUES: undefined
 });
 
 const reducer = handleActions(
@@ -70,6 +72,8 @@ const reducer = handleActions(
     [actions.askInterestSuccess, handlers.askInterestSuccess],
     [actions.askInterestFailure, handlers.askInterestFailure],
     [actions.askInterestStatusHidden, handlers.askInterestStatusHidden],
+    // payment form values
+    [actions.setFormValues, handlers.setFormValues],
 
   ]),
   initialState,

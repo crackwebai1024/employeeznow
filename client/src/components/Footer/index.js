@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography,
     padding: '3rem 7rem 1rem 7rem',
     [theme.breakpoints.down('sm')]: {
-      paddingRight: '3rem',
+      // paddingRight: '3rem',
     },
   },
   copyright: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   logoContainer: {
-    width: '20rem',
+    // width: '20rem',
     marginLeft: '-5rem',
     marginRight: 'auto',
     [theme.breakpoints.down('xs')]: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   mainLinks: {
-    width: '15rem',
+    // width: '15rem',
   },
   link: {
     textDecoration: 'none',
@@ -66,12 +66,7 @@ export default function Footer({ isAuthenticated, value, setValue }) {
   /** value/setValue is connected with value of Nav(Header) If eigther Nav/Footer change the order, value has to be matched */
   return (
     <footer className={classes.footer}>
-      <Grid
-        container
-        direction="column"
-        alignItems={matchesXS ? 'center' : undefined}
-        style={{ width: '100%' }}
-      >
+      <Grid container direction="column" alignItems={matchesXS ? 'center' : undefined} style={{ width: '100%' }} >
         {/* column 1-1 */}
         <Grid item>
           {/* nested row */}

@@ -26,7 +26,8 @@ import BusinessOutlinedIcon from '@material-ui/icons/BusinessOutlined';
 import { getToken, getUser } from '@helpers/auth-helpers'
 import { actions as authActions } from '@store/auth';
 import { bindActionCreators } from 'redux';
-import logo from '@assets/logo.svg';
+import logo from '@assets/logo.png';
+import { Typography } from '@material-ui/core';
 
 
 // Nav Bar Elevation
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     height: '5rem',
     paddingLeft: '4rem',
     paddingRight: '4rem',
+    backgroundColor: theme.palette.primary.main,
     zIndex: theme.zIndex.modal + 1, //zIndex of modal default + 1
   },
   logoContainer: {
@@ -68,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    // marginBottom: '1rem',
+    marginBottom: '1rem',
   },
   drawerIconContainer: {
     marginLeft: 'auto',
@@ -83,10 +85,10 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: '15rem',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "theme.palette.background.paper",
   },
   drawerItem: {
-    opacity: 0.7,
+    opacity: 1,
   },
   drawerItemSelected: {
     '& .MuiListItemText-root': {
@@ -296,7 +298,7 @@ const Header = ({
                 className={classes.drawerItem}
                 onClick={route.onClick}
               >
-                {route.name}
+                <Typography>{route.name}</Typography>
               </ListItemText>
             </ListItem>
           ))}
@@ -319,7 +321,7 @@ const Header = ({
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" color="inherit" className={classes.appbar}>
+        <AppBar position="fixed" className={classes.appbar}>
           <Toolbar disableGutters>
             <Button
               component={Link}
