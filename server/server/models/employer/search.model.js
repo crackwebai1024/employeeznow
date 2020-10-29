@@ -5,6 +5,7 @@ const SearchFilterSchema = new mongoose.Schema({
   searchAddress: {
     street: String,
     state: String,
+    city: String,
     zipcode: {
       type: String,
       required: [true, "Please provide zipcode"],
