@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Button from '@material-ui/core/Button';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import LinkTab from '@components/Element/Button/LinkTab';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -17,17 +15,16 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import LineStyleOutlinedIcon from '@material-ui/icons/LineStyleOutlined';
-import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
-import BusinessOutlinedIcon from '@material-ui/icons/BusinessOutlined';
-import { getToken, getUser } from '@helpers/auth-helpers'
 import { actions as authActions } from '@store/auth';
 import { bindActionCreators } from 'redux';
-import logo from '@assets/logo.png';
+import {
+  employeeRoutes,
+  employerRoutes,
+  noAuthRoutes
+} from './HeaderUrls'
+import logo from '@assets/logo.svg';
 import { Typography } from '@material-ui/core';
+import { Router } from '@material-ui/icons';
 
 
 // Nav Bar Elevation
@@ -50,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
     height: '5rem',
     paddingLeft: '4rem',
     paddingRight: '4rem',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: "#FDFDFD",
+    color: theme.palette.common.black,
     zIndex: theme.zIndex.modal + 1, //zIndex of modal default + 1
   },
   logoContainer: {
@@ -60,13 +58,23 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    width: '100%',
+    width: '95%',
+  },
+  bottomEffect: {
+    width: "100%",
+    height: '1px',
+    background: theme.palette.common.green
   },
   tabContainer: {
     marginLeft: 'auto',
+    display: 'flex'
   },
   tab: {
     minWidth: 10,
+    listStyleType: 'none',
+    cursor: 'pointer',
+    fontSize: 16,
+    fontWeight: 300,
   },
   toolbarMargin: {
     ...theme.mixins.toolbar,
@@ -104,13 +112,9 @@ const Header = ({
   value,
   setValue,
   isAuthenticated
-  // setSelectedIndex,
 }) => {
   //**  style **//
   const classes = useStyles();
-  const slug = JSON.parse(getUser()) && JSON.parse(getUser()).slug
-  // Tab
-  //  const [value, setValue] = useState(false);
 
   // Drawer
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -131,105 +135,23 @@ const Header = ({
     return window.location.pathname = "/"
   };
 
-  // Route set up
-  // 1) After Employee loggedin
-  const employeeRoutes = [
-    { name: 'Home', link: '/', activeIndex: 0, icon: <HomeOutlinedIcon /> },
-    {
-      name: 'Learn More',
-      link: '/about',
-      activeIndex: 1,
-      icon: <BusinessOutlinedIcon />,
-    },
-    {
-      name: 'Dashboard',
-      link: `/employees/${slug}`,
-      activeIndex: 2,
-      icon: <LineStyleOutlinedIcon />,
-    },
-    {
-      name: 'Log Out',
-      link: '#',
-      onClick: handleLogout,
-      activeIndex: 3,
-      icon: <LockOutlinedIcon />,
-    },
-  ];
-
-  // 2) After employer loggedin
-  const employerRoutes = [
-    { name: 'Home', link: '/', activeIndex: 0, icon: <HomeOutlinedIcon /> },
-    {
-      name: 'About Us',
-      link: '/about',
-      activeIndex: 1,
-      icon: <BusinessOutlinedIcon />,
-    },
-    {
-      name: 'Dashboard',
-      link: `/employers/${slug}`,
-      activeIndex: 2,
-      icon: <LineStyleOutlinedIcon />,
-    },
-    {
-      name: 'Log Out',
-      link: '#!',
-      onClick: (e) => handleLogout(e),
-      activeIndex: 3,
-      icon: <LockOutlinedIcon />,
-    },
-  ];
-
-  // 3) No auth (public)
-  const noAuthRoutes = [
-    { name: 'Home', link: '/', activeIndex: 0, icon: <HomeOutlinedIcon /> },
-    {
-      name: 'Learn More',
-      link: '/about',
-      activeIndex: 1,
-      icon: <BusinessOutlinedIcon />,
-    },
-    {
-      name: 'Log In',
-      link: '/login',
-      activeIndex: 2,
-      icon: <LockOpenOutlinedIcon />,
-    },
-    {
-      name: 'Sign Up',
-      link: '/signup',
-      activeIndex: 3,
-      icon: <VpnKeyOutlinedIcon />,
-    },
-  ];
-
   // Loop routes(tab) - trigger tabs(routes) changes
   useEffect(() => {
-    [...employeeRoutes, ...employerRoutes, ...noAuthRoutes].forEach((route) => {
+    [ ...employeeRoutes, 
+      ...employerRoutes, 
+      ...noAuthRoutes
+    ].forEach((route) => {
       switch (window.location.pathname) {
         case `${route.link}`:
           if (value !== route.activeIndex) {
             setValue(route.activeIndex);
-            // use selectedIndex when you added menu
-            // if (route.selectedIndex && route.selectedIndex !== selectedIndex) {
-            //   setSelectedIndex(route.selectedIndex);
-            // }
           }
           break;
         default:
           break;
       }
     });
-  }, [
-    //thse dependecies cause infinite loop
-    //value,
-    // selectedIndex,
-    // setSelectedIndex,
-    employeeRoutes,
-    employerRoutes,
-    noAuthRoutes,
-    setValue,
-  ]);
+  }, [employeeRoutes, employerRoutes, noAuthRoutes, setValue]);
 
   // Change tab value
   const handleChange = (e, newValue) => {
@@ -238,24 +160,25 @@ const Header = ({
 
   // Setup Tabs render
   const tabs = (routes) => (
-    <Tabs
+    <ul
       value={value}
       onChange={handleChange}
       className={classes.tabContainer}
     >
       {routes.map((route, index) => (
-        <Tab
+        <li
           key={`${route}${index}`}
           className={classes.tab}
-          component={Link}
-          to={route.link}
-          label={route.name}
-          // aria-owns={route.ariaOwns}
-          // aria-haspopup={route.ariaPopup}
-          onClick={route.onClick}
-        />
+          onClick={route.onClick && handleLogout}
+        >
+          <LinkTab
+            to={route.link}
+            title={route.name}
+          >
+          </LinkTab>
+        </li>
       ))}
-    </Tabs>
+    </ul>
   );
 
   // create each tabs
@@ -278,7 +201,7 @@ const Header = ({
         {/* add sae margin as navigation bar so that drawer is pushed down under the logo */}
         <div className={classes.toolbarMargin} />
         {/* disablePadding - there is a tiny padding and remove that */}
-        <List disablePadding>
+        <ul disablePadding>
           {routes.map((route) => (
             <ListItem
               key={`${route}${route.activeIndex}`}
@@ -302,7 +225,7 @@ const Header = ({
               </ListItemText>
             </ListItem>
           ))}
-        </List>
+        </ul>
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
@@ -321,7 +244,7 @@ const Header = ({
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed" className={classes.appbar}>
+        <AppBar className={classes.appbar}>
           <Toolbar disableGutters>
             <Button
               component={Link}

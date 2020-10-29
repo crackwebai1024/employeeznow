@@ -39,10 +39,21 @@ const style = makeStyles(theme => ({
 }));
 
 const Steppers = ({ formValues, inputHandle }) => {
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
   const classes = style();
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => setActiveStep(prevActiveStep => prevActiveStep + 1);
+  const capture = async () => {
+    setLoading(true);
+  }
+
+  const handleNext = () => {
+    if (activeStep === 2) {
+      capture()
+    } else {
+      setActiveStep(prevActiveStep => prevActiveStep + 1)
+    }
+  };
   const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
   const handleReset = () => setActiveStep(0);
 

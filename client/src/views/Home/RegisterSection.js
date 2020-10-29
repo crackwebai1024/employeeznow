@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   employee: {
     borderRadius: 0,
     textAlign: "center",
-    background: 'white',
+    background: '#EEEEEE',
     color: 'black',
     width: '100%',
     height: '300px',

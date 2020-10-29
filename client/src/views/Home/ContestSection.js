@@ -6,16 +6,26 @@ const useStyles = makeStyles((theme) => ({
   heading1: {
     maxWidth: "750px",
     color: theme.palette.primary.main,
+    fontSize: '2.2rem',
+    fontWeight: 300,
     [theme.breakpoints.down('sm')]: {
-      fontSize: '2.5rem',
+      fontSize: '2rem',
       letterSpacing: '0.08rem',
     },
   },
+  list: {
+    fontSize: '18px',
+    textAlign: 'center',
+    marginTop: '20px',
+    color: "rgb(0,0,0,0.6)",
+    fontWeight: 300
+  },
   paper2: {
-    background: "#eaeff8",
+    background: "#fcfcfc",
     display: 'flex',
     borderRadius: '30px',
     marginTop: "30px",
+    paddingTop: '20px',
     paddingBottom: "50px",
     [theme.breakpoints.down('sm')]: {
       display: 'block',
@@ -23,17 +33,30 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button1: {
-    borderRadius: '15px',
-    backgroundColor: '#C00000',
+    border: '2px solid #1f73be',
+    background: 'white',
+    textAlign:'center',
+    cursor: 'pointer',
     padding: '0.8rem 2rem',
     marginTop: '-30px',
     width: '300px',
     fontSize: '20px',
     margin: 'auto',
     '&:hover': {
-      backgroundColor: '#A00000'
+      backgroundColor: '#eeeeee'
     },
   },
+  image: {
+    width: '80%',
+    maxWidth: '400px',
+    maxHeight: '200px',
+    cursor: 'pointer',
+    transition: '0.2s',
+    padding: "10px",
+    '&:hover': {
+      padding: "8px",
+    },
+  }
 }));
 
 export default function ContestSection() {
@@ -45,32 +68,29 @@ export default function ContestSection() {
           <img
             src={`${process.env.PUBLIC_URL}/img/img2.svg`}
             alt="chef"
-            style={{
-              width: '80%',
-              maxWidth: '400px'
-            }}
+            className={classes.image}
           />
           <Grid>
             <Typography variant="h1" style={{ textAlign: "center" }} className={classes.heading1}>
               Check out our Contest Page Enter a video or Vote on others
             </Typography>
-            <Typography style={{ fontSize: '32px', textAlign: 'center' }}>
+            <Typography className={classes.list}>
               <i>
-                Best Cocktail &#8226; Best Entrée  &#8226; Best Sandwich  &#8226; Best Coffee
-                </i>
+                Best Cocktail &nbsp; &#8226;  Best Entrée &nbsp; &#8226; Best Sandwich &nbsp; &#8226; Best Coffee
+              </i>
             </Typography>
           </Grid>
         </Paper>
       </Grid>
-      <Grid container spacing={3} style={{ position: 'relative'}}>
-        <Button
-          variant="contained"
+      <Grid container spacing={3} style={{ position: 'relative' }}>
+        <div
+          // variant="contained"
           color="primary"
           className={classes.button1}
         >
           GO TO THE <br />
           CONTEST PAGE
-        </Button>
+        </div>
       </Grid>
     </Fragment>
   )

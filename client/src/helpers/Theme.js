@@ -8,12 +8,14 @@ const employeezNowWinered = '#7D1D1E';
 export default createMuiTheme({
   palette: {
     common: {
-      white: '#fcfcfc',
+      white: '#ffffff',
       blue: '#6098E0',
-      black: '#',
+      black: '#000000E1',
+      lightBlack: "#00000091",
       darkBlue: '#2771E0',
       pink: '#FC0F59',
       yellow: '#FFF92D',
+      green: '#008000'
     },
     primary: {
       main: employeezNowBlue,
