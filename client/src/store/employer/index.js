@@ -21,7 +21,23 @@ export const actions = createActions({
   SEARCH_EMPLOYEE: undefined,
   SEARCH_EMPLOYEE_SUCCESS: undefined,
 
-  INITIAL_LOADING: undefined
+  INITIAL_LOADING: undefined,
+
+  GET_SEARCH_RESULT: undefined,
+  GET_SEARCH_RESULT_SUCCESS: undefined,
+
+  SET_RETURN: undefined,
+  REMOVE_FILTER: undefined,
+  REMOVE_FILTER_SUCCESS: undefined,
+  REMOVE_FILTER_FAILURE: undefined,
+
+  ASK_INTEREST_REQUEST: undefined,
+  ASK_INTEREST_SUCCESS: undefined,
+  ASK_INTEREST_FAILURE: undefined,
+
+  ASK_INTEREST_STATUS_HIDDEN: undefined,
+
+  SET_FORM_VALUES: undefined
 });
 
 const reducer = handleActions(
@@ -43,6 +59,22 @@ const reducer = handleActions(
     
     [actions.initialLoading, handlers.initialLoading],
     
+    [actions.getSearchResult, handlers.getSearchResult],
+    [actions.getSearchResultSuccess, handlers.getSearchResultSuccess],
+
+    [actions.setReturn, handlers.setReturn],
+
+    [actions.removeFilter, handlers.removeFilter],
+    [actions.removeFilterSuccess, handlers.removeFilterSuccess],
+    [actions.removeFilterFailure, handlers.removeFilterFailure],
+
+    [actions.askInterestRequest, handlers.askInterestRequest],
+    [actions.askInterestSuccess, handlers.askInterestSuccess],
+    [actions.askInterestFailure, handlers.askInterestFailure],
+    [actions.askInterestStatusHidden, handlers.askInterestStatusHidden],
+    // payment form values
+    [actions.setFormValues, handlers.setFormValues],
+
   ]),
   initialState,
 );

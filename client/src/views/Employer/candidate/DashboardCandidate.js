@@ -1,27 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { actions as employeeActions } from '@store/employee';
+import { actions as employerActions } from '@store/employer';
+import { bindActionCreators } from 'redux';
+import { getUser, getFilterID } from '@helpers/auth-helpers';
+import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
-import { loadEmployee } from '../../../store/actions/employee';
-import CandidateProfileHeader from './CandidateProfileHeader';
+import Box from '@material-ui/core/Box';
+import CandidateDocuments from './CandidateDocuments'
 import ProfilePhoto from '../../Employee/Dashboard/ProfilePhoto';
 import BackgourndPhoto from '../../Employee/Dashboard/BackgroundPhoto';
-import Profession from '../../Employee/Dashboard/Profession';
-import ProfessionDetail from '../../Employee/Dashboard/Professiondetail';
-import CallToAction from '../../Employee/Dashboard/CallToAction';
+import CallToAction from '@components/CallToAction';
+import Alert from '@material-ui/lab/Alert';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: '95vh',
   },
-  profileContainer: {
+  header: {
+    background: 'white',
+    paddingBottom: '1rem',
+    marginBottom: '1rem',
+    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
+  },
+  profilePhoto: {
+    width: 166,
+    display: 'flex',
+    marginLeft: '3rem',
+    marginTop: -100,
+    padding: 0,
+    cursor: "pointer",
     [theme.breakpoints.down('xs')]: {
+      display: 'block',
+      margin: 'auto',
+      // marginLeft: "0rem",
+      marginTop: -100,
+    },
+  },
+  callToAction: {
+
+  },
+  profileContainer: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: '-7rem',
     },
   },
@@ -55,154 +81,199 @@ const useStyles = makeStyles((theme) => ({
   noInfotext: {
     color: theme.palette.common.blue,
   },
+  basicTitle: {
+    fontSize: 20,
+    fontWeight: 900,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 16
+    }
+  },
+  basicInfo: {
+    maxWidth: "600px",
+    marginTop: -60,
+    marginLeft: 220,
+    marginBottom: '2rem',
+    [theme.breakpoints.down('xs')]: {
+      marginTop: 0,
+      marginLeft: '0rem',
+      textAlign: 'center'
+    },
+  },
+  content: {
+    maxWidth: 700,
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+    paddingBottom: '0rem',
+    margin: 'auto',
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: '0rem'
+    }
+  },
+  contentItem: {
+    padding: '0 1rem 0 1rem'
+  },
+  alert: {
+    marginBottom: '1rem'
+  }
 }));
 
-const DashboardCandidate = ({
-  location,
-  employee,
-  slug,
-  errorMessage,
-  loadEmployee,
-}) => {
+const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, background, match, employeeData }) => {
   console.log(location.data);
-  useEffect(() => {
-    console.log('calling');
-    loadEmployee(location.data.employeeId);
-  }, []);
-
+  const { basic, document, experience, portfolio, preference, skill } = employeeData
   const classes = useStyles();
   const theme = useTheme();
+  const { slug } = match.params;
+  const user = JSON.parse(getUser())
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const [value, setValue] = React.useState(4.5);
+  const currentFilterID = getFilterID()
   /* eslint-disable react/jsx-one-expression-per-line */
 
+  useEffect(() => {
+    const data = {
+      employeeID: slug,
+      id: user._id
+    }
+    actions.getUserDataRequest(data)
+  }, [])
+
+  useEffect(() => {
+    if (askInterestStatus) {
+      setTimeout(() => {
+        actions.askInterestStatusHidden()
+      }, 3000);
+    }
+  }, [askInterestStatus])
+
+  // ask about interested request
+  const onAskInterest = () => {
+    const data = {
+      employeeID: slug,
+      employerID: user._id,
+      filterID: currentFilterID
+    }
+    actions.askInterestRequest(data)
+  }
+
+  console.log(askInterestStatus, "employeeData")
   return (
-    <Container className={classes.container}>
+    <Container className={classes.container} maxWidth="md">
       {/* Dashboard whole page column root */}
-      <Grid container direction="column">
-        {/* column 1 / profile image, account button & background image / */}
-        {/* row Profile image & background image */}
-        <Grid
-          item
-          container
-          direction={matchesXS ? 'column-reverse' : 'row'}
-          justify="flex-start"
-        >
-          {/* row 1 / 2 row={4}*/}
-          <Grid
-            item
-            container
-            direction="column"
-            sm={4}
-            alignItems="center"
-            justify="center"
-            className={classes.profileContainer}
-          >
-            {/* nested column 1 / 3 profile image - veteran's profile is visible to all employers */}
-            <Grid item>
-              {employee.professionDetails &&
-              employee.professionDetails.veteran.status === true ? (
-                <ProfilePhoto photo={employee.profilePhoto} slug={slug} />
-              ) : (
-                <ProfilePhoto
-                  photo={`${process.env.PUBLIC_URL}/img/default.png`}
-                />
-              )}
-            </Grid>
+      {
+        askInterestStatus == "SUCCESS" && <Alert severity="success" className={classes.alert}>Success</Alert>
+      }
+      {
+        askInterestStatus === "FAILURE" && <Alert severity="error" className={classes.alert}>Failure</Alert>
+      }
 
-            {/* nested column 2 / 3 Name */}
-            <Grid item>
-              <Typography className={classes.nameText}>
-                {`Candidate: ${employee.employeezNowId}`}
-              </Typography>
-            </Grid>
-
-            {/* nested column 3 / 3 account Button - hidden for employer */}
-            <Grid item />
-          </Grid>
-
-          {/* row 2 / 2  row={8} background photo */}
-          <Grid item container direction="column" sm={8} justify="flex-start">
-            {/* nested column 1 / 2 */}
-            <Grid item className={classes.bgContainer}>
-              {/* default pictures, should get photo from api  */}
-              {/* <BackgourndPhoto photo={employee.backgroundPhoto} slug={slug} /> */}
-              <BackgourndPhoto photo={employee} slug={slug} />
-            </Grid>
+      <Grid className={classes.header}>
+        <BackgourndPhoto />
+        <Grid className={classes.profilePhoto}>
+          <Grid>
+            <ProfilePhoto />
           </Grid>
         </Grid>
+        <Grid item container className={classes.basicInfo}>
+          <Grid item xs={12} md={6}>
+            <Typography className={classes.basicTitle}>
+              CandidateID : {basic && basic.employeezNowId}
+            </Typography>
+            <Typography className={classes.basicTitle}>
+              {basic && `${basic.address.city} ${basic.address.state} ${basic.address.street1}`}
+            </Typography>
+            <Typography className={classes.basicTitle}>
+              {preference && preference.employmentStatus}
+            </Typography>
+            <Typography className={classes.basicTitle}>
 
-        {/* column 2 /  profession & profession details*/}
-        <Grid item>
-          {/* row 1 / 2  profession visible to all employers except for add/edit button */}
-          <Grid
-            container
-            direction="row"
-            className={classes.underPhotoContainer}
-          >
-            <Grid
-              item
-              md={4}
-              sm={12}
-              xs={12}
-              className={classes.professionContainer}
-            >
-              {!employee.profession ? (
-                ''
-              ) : (
-                <Profession profession={employee.profession} />
-              )}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box component="fieldset" mb={3} borderColor="transparent">
+              <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly size="large" />
+            </Box>
+          </Grid>
+        </Grid>
+        {skill &&
+          <Fragment>
+            <Grid container item sm={12} className={classes.content}>
+              <Grid container item xs={12} sm={6} className={classes.contentItem}>
+                <Grid item xs={6}>
+                  <Typography> {skill.primaryJob.title} </Typography>
+                </Grid>
+                <Grid item xs={6} style={{ textAlign: 'right' }}>
+                  <Typography>{skill.primaryJob.years} years</Typography>
+                </Grid>
+              </Grid>
+              <Grid container item xs={12} sm={6} className={classes.contentItem}>
+                <Grid item xs={6}>
+                  <Typography> {skill.secondaryJob.title} </Typography>
+                </Grid>
+                <Grid item xs={6} style={{ textAlign: 'right' }}>
+                  <Typography>{skill.secondaryJob.years} {skill.secondaryJob ? "years" : ""}</Typography>
+                </Grid>
+              </Grid>
             </Grid>
-
-            {/* row 2 / 2  profession details - visible to all employers except for add/edit button */}
-            <Grid
-              item
-              md={8}
-              sm={12}
-              xs={12}
-              className={classes.professionDetailsContainer}
-            >
-              {!employee.professionDetails ? (
-                <Grid container direction="column">
-                  <Grid item>
-                    <Typography
-                      className={classes.noInfotext}
-                      align={matchesSM ? 'center' : 'flex-start'}
-                    >
-                      This candidate does not have Job interests yet.
-                    </Typography>
+            <Grid container item sm={12} className={classes.content}>
+              {skill.cuisine.map(cu => {
+                return <Grid container item xs={12} sm={6} className={classes.contentItem}>
+                  <Grid item xs={6}>
+                    <Typography> {cu.type} </Typography>
                   </Grid>
-                  <Grid item>
-                    <CallToAction />
+                  <Grid item xs={6} style={{ textAlign: 'right' }}>
+                    <Typography>{cu.years} years</Typography>
                   </Grid>
                 </Grid>
-              ) : (
-                <ProfessionDetail details={employee.professionDetails} />
-              )}
+              })}
             </Grid>
+            <Grid container item sm={12} className={classes.content}>
+              <Grid container item xs={12} sm={6} className={classes.contentItem}>
+
+              </Grid>
+              <Grid container item xs={12} sm={6} className={classes.contentItem}>
+                <Typography>Desired Salary : {`${preference.idealSalary.amount} / ${preference.idealSalary.unit}`}</Typography>
+                <Typography>Desired Salary : {`${preference.idealSalary.amount} / ${preference.idealSalary.unit}`}</Typography>
+              </Grid>
+            </Grid>
+          </Fragment>
+        }
+        <hr />
+        <CandidateDocuments />
+        <Grid item container className={classes.callToAction}>
+          <Grid item xs={12}>
+            <CallToAction onAskInterest={onAskInterest} />
           </Grid>
         </Grid>
-
-        {/* column 2 /  portfolio */}
-        <Grid item>Gallery</Grid>
+        <Grid className={classes.section}>
+          <Grid className={classes.name}>
+            {/* {basic &&
+              employeeData.basic.lastName + " " + employeeData.basic.firstName
+            } */}
+          </Grid>
+        </Grid>
       </Grid>
     </Container>
   );
 };
 
-DashboardCandidate.propTypes = {
-  // loadEmployee: PropTypes.func.isRequired,
-  // profession: PropTypes.shape([]),
-  // professionDetails: PropTypes.shape([]),
-};
+const mapStateToProps = ({
+  employee: {
+    employeeData
+  },
+  employer: {
+    askInterestStatus
+  }
+}) => ({
+  employeeData, askInterestStatus
+});
 
-const mapStateToProps = (state) => {
-  return {
-    errorMessage: state.auth.error,
-    slug: state.auth.slug,
-    employee: state.employee,
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    ...employeeActions,
+    ...employerActions
+  }, dispatch),
+});
 
-export default connect(mapStateToProps, { loadEmployee })(DashboardCandidate);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardCandidate);

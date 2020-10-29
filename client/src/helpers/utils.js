@@ -1,5 +1,5 @@
 export const getBoxSize = () => {
-  return window.innerHeight - 307
+  return window.innerHeight - 240
 }
 
 export const _arrayBufferToBase64 = (buffer) => {

@@ -1,8 +1,16 @@
 
 const initialState = {
   employerData: {},
-  saveFilter : 'NONE',
-  searchLoading: 'NONE'
+  saveFilter: 'NONE',
+  searchLoading: 'NONE',
+  filterResult: [],
+  return: false,
+  askInterestStatus: "",
+  formValues: {
+    service: "", facebook: "", twitter: "", firstname: "", lastname: "",
+    email: "", line1: "", line2: "", postal_code: "", city: "", country: null,
+    currency: null, amount: "",
+  }
 };
 
 export const getEmployerData = (state) => ({
@@ -23,13 +31,18 @@ export const getEmployerFailure = (state) => ({
 
 export const saveFilterRequest = (state) => ({
   ...state,
-  saveFilter : 'NONE',
+  saveFilter: 'REQUEST',
 });
 
-export const saveFilterSuccess = (state, { payload }) => ({
-  ...state,
-  saveFilter : 'SUCCESS'
-});
+export const saveFilterSuccess = (state, { payload }) => {
+  return {
+    ...state,
+    saveFilter: 'SUCCESS',
+    searchLoading: "SUCCESS",
+    filterID: payload.filterID,
+    filterResult: payload.filterResult,
+  }
+};
 
 export const saveFilterFailure = (state) => ({
   ...state,
@@ -38,7 +51,8 @@ export const saveFilterFailure = (state) => ({
 
 export const getFilterListRequest = (state, { payload }) => ({
   ...state,
-  searchLoading: 'NONE'
+  searchLoading: 'NONE',
+  saveFilter: 'NONE',
 });
 
 export const getFilterListSuccess = (state, { payload }) => ({
@@ -52,7 +66,7 @@ export const getFilterListFailure = (state, { payload }) => ({
 
 export const searchEmployee = (state, { payload }) => ({
   ...state,
-  searchLoading : "REQUEST"
+  searchLoading: "REQUEST"
 })
 
 export const searchEmployeeFailure = (state, { payload }) => ({
@@ -62,12 +76,71 @@ export const searchEmployeeFailure = (state, { payload }) => ({
 
 export const searchEmployeeSuccess = (state, { payload }) => ({
   ...state,
-  searchLoading: "SUCCESS"
+  searchLoading: "SUCCESS",
+  filterResult: payload.searchResult,
+  filterID: payload.filterID
 })
 
 export const initialLoading = (state, { payload }) => ({
   ...state,
-  searchLoading: "NONE"
+  searchLoading: "NONE",
+
+})
+
+export const getSearchResult = (state, { payload }) => ({
+  ...state,
+})
+
+export const getSearchResultSuccess = (state, { payload }) => {
+  return {
+    ...state,
+    filterResult: payload.searchresult,
+  }
+}
+
+export const setReturn = (state) => ({
+  ...state,
+  return: true
+})
+
+export const removeFilter = (state) => ({
+  ...state
+})
+
+export const removeFilterSuccess = (state, { payload }) => ({
+  ...state,
+  filter: payload,
+})
+
+export const removeFilterFailure = (state) => ({
+  ...state
+})
+
+export const askInterestRequest = (state) => ({
+  ...state,
+  askInterestStatus: ""
+})
+
+export const askInterestSuccess = (state, { payload }) => {
+  return {
+    ...state,
+    askInterestStatus: "SUCCESS"
+  }
+}
+
+export const askInterestFailure = (state) => ({
+  ...state,
+  askInterestStatus: "FAILURE"
+})
+
+export const askInterestStatusHidden = (state) => ({
+  ...state,
+  askInterestStatus: ""
+})
+
+export const setFormValues = (state, { payload }) => ({
+  ...state,
+  formValues: payload
 })
 
 export default initialState;

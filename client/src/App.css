@@ -2,3 +2,7 @@
   max-height: 300px !important;
   margin-top: 40px !important;
 }
+
+.MuiPaper-elevation4 {
+  box-shadow: none !important;
+}

@@ -1,0 +1,16 @@
+.link_item:hover .link_item_bottom {
+  width: 100%;
+  height: 2px;
+  transition: 0.3s;
+  background-color: green;
+}
+.link_item {
+  text-decoration: none;
+}
+.link_item_bottom {
+  height: 2px;
+  width: 0px;
+}
+.link_item:hover .LinkItem  {
+  color: green
+}

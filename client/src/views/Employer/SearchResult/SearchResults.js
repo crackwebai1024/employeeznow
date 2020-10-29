@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
@@ -12,27 +13,34 @@ import Typography from '@material-ui/core/Typography';
 import KeyboardArrowUpOutlinedIcon from '@material-ui/icons/KeyboardArrowUpOutlined';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
+import { getUser, setFilterID } from '@helpers/auth-helpers';
 import professions from './data';
-// import {
-//   loadProfessions,
-//   searchAndSavefilterProfessions,
-// } from '../../../store/actions/professions';
+import SearchForm from '../form/SearchForm';
 import CandidateList from './CandidateList';
+import Dialog from '@material-ui/core/Dialog';
 import EditSearchForm from '../form/EditSearchForm';
 import Sidebar from './Sidebar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    minHeight: '95vh',
     [theme.breakpoints.down('sm')]: {
       display: 'block',
     },
+  },
+  title : {
+    fontSize: 20,
   },
   drawer: {
     [theme.breakpoints.up('md')]: {
       width: '15rem',
       flexShrink: 0,
     },
+  },
+  dialog: {
+    marginTop: '5rem',
+    zIndex: 13033, // larger than header and footer
   },
   drawerButton: {
     marginBottom: '2rem',
@@ -57,13 +65,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchResults = () => {
+const SearchResults = (props) => {
+  const { actions, filter, match, filterResult, filterID, result } = props
   const classes = useStyles();
   const theme = useTheme();
+  const { slug } = match.params
+  const history = useHistory()
 
+  const user = JSON.parse(getUser());
   // Drawer
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const [openSearchForm, setOpenSearchForm] = useState(false)
+  const [searchFormData, setSearchFormdata] = useState({})
   //Swipeable drawer
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -73,6 +86,51 @@ const SearchResults = () => {
 
   // Define current searchQuery - index is from action
   // const currentSearchQuery = searchQueries[location.index];
+  const [searchQueries, setSearchQueries] = useState([])
+  const [reload, setReload] = useState(false)
+
+  const clickFormClose = () => {
+    setOpenSearchForm(false)
+  }
+
+  useEffect(() => {
+    const data = { id: user._id }
+    actions.getFilterListRequest(data)
+    if (result) {
+      const searchData = {
+        filterID: slug,
+      }
+      return actions.getSearchResult(searchData)
+    }
+    const searchData = {
+      ...data,
+      filterID: slug,
+    }
+    actions.searchEmployee(searchData)
+  }, [])
+
+  useEffect(() => {
+    if (filter) {
+      setSearchQueries(filter.filters)
+      setReload(!reload)
+    }
+  }, [filter])
+
+  useEffect(() => {
+    actions.initialLoading()
+  }, [filterResult])
+
+  useEffect(() => {
+    if (filterID)
+      history.push(`/search/${filterID}`)
+    setFilterID(filterID)
+  }, [filterID])
+
+  const setFilterUpdateHandle = (data) => {
+    setOpenSearchForm(true)
+    setSearchFormdata(data)
+  }
+  console.log(openSearchForm, "searchFormData")
   return (
     <Container className={classes.root}>
       <nav aria-label="mailbox folders">
@@ -96,9 +154,11 @@ const SearchResults = () => {
           >
             <div className={classes.toolbar} />
             <Sidebar
-              searchQuery={[]}
+              searchQuery={searchQueries}
               setMobileOpen={setMobileOpen}
               mobileOpen={mobileOpen}
+              setFilterUpdate={setFilterUpdateHandle}
+              slug={slug}
             />
           </SwipeableDrawer>
         </Hidden>
@@ -114,7 +174,7 @@ const SearchResults = () => {
             open
           >
             <div className={classes.toolbar} />
-            <Sidebar searchQuery={[]} />
+            <Sidebar searchQuery={searchQueries} slug={slug} setFilterUpdate={setFilterUpdateHandle} />
           </Drawer>
         </Hidden>
       </nav>
@@ -138,48 +198,56 @@ const SearchResults = () => {
           <Grid item>
             <Grid container className={classes.titleContainer}>
               <Grid item>
-                <Typography>EMPLOYEES SEARCH </Typography>
+                <Typography className={classes.title}>EMPLOYEES SEARCH </Typography>
               </Grid>
               {/* <Grid item>{count !== null ? `total: ${count}` : 0}</Grid> */}
-              <Grid item>page 1</Grid>
+              {/* <Grid item>page 1</Grid> */}
             </Grid>
           </Grid>
           <Grid item>
             {/* search results - employee lists */}
             {
-              true
-                ? professions.map((profession) => (
+              filterResult.length > 0
+                ? filterResult.map((result) => (
                   <CandidateList
-                    key={profession._id}
-                    id={profession._id} // This _id is professionId
-                    employeezNowId={profession.employeezNowId}
-                    employeeId={profession.employeeId}
-                    primaryTitle={profession.primaryJob.title}
-                    primaryYears={profession.primaryJob.years}
-                    secondaryTitle={profession.secondaryJob.title}
-                    secondaryYears={profession.secondaryJob.years}
-                    shift={profession.shift}
-                    style={profession.style}
-                    cuisine={profession.cuisine}
-                    wineKnowledge={profession.wineKnowledge}
-                    cocktailKnowledge={profession.cocktailKnowledge}
-                    systems={profession.systems}
+                    key={result._id}
+                    id={result._id} // This _id is professionId
+                    employeezNowId={result.employeezNowId}
+                    employeeId={result.employeeId}
+                    primaryTitle={result.employeeskill.primaryJob.title}
+                    primaryYears={result.employeeskill.primaryJob.years}
+                    secondaryTitle={result.employeeskill.secondaryJob.title}
+                    secondaryYears={result.employeeskill.secondaryJob.years}
+                    shift={result.employeeskill.shift}
+                    style={result.employeeskill.style}
+                    cuisine={result.employeeskill.cuisine}
+                    wineKnowledge={result.employeeskill.wineKnowledge}
+                    cocktailKnowledge={result.employeeskill.cocktailKnowledge}
+                    systems={result.employeeskill.systems}
                   />
                 ))
                 : 'There are no search results. Pleast try with different search.'}
           </Grid>
         </Grid>
       </main>
+      <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
+        fullWidth className={classes.dialog}
+      >
+        <SearchForm employerId={user._id}
+          searchFormData={searchFormData}
+          slug={slug} setOpenSearchForm={setOpenSearchForm}
+        />
+      </Dialog>
     </Container>
   );
 };
 
 const mapStateToProps = ({
   employer: {
-    employerData, filter, searchLoading
+    employerData, filter, searchLoading, filterResult, filterID, result
   },
 }) => ({
-  employerData, filter, searchLoading
+  employerData, filter, searchLoading, filterResult, filterID, result
 });
 
 const mapDispatchToProps = (dispatch) => ({

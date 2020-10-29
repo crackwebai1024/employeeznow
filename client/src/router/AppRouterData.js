@@ -10,6 +10,7 @@ import EmployeeForm from '@views/Auth/Signup/EmployeeForm';
 import EmployeeAccount from '@views/Employee/Dashboard/EmployeeAccount';
 import EmployerAccount from '@views/Employer/form/EditEmployerAccountForm';
 import EmployeeDashbaord from '@views/Employee/Dashboard/Dashboard';
+import DashboardCandidate from '@views/Employer/candidate/DashboardCandidate';
 import EmployerDashbaord from '@views/Employer/dashboard/DashboardEmployer';
 import SkillsForm from '@views/Employee/form/SkillsForm';
 import ProfessionDetailsForm from '@views/Employee/form/ProfessionDetailsForm';
@@ -17,6 +18,7 @@ import ExperienceForm from '@views/Employee/form/ExperienceForm';
 import ForgotPassword from '@views/Auth/Password/ForgotPasswordForm';
 import ResetPasswordForm from '@views/Auth/Password/ResetPasswordForm';
 import SearchResults from '@views/Employer/SearchResult/SearchResults';
+import Payment from '@views/Employer/Payment'
 import { getUser } from '@helpers/auth-helpers';
 
 
@@ -35,16 +37,24 @@ export const AppRouterData = [
   { 'path': `/forgotPassword`, component: ForgotPassword },
 ]
 
-export const AppPrivateRouterData = [
+export const AppPrivateRouterEmployerData = [
   { "path": "/", component: Home },
   { "path": '/about', component: LearnMore },
   { "path": '/search/:slug', component: SearchResults },
+  { 'path': `/employers/${user && user.slug}`, component: EmployerDashbaord },
+  { 'path': `/employers/${user && user.slug}/account`, component: EmployerAccount },
+  { 'path': `/candidate/:slug`, component: DashboardCandidate },
+  { 'path': `/payment`, component: Payment },
+]
+
+export const AppPrivateRouteeEmployeeData = [
+  { "path": "/", component: Home },
+  { "path": '/about', component: LearnMore },
   { 'path': `/employee/${user && user.slug}/account`, component: EmployeeAccount },
   { 'path': `/employees/${user && user.slug}`, component: EmployeeDashbaord },
-  { 'path': `/employers/${user && user.slug}`, component: EmployerDashbaord },
   { 'path': `/${user && user.slug}/skills`, component: SkillsForm },
-  { 'path': `/employers/${user && user.slug}/account`, component: EmployerAccount },
   { 'path': `/${user && user.slug}/professiondetails-form`, component: ProfessionDetailsForm },
   { 'path': `/${user && user.slug}/work-experience`, component: ExperienceForm },
-  // { 'path': "", component: Dashbaord }
 ]
+
+

@@ -120,8 +120,6 @@ const EmployeeAccount = ({ employeeData, history, actions }) => {
     setOpenPassword(true);
   };
 
-  console.log(employeeData,"payload")
-
   return (
     !_.isEmpty(employeeData) ?
     <Container className={classes.container}>
