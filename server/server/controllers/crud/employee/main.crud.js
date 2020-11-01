@@ -11,6 +11,12 @@ const { find_ByID } = CRUD;
 
 const read = async (req, res) => {
   let id = req.query.id;
+  if (req.query.employeeID) {
+    id = req.query.employeeID;
+  }
+  // res.status(200).json({
+  //   id,
+  // });
   let basicData = find_ByID(Employee, "_id", id, res);
   let documentData = find_ByID(EmployeeDocument, "employee", id, res);
   let experienceData = find_ByID(EmployeeExperience, "employee", id, res);

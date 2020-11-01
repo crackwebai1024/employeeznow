@@ -1,5 +1,6 @@
 import SearchFilter from "../../../models/employer/search.model";
-import CRUD from "../utils/general";
+import Surf from "../../search/search";
+import SearchRes from "./searchres.crud";
 import errorHandler from "../../../helpers/dbErrorHandler";
 import extend from "lodash/extend";
 
@@ -27,7 +28,6 @@ const updateByID = async (req, res, next) => {
   console.log(req.body);
   try {
     let se_filter = await findByID(req, res);
-    console.log(se_filter);
     if (se_filter === null) {
       se_filter = new SearchFilter(req.body);
     } else {
@@ -35,11 +35,15 @@ const updateByID = async (req, res, next) => {
     }
     console.log(se_filter);
     await se_filter.save();
-
-    // test for creating, updating filter
-    return res.status(200).json({
-      success: se_filter,
-    });
+    const searchres = await Surf.searchEmployee(se_filter);
+    const reqbody = {
+      body: {
+        filterID: se_filter._id,
+        searchresult: searchres,
+      },
+    };
+    await SearchRes.updateByID(reqbody, res);
+    return;
     // await next();
   } catch (err) {
     console.log(err);
@@ -78,6 +82,7 @@ const deleteByID = async (req, res) => {
       success: "delete successfully",
     });
   } catch (err) {
+    console.log(err);
     return res.status(403).json({
       error: errorHandler.getErrorMessage(err),
     });

@@ -92,6 +92,11 @@ const EmployeeSchema = new mongoose.Schema(
         return strtime.slice(len - 10);
       },
     },
+    interestedEmployees: {
+      type: [mongoose.Schema.ObjectId],
+      ref: "Employee",
+      required: true,
+    },
     salt: String,
     createdAt: {
       type: Date,
