@@ -1,4 +1,3 @@
-// 1) After Employee loggedin
 import React from 'react';
 import { getToken, getUser } from '@helpers/auth-helpers';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
@@ -15,6 +14,7 @@ export const employeeRoutes = [
   { name: 'Learn More', link: '/about', activeIndex: 1, icon: <BusinessOutlinedIcon /> },
   { name: 'Dashboard', link: `/employees/${slug}`, activeIndex: 2, icon: <LineStyleOutlinedIcon /> },
   { name: 'Log Out', link: '/', onClick: "handleLogout", activeIndex: 3, icon: <LockOutlinedIcon /> },
+  { name: 'Contact Us', link: '/contactus', activeIndex: 4, icon: <LockOutlinedIcon /> },
 ];
 
 // 2) After employer loggedin
@@ -23,6 +23,7 @@ export const employerRoutes = [
   { name: 'About Us', link: '/about', activeIndex: 1, icon: <BusinessOutlinedIcon /> },
   { name: 'Dashboard', link: `/employers/${slug}`, activeIndex: 2, icon: <LineStyleOutlinedIcon /> },
   { name: 'Log Out', link: '/', onClick: "handleLogout", activeIndex: 3, icon: <LockOutlinedIcon /> },
+  { name: 'Contact Us', link: '/contactus', activeIndex: 4, icon: <LockOutlinedIcon /> },
 ];
 
 // 3) No auth (public)
@@ -31,4 +32,5 @@ export const noAuthRoutes = [
   { name: 'Learn More', link: '/about', activeIndex: 1, icon: <BusinessOutlinedIcon /> },
   { name: 'Log In', link: '/login', activeIndex: 2, icon: <LockOpenOutlinedIcon /> },
   { name: 'Sign Up', link: '/signup', activeIndex: 3, icon: <VpnKeyOutlinedIcon /> },
+  { name: 'Contact Us', link: '/contactus', activeIndex: 4, icon: <LockOutlinedIcon /> },
 ];

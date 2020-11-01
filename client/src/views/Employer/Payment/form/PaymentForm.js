@@ -8,8 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import StripeInput from '../components/StripeInput';
 import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 
-const PaymentForm = ({ actions, formValues }) => {
-
+const PaymentForm = ({ actions, formValues} ) => {
     const cardsLogo = [
         "amex",
         "cirrus",
@@ -22,7 +21,7 @@ const PaymentForm = ({ actions, formValues }) => {
         "visa",
         "visaelectron",
     ];
-
+    
     const inputHandle = (e) => {
         let key = e.target.name;
         let value = e.target.value
@@ -92,6 +91,12 @@ const PaymentForm = ({ actions, formValues }) => {
                 variant="outlined"
                 required
                 onChange={inputHandle}
+                InputProps={{
+                    inputComponent :StripeInput,
+                    inputProps: {
+                        component : CardExpiryElement
+                    }
+                }}
                 fullWidth
                 InputLabelProps={{ shrink: true }}
             />
@@ -102,6 +107,12 @@ const PaymentForm = ({ actions, formValues }) => {
                 name="cvc"
                 variant="outlined"
                 required
+                InputProps={{
+                    inputComponent: StripeInput,
+                    inputProps: {
+                        component: CardCvcElement
+                    }
+                }}
                 onChange={inputHandle}
                 fullWidth
                 InputLabelProps={{ shrink: true }}

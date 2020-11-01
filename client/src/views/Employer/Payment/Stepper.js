@@ -8,6 +8,8 @@ import {
   Box,
   Grid,
 } from '@material-ui/core';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import StepperIcons from "./StepIcons";
 import StepConnector from './StepConnector'
 import ContactForm from "./form/ContactForm";
@@ -39,86 +41,97 @@ const style = makeStyles(theme => ({
 }));
 
 const Steppers = ({ formValues, inputHandle }) => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const classes = style();
   const [loading, setLoading] = useState(false);
 
+  const stripe = useStripe();
+  const elements = useElements();
+
   const capture = async () => {
     setLoading(true);
+    if (!stripe || !elements)
+      return;
+
+    const cardElement = elements.getElement(CardElement);
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement
+    })
+
   }
+    const handleNext = (formdata) => {
+      if (activeStep === 2) {
+        capture()
+      } else {
+        setActiveStep(prevActiveStep => prevActiveStep + 1)
+      }
+    };
+    const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    const handleReset = () => setActiveStep(0);
 
-  const handleNext = () => {
-    if (activeStep === 2) {
-      capture()
-    } else {
-      setActiveStep(prevActiveStep => prevActiveStep + 1)
+    const StepContent = ({ step }) => {
+      switch (step) {
+        case 0:
+          return <ContactForm />;
+        case 1:
+          return <ServiceForm />;
+        case 2:
+          return <PaymentForm />;
+        default:
+          return <></>;
+      }
     }
-  };
-  const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  const handleReset = () => setActiveStep(0);
 
-  const StepContent = ({ step }) => {
-    switch (step) {
-      case 0:
-        return <ContactForm />;
-      case 1:
-        return <ServiceForm />;
-      case 2:
-        return <PaymentForm />;
-      default:
-        return <></>;
-    }
-  }
-
-  return <>
-    <Stepper
-      alternativeLabel className={classes.stepper}
-      connector={<StepConnector />} activeStep={activeStep}
-    >
-      {/* Change the number of loops here based on StepContent */}
-      {[1, 2, 3].map(e =>
-        <Step key={e}>
-          <StepLabel StepIconComponent={StepperIcons} />
-        </Step>
-      )}
-    </Stepper>
-    <Box className={classes.mainBox}>
-      <Grid
-        container
-        spacing={3}
-        direction="column"
-        justify="space-around"
-        alignItems="center"
-        style={{ height: "400px" }}
+    return <>
+      <Stepper
+        alternativeLabel className={classes.stepper}
+        connector={<StepConnector />} activeStep={activeStep}
       >
-        {activeStep === 3
-          ?
-          <Button onClick={handleReset} className={classes.button}>
-            Reset
+        {/* Change the number of loops here based on StepContent */}
+        {[1, 2, 3].map(e =>
+          <Step key={e}>
+            <StepLabel StepIconComponent={StepperIcons} />
+          </Step>
+        )}
+      </Stepper>
+      <Box className={classes.mainBox}>
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+          justify="space-around"
+          alignItems="center"
+          style={{ height: "400px" }}
+        >
+          {activeStep === 3
+            ?
+            <Button onClick={handleReset} className={classes.button}>
+              Reset
           </Button>
-          :
-          <form className={classes.form} onSubmit={e => { e.preventDefault(); handleNext() }}>
-            <Grid container spacing={3}>
-              <StepContent step={activeStep} />
-              <Grid container item justify="flex-end">
-                <Button disabled={activeStep === 0} className={classes.button} onClick={handleBack}>
-                  Back
+            :
+            <form className={classes.form} onSubmit={e => { e.preventDefault(); handleNext(e) }}>
+              <Grid container spacing={3}>
+                <StepContent step={activeStep} />
+                <Grid container item justify="flex-end">
+                  <Button disabled={activeStep === 0} className={classes.button} onClick={handleBack}>
+                    Back
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  type="submit"
-                >
-                  {activeStep === 2 ? 'Pay' : 'Next'}
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    type="submit"
+                  >
+                    {activeStep === 2 ? 'Pay' : 'Next'}
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        }
-      </Grid>
-    </Box>
-  </>
-}
+            </form>
+          }
+        </Grid>
+      </Box>
+    </>
+  }
 
-export default Steppers;
+  export default Steppers;

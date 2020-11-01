@@ -5,7 +5,7 @@ export async function employeeEmailVerify(data) {
 }
 
 export async function phoneVerifyRequest(data) {
-  return await Axios.get('/auth/employee/isvalidphone', data)
+  return await Axios.post('/auth/employee/isvalidphone', data)
 }
 
 export async function signupConfirm(data) {

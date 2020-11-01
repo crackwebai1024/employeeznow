@@ -39,6 +39,7 @@ function* onEmailVerify({ payload }) {
 }
 
 function* onPhoneVerify({ payload }) {
+  console.log("code is sent!")
   const res = yield call(AuthAPI.phoneVerifyRequest, payload)
   try {
     if (res && res.data.success)

@@ -9,13 +9,15 @@ import styles from './Button.module.css';
 const useStyles = makeStyles((theme) => ({
   LinkItem: {
     color: theme.palette.common.black,
-    padding: '0 20px 0 10px',
+    padding: '0 1rem 0 1rem',
     width: 'fit-content',
+    fontFamily :'Nunito Sans',
+    fontWeight: 500,
     '&:hover': {
-      color: theme.palette.common.green
+      color: theme.palette.primary.extra
     },
     '&:focus': {
-      color: theme.palette.common.green
+      color: theme.palette.primary.extra
     }
   },
 }))
