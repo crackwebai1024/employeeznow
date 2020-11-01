@@ -9,9 +9,7 @@ const find_ByID = async (req, res) => {
     req.query.filterID,
     res
   );
-  //   console.log("++++++++++++++++++++++++++++++++++++++++++", searchResultByID);
   //   if (searchResultByID) {
-  //     console.log("++++++++++++");
   //     return res.status(200).json({
   //       searchresult: searchResultByID.searchresult,
   //     });

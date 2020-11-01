@@ -21,7 +21,6 @@ const save = async (data, res) => {
 
 const find_ByID = async (req, res) => {
   let role = "employee";
-  console.log(req.query.id);
   let portfolioByID = await CRUD.find_ByID(
     EmployeePortfolio,
     role,
@@ -36,7 +35,6 @@ const find_ByID = async (req, res) => {
 const updateByID = async (req, res) => {
   let role = "employee";
   const { id, folioID, fname, file, note } = req.body;
-  console.log(folioID);
   let portfolioByID = await CRUD.find_ByID(
     EmployeePortfolio,
     role,

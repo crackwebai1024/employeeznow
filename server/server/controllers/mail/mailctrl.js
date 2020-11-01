@@ -1,6 +1,13 @@
 import Employee from "../../models/employee/basic.model";
 import Employer from "../../models/employer/basic.model";
 import { sendEmail } from "../../utils/email";
+import jwt from "jsonwebtoken";
+import config from "../../../config/config";
+
+// create token for signin user
+const createToken = (id) => {
+  return jwt.sign({ _id: id }, config.jwtSecret);
+};
 
 // send employee the interest email from employer
 const sendEmployeeEmail = async (req, res) => {

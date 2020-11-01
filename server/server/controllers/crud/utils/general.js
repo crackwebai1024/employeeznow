@@ -36,7 +36,7 @@ const find_ByID = async (Model, role, id, res) => {
 const updateByID = async (Model, role, id, req, res) => {
   try {
     let user = await find_ByID(Model, role, id, res);
-    console.log(user);
+    console.log("===================================================", user);
     delete req.body.id;
     req.body[role] = id;
     // check create or update

@@ -42,7 +42,6 @@ const read = async (bucketName, id) => {
 
 const save = async (req, res, next) => {
   // bucketName, fileName, fcont
-  console.log("***************************", req);
   let fileName = "";
   if (req.body.type !== "portfolio") {
     fileName = req.body.id + req.body.type;
@@ -58,7 +57,6 @@ const save = async (req, res, next) => {
     Key: fileName,
   };
 
-  // var base64data = new Buffer(fcont.buffer, "binary");
   s3.putObject(
     {
       Bucket: bucketName,

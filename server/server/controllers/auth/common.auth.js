@@ -14,7 +14,6 @@ const createToken = (id) => {
 
 const create = async (req, res, next) => {
   if (req.body.role === "employee") {
-    console.log("=============");
     await CRUD.create(Employee, req, res, next);
   } else {
     await CRUD.create(Employer, req, res, next);
@@ -46,6 +45,7 @@ const signIn = async (req, res) => {
   let user = {};
   let role = req.body.role;
   try {
+    // check if the user data is in the database
     if (role === "employee") {
       user = await Employee.findOne({ email: req.body.email });
     }
@@ -54,11 +54,8 @@ const signIn = async (req, res) => {
       user = await Employer.findOne({ email: req.body.email });
     }
 
-    console.log(user, req.body.email);
     if (!user) {
-      return res.status("401").json({
-        error: `${role} not found`,
-      });
+      return res.status("404").json({ error: `${role} not found` });
     }
 
     if (!user.authenticate(req.body.password)) {
@@ -68,10 +65,7 @@ const signIn = async (req, res) => {
     }
 
     const token = createToken(user._id);
-    res.cookie("t", token, {
-      expire: new Date() + 3600,
-    });
-    console.log(user);
+    res.cookie("t", token, { expire: new Date() + 3600000 });
 
     return res.status(200).json({
       token,
@@ -113,7 +107,6 @@ const forgotPassword = async (req, res) => {
         You can do this through the button below: ${resetUrl}\n
         If you didn't request this, please ignore this email. `;
 
-  console.log(message);
   // send message to the user email
   try {
     let sendResult = await sendEmail({
@@ -146,10 +139,9 @@ const resetPassword = async (req, res) => {
 
   // Encrypt request token and compare with db
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-  console.log(hashedToken);
+
   let user;
   if (role === "employee") {
-    console.log("mongodb");
     user = await Employee.findOne({
       passwordResetToken: hashedToken,
       passwordResetExpires: { $gt: Date.now() },
@@ -170,7 +162,6 @@ const resetPassword = async (req, res) => {
     });
   }
 
-  console.log(user.firstName);
   user.password = newPassword;
   user.passwordConfirm = newPasswordConfirm;
   user.passwordResetToken = undefined;
@@ -179,7 +170,6 @@ const resetPassword = async (req, res) => {
 
   try {
     await user.save();
-    console.log("after save");
     // Log the user in
     // const token = createToken(user.employeezNowId);
     // console.log("after token");
@@ -201,11 +191,8 @@ const resetPassword = async (req, res) => {
   }
 };
 
+// check if the user email is used before
 const isValidEmail = async (req, res, next) => {
-  console.log("I am here");
-  console.log(req.body.email);
-  console.log(req.body);
-
   let Model;
   let role = req.body.role;
 
@@ -219,13 +206,11 @@ const isValidEmail = async (req, res, next) => {
     let user = await Model.findOne({
       email: req.body.email,
     });
-    console.log(user, next);
     if (!user && req.body.role === "employee") {
       return res.status("200").json({
         success: "valid email",
       });
     } else if (!user) {
-      console.log("I am here");
       await next();
     } else {
       return res.status("403").json({

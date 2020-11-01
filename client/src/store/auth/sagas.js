@@ -1,145 +1,153 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
-import * as Sentry from '@sentry/browser';
-import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUser, setRole } from '@helpers/auth-helpers';
-import { actions, actions as types } from './index';
-import * as  AuthAPI from '@services/AuthAPI';
+import { call, put, takeEvery } from "redux-saga/effects";
+import * as Sentry from "@sentry/browser";
+import {
+  deleteToken,
+  setToken,
+  deleteUser,
+  deleteRole,
+  setUserConfigured,
+  setUser,
+  setRole,
+} from "@helpers/auth-helpers";
+import { actions, actions as types } from "./index";
+import * as AuthAPI from "@services/AuthAPI";
 
-function* onAuthenticate({ payload }) {
+function* onAuthenticate({ payload }) {}
 
-}
-
-function* onIsAuthenticated() {
-
-}
+function* onIsAuthenticated() {}
 
 function* onLogout() {
-  yield put(types.logoutSuccess())
-  deleteToken()
-  deleteRole()
-  deleteUser()
+  yield put(types.logoutSuccess());
+  deleteToken();
+  deleteRole();
+  deleteUser();
 }
 
 function* checkAuthorization({ payload }) {
   const error = (payload && payload.error) || payload;
-  if ((error && error.response && error.response.status === 401) || error.message === 'Unauthorized') {
+  if (
+    (error && error.response && error.response.status === 401) ||
+    error.message === "Unauthorized"
+  ) {
     yield* onLogout();
   }
 }
 
 function* onEmailVerify({ payload }) {
-  const data = payload
+  const data = payload;
   try {
     const res = yield call(AuthAPI.employeeEmailVerify, data);
     if (res && res.data.success) {
-      yield put(types.emailSuccess())
+      yield put(types.emailSuccess());
     }
   } catch {
-    yield put(types.emailFailure())
+    yield put(types.emailFailure());
   }
 }
 
 function* onPhoneVerify({ payload }) {
-  const res = yield call(AuthAPI.phoneVerifyRequest, payload)
+  const res = yield call(AuthAPI.phoneVerifyRequest, payload);
   try {
-    if (res && res.data.success)
-      yield put(types.phoneVerifyRequestSuccess())
+    if (res && res.data.success) yield put(types.phoneVerifyRequestSuccess());
   } catch {
     // yield put(types.phoneVerifyRequestSuccess)
-    return
+    return;
   }
   // yield put(types.phoneVerifyRequestFailure)
 }
 
 function* onSignupConfirm({ payload }) {
   try {
-    const res = yield call(AuthAPI.signupConfirm, payload.confirmData)
+    const res = yield call(AuthAPI.signupConfirm, payload.confirmData);
     if (res && res.data) {
-      setToken(res.data.token)
-      setUser(res.data.employee)
-      setRole(payload.confirmData.role)
-      
-      if(payload.veteranCardData) {
-        let data = payload.veteranCardData
-        data.append("id", res.data.employee._id)
-        data.append("role", payload.confirmData.role)
-        const response = yield call(AuthAPI.onUploadVeteranCard, data)
+      setToken(res.data.token);
+      setUser(res.data.employee);
+      setRole(payload.confirmData.role);
+
+      if (payload.veteranCardData) {
+        let data = payload.veteranCardData;
+        data.append("id", res.data.employee._id);
+        data.append("role", payload.confirmData.role);
+        const response = yield call(AuthAPI.onUploadVeteranCard, data);
       }
-      
-      window.location.pathname = `employees/${res.data[payload.confirmData.role].slug}`
-      yield put(types.signupConfirmSuccess(res.data.employee))
+
+      window.location.pathname = `employees/${
+        res.data[payload.confirmData.role].slug
+      }`;
+      yield put(types.signupConfirmSuccess(res.data.employee));
     }
   } catch {
-    yield put(types.signupConfirmFailure())
+    yield put(types.signupConfirmFailure());
   }
 }
 
 function* onLogin({ payload }) {
   try {
-    const res = yield call(AuthAPI.onLogin, payload)
+    const res = yield call(AuthAPI.onLogin, payload);
     if (res && res.data) {
-      setToken(res.data.token)
-      setUser(res.data[payload.role])
-      setRole(payload.role)
+      setToken(res.data.token);
+      setUser(res.data[payload.role]);
+      setRole(payload.role);
       if (payload.role == "employee") {
-        window.location.pathname = `employees/${res.data[payload.role].slug}`
+        window.location.pathname = `employees/${res.data[payload.role].slug}`;
       } else if (payload.role == "employer") {
-        window.location.pathname = `employers/${res.data[payload.role].slug}`
+        window.location.pathname = `employers/${res.data[payload.role].slug}`;
       }
-      yield put(types.loginSuccess(res.data.employee))
+      yield put(types.loginSuccess(res.data.employee));
     }
   } catch {
-    yield put(types.loginFailure())
+    yield put(types.loginFailure());
   }
 }
 
 function* onEmployerSignup({ payload }) {
   try {
     let data = {
-      email: payload.email
-    }
-    const res = yield call(AuthAPI.EmployerSendCode, data)
+      email: payload.email,
+    };
+    const res = yield call(AuthAPI.EmployerSendCode, data);
     if (res && res.data) {
-      yield put(types.employerEmailVerify(payload))
+      yield put(types.employerEmailVerify(payload));
     }
   } catch {
-    yield put(types.employerEmailVerifyFailure())
+    yield put(types.employerEmailVerifyFailure());
   }
 }
 
 function* onEmailCodeSend({ payload }) {
   try {
-    const res = yield call(AuthAPI.onEmployerSignup, payload)
+    const res = yield call(AuthAPI.onEmployerSignup, payload);
     if (res && res.data) {
-      setToken(res.data.token)
-      setUser(res.data.employer)
-      setRole(payload.role)
-      window.location.pathname = `employers/${res.data[payload.role].slug}`
-      yield put(types.signupConfirmSuccess(res.data.employer))
+      setToken(res.data.token);
+      setUser(res.data.employer);
+      setRole(payload.role);
+      window.location.pathname = `employers/${res.data[payload.role].slug}`;
+      yield put(types.signupConfirmSuccess(res.data.employer));
     }
   } catch {
-    yield put(types.emailCodeSendFailure())
+    yield put(types.emailCodeSendFailure());
   }
 }
 
 function* onForgotPassword({ payload }) {
   try {
-    const res = yield call(AuthAPI.onForgotPassword, payload)
-    if(res && res.data) {
-      yield put(types.forgotPasswordSuccess())
+    const res = yield call(AuthAPI.onForgotPassword, payload);
+    if (res && res.data) {
+      yield put(types.forgotPasswordSuccess());
     }
   } catch {
-    yield put(types.forgotPasswordFailure())
+    yield put(types.forgotPasswordFailure());
   }
 }
 
 function* onResetPassword({ payload }) {
   try {
-    const res = yield call(AuthAPI.onResetPassword, payload)
-    if(res && res.data) {
-      yield put(types.resetPasswordSuccess())
+    const res = yield call(AuthAPI.onResetPassword, payload);
+    if (res && res.data) {
+      yield put(types.resetPasswordSuccess());
     }
   } catch {
-    yield put(types.resetPasswordFailure())
+    yield put(types.resetPasswordFailure());
   }
 }
 
