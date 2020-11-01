@@ -154,6 +154,7 @@ const PhoneVerification = ({
           setPhoneData(data);
           debugger;
           actions.phoneVerifyRequestRequest(data);
+          console.log(data, "data is sent!")
         } else {
           setError("Phone number is invalid!");
         }
@@ -214,9 +215,8 @@ const PhoneVerification = ({
   };
 
   const onDigitBack = () => {
-    actions.phoneVerifyRequestFailure();
-  };
-  debugger;
+  }
+  }
   return (
     <Container component="main" maxWidth="sm">
       <Grid container direction="column" justify="center" alignItems="center">

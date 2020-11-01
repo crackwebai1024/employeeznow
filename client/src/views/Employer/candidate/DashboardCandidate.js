@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
@@ -121,6 +121,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
   console.log(location.data);
   const { basic, document, experience, portfolio, preference, skill } = employeeData
   const classes = useStyles();
+  const history = useHistory()
   const theme = useTheme();
   const { slug } = match.params;
   const user = JSON.parse(getUser())
@@ -151,10 +152,14 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
   const onAskInterest = () => {
     const data = {
       employeeID: slug,
-      employerID: user._id,
+      id: user._id,
       filterID: currentFilterID
     }
     actions.askInterestRequest(data)
+  }
+
+  const purchaseProfile = () => {
+    history.push('/payment')
   }
 
   console.log(askInterestStatus, "employeeData")
@@ -243,7 +248,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
         <CandidateDocuments />
         <Grid item container className={classes.callToAction}>
           <Grid item xs={12}>
-            <CallToAction onAskInterest={onAskInterest} />
+            <CallToAction onAskInterest={onAskInterest} purchaseProfile = {purchaseProfile} />
           </Grid>
         </Grid>
         <Grid className={classes.section}>

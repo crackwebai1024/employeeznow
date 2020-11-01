@@ -10,15 +10,16 @@ export default createMuiTheme({
     common: {
       white: '#ffffff',
       blue: '#6098E0',
-      black: '#000000E1',
-      lightBlack: "#00000091",
+      black: '#100C08',
+      lightBlack: "#757575",
       darkBlue: '#2771E0',
       pink: '#FC0F59',
       yellow: '#FFF92D',
-      green: '#008000'
+      green: '#228800'
     },
     primary: {
       main: employeezNowBlue,
+      extra: '#1f73be'
     },
     secondary: {
       main: employeezNowWinered,

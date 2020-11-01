@@ -51,10 +51,12 @@ export const emailFailure = (state, { payload }) => ({
   emailFailure: true
 })
 
-export const phoneVerifyRequestRequest = (state, { payload }) => ({
+export const phoneVerifyRequestRequest = (state, { payload }) => {
+  debugger
+  return {
   ...state,
   isSentPhoneNumber: false
-})
+}}
 
 export const phoneVerifyRequestSuccess = (state, { payload }) => ({
   ...state,

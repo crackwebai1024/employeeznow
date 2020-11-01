@@ -1,15 +1,16 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography, Button } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import MainButton from '@components/Element/Button/MainButton';
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    maxWidth: "750px",
     color: theme.palette.primary.main,
-    fontSize: '2.2rem',
+    fontSize: '26px',
     fontWeight: 300,
     [theme.breakpoints.down('sm')]: {
-      fontSize: '2rem',
+      fontSize: '26px',
       letterSpacing: '0.08rem',
     },
   },
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '18px',
     textAlign: 'center',
     marginTop: '20px',
-    color: "rgb(0,0,0,0.6)",
+    color: theme.palette.common.lightBlack,
     fontWeight: 300
   },
   paper2: {
@@ -26,16 +27,18 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '30px',
     marginTop: "30px",
     paddingTop: '20px',
+    float: 'right',
     paddingBottom: "50px",
     [theme.breakpoints.down('sm')]: {
       display: 'block',
-      textAlign: 'center'
+      textAlign: 'center',
+      float: 'none'
     },
   },
   button1: {
     border: '2px solid #1f73be',
     background: 'white',
-    textAlign:'center',
+    textAlign: 'center',
     cursor: 'pointer',
     padding: '0.8rem 2rem',
     marginTop: '-30px',
@@ -47,14 +50,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    width: '80%',
+    width: '100%',
     maxWidth: '400px',
     maxHeight: '200px',
     cursor: 'pointer',
     transition: '0.2s',
     padding: "10px",
     '&:hover': {
-      padding: "8px",
     },
   }
 }));
@@ -62,36 +64,39 @@ const useStyles = makeStyles((theme) => ({
 export default function ContestSection() {
   const classes = useStyles()
   return (
-    <Fragment>
-      <Grid item xs={12} md={12}>
-        <Paper elevation={0} className={classes.paper2}>
-          <img
-            src={`${process.env.PUBLIC_URL}/img/img2.svg`}
-            alt="chef"
-            className={classes.image}
-          />
+    <Container>
+      <Grid container>
+        <Grid item xs={12} md={6}>
+          <Paper elevation={0} className={classes.paper2}>
+            <img
+              src={`${process.env.PUBLIC_URL}/img/img2.svg`}
+              alt="chef"
+              className={classes.image}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={6}>
           <Grid>
             <Typography variant="h1" style={{ textAlign: "center" }} className={classes.heading1}>
-              Check out our Contest Page Enter a video or Vote on others
+              Check out our Contest Page
+            </Typography >
+            <Typography variant="h1" style={{ textAlign: "center", color : 'green' }} className={classes.heading1}>
+              Enter a video or Vote on others
             </Typography>
             <Typography className={classes.list}>
-              <i>
-                Best Cocktail &nbsp; &#8226;  Best Entrée &nbsp; &#8226; Best Sandwich &nbsp; &#8226; Best Coffee
-              </i>
+              Best Cocktail   Best Entrée    Best Sandwich       Best Coffee
             </Typography>
           </Grid>
-        </Paper>
+          <MainButton 
+            background="green"
+            color="color"
+            hoverColo=""
+            pd={80} fontSize={18} 
+            label="Go To Contest" 
+            to="" width="200px">
+          </MainButton>
+        </Grid>
       </Grid>
-      <Grid container spacing={3} style={{ position: 'relative' }}>
-        <div
-          // variant="contained"
-          color="primary"
-          className={classes.button1}
-        >
-          GO TO THE <br />
-          CONTEST PAGE
-        </div>
-      </Grid>
-    </Fragment>
+    </Container >
   )
 }

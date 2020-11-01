@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Only employer can access
-const CallToAction = ({ actions, onAskInterest }) => {
+const CallToAction = ({ actions, onAskInterest, purchaseProfile }) => {
   const classes = useStyles();
   const history = useHistory()
   const filterID = getFilterID()
@@ -66,7 +66,7 @@ const CallToAction = ({ actions, onAskInterest }) => {
   return (
     <Grid container justify="space-evenly">
       <Grid item className={classes.buttonContainer}>
-        <Button className={`${classes.button} ${classes.button1}`}>
+        <Button className={`${classes.button} ${classes.button1}`} onClick ={purchaseProfile}>
           PURCHASE THIS PROFILE
         </Button>
       </Grid>

@@ -46,7 +46,7 @@ function* onEmailVerify({ payload }) {
 }
 
 function* onPhoneVerify({ payload }) {
-  const res = yield call(AuthAPI.phoneVerifyRequest, payload);
+  const res = yield call(AuthAPI.phoneVerifyRequest, payload)
   try {
     if (res && res.data.success) yield put(types.phoneVerifyRequestSuccess());
   } catch {
