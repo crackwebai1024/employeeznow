@@ -17,39 +17,43 @@ const isValidPhone = async (req, res) => {
   let codeLength = 6;
   console.log("phone verification body ==> ", req.body);
 
-  try {
-    let user = await Employee.findOne({ cell: countryCode + phoneNumber });
-    if (!user) {
-      _authy
-        .phones()
-        .verification_start(
-          phoneNumber,
-          countryCode,
-          { via: "sms", locale: "en", code_length: "6" },
-          function (err, resp) {
-            console.log("authy_api_key ==> ", process.env.AUTHY_API_KEY);
-            if (err) {
-              console.log(err);
-              return res.status(403).json({
-                failed: "please input the phone number again",
-              });
-            }
-            return res.status(200).json({
-              success:
-                "valid phone number, we already sent 6 digit codes to your phonenumber",
-            });
-          }
-        );
-    } else {
-      return res.status(403).json({
-        failed: "please input the phone number again",
-      });
-    }
-  } catch (err) {
-    return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
-    });
-  }
+  // try {
+  //   let user = await Employee.findOne({ cell: countryCode + phoneNumber });
+  //   if (!user) {
+  //     _authy
+  //       .phones()
+  //       .verification_start(
+  //         phoneNumber,
+  //         countryCode,
+  //         { via: "sms", locale: "en", code_length: "6" },
+  //         function (err, resp) {
+  //           console.log("authy_api_key ==> ", process.env.AUTHY_API_KEY);
+  //           if (err) {
+  //             console.log(err);
+  //             return res.status(403).json({
+  //               failed: "please input the phone number again",
+  //             });
+  //           }
+  //           return res.status(200).json({
+  //             success:
+  //               "valid phone number, we already sent 6 digit codes to your phonenumber",
+  //           });
+  //         }
+  //       );
+  //   } else {
+  //     return res.status(403).json({
+  //       failed: "please input the phone number again",
+  //     });
+  //   }
+  // } catch (err) {
+  //   return res.status(400).json({
+  //     error: errorHandler.getErrorMessage(err),
+  //   });
+  // }
+  return res.status(200).json({
+    success:
+      "valid phone number, we already sent 6 digit codes to your phonenumber",
+  });
 };
 
 /* check six digit code is valid */
