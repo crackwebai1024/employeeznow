@@ -15,9 +15,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   list: {
-    fontSize: '18px',
+    fontSize: '16px',
     textAlign: 'center',
     marginTop: '20px',
+    marginBottom: '20px',
     color: theme.palette.common.lightBlack,
     fontWeight: 300
   },
@@ -58,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     '&:hover': {
     },
+  },
+  col_center: {
+    display: "flex",
+    alignItems: "center"
   }
 }));
 
@@ -75,26 +80,30 @@ export default function ContestSection() {
             />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Grid>
+        <Grid item xs={12} md={6} className={classes.col_center}>
+          <Grid style={{ margin: 'auto'}}>
             <Typography variant="h1" style={{ textAlign: "center" }} className={classes.heading1}>
               Check out our Contest Page
             </Typography >
-            <Typography variant="h1" style={{ textAlign: "center", color : 'green' }} className={classes.heading1}>
+            <Typography variant="h1" style={{ textAlign: "center", color: 'green' }} className={classes.heading1}>
               Enter a video or Vote on others
             </Typography>
             <Typography className={classes.list}>
-              Best Cocktail   Best Entrée    Best Sandwich       Best Coffee
+              Best Cocktail &nbsp;&nbsp;&nbsp; Best Entrée &nbsp;&nbsp;&nbsp; Best Sandwich &nbsp;&nbsp;&nbsp; Best Coffee
             </Typography>
+            <MainButton
+              background="green"
+              color="color"
+              border="green"
+              hoverColor=""
+              hoverBack="white"
+              pd={60} fontSize={18}
+              label="Go To Contest"
+              color="white" yellow
+              hoverColor="green"
+              to="" width="260px">
+            </MainButton>
           </Grid>
-          <MainButton 
-            background="green"
-            color="color"
-            hoverColo=""
-            pd={80} fontSize={18} 
-            label="Go To Contest" 
-            to="" width="200px">
-          </MainButton>
         </Grid>
       </Grid>
     </Container >

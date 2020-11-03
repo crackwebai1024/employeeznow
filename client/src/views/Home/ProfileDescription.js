@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   profileSubtitle: {
@@ -20,23 +20,37 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   ContainerLeft: {
-    maxWidth: '500px',
-    float: 'right',
+    // maxWidth: '500px',
+    textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       float: "none",
-      margin: 'auto',
+      textAlign: 'center',
     },
+  },
+  profile: {
+    fontSize: '26px',
+    textAlign: 'center'
+  },
+  col_center: {
+    display: 'flex',
+    alignIems: "center",
+  },
+  center: {
+    textAlign: 'center'
   }
 }))
 
 const ProfileDescription = () => {
   const classes = useStyles()
   return (<Fragment>
-    <Grid item xs={12} style={{ textAlign: 'center' }}>
-      Your Profile can include
-  </Grid>
+    <Grid item xs={12} >
+      <Typography className={classes.profile}>
+        Your Profile can include
+      </Typography>
+    </Grid>
     <Grid item xs={12} md={6}>
       <Grid className={classes.ContainerLeft}>
+        <img src={`${process.env.PUBLIC_URL}/img/img1.svg`} />
       </Grid>
     </Grid>
     <Grid item xs={12} md={6}>
@@ -50,29 +64,35 @@ const ProfileDescription = () => {
       </Typography>
       </Grid>
     </Grid>
-    <Grid item xs={12} md={6}>
-      <Typography className={classes.profileSubtitle}>
-        <b>A SELF-INTERVIEW</b> to let them know who you are
-      </Typography>
-      <Typography className={classes.profileSubdescription}>
-        Your EmoloyeezNow profile allows you to create and build a portfolio to show what you can do.
-        Upload pictures of your accompishment and even your self-interview.
-        Now you get to control the narrative and talk about the topics and questions that best suit you.
-      </Typography>
+    <Grid item xs={12} md={6} className={classes.col_center}>
+      <Box style={{ margin: 'auto' }}>
+        <Typography className={classes.profileSubtitle}>
+          <b>A SELF-INTERVIEW</b> to let them know who you are
+        </Typography>
+        <Typography className={classes.profileSubdescription}>
+          Your EmoloyeezNow profile allows you to create and build a portfolio to show what you can do.
+          Upload pictures of your accompishment and even your self-interview.
+          Now you get to control the narrative and talk about the topics and questions that best suit you.
+        </Typography>
+      </Box>
     </Grid>
-    <Grid item xs={12} md={6}>
-
+    <Grid item xs={12} md={6} className={classes.center}>
+      <img src={`${process.env.PUBLIC_URL}/img/img2(2).svg`} />
     </Grid>
-    <Grid item xs={12} md={6}>
-
+    <Grid item xs={12} md={6} className={classes.center}>
+      <img src={`${process.env.PUBLIC_URL}/img/img3.svg`} />
     </Grid>
-    <Grid item xs={12} md={6}>
-      <Typography className={classes.profileSubtitle}>
-        PHOTOS of your CREATIONS
-      </Typography>
-      <Typography className={classes.profileSubdescription}>
-        Add multiple pictures to show your different areas of knowledge
-      </Typography>
+    <Grid item xs={12} md={6} className={classes.col_center}>
+      <Box style={{ margin: 'auto' }}>
+        <Grid xs={12}>
+          <Typography className={classes.profileSubtitle}>
+            PHOTOS of your CREATIONS
+          </Typography>
+          <Typography className={classes.profileSubdescription}>
+            Add multiple pictures to show your different areas of knowledge
+          </Typography>
+        </Grid>
+      </Box>
     </Grid>
   </Fragment>
   )

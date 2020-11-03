@@ -4,31 +4,29 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
+import { Grid, Box, TextField, Avatar, Typography } from '@material-ui/core';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
-import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import MainButton from '@components/Element/Button/MainButton';
 import Select from '@material-ui/core/Select';
 import { actions as authActions } from '@store/auth';
 import { bindActionCreators } from 'redux';
+import { countryOptions } from './AddressState'
 import _ from 'lodash';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    margin: theme.spacing(1),
+    marginRight: theme.spacing(2),
     background: theme.palette.common.blue,
   },
   formControl: {
-    marginTop: '1.3rem',
+    marginTop: '1rem',
     backgroundColor: 'transparent',
   },
   heading1: {
-    ...theme.typography.h1,
+    fontSize: '30px',
     marginBottom: '1.5rem',
   },
   button: {
@@ -36,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 25,
   },
   linkContainer: {
-    marginBottom: '8rem',
+    marginBottom: '2rem',
+    margin: 'auto'
   },
   link: {
     textDecoration: 'none',
@@ -51,10 +50,23 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2rem',
   },
   companyInfo: {
-    marginTop: '3rem',
+    marginTop: '1rem',
     marginBottom: '-1rem',
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
+    },
+  },
+  wrapper: {
+    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
+    maxWidth: '500px',
+    position: "relative",
+    top: '5rem',
+    padding: '2rem',
+    margin: 'auto',
+    // marginBottom: '4rem',
+    // borderBottom: '2rem',
+    [theme.breakpoints.down('xs')]: {
+      padding: "1rem"
     },
   },
   horizontal: {
@@ -70,9 +82,17 @@ const useStyles = makeStyles((theme) => ({
   },
   emailInfo: {
     ...theme.typography.caption,
-    marginTop: '-1.3rem',
+    marginTop: '-0.5rem',
     color: theme.palette.common.blue,
   },
+  stateLabel: {
+    background: 'white'
+  },
+  buttonWrapper: {
+    width: "100%",
+    marginTop: '1rem',
+    marginBottom: '2rem'
+  }
 }));
 
 const EmployerForm = ({
@@ -116,27 +136,25 @@ const EmployerForm = ({
   if (isAuthenticated) {
     return <Redirect to={`/employers/${slug}`} />;
   }
-  
-  if(!_.isEmpty(signupUser)) {
-    return <Redirect to ='/signup/emailverify' />
-  } 
+
+  if (!_.isEmpty(signupUser)) {
+    return <Redirect to='/signup/emailverify' />
+  }
 
   return (
-    <Container component="main" maxWidth="sm">
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item>
+    <Container maxWidth="sm" style={{ paddingBottom: '10rem' }}>
+      <Grid container direction="column" alignItems="center" className={classes.wrapper}>
+        <Grid item style={{ display: 'flex' }}>
           <Avatar className={classes.avatar}>
             <VpnKeyOutlinedIcon />
           </Avatar>
-        </Grid>
-        <Grid item>
           <Typography variant="h1" className={classes.heading1}>
             Employer Sign Up
           </Typography>
         </Grid>
 
         <form onSubmit={(e) => e.preventDefault()}>
-          <Grid item container direction="row" spacing={2}>
+          <Grid item container direction="row" spacing={1}>
             <Grid item sm={12} xs={12}>
               <Typography variant="h6" className={classes.companyInfo}>
                 COMPANY INFORMATION:
@@ -151,6 +169,7 @@ const EmployerForm = ({
                 margin="normal"
                 required
                 fullWidth
+                size="small"
                 name="name"
                 label="Company Name"
                 type="text"
@@ -172,6 +191,7 @@ const EmployerForm = ({
                 margin="normal"
                 required
                 fullWidth
+                size="small"
                 name="address.street1"
                 label="Street"
                 type="text"
@@ -186,6 +206,7 @@ const EmployerForm = ({
                 variant="outlined"
                 margin="normal"
                 fullWidth
+                size="small"
                 name="address.street2"
                 label="Apt / Suite"
                 type="text"
@@ -207,6 +228,7 @@ const EmployerForm = ({
                 margin="normal"
                 required
                 fullWidth
+                size="small"
                 name="address.city"
                 label="City"
                 type="text"
@@ -219,10 +241,12 @@ const EmployerForm = ({
             <Grid item sm={4} xs={6}>
               <FormControl
                 required
+                size="small"
+                variant="outlined"
                 error={stateError ? true : false}
                 className={classes.formControl}
               >
-                <InputLabel htmlFor="address.state">State</InputLabel>
+                <InputLabel htmlFor="address.state" className={classes.stateLabel}>State</InputLabel>
 
                 <Select
                   native
@@ -232,57 +256,11 @@ const EmployerForm = ({
                   onChange={(e) => handleChange(e)}
                 >
                   <option aria-label="None" value="" />
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UT">Utah</option>
-                  <option value="VT">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
+                  {
+                    countryOptions.map((option, item) => {
+                      return <option key={item} value={option.value}>{option.label}</option>
+                    })
+                  }
                 </Select>
               </FormControl>
             </Grid>
@@ -302,6 +280,7 @@ const EmployerForm = ({
                 name="address.zipcode"
                 label="Zip Code"
                 type="text"
+                size="small"
                 id="zipcode"
                 autoComplete="zipcode"
                 inputRef={register({
@@ -321,6 +300,7 @@ const EmployerForm = ({
                 variant="outlined"
                 margin="normal"
                 fullWidth
+                size="small"
                 name="generalEmail"
                 label="General Email Address"
                 type="email"
@@ -341,6 +321,7 @@ const EmployerForm = ({
                 margin="normal"
                 fullWidth
                 name="website"
+                size="small"
                 label="Company Website"
                 type="url"
                 id="website"
@@ -366,6 +347,7 @@ const EmployerForm = ({
                 required
                 variant="outlined"
                 margin="normal"
+                size="small"
                 fullWidth
                 name="firstName"
                 label="First Name"
@@ -383,6 +365,7 @@ const EmployerForm = ({
                 required
                 variant="outlined"
                 margin="normal"
+                size="small"
                 fullWidth
                 name="lastName"
                 label="Last Name"
@@ -398,6 +381,7 @@ const EmployerForm = ({
                 variant="outlined"
                 margin="normal"
                 fullWidth
+                size="small"
                 name="title"
                 label="Title"
                 type="text"
@@ -414,6 +398,7 @@ const EmployerForm = ({
                 required
                 variant="outlined"
                 margin="normal"
+                size="small"
                 fullWidth
                 name="phone"
                 label="Phone Number"
@@ -439,6 +424,7 @@ const EmployerForm = ({
                 fullWidth
                 name="email"
                 label="Email Address"
+                size="small"
                 type="email"
                 id="email"
                 autoComplete="email"
@@ -463,6 +449,7 @@ const EmployerForm = ({
                 variant="outlined"
                 margin="normal"
                 fullWidth
+                size="small"
                 name="password"
                 label="Password"
                 type="password"
@@ -482,6 +469,7 @@ const EmployerForm = ({
                 required
                 variant="outlined"
                 margin="normal"
+                size="small"
                 fullWidth
                 name="passwordConfirm"
                 label="Password Confirm"
@@ -494,18 +482,21 @@ const EmployerForm = ({
                 })}
               />
             </Grid>
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit(onSubmit)}
-              className={classes.button}
-            >
-              Sign Up
-            </Button>
-
+            <Box className={classes.buttonWrapper}>
+              <MainButton
+                width="100%"
+                label="SING UP"
+                color="white"
+                border="green"
+                background="green"
+                hoverColor="green"
+                hoverBack="white"
+                color="white"
+                fontSize={16}
+                onClick={handleSubmit(onSubmit)}
+              >
+              </MainButton>
+            </Box>
             {/* If authorization was failed */}
             {errorMessage && (
               <Grid item className={classes.invalidMessage}>
