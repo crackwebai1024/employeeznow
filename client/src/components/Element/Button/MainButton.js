@@ -13,22 +13,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Button = styled.div`
+const Button = styled.button`
   background: ${props => props.background};
   border: 2px solid ${props => props.border};
-  width: fit-content;
+  width: ${props => props.width};
+  text-align: center;
   border-radius: 3px;
   transition: 0.3s;
   margin: auto;
+  font-family: Roboto;
   cursor: pointer;
   color: ${props => props.color};
   font-size: ${props => props.fontSize}px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
   padding-left: ${props => props.pd}px;
   padding-right: ${props => props.pd}px;
   &:hover {
-    background: white;
+    background-color: ${props => props.hoverBack};
     color : ${props => props.hoverColor}
   }
 `;
@@ -39,6 +41,9 @@ export default function MainButton(props) {
 
   const onClick = () => {
     history.push(props.to)
+    if(props.onClick){
+      props.onClick()
+    }
   }
   return (
     <Button
@@ -51,6 +56,7 @@ export default function MainButton(props) {
       border={props.border}
       color={props.color}
       hoverColor={props.hoverColor}
+      hoverBack={props.hoverBack}
     >
       {props.label}
     </Button>

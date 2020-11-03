@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.blue,
   },
   formControl: {
-    marginTop: '1.3rem',
+    marginTop: '1rem',
     backgroundColor: 'transparent',
   },
   uploadButton: {
@@ -91,6 +91,9 @@ const useStyles = makeStyles((theme) => ({
   stateError: {
     color: theme.palette.error.main,
   },
+  stateLabel: {
+    background: 'white'
+  }
 }));
 
 const EmployeeForm = ({
@@ -196,7 +199,7 @@ const EmployeeForm = ({
           <Typography className={classes.heading1}>Employee Sign Up</Typography>
         </Grid>
         <form onSubmit={(e) => e.preventDefault()}>
-          <Grid item container direction="row" spacing={2}>
+          <Grid item container direction="row" spacing={1}>
             <Grid item sm={12}>
               <TextField
                 error={errors.firstName ? true : false}
@@ -204,6 +207,7 @@ const EmployeeForm = ({
                 required
                 variant="outlined"
                 margin="normal"
+                size="small"
                 fullWidth
                 name="firstName"
                 label="First Name"
@@ -218,6 +222,7 @@ const EmployeeForm = ({
                 error={errors.middleName ? true : false}
                 helperText={errors.middleName ? invalidError : ''}
                 variant="outlined"
+                size="small"
                 margin="normal"
                 fullWidth
                 name="middleName"
@@ -236,6 +241,7 @@ const EmployeeForm = ({
                 variant="outlined"
                 margin="normal"
                 fullWidth
+                size="small"
                 name="lastName"
                 label="Last Name"
                 type="text"
@@ -256,6 +262,7 @@ const EmployeeForm = ({
                 margin="normal"
                 required
                 fullWidth
+                size="small"
                 name="address.street1"
                 label="Street"
                 type="text"
@@ -269,6 +276,7 @@ const EmployeeForm = ({
                 variant="outlined"
                 margin="normal"
                 fullWidth
+                size="small"
                 name="address.street2"
                 label="Apt / Suite"
                 type="text"
@@ -293,6 +301,7 @@ const EmployeeForm = ({
                 label="City"
                 type="text"
                 id="city"
+                size="small"
                 autoComplete="city"
                 inputRef={register({ required: true, minLength: 2 })}
               />
@@ -300,11 +309,12 @@ const EmployeeForm = ({
             <Grid item sm={4} xs={6}>
               <FormControl
                 required
+                size="small"
+                variant="outlined"
                 error={stateError ? true : false}
-                // helpertext={stateError ? 'Please select state' : ''}
                 className={classes.formControl}
               >
-                <InputLabel htmlFor="address.state">State</InputLabel>
+                <InputLabel htmlFor="address.state" className={classes.stateLabel}>State</InputLabel>
 
                 <Select
                   native
@@ -313,6 +323,7 @@ const EmployeeForm = ({
                   key="address.state"
                   onChange={(e) => handleChange(e)}
                 >
+                  <option aria-label="None" value="" />
                   {
                     countryOptions.map((option, item) => {
                       return <option key={item} value={option.value}>{option.label}</option>
@@ -337,6 +348,7 @@ const EmployeeForm = ({
                 name="address.zipcode"
                 label="Zip Code"
                 type="text"
+                size="small"
                 id="zipcode"
                 autoComplete="zipcode"
                 inputRef={register({
@@ -357,6 +369,7 @@ const EmployeeForm = ({
                 margin="normal"
                 fullWidth
                 name="email"
+                size="small"
                 label="Email Address"
                 type="email"
                 id="email"
@@ -375,6 +388,7 @@ const EmployeeForm = ({
                 required
                 variant="outlined"
                 margin="normal"
+                size="small"
                 fullWidth
                 name="emailConfirm"
                 label="Email Address Confirm"
@@ -395,6 +409,7 @@ const EmployeeForm = ({
                 error={errors.password ? true : false}
                 name="password"
                 label="Password"
+                size="small"
                 helperText={
                   errors.password ? 'Password must be munimum 8 characters' : ''
                 }
@@ -415,6 +430,7 @@ const EmployeeForm = ({
                   errors.passwordConfirm ? 'Passwords do not match' : ''
                 }
                 id="passwordConfirm"
+                size="small"
                 name="passwordConfirm"
                 autoComplete="passwordConfirm"
                 inputRef={register({
@@ -496,7 +512,7 @@ const EmployeeForm = ({
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={handleSubmit(onSubmit)}
               className={classes.button}
             >

@@ -1,5 +1,4 @@
 export const countryOptions = [
-  { value: "none", label : ''},
   { value:"AL", label : 'Alabama'},
   { value:"AK", label : 'Alaska'},
   { value:"AZ", label : 'Arizona'},

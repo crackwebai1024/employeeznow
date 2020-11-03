@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import { Grid, TextField, FormControlLabel, Box } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import MainButton from '@components/Element/Button/MainButton';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -20,23 +18,25 @@ import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    margin: theme.spacing(1),
+    marginRight: theme.spacing(2),
     background: theme.palette.common.blue,
   },
   eye: {
     cursor: 'pointer',
   },
-  form: {},
+
   heading1: {
-    ...theme.typography.h1,
-    marginBottom: '1.5rem',
+    fontSize: '30px',
+    marginBottom: '1rem',
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
-    marginBottom: '8rem',
+    marginTop: '0.3rem',
+    borderTop: 'solid 1px lightgray'
+    // marginBottom: '8rem',
   },
   link: {
     textDecoration: 'none',
@@ -45,11 +45,22 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  wrapper: {
+    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
+    maxWidth: '500px',
+    position: "relative",
+    top: '5rem',
+    padding: '2rem',
+    margin: 'auto',
+    [theme.breakpoints.down('xs')]: {
+      padding: "1rem"
+    },
+  },
   invalidMessage: {
     textAlign: 'center',
     color: theme.palette.error.main,
     marginBottom: '2rem',
-  },
+  }
 }));
 
 const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) => {
@@ -70,7 +81,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
       setError("Email or Password is not correct")
     }
   }, [loginStatus])
-  
+
   //Redirect to each account page after logged in
   if (isAuthenticated && localStorage.getItem('role') === 'employer') {
     return <Redirect to={`/employers/${slug}`} />;
@@ -82,13 +93,11 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
 
   return (
     <Container>
-      <Grid container direction="column" alignItems="center">
-        <Grid item>
+      <Grid container direction="column" alignItems="center" className={classes.wrapper}>
+        <Grid item style={{ display: 'flex' }}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-        </Grid>
-        <Grid item>
           <Typography variant="h1" className={classes.heading1}>
             Log In
           </Typography>
@@ -135,6 +144,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
             name="email"
             label="Email"
             type="email"
+            size="small"
             id="email"
             autoComplete="email"
             autoFocus
@@ -146,6 +156,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
           <PasswordInput
             error={errors.password ? true : false}
             label="password"
+            size="small"
             helperText={
               errors.password ? 'Passwords must be minimum 8 characters' : ''
             }
@@ -154,18 +165,21 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
               required: true,
               minLength: 8,
             })}
-            />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit(onSubmit)}
-            className={classes.button}
-          >
-            Log In
-          </Button>
+          />
+          <Box className={classes.button}>
+            <MainButton
+              width="100%"
+              label="LOG IN"
+              background="green"
+              border="green"
+              hoverColor="green"
+              hoverBack="white"
+              color="white"
+              fontSize={16}
+              onClick={handleSubmit(onSubmit)}
+            >
+            </MainButton>
+          </Box>
           {/* errorMassge when authentication is failed */}
           {error && (
             <Grid item className={classes.invalidMessage}>
@@ -173,7 +187,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
             </Grid>
           )}
         </form>
-
+        <hr/>
         <Grid
           container
           direction="row"

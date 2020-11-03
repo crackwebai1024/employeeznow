@@ -3,18 +3,19 @@ import { createMuiTheme } from '@material-ui/core/styles';
 ////****  This theme is available anywahere - common styles  ****////
 //#16283f
 const employeezNowBlue = '#172940';
-const employeezNowWinered = '#7D1D1E';
+const employeezNowWinered = '#228800';
 
 export default createMuiTheme({
   palette: {
     common: {
-      white: '#ffffff',
+      white: '#fcfcfc',
       blue: '#6098E0',
       black: '#100C08',
       lightBlack: "#757575",
+      darkgray: "#424242",
       darkBlue: '#2771E0',
       pink: '#FC0F59',
-      yellow: '#FFF92D',
+      yellow: '#FFD101',
       green: '#228800'
     },
     primary: {

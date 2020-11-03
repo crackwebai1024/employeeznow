@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import { Grid, Typography, Box } from '@material-ui/core';
 import logo from '@assets/logo.svg';
 import RegisterSection from '../Home/RegisterSection';
 import SelfInterviewSection from '../Home/SelfInterviewSection';
 import ContestSection from '../Home/ContestSection';
 import RestaurantOutlinedIcon from '@material-ui/icons/RestaurantOutlined';
+
+const imageList = ["desktop", "binoculars", "memo", "profile", "question", "", "", "calendar"]
+
+const listData = [
+  { img: 'desktop', title: "EMPLOYEE REGISTRATION", description: "It is free for anyone to sign up and create their employee profile. It is not just about up loading a resume, personal preferences are  included to complete your overall profile." },
+  { img: 'binoculars', title: "EMPLOYER SEARCH", description: "It is free for any employer to search the <b>EmployeezNow</b> database. Simply upload specific details required for the open position, such as zip-code, job titles, years of experience and keywords." },
+  { img: 'memo', title: "THE RESULTS", description: 'EmployeezNow will instantly provide employers a list of candidates that best match the details of the search. The results will yield partial profiles only.' },
+  { img: 'profile', title: "PARTIAL PROFILES", description: 'All information such as work history and personal preferences are free to be viewed by the employer. The only thing missing is any relevant contact information.' }
+]
+
+const listData1 = [
+  { img: 'question', title: "INVEST REQUEST", description: "Employers can send a request through EmployeezNow to inquire if the candidate would be interested in their specific job opportunity" },
+  { img: 'podium', title: "COMPLETE PROFILE", description: "Profiles that contain all of the candidate's contact information can be purchased by the employer to continue with the hiring process." },
+  { img: 'finger', title: "ONE TIME FEE", description: "Complete profiles are just $8.00 and that employer will have access to their purchased profiles indefinitely." },
+  { img: 'calendar', title: "AUTOMATION", description: "<b>EmployeezNow</b> will keep all profiles current so employers know the information is accurate. Because <b>EmployeezNow</b> does the work for you the candidates, registering once until you are ready to retire!" },
+]
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -20,32 +32,33 @@ const useStyles = makeStyles((theme) => ({
 
     },
   },
-  textLgContainer: {
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
-    },
+  whyEmployeez: {
+    marginTop: '100px',
+    paddingBottom: '6rem'
   },
   title: {
-    fontSize: '40px',
+    fontSize: '30px',
+    fontWeight: 600,
     textAlign: 'center',
-    color: 'red'
+    color: theme.palette.common.black
   },
   veteranSectionTitle: {
-    fontSize: "56px",
-    fontWeight: 600,
+    fontSize: "30px",
+    fontWeight: 400,
     [theme.breakpoints.down('sm')]: {
       fontSize: '46px'
     }
   },
   veteranSectionSubTitle: {
-    fontSize: '40px',
+    fontSize: '30px',
     fontWeight: 400,
+    color: theme.palette.common.green,
     [theme.breakpoints.down('sm')]: {
       fontSize: '30px'
     }
   },
   partImg: {
-    maxHeight: '150px',
+    maxHeight: '50px',
   },
   veteranImg: {
     maxWidth: '500px'
@@ -78,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   veteranSectionBottom: {
-    fontSize: '20px'
+    fontSize: '16px'
   },
   containerRight: {
     [theme.breakpoints.down('sm')]: {
@@ -145,6 +158,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#A00000'
     },
   },
+  col_center: {
+    display: 'flex',
+    alignItems: 'center'
+  },
   button2: {
     borderRadius: '15px',
     backgroundColor: '#002060',
@@ -160,7 +177,8 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     textAlign: 'center',
-    fontSize: '18px'
+    fontSize: '14px',
+    marginTop: '2rem'
   },
   button: {
     borderRadius: '50px',
@@ -171,27 +189,32 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   iconTitle: {
-    fontSize: '30px',
+    fontSize: '16px',
     textAlign: 'center',
     fontWeight: 200
   },
+  center: {
+    margin: 'auto'
+  },
+  contestSection: {
+    background: '#FAFAFA'
+  },
   bigTitle: {
-    fontSize: '60px',
+    fontSize: '30px',
     fontWeight: 200,
     textAlign: 'center',
-    marginBottom : '30px'
+    marginBottom: '30px'
   }
 }));
 
 const LearnMore = () => {
   const classes = useStyles();
-  return (
+  return (<Fragment>
     <Container width="sm" className={classes.mainContainer}>
-      <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
+      <Grid container ustify="center" spacing={0} style={{ paddingTop: '100px' }}>
         <Grid item xs={12} md={12} className={classes.title}>
-          <i>WHY SPEND A FEW DAYS WHEN YOU CAN GET <br />
+          WHY SPEND A FEW DAYS WHEN YOU CAN GET <br />
           EMPLOYEEZNOW IN JUST A FEW MINUTES!
-          </i>
         </Grid>
       </Grid>
 
@@ -201,158 +224,65 @@ const LearnMore = () => {
             The process is quick and easy
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6} md={3} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/desktop.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle}>
-            EMPLOYEE REGISTRATION
-          </Typography>
-          <Typography className={classes.description}>
-            It is free for anyone to sign up and create their employee profile.
-            It is not just about up loading a resume, personal preferences are
-            included to complete your overall profile.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={3} sm={6} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/binoculars.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle}>
-            EMPLOYER SEARCH
-          </Typography>
-          <Typography className={classes.description}>
-            It is free for any employer to search the <b>EmployeezNow</b> database.
-          Simply upload specific details required for the open position, such as zip-code,
-          job titles, years of experience and keywords.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={3} sm={6} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/memo.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle}>
-            THE RESULTS
-          </Typography>
-          <Typography className={classes.description}>
-            EmployeezNow will instantly provide employers a list of candidates that best match the details of the
-            search. The results will yield partial profiles only.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={3} sm={6} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/profile.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle}>
-            PARTIAL PROFILES
-          </Typography>
-          <Typography className={classes.description}>
-            All information such as work history and personal preferences are
-            free to be viewed by the employer. The only thing missing is any relevant contact information.
-          </Typography>
-        </Grid>
+        {
+          listData.map((list, i) => {
+            return <Grid key={i} item xs={12} sm={6} md={3} style={{ textAlign: 'center' }}>
+              <img
+                className={classes.partImg}
+                src={`${process.env.PUBLIC_URL}/img/${list.img}.svg`}
+                alt="chef"
+                style={{
+                  width: '90%',
+                }}
+              />
+              <Typography className={classes.iconTitle}>
+                {list.title}
+              </Typography>
+              <Typography className={classes.description}>
+                <div dangerouslySetInnerHTML={{ __html: list.description }}></div>
+              </Typography>
+            </Grid>
+          })
+        }
       </Grid>
 
-      <Grid container ustify="center" spacing={5} style={{ marginTop: '100px' }}>
+      <Grid container ustify="center" spacing={5} style={{ marginTop: '100px', marginBottom: '100px' }}>
         <Grid item xs={12} md={12} style={{ textAlign: 'center' }}>
           <Typography className={classes.bigTitle}>
             Profiles are reviewed and decisions are made
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6} md={3} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/question.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle}>
-            INVEST REQUEST
-          </Typography>
-          <Typography className={classes.description}>
-            Employers can send a request through <b>EmployeezNow</b> to inquire
-            if the candidate would be interested in their specific job opportunity
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={3} sm={6} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/podium.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle}>
-            COMPLETE PROFILE
-          </Typography>
-          <Typography className={classes.description}>
-            Profiles that contain all of the candidate's contact information can be purchased by the
-            employer to continue with the hiring process.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={3} sm={6} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/finger.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle}>
-            ONE TIME FEE
-          </Typography>
-          <Typography className={classes.description}>
-            Complete profiles are just $8.00 and that employer will have access to their
-            purchased profiles indefinitely.
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={3} sm={6} style={{ textAlign: 'center' }}>
-          <img
-            className={classes.partImg}
-            src={`${process.env.PUBLIC_URL}/img/calendar.svg`}
-            alt="chef"
-            style={{
-              width: '90%',
-            }}
-          />
-          <Typography className={classes.iconTitle} >
-            AUTOMATION
-          </Typography>
-          <Typography className={classes.description}>
-            <b>EmployeezNow</b> will keep all profiles current so employers know the information is accurate.
-            Because <b>EmployeezNow</b> does the work for you the candidates, registering once until you are ready to retire!
-          </Typography>
-        </Grid>
+        {
+          listData1.map((list, i) => {
+            return <Grid key={i} item xs={12} sm={6} md={3} style={{ textAlign: 'center' }}>
+              <img
+                className={classes.partImg}
+                src={`${process.env.PUBLIC_URL}/img/${list.img}.svg`}
+                alt="chef"
+                style={{
+                  width: '90%',
+                }}
+              />
+              <Typography className={classes.iconTitle}>
+                {list.title}
+              </Typography>
+              <Typography className={classes.description}>
+                <div dangerouslySetInnerHTML={{ __html: list.description }}></div>
+              </Typography>
+            </Grid>
+          })
+        }
       </Grid>
 
-      <Grid container ustify="center" spacing={3} style={{ marginTop: '100px' }}>
+    </Container>
+
+    <Grid className={classes.contestSection}>
+      <Grid container ustify="center" spacing={3}>
         <ContestSection />
       </Grid>
+    </Grid>
 
+    <Container width="sm" className={classes.mainContainer}>
       <Grid container ustify="center" spacing={5} style={{ marginTop: '100px', textAlign: 'center' }}>
         <Grid item xs={12}>
           <Typography className={classes.veteranSectionTitle}>
@@ -390,46 +320,49 @@ const LearnMore = () => {
       <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
         <RegisterSection />
       </Grid>
-      <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
+
+      <Grid container ustify="center" spacing={0} style={{ marginTop: '100px', paddingBottom: '6rem' }}>
         <Grid xs={12}>
           <Typography className={classes.title}>
-            <i>THE FIRST AUTOMATED SEARCH ENGINE FOR<br />
-            EMPLOYEES OF HOSPITALITY</i>
+            THE FIRST AUTOMATED SEARCH ENGINE FOR<br />
+            EMPLOYEES OF HOSPITALITY
           </Typography>
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={5} style={{ marginTop: '2rem' }}>
           <div style={{ padding: "100% 0 0 0", position: "relative" }}>
             <iframe src="https://player.vimeo.com/video/455932248" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
             </iframe>
           </div>
           <script src="https://player.vimeo.com/api/player.js"></script>
         </Grid>
-        <Grid item xs={12} md={7}>
-          <Typography style={{ textAlign: 'center' }}>
-            <img
-              className={classes.veteranImg}
-              src={logo}
-              alt="logo"
-              style={{
-                width: '70%',
-              }}
-            >
-            </img>
-          </Typography>
-          <Typography style={{margin: 'auto', maxWidth : '500px'}}>
-            <i>Serving out Employer & Employee Clients Nationwide!</i>
-            <ul>
-              <li>THE FASTEST WAY TO EMPLOYEE SEARCH</li>
-              <li>WHY SPEND A FEW DAYS WHEN YOU CAN GET <b>EMPLOYEEZNOW</b> IN JUST A FEW MINUTES?</li>
-              <li>LET YOUR JOB DO THE WORK OF FINDING YOU</li>
-              <li>NEVER POST ANOTHER JOB BUT STILL GET THE BEST CANDIDATES</li>
-              <li>EMPLOYEES WILL REGISTER MORE THAN JUST A RESUME!</li>
-            </ul>
-          </Typography>
+        <Grid item xs={12} md={7} className={classes.col_center}>
+          <Box className={classes.center}>
+            <Typography style={{ textAlign: 'center' }}>
+              <img
+                className={classes.veteranImg}
+                src={logo}
+                alt="logo"
+                style={{
+                  width: '70%',
+                }}
+              >
+              </img>
+            </Typography>
+            <Typography style={{ margin: 'auto', maxWidth: '500px' }}>
+              Serving out Employer & Employee Clients Nationwide!
+              <ul>
+                <li>THE FASTEST WAY TO EMPLOYEE SEARCH</li>
+                <li>WHY SPEND A FEW DAYS WHEN YOU CAN GET <b>EMPLOYEEZNOW</b> IN JUST A FEW MINUTES?</li>
+                <li>LET YOUR JOB DO THE WORK OF FINDING YOU</li>
+                <li>NEVER POST ANOTHER JOB BUT STILL GET THE BEST CANDIDATES</li>
+                <li>EMPLOYEES WILL REGISTER MORE THAN JUST A RESUME!</li>
+              </ul>
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
-    </Container >
-
+    </Container>
+  </Fragment>
   );
 };
 
