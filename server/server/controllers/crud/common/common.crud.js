@@ -4,7 +4,6 @@ import CRUD from "../utils/general";
 import extend from "lodash/extend";
 
 const updatePWD = async (req, res) => {
-  console.log(req.body);
   let role = req.body.role;
   let user;
   try {
@@ -13,7 +12,6 @@ const updatePWD = async (req, res) => {
     } else {
       user = await Employer.findOne({ _id: req.body.id });
     }
-    console.log(user);
     if (!user) {
       return res.status(403).json({
         error: "There is no such user",
@@ -28,8 +26,6 @@ const updatePWD = async (req, res) => {
     let newpass = {};
     user.password = req.body.newPassword;
     user.passwordConfirm = req.body.newPasswordConfirm;
-    // console.log("---------------------------");
-    // user = extend(user, newpass);
     await user.save();
     return res.status(200).json({
       success: "set new password successfully",

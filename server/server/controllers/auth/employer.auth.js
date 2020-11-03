@@ -17,7 +17,6 @@ const sendCodetoEmail = async (req, res) => {
   }
 
   const sixDCode = randomize("0", 6);
-  console.log(sixDCode);
   const tempUser = new TempEmployer({
     email: userEmail,
     digitCode: sixDCode,
@@ -59,7 +58,6 @@ const isEmailVerified = async (req, res, next) => {
   // find user with email
   try {
     user = await TempEmployer.findOne({ email: req.body.email });
-    console.log(user);
     if (user.digitCode === req.body.sixDCode) {
       await next();
     } else {
