@@ -18,6 +18,7 @@ import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
 import { FormControl } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
@@ -93,6 +94,7 @@ const ProfessionDetailsForm = ({
   preference,
   loading,
   errorMessage,
+  success,
 }) => {
   const [formData, setFormData] = useState({
     employmentStatus: "",
@@ -103,7 +105,7 @@ const ProfessionDetailsForm = ({
     newOpportunity: { availability: false, title: "" },
     veteran: { status: false, veteranId: "" },
   });
-
+  const [showAlert, setShowAlert] = useState(0);
   const {
     employmentStatus,
     idealSalary,
@@ -145,6 +147,19 @@ const ProfessionDetailsForm = ({
       setFormData(preference.preference);
     }
   }, [preference]);
+
+  useEffect(() => {
+    if (success) {
+      setShowAlert(1);
+    } else if (success === false) {
+      setShowAlert(2);
+    } else {
+      setShowAlert(0);
+    }
+    setTimeout(() => {
+      actions.initiateSuccess();
+    }, 5000);
+  }, [success]);
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
@@ -247,7 +262,12 @@ const ProfessionDetailsForm = ({
             </Typography>
           </Grid>
         </Grid>
-
+        {showAlert === 1 && (
+          <Alert severity="success">Successfully saved!</Alert>
+        )}
+        {showAlert === 2 && (
+          <Alert severity="error">Sorry! Saving failed!</Alert>
+        )}
         <form onSubmit={onSubmit} className={classes.formContainer}>
           <Grid
             container
@@ -506,18 +526,14 @@ ProfessionDetailsForm.propTypes = {
   createProfessionDetails: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ employee: { preference, loading } }) => ({
+const mapStateToProps = ({ employee: { preference, loading, success } }) => ({
   preference,
   loading,
+  success,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(
-    {
-      ...employeeActions,
-    },
-    dispatch
-  ),
+  actions: bindActionCreators({ ...employeeActions }, dispatch),
 });
 
 export default connect(

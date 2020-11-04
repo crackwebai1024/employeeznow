@@ -24,6 +24,7 @@ import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
 import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
+import Alert from "@material-ui/lab/Alert";
 
 import {
   jobTypes,
@@ -121,8 +122,11 @@ const SkillsForm = ({
   setAlert,
   slug,
   employee,
+  success,
 }) => {
   // set State
+  const [showAlert, setShowAlert] = useState(0);
+
   const [primaryJob, setPrimaryJob] = useState({ title: "", years: "" });
   const [secondaryJob, setSecondaryJob] = useState({ title: "", years: "" });
   const [checkbox, setCheckbox] = useState(false);
@@ -188,6 +192,7 @@ const SkillsForm = ({
   }
   // display previous value to each field. But it currently works only primary and secondaryJob
   useEffect(() => {
+    console.log("-----------first before load-----------");
     _loadData();
   }, []);
 
@@ -359,29 +364,6 @@ const SkillsForm = ({
           }
         }
         return setCuisine(newArray);
-
-        // if (value == "" ? cuisine.length > 5 : cuisine.length > 4) {
-        //   return setCuisineYearsError("You cannot select more than 5 items.");
-        // }
-        // setCuisineYearsError("");
-
-        // const newArray = [...cuisine];
-
-        // // change years = 0 to '' - it is easier to remove data later
-        // const noZeroValue = value === "0" ? (value = "") : value;
-        // newArray.push({ type: id, years: value });
-        // // update years if type exisits - Also if year is '', obj removed
-        // const update = newArray.filter(function (obj) {
-        //   return obj.type === id ? (obj.years = noZeroValue) : obj;
-        // });
-
-        // // remove duplicate type and year (when input value has two digits ex.10, onChange triggers input twice)
-        // const noDuplicateArray = update.filter(
-        //   (v, i, a) =>
-        //     a.findIndex((t) => t.type === v.type && t.years === v.years) === i
-        // );
-
-        // return setCuisine(noDuplicateArray);
       }
       case "styleCurrent": {
         setStyle({ type: id, years: "" });
@@ -445,6 +427,20 @@ const SkillsForm = ({
     //setAlert('success', 'Successfully updated!', history, slug);
   };
 
+  useEffect(() => {
+    console.log(success);
+    if (success) {
+      setShowAlert(1);
+    } else if (success === false) {
+      setShowAlert(2);
+    } else {
+      setShowAlert(0);
+    }
+    setTimeout(() => {
+      actions.initiateSuccess();
+    }, 5000);
+  }, [success]);
+
   return (
     !loading && (
       <Container maxWidth="sm" id="#">
@@ -454,7 +450,12 @@ const SkillsForm = ({
               UPDATE SKILLS
             </Typography>
           </Grid>
-
+          {showAlert === 1 && (
+            <Alert severity="success">Successfully saved!</Alert>
+          )}
+          {showAlert === 2 && (
+            <Alert severity="error">Sorry! Saving failed!</Alert>
+          )}
           <form onSubmit={handleSubmit}>
             <Grid item className={classes.titleContainer}>
               <Typography className={classes.title}>
@@ -912,9 +913,10 @@ SkillsForm.propTypes = {
   //slug: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ employee: { skill, loading } }) => ({
+const mapStateToProps = ({ employee: { skill, loading, success } }) => ({
   skill,
   loading,
+  success,
 });
 
 const mapDispatchToProps = (dispatch) => ({

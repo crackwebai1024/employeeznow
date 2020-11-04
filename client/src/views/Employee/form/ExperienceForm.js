@@ -1,27 +1,29 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { actions as employeeActions } from '@store/employee';
-import { bindActionCreators } from 'redux';
-import CloseIcon from '@material-ui/icons/Close';
-import { jobTypes, roles } from '../professionTypes';
-import { getUser } from '@helpers/auth-helpers';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import React, { useState, useEffect, Fragment } from "react";
+import { connect } from "react-redux";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { actions as employeeActions } from "@store/employee";
+import { bindActionCreators } from "redux";
+import CloseIcon from "@material-ui/icons/Close";
+import { jobTypes, roles } from "../professionTypes";
+import { getUser } from "@helpers/auth-helpers";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import Alert from "@material-ui/lab/Alert";
+
 // import {
 //   loadProfessionDetails,
 //   updateProfessionDetails,
@@ -30,99 +32,117 @@ import Menu from '@material-ui/core/Menu';
 // set style
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    marginTop: '1.5rem',
-    marginBottom: '1.5rem',
-    fontSize: '2rem',
+    marginTop: "1.5rem",
+    marginBottom: "1.5rem",
+    fontSize: "2rem",
     color: theme.palette.primary.main,
   },
   formContainer: {
-    marginTop: '3rem',
+    marginTop: "3rem",
   },
   textContainer: {
-    marginTop: '2rem',
+    marginTop: "2rem",
   },
   addOtherJob: {
     fontSize: "40px",
-    cursor: "pointer"
+    cursor: "pointer",
   },
   dialog: {
-    padding: '2rem',
+    padding: "2rem",
     textAlign: "center",
   },
   error: {
-    color: 'red'
+    color: "red",
   },
   description: {
-    marginTop: '1rem'
+    marginTop: "1rem",
   },
   checkboxText: {
-    marginTop: '1.5rem',
+    marginTop: "1.5rem",
   },
   item: {
-    '& .MuiInput-input': {
+    "& .MuiInput-input": {
       color: theme.palette.grey[700],
     },
-    '& .MuiFormControlLabel-label': {
-      fontSize: '0.85rem',
+    "& .MuiFormControlLabel-label": {
+      fontSize: "0.85rem",
       color: theme.palette.grey[700],
     },
   },
   button: {
-    marginTop: '2rem',
-    marginBottom: '5rem',
+    marginTop: "2rem",
+    marginBottom: "5rem",
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
   contactEmail: {
-    paddingTop: "3rem"
+    paddingTop: "3rem",
   },
   close: {
     cursor: "pointer",
   },
   menuItem: {
     maxHeight: "500px",
-  }
+  },
 }));
 
 const ExperienceForm = ({
   // loadProfessionDetails,
   // updateProfessionDetails,
+  success,
   loading,
   experience,
   actions,
   errorMessage,
 }) => {
   const [formData, setFormData] = useState({
-    primaryJob: { title: "", company: '', startDate: '', endDate: '', description: "", years: 0, current: false },
-    secondaryJob: { title: "", company: '', startDate: '', endDate: '', description: "", years: 0 },
-    employmentStatus: '',
+    primaryJob: {
+      title: "",
+      company: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      years: 0,
+      current: false,
+    },
+    secondaryJob: {
+      title: "",
+      company: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      years: 0,
+    },
+    employmentStatus: "",
   });
 
-  const [error, setError] = useState({
-    primaryJob: '',
-  })
+  const [showAlert, setShowAlert] = useState(0);
 
-  const user = JSON.parse(getUser())
+  const [error, setError] = useState({
+    primaryJob: "",
+  });
+
+  const user = JSON.parse(getUser());
   // material-ui
   const classes = useStyles();
   const theme = useTheme();
-  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // disablt 'end date' for primaryJob if current was checked
   const [toDisabled, setToDisabled] = useState(formData.primaryJob.current);
   const [toggleBox, setToggleBox] = useState(false);
 
   const [otherJobs, setOtherJobs] = useState([]);
-  const [reload, setReload] = useState(false)
-  const [limit, setLimit] = useState(false)
+  const [reload, setReload] = useState(false);
+  const [limit, setLimit] = useState(false);
 
   const units = [
-    { value: 'hourly' },
-    { value: 'weekly' },
-    { value: 'annually' },
+    { value: "hourly" },
+    { value: "weekly" },
+    { value: "annually" },
   ];
 
   const [open, setOpen] = useState(true);
@@ -139,79 +159,90 @@ const ExperienceForm = ({
   // load profession details and set default
   useEffect(() => {
     let data = {
-      id: user._id
-    }
-    actions.loadExperienceData(data)
+      id: user._id,
+    };
+    actions.loadExperienceData(data);
   }, []);
 
   useEffect(() => {
     if (experience && experience.experience) {
       if (experience.experience.primaryJob.current) {
-        setToDisabled(true)
+        setToDisabled(true);
       }
-      setFormData(experience.experience)
-      setOpen(false)
-      setOtherJobs(experience.experience.otherJob)
+      setFormData(experience.experience);
+      setOpen(false);
+      setOtherJobs(experience.experience.otherJob);
     }
-  }, [experience])
+  }, [experience]);
+
+  useEffect(() => {
+    if (success) {
+      setShowAlert(1);
+    } else if (success === false) {
+      setShowAlert(2);
+    } else {
+      setShowAlert(0);
+    }
+    setTimeout(() => {
+      actions.initiateSuccess();
+    }, 5000);
+  }, [success]);
+
   // destructure
-  const {
-    primaryJob,
-    secondaryJob
-  } = formData;
+  const { primaryJob, secondaryJob } = formData;
 
   const onChange = ({ target: { id, name, value, checked } }) => {
-    console.log('id:', id, 'name:', name, 'value:', value, 'checked', checked);
+    console.log("id:", id, "name:", name, "value:", value, "checked", checked);
     switch (name) {
-      case 'employmentStatus': {
+      case "employmentStatus": {
         return setFormData({ ...formData, [name]: value });
       }
-      case 'primaryJob': {
+      case "primaryJob": {
         return setFormData({
           ...formData,
-          [name]: value
-        })
+          [name]: value,
+        });
       }
-      case 'endDate':
+      case "endDate":
         if (formData[id].startDate > value) {
           setError({
             ...error,
-            [id]: "Your end date can’t be earlier than your start date."
-          })
+            [id]: "Your end date can’t be earlier than your start date.",
+          });
         } else {
           setError({
             ...error,
-            [id]: ""
-          })
+            [id]: "",
+          });
         }
-        let years = 0
+        let years = 0;
         if (formData[id].startDate && formData[id].endDate) {
-          let start = new Date(formData[id].startDate)
-          let end = new Date(formData[id].endDate)
-          years = (end - start) / 86400000 / 365
+          let start = new Date(formData[id].startDate);
+          let end = new Date(formData[id].endDate);
+          years = (end - start) / 86400000 / 365;
         }
         setFormData((prevState) => ({
           ...prevState,
           [id]: { ...prevState[id], [name]: value, years: years },
         }));
         break;
-      case 'startDate': {
+      case "startDate": {
         if (formData[id].endDate && formData[id].endDate < value) {
           setError({
             ...error,
-            [id]: "Your end date can’t be earlier than your start date."
-          })
+            [id]: "Your end date can’t be earlier than your start date.",
+          });
         } else {
           setError({
             ...error,
-            [id]: ""
-          })
+            [id]: "",
+          });
         }
-        let years = 0
+        let years = 0;
         if (formData[id].startDate && formData[id].endDate) {
-          let start = new Date(formData[id].startDate)
-          let end = new Date(formData[id].endDate)
-          years = (end - start) / 86400000 / 365
+          let start = new Date(formData[id].startDate);
+          let end = new Date(formData[id].endDate);
+          years = (end - start) / 86400000 / 365;
         }
         setFormData((prevState) => ({
           ...prevState,
@@ -219,22 +250,25 @@ const ExperienceForm = ({
         }));
         break;
       }
-      case 'current': {
+      case "current": {
         setFormData((prevState) => ({
           ...prevState,
           [id]: { ...prevState[id], [name]: checked },
         }));
         if (checked) {
-          setError({ ...error, [id]: '' })
+          setError({ ...error, [id]: "" });
         } else {
           if (formData[id].startDate > formData[id].endDate) {
-            setError({ ...error, [id]: 'Your end date can’t be earlier than your start date.' })
+            setError({
+              ...error,
+              [id]: "Your end date can’t be earlier than your start date.",
+            });
           }
         }
         setToDisabled(!toDisabled);
         break;
       }
-      case 'status': {
+      case "status": {
         setFormData((prevState) => ({
           ...prevState,
           [id]: { ...prevState[id], [name]: checked },
@@ -242,9 +276,9 @@ const ExperienceForm = ({
         setToggleBox(!toggleBox);
         break;
       }
-      case 'company':
-      case 'description':
-      case 'jobTitle':
+      case "company":
+      case "description":
+      case "jobTitle":
       default:
         return setFormData((prevState) => ({
           ...prevState,
@@ -256,58 +290,60 @@ const ExperienceForm = ({
   const onSubmit = (e) => {
     e.preventDefault();
     if (error.primaryJob) {
-      return
+      return;
     }
     let data = {
       ...formData,
-    }
+    };
     let submitData = {
       primaryJob: data.primaryJob,
       secondaryJob: data.secondaryJob,
       otherJob: otherJobs,
-      id: user._id
-    }
+      id: user._id,
+    };
 
-    actions.updateJobExperience(submitData)
+    actions.updateJobExperience(submitData);
   };
 
   const handleInput = (e, key) => {
-    let data = otherJobs
-    data[key][e.target.name] = e.target.value
+    let data = otherJobs;
+    data[key][e.target.name] = e.target.value;
     if (data[key].startDate && data[key].endDate) {
-      let start = new Date(data[key].startDate)
-      let end = new Date(data[key].endDate)
-      let years = Number((end - start) / 86400000 / 365)
-      data[key].years = years
+      let start = new Date(data[key].startDate);
+      let end = new Date(data[key].endDate);
+      let years = Number((end - start) / 86400000 / 365);
+      data[key].years = years;
     }
 
-    setOtherJobs(data)
-    setReload(!reload)
-  }
+    setOtherJobs(data);
+    setReload(!reload);
+  };
 
   const addOtherJobs = () => {
     if (otherJobs.length >= 5) {
-      setLimit(true)
-      return
+      setLimit(true);
+      return;
     }
-    let otherJob = otherJobs
-    otherJob.push({})
-    setOtherJobs(otherJob)
-    setReload(!reload)
-  }
+    let otherJob = otherJobs;
+    otherJob.push({});
+    setOtherJobs(otherJob);
+    setReload(!reload);
+  };
 
   const onJobTitleChange = (e, id) => {
     setFormData((prevState) => ({
       ...prevState,
       [id]: { ...prevState[id], title: e.target.value },
     }));
-  }
+  };
 
-  console.log(primaryJob.title, "payload")
-  return experience ?
+  console.log(primaryJob.title, "payload");
+  return experience ? (
     <Container maxWidth="md">
       <Grid
-        container direction="column" alignItems={matchesXS ? 'center' : 'flex-start'}
+        container
+        direction="column"
+        alignItems={matchesXS ? "center" : "flex-start"}
       >
         <Grid item>
           <Typography variant="h1" className={classes.heading1}>
@@ -315,12 +351,13 @@ const ExperienceForm = ({
           </Typography>
         </Grid>
       </Grid>
-
+      {showAlert === 1 && <Alert severity="success">Successfully saved!</Alert>}
+      {showAlert === 2 && <Alert severity="error">Sorry! Saving failed!</Alert>}
       <form onSubmit={(e) => onSubmit(e)} className={classes.formContainer}>
         <Grid
           container
           direction="column"
-          alignItems={matchesXS ? 'center' : 'flex-start'}
+          alignItems={matchesXS ? "center" : "flex-start"}
         >
           {/* primary job */}
           <Grid item>
@@ -330,14 +367,17 @@ const ExperienceForm = ({
           </Grid>
 
           <Grid
-            container justify="flex-start" direction={matchesXS ? 'column' : 'row'} alignItems="center"
+            container
+            justify="flex-start"
+            direction={matchesXS ? "column" : "row"}
+            alignItems="center"
           >
             <Grid container>
               <Grid item sm={3}>
-                {
-                  primaryJob &&
+                {primaryJob && (
                   <TextField
-                    required select
+                    required
+                    select
                     label="Primary Job"
                     id="primaryJob"
                     name="title"
@@ -348,53 +388,78 @@ const ExperienceForm = ({
                     PaperProps={{
                       style: {
                         maxHeight: 500,
-                        width: '20ch',
+                        width: "20ch",
                       },
                     }}
                   >
                     {jobTypes.map((job) => {
-                      return <MenuItem key={job} value={job} id="primaryJob">
-                        {job}
-                      </MenuItem>
+                      return (
+                        <MenuItem key={job} value={job} id="primaryJob">
+                          {job}
+                        </MenuItem>
+                      );
                     })}
                   </TextField>
-                }
+                )}
               </Grid>
               <Grid item sm={3}>
-                <TextField type="text" name="company" id="primaryJob" required
-                  label="Company Name" InputLabelProps={{ shrink: true }}
-                  value={primaryJob.company} onChange={(e) => onChange(e)}
+                <TextField
+                  type="text"
+                  name="company"
+                  id="primaryJob"
+                  required
+                  label="Company Name"
+                  InputLabelProps={{ shrink: true }}
+                  value={primaryJob.company}
+                  onChange={(e) => onChange(e)}
                 />
               </Grid>
 
               <Grid item sm={3}>
-                <TextField type="date" name="startDate" id="primaryJob"
-                  label="Start Date" InputLabelProps={{ shrink: true }}
-                  value={primaryJob.startDate} onChange={(e) => onChange(e)}
+                <TextField
+                  type="date"
+                  name="startDate"
+                  id="primaryJob"
+                  label="Start Date"
+                  InputLabelProps={{ shrink: true }}
+                  value={primaryJob.startDate}
+                  onChange={(e) => onChange(e)}
                   className={classes.item}
                 />
               </Grid>
 
               <Grid item sm={3}>
-                <TextField type="date" name="endDate" id="primaryJob"
-                  label="End Date" error={error.primaryJob ? true : false}
+                <TextField
+                  type="date"
+                  name="endDate"
+                  id="primaryJob"
+                  label="End Date"
+                  error={error.primaryJob ? true : false}
                   InputLabelProps={{ shrink: true }}
-                  value={toDisabled ? '' : primaryJob.endDate}
+                  value={toDisabled ? "" : primaryJob.endDate}
                   disabled={toDisabled ? true : false}
-                  onChange={(e) => onChange(e)} className={classes.item}
+                  onChange={(e) => onChange(e)}
+                  className={classes.item}
                 />
               </Grid>
             </Grid>
             <Grid container>
               <Grid item xs={12} sm={12}>
-                <TextField id="primaryJob" name="description" label="Description"
-                  multiline fullWidth InputLabelProps={{ shrink: true }}
-                  value={primaryJob.description} onChange={(e) => onChange(e)}
-                  rows={4} className={classes.description} variant="outlined"
+                <TextField
+                  id="primaryJob"
+                  name="description"
+                  label="Description"
+                  multiline
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  value={primaryJob.description}
+                  onChange={(e) => onChange(e)}
+                  rows={4}
+                  className={classes.description}
+                  variant="outlined"
                 />
               </Grid>
             </Grid>
-
           </Grid>
           <Grid item className={classes.error}>
             {error.primaryJob && error.primaryJob}
@@ -403,8 +468,11 @@ const ExperienceForm = ({
           <Grid item>
             <FormControlLabel
               control={
-                <Checkbox name="current" id="primaryJob"
-                  checked={primaryJob.current} value={primaryJob.current}
+                <Checkbox
+                  name="current"
+                  id="primaryJob"
+                  checked={primaryJob.current}
+                  value={primaryJob.current}
                   onChange={(e) => onChange(e)}
                 />
               }
@@ -419,60 +487,91 @@ const ExperienceForm = ({
           </Grid>
 
           <Grid
-            container justify="flex-start" direction={matchesXS ? 'column' : 'row'} alignItems="center"
+            container
+            justify="flex-start"
+            direction={matchesXS ? "column" : "row"}
+            alignItems="center"
           >
             <Grid container>
               <Grid item sm={3}>
                 <TextField
                   select
-                  label="Previous Job" id="secondaryJob"
-                  name="title" value={secondaryJob.title}
+                  label="Previous Job"
+                  id="secondaryJob"
+                  name="title"
+                  value={secondaryJob.title}
                   InputLabelProps={{ shrink: true }}
                   onChange={(e) => onJobTitleChange(e, "secondaryJob")}
                   helperText="Please select your currency"
                 >
                   {jobTypes.map((job) => {
-                    return <MenuItem key={`secondary_${job}`} value={job} id="secondaryJob">
-                      {job}
-                    </MenuItem>
+                    return (
+                      <MenuItem
+                        key={`secondary_${job}`}
+                        value={job}
+                        id="secondaryJob"
+                      >
+                        {job}
+                      </MenuItem>
+                    );
                   })}
-
                 </TextField>
-
               </Grid>
               <Grid item sm={3}>
-                <TextField type="text" name="company" id="secondaryJob"
-                  label="Company Name" InputLabelProps={{ shrink: true }}
-                  value={secondaryJob.company} onChange={(e) => onChange(e)}
+                <TextField
+                  type="text"
+                  name="company"
+                  id="secondaryJob"
+                  label="Company Name"
+                  InputLabelProps={{ shrink: true }}
+                  value={secondaryJob.company}
+                  onChange={(e) => onChange(e)}
                 />
               </Grid>
 
               <Grid item sm={3}>
-                <TextField type="date" name="startDate" id="secondaryJob"
-                  label="Start Date" InputLabelProps={{ shrink: true }}
-                  value={secondaryJob.startDate} onChange={(e) => onChange(e)}
+                <TextField
+                  type="date"
+                  name="startDate"
+                  id="secondaryJob"
+                  label="Start Date"
+                  InputLabelProps={{ shrink: true }}
+                  value={secondaryJob.startDate}
+                  onChange={(e) => onChange(e)}
                   className={classes.item}
                 />
               </Grid>
 
               <Grid item sm={3}>
-                <TextField type="date" name="endDate" id="secondaryJob"
-                  label="End Date" error={error.secondaryJob ? true : false}
+                <TextField
+                  type="date"
+                  name="endDate"
+                  id="secondaryJob"
+                  label="End Date"
+                  error={error.secondaryJob ? true : false}
                   InputLabelProps={{ shrink: true }}
-                  onChange={(e) => onChange(e)} className={classes.item}
+                  onChange={(e) => onChange(e)}
+                  className={classes.item}
                 />
               </Grid>
             </Grid>
             <Grid container>
               <Grid item xs={12} sm={12}>
-                <TextField id="secondaryJob" name="description" label="Description"
-                  multiline fullWidth InputLabelProps={{ shrink: true }}
-                  value={secondaryJob.description} onChange={(e) => onChange(e)}
-                  rows={4} className={classes.description} variant="outlined"
+                <TextField
+                  id="secondaryJob"
+                  name="description"
+                  label="Description"
+                  multiline
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  value={secondaryJob.description}
+                  onChange={(e) => onChange(e)}
+                  rows={4}
+                  className={classes.description}
+                  variant="outlined"
                 />
               </Grid>
             </Grid>
-
           </Grid>
           <Grid item className={classes.error}>
             {error.secondaryJob && error.secondaryJob}
@@ -480,78 +579,105 @@ const ExperienceForm = ({
 
           {/* other job */}
           {otherJobs.map((otherjob, key) => {
-            return <Fragment key={key}>
-              <Grid item className={classes.textContainer}>
-                <Typography gutterBottom variant="h6">
-                  Previous Job
-                </Typography>
-              </Grid>
-              <Grid container justify="flex-start" alignItems="center">
-                <Grid container>
-                  <Grid item xs={12} sm={3}>
-                    <TextField
-                      required select
-                      label="Job Title" id="secondaryJob"
-                      name="title" value={otherJobs[key].title}
-                      InputLabelProps={{ shrink: true }}
-                      onChange={(e) => handleInput(e, key)}
-                      helperText="Please select your currency"
-                    >
-                      {jobTypes.map((job) => {
-                        return <MenuItem key={job} value={job}>
-                          {job}
-                        </MenuItem>
-                      })}
-                    </TextField>
-                  </Grid>
+            return (
+              <Fragment key={key}>
+                <Grid item className={classes.textContainer}>
+                  <Typography gutterBottom variant="h6">
+                    Previous Job
+                  </Typography>
+                </Grid>
+                <Grid container justify="flex-start" alignItems="center">
+                  <Grid container>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        required
+                        select
+                        label="Job Title"
+                        id="secondaryJob"
+                        name="title"
+                        value={otherJobs[key].title}
+                        InputLabelProps={{ shrink: true }}
+                        onChange={(e) => handleInput(e, key)}
+                        helperText="Please select your currency"
+                      >
+                        {jobTypes.map((job) => {
+                          return (
+                            <MenuItem key={job} value={job}>
+                              {job}
+                            </MenuItem>
+                          );
+                        })}
+                      </TextField>
+                    </Grid>
 
-                  <Grid item xs={12} sm={3}>
-                    <TextField type="text" name="company" label="Company Name"
-                      InputLabelProps={{ shrink: true }}
-                      value={otherJobs[key].company} onChange={(e) => handleInput(e, key)}
-                    />
-                  </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        type="text"
+                        name="company"
+                        label="Company Name"
+                        InputLabelProps={{ shrink: true }}
+                        value={otherJobs[key].company}
+                        onChange={(e) => handleInput(e, key)}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={3}>
-                    <TextField type="date" name="startDate" label="Start Date"
-                      InputLabelProps={{ shrink: true }}
-                      value={otherJobs[key].startDate} onChange={(e) => handleInput(e, key)}
-                      className={classes.item}
-                    />
-                  </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        type="date"
+                        name="startDate"
+                        label="Start Date"
+                        InputLabelProps={{ shrink: true }}
+                        value={otherJobs[key].startDate}
+                        onChange={(e) => handleInput(e, key)}
+                        className={classes.item}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={3}>
-                    <TextField type="date" name="endDate" id="" label="End Date"
-                      // error={error.otherJobs[key] ? true : false}
-                      InputLabelProps={{ shrink: true }} className={classes.item}
-                      value={otherJobs[key].endDate} onChange={(e) => handleInput(e, key)}
-                    />
+                    <Grid item xs={12} sm={3}>
+                      <TextField
+                        type="date"
+                        name="endDate"
+                        id=""
+                        label="End Date"
+                        // error={error.otherJobs[key] ? true : false}
+                        InputLabelProps={{ shrink: true }}
+                        className={classes.item}
+                        value={otherJobs[key].endDate}
+                        onChange={(e) => handleInput(e, key)}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        name="description"
+                        label="Description"
+                        multiline
+                        fullWidth
+                        InputLabelProps={{ shrink: true }}
+                        value={otherJobs[key].description}
+                        className={classes.description}
+                        variant="outlined"
+                        onChange={(e) => handleInput(e, key)}
+                        rows={4}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
-                <Grid container>
-                  <Grid item xs={12} sm={12}>
-                    <TextField name="description" label="Description"
-                      multiline fullWidth InputLabelProps={{ shrink: true }}
-                      value={otherJobs[key].description} className={classes.description} variant="outlined"
-                      onChange={(e) => handleInput(e, key)} rows={4}
-                    />
-                  </Grid>
+                <Grid item className={classes.error}>
+                  {/* {error.otherJobs[key] && error.otherJobs[key]} */}
                 </Grid>
-              </Grid>
-              <Grid item className={classes.error}>
-                {/* {error.otherJobs[key] && error.otherJobs[key]} */}
-              </Grid>
-            </Fragment>
-          }
-          )}
-          {!limit &&
+              </Fragment>
+            );
+          })}
+          {!limit && (
             <Grid>
               <Button onClick={addOtherJobs}>
                 <AddBoxIcon className={classes.addOtherJob} />
-                    Add Other Jobs
-                    </Button>
+                Add Other Jobs
+              </Button>
             </Grid>
-          }
+          )}
           <Grid item>
             <Button
               type="submit"
@@ -571,7 +697,7 @@ const ExperienceForm = ({
           </Grid>
         )}
       </form>
-      {!experience.experience &&
+      {!experience.experience && (
         <Dialog
           open={open}
           onClose={handleClose}
@@ -586,33 +712,31 @@ const ExperienceForm = ({
             <DialogContentText>
               <Typography>
                 <i>
-                  You can manually enter your work experience or email your resume
-                  and it will be uploaded in approximately 48 hours
-            </i>
+                  You can manually enter your work experience or email your
+                  resume and it will be uploaded in approximately 48 hours
+                </i>
               </Typography>
               <Typography className={classes.contactEmail}>
                 Register@EmployeezNow.com
-          </Typography>
+              </Typography>
             </DialogContentText>
           </DialogContent>
         </Dialog>
-      }
-    </Container> :
+      )}
+    </Container>
+  ) : (
     ""
+  );
 };
 
-const mapStateToProps = ({
-  employee: {
-    experience, loading
-  },
-}) => ({
-  experience, loading
+const mapStateToProps = ({ employee: { experience, loading, success } }) => ({
+  experience,
+  loading,
+  success,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...employeeActions,
-  }, dispatch),
+  actions: bindActionCreators({ ...employeeActions }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExperienceForm);

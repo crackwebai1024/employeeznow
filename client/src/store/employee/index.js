@@ -3,6 +3,8 @@ import { handleActions, createActions } from "redux-actions";
 import initialState, * as handlers from "./handlers";
 
 export const actions = createActions({
+  INITIATE_SUCCESS: undefined,
+  SET_SUCCESS: undefined,
   GET_USER_DATA_REQUEST: undefined,
   GET_USER_DATA_SUCCESS: undefined,
 
@@ -44,6 +46,8 @@ export const actions = createActions({
 
 const reducer = handleActions(
   new Map([
+    [actions.initiateSuccess, handlers.initiateSuccess],
+    [actions.setSuccess, handlers.setSuccess],
     [actions.getUserDataRequest, handlers.getUserDataRequest],
     [actions.getUserDataSuccess, handlers.getUserDataSuccess],
 

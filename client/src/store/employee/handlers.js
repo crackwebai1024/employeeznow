@@ -7,6 +7,11 @@ const initialState = {
   success: "",
 };
 
+export const initiateSuccess = (state) => ({
+  ...state,
+  success: "",
+});
+
 export const getUserDataRequest = (state, { payload }) => ({
   ...state,
 });
@@ -38,7 +43,6 @@ export const updateSkillSuccess = (state, { payload }) => ({
   ...state,
   skill: payload,
   loading: false,
-  success: true,
 });
 
 export const updateJobExperience = (state, { payload }) => ({
@@ -57,7 +61,6 @@ export const success = (state, { payload }) => {
     loading: false,
     reload: !state.reload,
     [payload.type]: payload.data,
-    success: true,
   };
 };
 
@@ -147,6 +150,10 @@ export const updateBasicInfoSuccess = (state, { payload }) => ({
   success: true,
 });
 
+export const setSuccess = (state) => ({
+  ...state,
+  success: true,
+});
 export const uploadVeteranCard = (state, { payload }) => ({
   ...state,
 });
