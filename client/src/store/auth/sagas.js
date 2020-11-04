@@ -151,6 +151,19 @@ function* onResetPassword({ payload }) {
   }
 }
 
+function* onChangePassword({ payload }) {
+  try {
+    const res = yield call(AuthAPI.onChangePassword, payload);
+    console.log("change password result ==> ", res);
+    if (res && res.data) {
+      yield put(types.changePasswordSuccess());
+    }
+  } catch {
+    console.log("change password result ==> ");
+    yield put(types.changePasswordFailure());
+  }
+}
+
 const authSagas = [
   takeEvery(types.loginRequest, onLogin),
   takeEvery(types.signupRequest, onEmailVerify),
@@ -162,6 +175,7 @@ const authSagas = [
   takeEvery(types.employerEmailCodeSend, onEmailCodeSend),
   takeEvery(types.forgotPasswordRequest, onForgotPassword),
   takeEvery(types.resetPasswordRequest, onResetPassword),
+  takeEvery(types.changePasswordRequest, onChangePassword),
 ];
 
 export function* watchUnauthorized() {

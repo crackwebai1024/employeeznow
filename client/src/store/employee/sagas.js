@@ -33,6 +33,7 @@ function* onLoadSkill({ payload }) {
     const res = yield call(EmployeeAPI.loadSkill, queryString);
     if (res && res.data) {
       yield put(types.updateSkillSuccess(res.data.skill));
+      yield put(types.initiateSuccess());
     }
   } catch {}
 }
@@ -42,6 +43,7 @@ function* onUpdateSkill({ payload }) {
     const res = yield call(EmployeeAPI.updateSkill, payload);
     if (res && res.data) {
       yield put(types.updateSkillSuccess(payload));
+      yield put(types.setSuccess());
     }
   } catch {}
 }
@@ -51,6 +53,7 @@ function* onUpdateJobExperience({ payload }) {
     const res = yield call(EmployeeAPI.updateJobExperience, payload);
     if (res && res.data) {
       yield put(types.success({ type: "experience", data: res.data }));
+      yield put(types.setSuccess());
     }
   } catch {
     yield put(types.failure);
@@ -63,6 +66,7 @@ function* onLoadJobExperience({ payload }) {
     const res = yield call(EmployeeAPI.loadExperienceData, queryString);
     if (res && res.data) {
       yield put(types.success({ type: "experience", data: res.data }));
+      yield put(types.initiateSuccess());
     }
   } catch {
     yield put(types.failure);
@@ -76,6 +80,7 @@ function* onUpdatePreference({ payload }) {
       yield put(
         types.success({ type: "preference", data: { preference: res.data } })
       );
+      yield put(types.setSuccess());
     }
   } catch {
     yield put(types.failure);
@@ -88,6 +93,7 @@ function* onLoadPreference({ payload }) {
     const res = yield call(EmployeeAPI.loadPreference, queryString);
     if (res && res.data) {
       yield put(types.success({ type: "preference", data: res.data }));
+      yield put(types.initiateSuccess());
     }
   } catch {}
 }
@@ -97,7 +103,9 @@ function* onUploadPhoto({ payload }) {
     const res = yield call(EmployeeAPI.uploadProfilePhoto, payload.formData);
     if (res && res.data) {
       let photo = _arrayBufferToBase64(res.data.content.data);
-      yield put(types.success({ type: payload.photoType, data: photo }));
+      yield put(
+        types.success({ type: payload.photoType, success: true, data: photo })
+      );
     }
   } catch {}
 }

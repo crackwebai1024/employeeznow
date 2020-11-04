@@ -1,49 +1,53 @@
-import React, { useRef } from 'react';
-import { connect } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
+import React, { useRef } from "react";
+import { connect } from "react-redux";
+import { useForm } from "react-hook-form";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import { actions as authActions } from "@store/auth";
+import { bindActionCreators } from "redux";
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
     ...theme.typography.h1,
-    textTransform: 'uppercase',
-    marginBottom: '-1rem',
+    textTransform: "uppercase",
+    marginBottom: "-1rem",
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
 }));
 
 const ChangePassfordForm = ({
+  actions,
   slug,
   history,
   setOpenPassword,
-  // updatePassword,
   errorMessage,
 }) => {
   // react-hook-form
   const { register, handleSubmit, errors, watch } = useForm({});
   const password = useRef({});
-  password.current = watch('password', '');
+  password.current = watch("password", "");
 
   // material-ui
   const classes = useStyles();
 
   const onSubmit = (formData) => {
+    formData.id = JSON.parse(localStorage.getItem("USER"))["_id"];
+    formData.role = "employee";
     console.log(formData);
-    // updatePassword(formData, history, slug);
+    actions.changePasswordRequest(formData);
   };
 
   return (
@@ -61,8 +65,8 @@ const ChangePassfordForm = ({
               error={errors.currentPassword ? true : false}
               helperText={
                 errors.currentPassword
-                  ? 'Password must have at leaset 8 charactors'
-                  : ''
+                  ? "Password must have at leaset 8 charactors"
+                  : ""
               }
               required
               variant="outlined"
@@ -86,8 +90,8 @@ const ChangePassfordForm = ({
               error={errors.password ? true : false}
               helperText={
                 errors.password
-                  ? 'Password must have at leaset 8 charactors'
-                  : ''
+                  ? "Password must have at leaset 8 charactors"
+                  : ""
               }
               required
               variant="outlined"
@@ -110,7 +114,7 @@ const ChangePassfordForm = ({
             <TextField
               error={errors.passwordConfirm ? true : false}
               helperText={
-                errors.passwordConfirm ? 'Passwords do not match' : ''
+                errors.passwordConfirm ? "Passwords do not match" : ""
               }
               required
               variant="outlined"
@@ -124,18 +128,18 @@ const ChangePassfordForm = ({
               autoComplete="passwordConfirm"
               inputRef={register({
                 validate: (value) =>
-                  value === password.current || 'The passwords do not match',
+                  value === password.current || "The passwords do not match",
               })}
             />
           </Grid>
         </DialogContent>
 
         <DialogActions>
-        <Button
+          <Button
             fullWidth
             variant="outlined"
             color="primary"
-            onClick={e => setOpenPassword(false)}
+            onClick={(e) => setOpenPassword(false)}
             className={classes.button}
           >
             CANCEL
@@ -169,5 +173,14 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(
+    {
+      ...authActions,
+    },
+    dispatch
+  ),
+});
+
 // export default connect(mapStateToProps, { updatePassword })(ChangePassfordForm);
-export default connect(mapStateToProps, null)(ChangePassfordForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassfordForm);
