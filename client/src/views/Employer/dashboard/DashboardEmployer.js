@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Box, Dialog, Button, Typography } from '@material-ui/core';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -15,14 +12,14 @@ import SearchForm from '../form/SearchForm';
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    paddingTop: '5rem',
     marginBottom: '5rem',
   },
   companyName: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    boxShadow: `0px 7px 8px -4px rgba(96,152,224,0.2),0px 12px 17px 2px rgba(96,152,224,0.14),0px 5px 22px 4px rgba(96,152,224,0.12)`,
-    padding: '1.8rem 3rem',
+    textAlign: 'center',
     marginTop: '1rem',
-    marginBottom: '3rem',
+    marginBottom: '1rem',
   },
   title: {
     marginTop: '3rem',
@@ -42,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'none',
     },
   },
+  leftSection: {
+    boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
+    padding: '2rem'
+  },
   accountButton: {
     marginLeft: '1rem',
   },
@@ -50,12 +51,48 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1303, // larger than header and footer
   },
   filterTitleContainer: {
-    marginTop: '2rem',
+    marginTop: '0.5rem',
     marginBottom: '0.5rem',
+  },
+  filterTitle: {
+    textAlign: 'center'
   },
   filterButttonContainer: {
     marginTop: '0.5rem',
   },
+  rightSection: {
+    maxWidth: '260px',
+    width: '260px',
+    boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
+    float: 'right',
+    paddingBottom: '2rem'
+  },
+  description: {
+    textAlign: 'center',
+    fontSize: '12rem'
+  },
+  filterIcon: {
+    position: 'relative',
+    top: "0.5rem",
+    margin: '0 0.5rem 0 0.5rem'
+  },
+  searchButton: {
+    width: '90%',
+    marginLeft: '5%',
+    height: '26px'
+  },
+  filterList: {
+    width: '100%',
+    listStyle: 'none',
+    padding: '0.7rem 0 0.7rem 1rem',
+    cursor: 'pointer',
+    transition: '0.1s',
+    '&:hover': {
+      background: theme.palette.common.white,
+      borderLeft: "solid 3px green"
+    },
+
+  }
 }));
 
 const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => {
@@ -123,16 +160,8 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
   const queryButton = searchQueries.length !== 0 && (
     <>
       <Grid item className={classes.filterTitleContainer}>
-        <Typography variant="h6" color="secondary">
-          YOUR SAVED SEARCH FILTER
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Typography variant="caption" component="div">
-          Click the button to use the saved filter for your employee search.
-        </Typography>
-        <Typography variant="caption" component="div">
-          If you want to create a new filter. Click NEW FILTER above.
+        <Typography variant="h6" color="secondary" className={classes.filterTitle}>
+          SEARCH FILTERS
         </Typography>
       </Grid>
 
@@ -140,17 +169,25 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
         <Grid
           container
           className={classes.filterButttonContainer}
-          spacing={1}
           justify="center"
         >
           {searchQueries.map((searchQuery, i) => (
-            <Grid item key={searchQuery._id}>
-              <Button type="submit" variant="outlined"  color="secondary" size="small" 
-                startIcon={<SearchOutlinedIcon />} id={searchQuery._id} onClick={(e) => handleSubmit(e, i)}
-              >
-                {searchQuery.name}
-              </Button>
-            </Grid>
+            <li item key={searchQuery._id}
+              onClick={(e) => handleSubmit(e, i)}
+              className={classes.filterList}
+            >
+              <Typography>
+                <SearchOutlinedIcon className={classes.filterIcon} /> {searchQuery.name}
+              </Typography>
+              {/* <Button 
+                  type="submit" variant="outlined"
+                  color="secondary" size="small"
+                  startIcon={<SearchOutlinedIcon />}
+                  id={searchQuery._id} 
+                >
+                  {searchQuery.name}
+                </Button> */}
+            </li>
           ))}
         </Grid>
       </Grid>
@@ -158,90 +195,107 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
   );
 
   return (
-    <Container className={classes.container}>
-      <Grid container direction="column" alignItems="center">
-        {name && (
-          <Grid item className={classes.companyName}>
-            <Typography variant="h1">{name}</Typography>
-          </Grid>
-        )}
-
-        <Grid item>
-          {/* only signed employer can see the button  - need to check later */}
-          {localStorage.role === 'employer' ? (
-            <Grid container>
-              <Grid item>
-                <Button onClick={clickFormOpen} variant="contained" color="primary"
-                  className={classes.searchButton}
-                >
-                  {searchQueries.length === 0
-                    ? 'Create search filter'
-                    : 'New Filter'}
-                </Button>
-                <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
-                  fullWidth className={classes.dialog}
-                >
-                  <SearchForm
-                    employerId={employer._id}
-                    // history={history}
-                    slug={user.slug}
-                    setOpenSearchForm={setOpenSearchForm}
-                  />
-                </Dialog>
+    <Container width="sm" className={classes.container}>
+      <Grid container justify="center" spacing={4}>
+        <Grid item xs={12} sm={4}>
+          <Box className={classes.rightSection}>
+            {name && (
+              <Grid item className={classes.companyName}>
+                <Typography variant="h5">{name}</Typography>
               </Grid>
-
-              <Grid item>
-                {/* Employer account page */}
-                <Button component={Link}
-                  to={`/employers/${user.slug}/account`}
-                  variant="outlined" color="primary" className={classes.accountButton}
-                >
-                  Account
-                </Button>
-              </Grid>
-            </Grid>
-          ) : (
-              ''
             )}
+            <Button onClick={clickFormOpen} variant="outlined" color="secondary"
+              className={classes.searchButton}
+            >
+              {searchQueries.length === 0
+                ? 'Create search filter'
+                : 'New Filter'}
+            </Button>
+            {queryButton}
+          </Box>
         </Grid>
-        {queryButton}
-        {name && (
-          <Grid item>
-            <Typography variant="h6" className={classes.title}>
-              COMPANY INFORMATION
+
+        <Grid item xs={12} sm={8}>
+          <Box item className={classes.leftSection}>
+            <Grid item>
+              {/* only signed employer can see the button  - need to check later */}
+              {localStorage.role === 'employer' ? (
+                <Grid container>
+                  <Grid item>
+                    <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
+                      fullWidth className={classes.dialog}
+                    >
+                      <SearchForm
+                        employerId={employer._id}
+                        // history={history}
+                        slug={user.slug}
+                        setOpenSearchForm={setOpenSearchForm}
+                      />
+                    </Dialog>
+                  </Grid>
+                </Grid>
+              ) : (
+                  ''
+                )}
+            </Grid>
+            {name && (
+              <Grid item>
+                <Typography variant="h6" className={classes.title}>
+                  COMPANY INFORMATION
             </Typography>
-            <Typography>
-              {address.street1} {address.street2}
-            </Typography>
-            <Typography>
-              {address.city} {address.state} {address.zipcode}
+                <Typography>
+                  {address.street1} {address.street2}
+                </Typography>
+                <Typography>
+                  {address.city} {address.state} {address.zipcode}
+                </Typography>
+
+                <Typography className={classes.generalEmail}>
+                  Email: {generalEmail}
+                </Typography>
+
+                <Typography>
+                  Website:{' '}
+                  <a href="{website}" target="_blank" className={classes.link}>
+                    {website}
+                  </a>
+                </Typography>
+
+                <Typography>Phone: {phone}</Typography>
+
+                <Typography variant="h6" className={classes.title}>
+                  CONTACT PERSON
             </Typography>
 
-            <Typography className={classes.generalEmail}>
-              Email: {generalEmail}
+                <Typography>
+                  {firstName} {lastName}
+                </Typography>
+
+                <Typography>{title}</Typography>
+                <Typography>Email: {email}</Typography>
+              </Grid>
+            )}
+            <Grid item>
+              {/* Employer account page */}
+              <Button component={Link}
+                to={`/employers/${user.slug}/account`}
+                variant="outlined" color="primary" className={classes.accountButton}
+              >
+                Account
+              </Button>
+            </Grid>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} className={classes.description}>
+          <Typography>
+            Click the button to use the saved filter for your employee search.
             </Typography>
-
-            <Typography>
-              Website:{' '}
-              <a href="{website}" target="_blank" className={classes.link}>
-                {website}
-              </a>
+          <Typography>
+            If you want to create a new filter. Click NEW FILTER above.
             </Typography>
+        </Grid>
 
-            <Typography>Phone: {phone}</Typography>
-
-            <Typography variant="h6" className={classes.title}>
-              CONTACT PERSON
-            </Typography>
-
-            <Typography>
-              {firstName} {lastName}
-            </Typography>
-
-            <Typography>{title}</Typography>
-            <Typography>Email: {email}</Typography>
-          </Grid>
-        )}
       </Grid>
     </Container>
   );

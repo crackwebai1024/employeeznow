@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
-  title : {
+  title: {
     fontSize: 20,
   },
   drawer: {
@@ -137,7 +137,7 @@ const SearchResults = (props) => {
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
 
         {/* visible smaller than xs */}
-        <Hidden mdUp implementation="css">
+        <Hidden xsUp implementation="css">
           <SwipeableDrawer
             anchor="top"
             disableBackdropTransition={!iOS}
@@ -162,28 +162,13 @@ const SearchResults = (props) => {
             />
           </SwipeableDrawer>
         </Hidden>
-
-        {/* visible greater than sm */}
-        <Hidden smDown implementation="css">
-          {/* Fixed drawer for larger than xs */}
-          <Drawer
-            classes={{
-              paper: classes.drawer,
-            }}
-            variant="permanent"
-            open
-          >
-            <div className={classes.toolbar} />
-            <Sidebar searchQuery={searchQueries} slug={slug} setFilterUpdate={setFilterUpdateHandle} />
-          </Drawer>
-        </Hidden>
       </nav>
 
       <main className={classes.content}>
         {/* <div className={classes.toolbar} /> */}
 
         {/* open drawer in x-small screen */}
-        <Hidden mdUp implementation="css">
+        <Hidden xsUp implementation="css">
           <Button
             onClick={() => setMobileOpen(!mobileOpen)}
             className={classes.drawerButton}
@@ -204,29 +189,47 @@ const SearchResults = (props) => {
               {/* <Grid item>page 1</Grid> */}
             </Grid>
           </Grid>
-          <Grid item>
+          <Grid container item xs={12}>
             {/* search results - employee lists */}
-            {
-              filterResult.length > 0
-                ? filterResult.map((result) => (
-                  <CandidateList
-                    key={result._id}
-                    id={result._id} // This _id is professionId
-                    employeezNowId={result.employeezNowId}
-                    employeeId={result.employeeId}
-                    primaryTitle={result.employeeskill.primaryJob.title}
-                    primaryYears={result.employeeskill.primaryJob.years}
-                    secondaryTitle={result.employeeskill.secondaryJob.title}
-                    secondaryYears={result.employeeskill.secondaryJob.years}
-                    shift={result.employeeskill.shift}
-                    style={result.employeeskill.style}
-                    cuisine={result.employeeskill.cuisine}
-                    wineKnowledge={result.employeeskill.wineKnowledge}
-                    cocktailKnowledge={result.employeeskill.cocktailKnowledge}
-                    systems={result.employeeskill.systems}
-                  />
-                ))
-                : 'There are no search results. Pleast try with different search.'}
+            <Grid item xs={12} sm={4}>
+              {/* visible greater than sm */}
+              <Hidden xDown implementation="css">
+                {/* Fixed drawer for larger than xs */}
+                <Drawer
+                  classes={{
+                    paper: classes.drawer,
+                  }}
+                  variant="permanent"
+                  open
+                >
+                  <div className={classes.toolbar} />
+                  {/* <Sidebar searchQuery={searchQueries} slug={slug} setFilterUpdate={setFilterUpdateHandle} /> */}
+                </Drawer>
+              </Hidden>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              {
+                filterResult.length > 0
+                  ? filterResult.map((result) => (
+                    <CandidateList
+                      key={result._id}
+                      id={result._id} // This _id is professionId
+                      employeezNowId={result.employeezNowId}
+                      employeeId={result.employeeId}
+                      primaryTitle={result.employeeskill.primaryJob.title}
+                      primaryYears={result.employeeskill.primaryJob.years}
+                      secondaryTitle={result.employeeskill.secondaryJob.title}
+                      secondaryYears={result.employeeskill.secondaryJob.years}
+                      shift={result.employeeskill.shift}
+                      style={result.employeeskill.style}
+                      cuisine={result.employeeskill.cuisine}
+                      wineKnowledge={result.employeeskill.wineKnowledge}
+                      cocktailKnowledge={result.employeeskill.cocktailKnowledge}
+                      systems={result.employeeskill.systems}
+                    />
+                  ))
+                  : 'There are no search results. Pleast try with different search.'}
+            </Grid>
           </Grid>
         </Grid>
       </main>

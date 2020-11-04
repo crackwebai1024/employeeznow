@@ -8,8 +8,6 @@ import {
   Box,
   Grid,
 } from '@material-ui/core';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import StepperIcons from "./StepIcons";
 import StepConnector from './StepConnector'
 import ContactForm from "./form/ContactForm";
@@ -40,25 +38,13 @@ const style = makeStyles(theme => ({
   },
 }));
 
-const Steppers = ({ formValues, inputHandle }) => {
+const Steppers = ({ formValues, inputHandle, stripe}) => {
   const [activeStep, setActiveStep] = useState(2);
   const classes = style();
   const [loading, setLoading] = useState(false);
 
-  const stripe = useStripe();
-  const elements = useElements();
-
   const capture = async () => {
-    setLoading(true);
-    if (!stripe || !elements)
-      return;
-
-    const cardElement = elements.getElement(CardElement);
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement
-    })
-
+    debugger
   }
     const handleNext = (formdata) => {
       if (activeStep === 2) {
@@ -89,11 +75,11 @@ const Steppers = ({ formValues, inputHandle }) => {
         connector={<StepConnector />} activeStep={activeStep}
       >
         {/* Change the number of loops here based on StepContent */}
-        {[1, 2, 3].map(e =>
+        {/* {[1, 2, 3].map(e =>
           <Step key={e}>
             <StepLabel StepIconComponent={StepperIcons} />
           </Step>
-        )}
+        )} */}
       </Stepper>
       <Box className={classes.mainBox}>
         <Grid
