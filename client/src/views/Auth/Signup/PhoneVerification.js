@@ -216,7 +216,6 @@ const PhoneVerification = ({
 
   const onDigitBack = () => {
   }
-  }
   return (
     <Container component="main" maxWidth="sm">
       <Grid container direction="column" justify="center" alignItems="center">
@@ -276,80 +275,68 @@ const PhoneVerification = ({
             </Grid>
           </Fragment>
         ) : (
-          <form onSubmit={(e) => e.preventDefault()}>
-            <Grid item container direction="row" spacing={0}>
-              {/* {error && (
+            <form onSubmit={(e) => e.preventDefault()}>
+              <Grid item container direction="row" spacing={0}>
+                {/* {error && (
                   <Grid item className={classes.invalidMessage}>
                     {error}
                   </Grid>
                 )} */}
-              <MuiPhoneNumber
-                name="phone"
-                label="Phone Number"
-                data-cy="user-phone"
-                defaultCountry={"us"}
-                variant="outlined"
-                fullWidth
-                value={phone}
-                error={error}
-                onChange={handlePhoneChange}
-                helperText={`${error ? "Invalid PhoneNumber" : ""}`}
-              />
-              <Grid item container>
-                <Grid xs={5}>
-                  <Button
-                    type="submit"
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    onClick={onBack}
-                    className={classes.button}
-                  >
-                    Back
+                <MuiPhoneNumber
+                  name="phone"
+                  label="Phone Number"
+                  data-cy="user-phone"
+                  defaultCountry={"us"}
+                  variant="outlined"
+                  fullWidth
+                  value={phone}
+                  error={error}
+                  onChange={handlePhoneChange}
+                  helperText={`${error ? "Invalid PhoneNumber" : ""}`}
+                />
+                <Grid item container>
+                  <Grid xs={5}>
+                    <Button
+                      type="submit"
+                      variant="outlined"
+                      color="primary"
+                      fullWidth
+                      onClick={onBack}
+                      className={classes.button}
+                    >
+                      Back
                   </Button>
-                </Grid>
-                <Grid xs={2}></Grid>
-                <Grid xs={5}>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={onConfirm}
-                    className={classes.button}
-                  >
-                    Send Code
+                  </Grid>
+                  <Grid xs={2}></Grid>
+                  <Grid xs={5}>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={onConfirm}
+                      className={classes.button}
+                    >
+                      Send Code
                   </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
 
-              {/* If authorization was failed */}
-            </Grid>
-          </form>
-        )}
+                {/* If authorization was failed */}
+              </Grid>
+            </form>
+          )}
       </Grid>
     </Container>
   );
-};
+}
 
 const mapStateToProps = ({
   auth: {
-    signupUser,
-    isSentPhoneNumber,
-    isAuthenticated,
-    user,
-    digicodeConfirmError,
-    isSingupUser,
-    veteranCardData,
+    signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser, veteranCardData,
   },
 }) => ({
-  signupUser,
-  isSentPhoneNumber,
-  isAuthenticated,
-  user,
-  digicodeConfirmError,
-  isSingupUser,
-  veteranCardData,
+  signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser, veteranCardData,
 });
 
 const mapDispatchToProps = (dispatch) => ({

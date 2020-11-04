@@ -25,7 +25,7 @@ const invalidError = "This field is invalid!"
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    margin: theme.spacing(1),
+    marginRight: '2rem',
     background: theme.palette.common.blue,
   },
   formControl: {
@@ -40,15 +40,15 @@ const useStyles = makeStyles((theme) => ({
     height: "150px"
   },
   heading1: {
-    ...theme.typography.h1,
-    marginBottom: '1.5rem',
+    fontSize: '30px',
+    fontWeight: 600
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
-    marginBottom: '8rem',
+    marginBottom: '2rem',
   },
   input: {
     display: 'none',
@@ -87,6 +87,14 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.caption,
     marginTop: '-1.3rem',
     color: theme.palette.common.blue,
+  },
+  wrapper: {
+    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
+    maxWidth: '500px',
+    position: "relative",
+    top: '5rem',
+    padding: '2rem',
+    margin: 'auto',
   },
   stateError: {
     color: theme.palette.error.main,
@@ -128,7 +136,7 @@ const EmployeeForm = ({
         ...veteran,
         status: !veteran.status
       })
-    
+
     if (e.target.name == 'veteranId') {
       setVeteran({
         ...veteran,
@@ -186,21 +194,19 @@ const EmployeeForm = ({
   if (phoneVerifyNeed) {
     return <Redirect to='/signup/phoneverify' />
   }
-  
+
   return (
-    <Container component="main" maxWidth="sm">
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid item>
+    <Container component="main" maxWidth="sm" style={{ paddingBottom: '10rem' }}>
+      <Grid container direction="column" justify="center" alignItems="center" className={classes.wrapper}>
+        <Grid item style={{ display: 'flex' }}>
           <Avatar className={classes.avatar}>
             <VpnKeyOutlinedIcon />
           </Avatar>
-        </Grid>
-        <Grid item>
           <Typography className={classes.heading1}>Employee Sign Up</Typography>
         </Grid>
         <form onSubmit={(e) => e.preventDefault()}>
           <Grid item container direction="row" spacing={1}>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <TextField
                 error={errors.firstName ? true : false}
                 helperText={errors.firstName ? invalidError : ''}
@@ -217,7 +223,7 @@ const EmployeeForm = ({
                 inputRef={register({ required: true })}
               />
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <TextField
                 error={errors.middleName ? true : false}
                 helperText={errors.middleName ? invalidError : ''}
@@ -233,7 +239,7 @@ const EmployeeForm = ({
                 inputRef={register}
               />
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <TextField
                 error={errors.lastName ? true : false}
                 helperText={errors.lastName ? invalidError : ''}
@@ -285,7 +291,7 @@ const EmployeeForm = ({
                 inputRef={register}
               />
             </Grid>
-            <Grid item sm={4} xs={6}>
+            <Grid item sm={4} xs={12}>
               <TextField
                 error={errors.address && errors.address.city ? true : false}
                 helpertext={
@@ -306,11 +312,12 @@ const EmployeeForm = ({
                 inputRef={register({ required: true, minLength: 2 })}
               />
             </Grid>
-            <Grid item sm={4} xs={6}>
+            <Grid item sm={4} xs={12}>
               <FormControl
                 required
                 size="small"
                 variant="outlined"
+                fullWidth
                 error={stateError ? true : false}
                 className={classes.formControl}
               >
@@ -333,7 +340,7 @@ const EmployeeForm = ({
               </FormControl>
             </Grid>
 
-            <Grid item sm={4} xs={6}>
+            <Grid item sm={4} xs={12}>
               <TextField
                 error={errors.address && errors.address.zipcode ? true : false}
                 helperText={

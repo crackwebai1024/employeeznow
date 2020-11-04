@@ -18,7 +18,7 @@ import ExperienceForm from '@views/Employee/form/ExperienceForm';
 import ForgotPassword from '@views/Auth/Password/ForgotPasswordForm';
 import ResetPasswordForm from '@views/Auth/Password/ResetPasswordForm';
 import SearchResults from '@views/Employer/SearchResult/SearchResults';
-import Payment from '@views/Employer/Payment'
+import Payment from '@views/Employer/Payment/Payment'
 import { getUser } from '@helpers/auth-helpers';
 
 

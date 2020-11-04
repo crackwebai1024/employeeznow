@@ -216,7 +216,7 @@ const EmployerForm = ({
               />
             </Grid>
 
-            <Grid item sm={4} xs={6}>
+            <Grid item sm={4} xs={12}>
               <TextField
                 error={errors.address && errors.address.city ? true : false}
                 helperText={
@@ -238,11 +238,12 @@ const EmployerForm = ({
               />
             </Grid>
 
-            <Grid item sm={4} xs={6}>
+            <Grid item sm={4} xs={12}>
               <FormControl
                 required
                 size="small"
                 variant="outlined"
+                fullWidth
                 error={stateError ? true : false}
                 className={classes.formControl}
               >
@@ -265,7 +266,7 @@ const EmployerForm = ({
               </FormControl>
             </Grid>
 
-            <Grid item sm={4} xs={6}>
+            <Grid item sm={4} xs={12}>
               <TextField
                 error={errors.address && errors.address.zipcode ? true : false}
                 helperText={
