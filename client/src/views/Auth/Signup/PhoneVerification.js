@@ -214,16 +214,9 @@ const PhoneVerification = ({
     actions.signupuserEmpty();
   };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   const onDigitBack = () => {
   }
-=======
-  const onDigitBack = () => {};
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
-=======
-  const onDigitBack = () => {};
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
+
   return (
     <Container component="main" maxWidth="sm">
       <Grid container direction="column" justify="center" alignItems="center">

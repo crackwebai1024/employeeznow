@@ -40,31 +40,16 @@ const useStyles = makeStyles((theme) => ({
     height: "150px",
   },
   heading1: {
-<<<<<<< HEAD
     fontSize: '30px',
-    fontWeight: 600
-=======
-    ...theme.typography.h1,
+    fontWeight: 600,
     marginBottom: "1.5rem",
-<<<<<<< HEAD
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
-=======
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
-<<<<<<< HEAD
-<<<<<<< HEAD
     marginBottom: '2rem',
-=======
-    marginBottom: "8rem",
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
-=======
-    marginBottom: "8rem",
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
   },
   input: {
     display: "none",
@@ -151,29 +136,10 @@ const EmployeeForm = ({
     if (e.target.name == "status")
       return setVeteran({
         ...veteran,
-<<<<<<< HEAD
-<<<<<<< HEAD
         status: !veteran.status
       })
 
-    if (e.target.name == 'veteranId') {
-=======
-=======
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
-        status: !veteran.status,
-      });
-
-    if (e.target.name == "veteranId") {
-<<<<<<< HEAD
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
-=======
->>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
-      setVeteran({
-        ...veteran,
-        veteranId: e.target.value,
-      });
     }
-  };
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
