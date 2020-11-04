@@ -2,9 +2,9 @@ import Employee from "../../models/employee/basic.model";
 import errorHandler from "../../helpers/dbErrorHandler";
 import { Verification } from "twilio-phone-verification";
 import geocoder from "../../utils/geocoder";
-import authy from "authy";
+// import authy from "authy";
 
-const _authy = authy(process.env.AUTHY_API_KEY);
+const _authy = require("authy")(process.env.AUTHY_API_KEY);
 
 /**
  * check the phone number is the valid phone number
@@ -16,44 +16,51 @@ const isValidPhone = async (req, res) => {
   let countryCode = req.body.countryCode;
   let codeLength = 6;
   console.log("phone verification body ==> ", req.body);
-
-  // try {
-  //   let user = await Employee.findOne({ cell: countryCode + phoneNumber });
-  //   if (!user) {
-  //     _authy
-  //       .phones()
-  //       .verification_start(
-  //         phoneNumber,
-  //         countryCode,
-  //         { via: "sms", locale: "en", code_length: "6" },
-  //         function (err, resp) {
-  //           console.log("authy_api_key ==> ", process.env.AUTHY_API_KEY);
-  //           if (err) {
-  //             console.log(err);
-  //             return res.status(403).json({
-  //               failed: "please input the phone number again",
-  //             });
-  //           }
-  //           return res.status(200).json({
-  //             success:
-  //               "valid phone number, we already sent 6 digit codes to your phonenumber",
-  //           });
-  //         }
-  //       );
-  //   } else {
-  //     return res.status(403).json({
-  //       failed: "please input the phone number again",
-  //     });
-  //   }
-  // } catch (err) {
-  //   return res.status(400).json({
-  //     error: errorHandler.getErrorMessage(err),
-  //   });
-  // }
-  return res.status(200).json({
-    success:
-      "valid phone number, we already sent 6 digit codes to your phonenumber",
+  _authy.check_approval_status("1231", function (err, res) {
+    if (err) {
+      console.log("error ==>", err);
+    } else {
+      console.log(res);
+    }
   });
+  try {
+    let user = await Employee.findOne({ cell: countryCode + phoneNumber });
+    if (!user) {
+      _authy
+        .phones()
+        .verification_start(
+          phoneNumber,
+          countryCode,
+          { via: "sms", locale: "en", code_length: "6" },
+          function (err, resp) {
+            console.log("authy_api_key ==> ", process.env.AUTHY_API_KEY);
+            if (err) {
+              console.log(err);
+              return res.status(403).json({
+                failed: "please input the phone number again",
+              });
+            }
+            return res.status(200).json({
+              success:
+                "valid phone number, we already sent 6 digit codes to your phonenumber",
+            });
+          }
+        );
+    } else {
+      return res.status(403).json({
+        failed: "please input the phone number again",
+      });
+    }
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+
+  // return res.status(200).json({
+  //   success:
+  //     "valid phone number, we already sent 6 digit codes to your phonenumber",
+  // });
 };
 
 /* check six digit code is valid */
@@ -63,16 +70,22 @@ const isPhoneVerified = async (req, res, next) => {
   let countryCode = req.body.countryCode;
   console.log("phone verified body ==> ", req.body);
 
-  // _authy.phones().verification_check(phoneNumber, countryCode, sixDigitCode, function (err, res) {
-  //   if(err){
-  //     return res.status(403).json({
-  //       error: "phone verification failed"
-  //     })
-  //   }
-  //   await next()
-  // });
+  _authy
+    .phones()
+    .verification_check(phoneNumber, countryCode, sixDigitCode, async function (
+      err,
+      res
+    ) {
+      if (err) {
+        return res.status(403).json({
+          error: "phone verification failed",
+        });
+      }
+      console.log(res);
+      await next();
+    });
 
-  await next();
+  // await next();
 };
 
 export default { isValidPhone, isPhoneVerified };

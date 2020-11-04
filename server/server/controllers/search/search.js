@@ -60,6 +60,7 @@ const searchEmployee = async (filter) => {
           spherical: true,
         },
       },
+      { $project: { _id: 1, locations: 1, slug: 1, distBetweenEmp: 1 } },
       {
         $lookup: {
           from: "employeeskills",

@@ -1,27 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { actions as authActions } from '@store/auth';
-import { bindActionCreators } from 'redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
-import PasswordInput from '@components/PasswordInput'
-import Button from '@material-ui/core/Button';
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
-import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import PublishIcon from '@material-ui/icons/Publish';
-import { countryOptions } from './AddressState'
+import React, { useRef, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { actions as authActions } from "@store/auth";
+import { bindActionCreators } from "redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+import PasswordInput from "@components/PasswordInput";
+import Button from "@material-ui/core/Button";
+import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
+import Typography from "@material-ui/core/Typography";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import PublishIcon from "@material-ui/icons/Publish";
+import { countryOptions } from "./AddressState";
 
-const invalidError = "This field is invalid!"
+const invalidError = "This field is invalid!";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -29,63 +29,72 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.blue,
   },
   formControl: {
-    marginTop: '1rem',
-    backgroundColor: 'transparent',
+    marginTop: "1rem",
+    backgroundColor: "transparent",
   },
   uploadButton: {
-    marginTop: '1rem'
+    marginTop: "1rem",
   },
   uploadImage: {
     width: "150px",
-    height: "150px"
+    height: "150px",
   },
   heading1: {
+<<<<<<< HEAD
     fontSize: '30px',
     fontWeight: 600
+=======
+    ...theme.typography.h1,
+    marginBottom: "1.5rem",
+>>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
+<<<<<<< HEAD
     marginBottom: '2rem',
+=======
+    marginBottom: "8rem",
+>>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
   },
   input: {
-    display: 'none',
+    display: "none",
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: "none",
     color: theme.palette.common.blue,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
   companyInfo: {
-    marginTop: '3rem',
-    marginBottom: '-1rem',
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
+    marginTop: "3rem",
+    marginBottom: "-1rem",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
     },
   },
   horizontal: {
-    border: 'none',
+    border: "none",
     borderTop: `1px dotted ${theme.palette.common.blue}`,
   },
   contactInfo: {
-    marginTop: '1rem',
-    marginBottom: '-1rem',
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
+    marginTop: "1rem",
+    marginBottom: "-1rem",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
     },
   },
   emailInfo: {
     ...theme.typography.caption,
-    marginTop: '-1.3rem',
+    marginTop: "-1.3rem",
     color: theme.palette.common.blue,
   },
   wrapper: {
@@ -100,8 +109,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
   },
   stateLabel: {
-    background: 'white'
-  }
+    background: "white",
+  },
 }));
 
 const EmployeeForm = ({
@@ -112,79 +121,105 @@ const EmployeeForm = ({
   phoneVerifyNeed,
   errorMessage,
   isAuthenticated,
+  signupUser,
   slug,
 }) => {
   // react-hook-form setup
-  const { register, handleSubmit, errors, watch } = useForm({});
+  const { register, handleSubmit, errors, watch, setValue } = useForm({});
   const password = useRef({});
-  password.current = watch('password', '');
+  password.current = watch("password", "");
 
-  const email = useRef({})
+  const email = useRef({});
   email.current = watch("email", "");
   // address.state error customized check
   const [stateError, setStateError] = useState(false);
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState("");
   const [veteran, setVeteran] = useState({ status: false, veteranId: "" });
-  const [veteranError, setVeteranError] = useState("")
-  const [veteranCard, setVeteranCard] = useState(null)
+  const [veteranError, setVeteranError] = useState("");
+  const [veteranCard, setVeteranCard] = useState(null);
   // material-ui
   const classes = useStyles();
 
   const onChange = (e) => {
-    if (e.target.name == 'status')
+    if (e.target.name == "status")
       return setVeteran({
         ...veteran,
+<<<<<<< HEAD
         status: !veteran.status
       })
 
     if (e.target.name == 'veteranId') {
+=======
+        status: !veteran.status,
+      });
+
+    if (e.target.name == "veteranId") {
+>>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
       setVeteran({
         ...veteran,
-        veteranId: e.target.value
-      })
+        veteranId: e.target.value,
+      });
     }
-  }
+  };
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
-    register({ name: 'address.state', value: e.target.value })
+    register({ name: "address.state", value: e.target.value });
     if (e.target.value) setStateError(false);
   };
 
   useEffect(() => {
     if (emailFailure)
-      setEmailError("Someone used this email. If you already registered, then please log in.")
-  }, [emailFailure])
+      setEmailError(
+        "Someone used this email. If you already registered, then please log in."
+      );
+  }, [emailFailure]);
+
+  useEffect(() => {
+    setValue("firstName", signupUser.firstName);
+    setValue("lastName", signupUser.lastName);
+    setValue("middleName", signupUser.middleName);
+    if (signupUser.address) {
+      setValue("address.street1", signupUser.address.street1);
+      setValue("address.street2", signupUser.address.street2);
+      setValue("address.city", signupUser.address.city);
+      setValue("address.zipcode", signupUser.address.zipcode);
+    }
+    setValue("email", signupUser.email);
+    setValue("emailConfirm", signupUser.emailConfirm);
+    setValue("password", signupUser.password);
+    setValue("passwordConfirm", signupUser.passwordConfirm);
+  }, []);
 
   const uploadVeteranCard = (e, type) => {
     const formData = new FormData();
-    formData.append("type", type)
-    formData.append("content", e.target.files[0])
-    formData.append("fname", e.target.files[0].name)
+    formData.append("type", type);
+    formData.append("content", e.target.files[0]);
+    formData.append("fname", e.target.files[0].name);
     setVeteranCard(formData);
-  }
+  };
   // connected to action
   const onSubmit = async (formData) => {
     if (veteran.status && veteran.veteranId == "") {
-      return setVeteranError("This field is required")
+      return setVeteranError("This field is required");
     }
     if (veteran.status && veteranCard == null) {
-      return setVeteranError("please Upload Veteran Card Image!")
+      return setVeteranError("please Upload Veteran Card Image!");
     }
-    if (!formData.address.state) return setStateError(true)
+    if (!formData.address.state) return setStateError(true);
 
     if (veteran.veteranId) {
       veteranCard.append("veteranId", veteran.veteranId);
 
-      actions.saveVeteranCard(veteranCard)
+      actions.saveVeteranCard(veteranCard);
     }
 
     if (formData) {
       let data = {
         ...formData,
-        role: "employee"
-      }
-      actions.signupRequest(data)
+        role: "employee",
+      };
+      actions.signupRequest(data);
     }
   };
   // Redirect to employer account page after sign up
@@ -192,7 +227,7 @@ const EmployeeForm = ({
     return <Redirect to={`/employees/${slug}`} />;
   }
   if (phoneVerifyNeed) {
-    return <Redirect to='/signup/phoneverify' />
+    return <Redirect to="/signup/phoneverify" />;
   }
 
   return (
@@ -209,7 +244,7 @@ const EmployeeForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.firstName ? true : false}
-                helperText={errors.firstName ? invalidError : ''}
+                helperText={errors.firstName ? invalidError : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -226,7 +261,7 @@ const EmployeeForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.middleName ? true : false}
-                helperText={errors.middleName ? invalidError : ''}
+                helperText={errors.middleName ? invalidError : ""}
                 variant="outlined"
                 size="small"
                 margin="normal"
@@ -242,7 +277,7 @@ const EmployeeForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.lastName ? true : false}
-                helperText={errors.lastName ? invalidError : ''}
+                helperText={errors.lastName ? invalidError : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -260,9 +295,7 @@ const EmployeeForm = ({
               <TextField
                 error={errors.address && errors.address.street1 ? true : false}
                 helpertext={
-                  errors.address && errors.address.street1
-                    ? invalidError
-                    : ''
+                  errors.address && errors.address.street1 ? invalidError : ""
                 }
                 variant="outlined"
                 margin="normal"
@@ -295,9 +328,7 @@ const EmployeeForm = ({
               <TextField
                 error={errors.address && errors.address.city ? true : false}
                 helpertext={
-                  errors.address && errors.address.city
-                    ? invalidError
-                    : ''
+                  errors.address && errors.address.city ? invalidError : ""
                 }
                 variant="outlined"
                 margin="normal"
@@ -321,7 +352,12 @@ const EmployeeForm = ({
                 error={stateError ? true : false}
                 className={classes.formControl}
               >
-                <InputLabel htmlFor="address.state" className={classes.stateLabel}>State</InputLabel>
+                <InputLabel
+                  htmlFor="address.state"
+                  className={classes.stateLabel}
+                >
+                  State
+                </InputLabel>
 
                 <Select
                   native
@@ -331,11 +367,13 @@ const EmployeeForm = ({
                   onChange={(e) => handleChange(e)}
                 >
                   <option aria-label="None" value="" />
-                  {
-                    countryOptions.map((option, item) => {
-                      return <option key={item} value={option.value}>{option.label}</option>
-                    })
-                  }
+                  {countryOptions.map((option, item) => {
+                    return (
+                      <option key={item} value={option.value}>
+                        {option.label}
+                      </option>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </Grid>
@@ -344,9 +382,7 @@ const EmployeeForm = ({
               <TextField
                 error={errors.address && errors.address.zipcode ? true : false}
                 helperText={
-                  errors.address && errors.address.zipcode
-                    ? invalidError
-                    : ''
+                  errors.address && errors.address.zipcode ? invalidError : ""
                 }
                 required
                 variant="outlined"
@@ -370,7 +406,7 @@ const EmployeeForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.email ? true : false}
-                helperText={errors.email ? invalidError : ''}
+                helperText={errors.email ? invalidError : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -391,7 +427,7 @@ const EmployeeForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.emailConfirm ? true : false}
-                helperText={errors.emailConfirm ? invalidError : ''}
+                helperText={errors.emailConfirm ? invalidError : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -406,7 +442,7 @@ const EmployeeForm = ({
                   required: true,
                   pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                   validate: (value) =>
-                    value === email.current || 'The email do not match',
+                    value === email.current || "The email do not match",
                 })}
               />
             </Grid>
@@ -418,7 +454,7 @@ const EmployeeForm = ({
                 label="Password"
                 size="small"
                 helperText={
-                  errors.password ? 'Password must be munimum 8 characters' : ''
+                  errors.password ? "Password must be munimum 8 characters" : ""
                 }
                 id="password"
                 autoComplete="password"
@@ -434,7 +470,7 @@ const EmployeeForm = ({
                 error={errors.passwordConfirm ? true : false}
                 label="Password Confirm"
                 helperText={
-                  errors.passwordConfirm ? 'Passwords do not match' : ''
+                  errors.passwordConfirm ? "Passwords do not match" : ""
                 }
                 id="passwordConfirm"
                 size="small"
@@ -442,7 +478,7 @@ const EmployeeForm = ({
                 autoComplete="passwordConfirm"
                 inputRef={register({
                   validate: (value) =>
-                    value === password.current || 'The passwords do not match',
+                    value === password.current || "The passwords do not match",
                 })}
               />
             </Grid>
@@ -464,25 +500,39 @@ const EmployeeForm = ({
                 />
 
                 {veteran.status ? (
-                  <Grid item container direction="column" justify="center" alignItems="center">
+                  <Grid
+                    item
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                  >
                     <img
                       className={classes.uploadImage}
-                      src={veteranCard && URL.createObjectURL(veteranCard.getAll("content")[0])}>
-                    </img>
+                      src={
+                        veteranCard &&
+                        URL.createObjectURL(veteranCard.getAll("content")[0])
+                      }
+                    ></img>
                     <Grid>
                       <input
                         accept="*"
                         className={classes.input}
                         id="contained-button-license"
                         multiple
-                        onChange={e => uploadVeteranCard(e, "veteran")}
+                        onChange={(e) => uploadVeteranCard(e, "veteran")}
                         type="file"
                       />
                     </Grid>
                     <Grid>
                       <label htmlFor="contained-button-license">
-                        <Button color="primary" component="span" className={classes.uploadButton}>
-                          <PublishIcon />Upload Image
+                        <Button
+                          color="primary"
+                          component="span"
+                          className={classes.uploadButton}
+                        >
+                          <PublishIcon />
+                          Upload Image
                         </Button>
                       </label>
                     </Grid>
@@ -490,9 +540,7 @@ const EmployeeForm = ({
                     <TextField
                       type="text"
                       name="veteranId"
-                      helperText={
-                        veteranError ? veteranError : ''
-                      }
+                      helperText={veteranError ? veteranError : ""}
                       error={veteranError ? true : false}
                       id="veteran"
                       label="Veteran ID"
@@ -505,15 +553,15 @@ const EmployeeForm = ({
                     />
                   </Grid>
                 ) : (
-                    ''
-                  )}
+                  ""
+                )}
               </Grid>
             </Grid>
-            {emailError &&
+            {emailError && (
               <Grid item className={classes.invalidMessage}>
                 {emailError}
               </Grid>
-            }
+            )}
             <Button
               disabled={signupLoading}
               type="submit"
@@ -538,8 +586,8 @@ const EmployeeForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-                ''
-              )}
+              ""
+            )}
           </Grid>
         </form>
 
@@ -555,16 +603,27 @@ const EmployeeForm = ({
 
 const mapStateToProps = ({
   auth: {
-    phoneVerifyNeed, signupLoading, emailFailure, isEmailCodeError
+    phoneVerifyNeed,
+    signupLoading,
+    emailFailure,
+    isEmailCodeError,
+    signupUser,
   },
 }) => ({
-  phoneVerifyNeed, signupLoading, emailFailure, isEmailCodeError
+  phoneVerifyNeed,
+  signupLoading,
+  emailFailure,
+  isEmailCodeError,
+  signupUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...authActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...authActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmployeeForm);

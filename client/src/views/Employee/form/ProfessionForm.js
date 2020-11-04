@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import { actions as employeeActions } from '@store/employee';
-import { bindActionCreators } from 'redux';
-import { getUser } from '@helpers/auth-helpers';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Checkbox from "@material-ui/core/Checkbox";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import { actions as employeeActions } from "@store/employee";
+import { bindActionCreators } from "redux";
+import { getUser } from "@helpers/auth-helpers";
 // import { createProfession } from '../../../store/actions/profession';
 // import setAlert from '../../../store/actions/alert';
 import {
@@ -31,60 +31,60 @@ import {
   cocktailKnowledges,
   poss,
   reservations,
-} from '../professionTypes';
+} from "../professionTypes";
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    marginTop: '1.5rem',
-    marginBottom: '1rem',
-    fontSize: '2rem',
+    marginTop: "1.5rem",
+    marginBottom: "1rem",
+    fontSize: "2rem",
     color: theme.palette.primary.main,
   },
   titleContainer: {
-    marginTop: '3.5rem',
-    marginBottom: '1rem',
+    marginTop: "3.5rem",
+    marginBottom: "1rem",
   },
   title: {
-    fontSize: '1.3rem',
+    fontSize: "1.3rem",
     color: theme.palette.common.darkBlue,
   },
   yearsText: {
-    marginRight: '1rem',
-    paddingTop: '0.3rem',
+    marginRight: "1rem",
+    paddingTop: "0.3rem",
   },
   yearsInput: {
-    width: '5.5rem',
+    width: "5.5rem",
   },
   item: {
-    '& .MuiFormControlLabel-label': {
-      fontSize: '0.85rem',
+    "& .MuiFormControlLabel-label": {
+      fontSize: "0.85rem",
       color: theme.palette.grey[700],
     },
   },
   styleSubtitle: {
     color: theme.palette.error.main,
-    fontSize: '0.85rem',
+    fontSize: "0.85rem",
   },
   styleandcuisineInput: {
-    '& >label ': {
-      fontSize: '0.85rem',
+    "& >label ": {
+      fontSize: "0.85rem",
       color: theme.palette.grey[700],
     },
   },
   adornment: {
-    '& >p': {
-      fontSize: '0.8rem',
+    "& >p": {
+      fontSize: "0.8rem",
     },
   },
   styleRadio: {
-    top: '0.87rem',
-    left: '0.7rem',
+    top: "0.87rem",
+    left: "0.7rem",
   },
   openContainer: {
-    marginTop: '2rem',
-    '&::after': {
-      transform: 'all 1s',
+    marginTop: "2rem",
+    "&::after": {
+      transform: "all 1s",
     },
   },
   avatar: {
@@ -95,8 +95,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.darkBlue,
   },
   button: {
-    marginTop: '1rem',
-    marginBottom: '5rem',
+    marginTop: "1rem",
+    marginBottom: "5rem",
   },
 }));
 
@@ -109,27 +109,27 @@ const ProfessionForm = ({
   slug,
 }) => {
   // Set state
-  const [primaryJob, setPrimaryJob] = useState({ title: '', years: '' });
-  const [secondaryJob, setSecondaryJob] = useState({ title: '', years: '' });
+  const [primaryJob, setPrimaryJob] = useState({ title: "", years: "" });
+  const [secondaryJob, setSecondaryJob] = useState({ title: "", years: "" });
   const [checkbox, setCheckbox] = useState(false);
-  const [primaryOther, setPrimaryOther] = useState('');
-  const [secondaryOther, setSecondaryOther] = useState('');
+  const [primaryOther, setPrimaryOther] = useState("");
+  const [secondaryOther, setSecondaryOther] = useState("");
   const [secondaryCheckbox, setSecondaryCheckbox] = useState(false);
   const [shift, setShift] = useState([]);
   const [systems, setSystems] = useState([]);
   const [style, setStyle] = useState([]);
-  const [styleCurrent, setStyleCurrent] = useState('');
+  const [styleCurrent, setStyleCurrent] = useState("");
   const [cuisine, setCuisine] = useState([]);
-  const [wineKnowledge, setWineKnowledge] = useState('');
-  const [cocktailKnowledge, setCocktailKnowledge] = useState('');
-  const [milesToWork, setMilesToWork] = useState('');
+  const [wineKnowledge, setWineKnowledge] = useState("");
+  const [cocktailKnowledge, setCocktailKnowledge] = useState("");
+  const [milesToWork, setMilesToWork] = useState("");
   const [openJob, setOpenJob] = useState(false);
 
   // Error
-  const [primaryYearsError, setPrimaryYearsError] = useState('');
-  const [secondaryYearsError, setSecondaryYearsError] = useState('');
-  const [styleYearsError, setStyleYearsError] = useState('');
-  const [cuisineYearsError, setCuisineYearsError] = useState('');
+  const [primaryYearsError, setPrimaryYearsError] = useState("");
+  const [secondaryYearsError, setSecondaryYearsError] = useState("");
+  const [styleYearsError, setStyleYearsError] = useState("");
+  const [cuisineYearsError, setCuisineYearsError] = useState("");
 
   // material-ui
   const classes = useStyles();
@@ -142,100 +142,100 @@ const ProfessionForm = ({
 
   // input handler
   const handleChange = ({ target: { id, name, value, checked } }) => {
-    console.log('id:', id, 'name:', name, 'value:', value, 'checked', checked);
+    console.log("id:", id, "name:", name, "value:", value, "checked", checked);
 
     switch (name) {
-      case 'primaryJob.title': {
+      case "primaryJob.title": {
         // When other field is checked, mark change setCheckbox. If others are checked, unmark 'Other" checkbox and remove text from 'Other'
-        if (id === 'primaryOther') {
+        if (id === "primaryOther") {
           setCheckbox(!checkbox);
         } else {
           setCheckbox(false);
-          setPrimaryOther('');
+          setPrimaryOther("");
         }
         return setPrimaryJob({ ...primaryJob, title: value });
       }
-      case 'primaryOther': {
+      case "primaryOther": {
         // Other text input value
         if (value) {
           setPrimaryOther(value);
           return setPrimaryJob({ ...primaryJob, title: value });
         }
         // if value is empty or deleted, it returns ''
-        return setPrimaryOther('');
+        return setPrimaryOther("");
       }
-      case 'primaryJob.years': {
+      case "primaryJob.years": {
         if (value < 0) {
-          return setPrimaryYearsError('Invalid input');
+          return setPrimaryYearsError("Invalid input");
         }
 
-        setPrimaryYearsError('');
+        setPrimaryYearsError("");
 
         return setPrimaryJob({ ...primaryJob, years: value });
       }
-      case 'secondaryJob.title': {
+      case "secondaryJob.title": {
         // When other field is checked, mark change setCheckbox. If others are checked, unmark 'Other" checkbox and remove text from 'Other'
-        if (id === 'secondaryOther') {
+        if (id === "secondaryOther") {
           setSecondaryCheckbox(!secondaryCheckbox);
         } else {
           setSecondaryCheckbox(false);
-          setSecondaryOther('');
+          setSecondaryOther("");
         }
         return setSecondaryJob({ ...secondaryJob, title: value });
       }
-      case 'secondaryOther': {
+      case "secondaryOther": {
         // Other text input value
         if (value) {
           setSecondaryOther(value);
           return setSecondaryJob({ ...secondaryJob, title: value });
         }
         // if value is empty or deleted, it returns ''
-        return setSecondaryOther('');
+        return setSecondaryOther("");
       }
-      case 'secondaryJob.years': {
+      case "secondaryJob.years": {
         if (value < 0) {
-          return setSecondaryYearsError('Invalid input');
+          return setSecondaryYearsError("Invalid input");
         }
-        setSecondaryYearsError('');
+        setSecondaryYearsError("");
         return setSecondaryJob({ ...secondaryJob, years: value });
       }
-      case 'shift': {
+      case "shift": {
         const newArray = [...shift];
 
         // uncheck - if the same shift already exists in state, the shift is removed from state
         if (newArray.length !== 0 && newArray.includes(value)) {
           const idx = newArray.indexOf(value);
-          newArray.splice(idx, idx + 1);
+          newArray.splice(idx, 1);
           return setShift(newArray);
         }
 
         newArray.push(value); // Set the new value
         return setShift(newArray);
       }
-      case 'systems': {
+      case "systems": {
         const newArray = [...systems];
 
         // uncheck - if the same shift already exists in state, the shift is removed from state
         if (newArray.length !== 0 && newArray.includes(value)) {
           const idx = newArray.indexOf(value);
-          newArray.splice(idx, idx + 1);
+          newArray.splice(idx, 1);
           return setSystems(newArray);
         }
 
         newArray.push(value); // Set the new value
         return setSystems(newArray);
       }
-      case 'style': {
+      case "style": {
         if (value < 0) {
-          return setStyleYearsError('Invalid input. Years must be above 0');
+          return setStyleYearsError("Invalid input. Years must be above 0");
         }
 
-        setStyleYearsError('');
+        setStyleYearsError("");
 
         const newArray = [...style];
 
         // change years = 0 to '' - it is easier to remove data later
-        const noZeroValue = value === '0' ? (value = '') : value;
+        const noZeroValue = value === "0" ? (value = "") : value;
         newArray.push({ type: id, years: value });
         // update years if type exisits - Also if year is '', obj removed
         const update = newArray.filter(function (obj) {
@@ -250,17 +250,17 @@ const ProfessionForm = ({
 
         return setStyle(noDuplicateArray);
       }
-      case 'cuisine': {
+      case "cuisine": {
         if (value < 0) {
-          return setCuisineYearsError('Invalid input. Years must be above 0');
+          return setCuisineYearsError("Invalid input. Years must be above 0");
         }
 
-        setCuisineYearsError('');
+        setCuisineYearsError("");
 
         const newArray = [...cuisine];
 
         // change years = 0 to '' - it is easier to remove data later
-        const noZeroValue = value === '0' ? (value = '') : value;
+        const noZeroValue = value === "0" ? (value = "") : value;
         newArray.push({ type: id, years: value });
         // update years if type exisits - Also if year is '', obj removed
         const update = newArray.filter(function (obj) {
@@ -275,16 +275,16 @@ const ProfessionForm = ({
 
         return setCuisine(noDuplicateArray);
       }
-      case 'styleCurrent': {
+      case "styleCurrent": {
         return setStyleCurrent(id);
       }
-      case 'wineKnowledge': {
+      case "wineKnowledge": {
         return setWineKnowledge(id);
       }
-      case 'cocktailKnowledge': {
+      case "cocktailKnowledge": {
         return setCocktailKnowledge(id);
       }
-      case 'milesToWork': {
+      case "milesToWork": {
         return setMilesToWork(value);
       }
       default:
@@ -322,18 +322,18 @@ const ProfessionForm = ({
       cuisineYearsError
     ) {
       setAlert(
-        'error',
-        'Invalid inputs. Please correct the value and try again'
+        "error",
+        "Invalid inputs. Please correct the value and try again"
       );
       return window.scrollTo(0, 0);
     }
     const formData = createFormData();
-    const id = JSON.parse(getUser())._id
+    const id = JSON.parse(getUser())._id;
     let data = {
       ...formData,
-      id: id
-    }
-    actions.addSkillsRequest(data)
+      id: id,
+    };
+    actions.addSkillsRequest(data);
   };
 
   return (
@@ -822,18 +822,17 @@ ProfessionForm.propTypes = {
   //employee: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({
-  employee: {
-    employeeData
-  },
-}) => ({
-  employeeData
+const mapStateToProps = ({ employee: { employeeData } }) => ({
+  employeeData,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...employeeActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...employeeActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfessionForm);

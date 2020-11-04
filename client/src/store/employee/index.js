@@ -1,12 +1,12 @@
-import { handleActions, createActions } from 'redux-actions';
+import { handleActions, createActions } from "redux-actions";
 
-import initialState, * as handlers from './handlers';
+import initialState, * as handlers from "./handlers";
 
 export const actions = createActions({
   GET_USER_DATA_REQUEST: undefined,
   GET_USER_DATA_SUCCESS: undefined,
 
-  GET_USER_DOCUMENT_REQUEST : undefined,
+  GET_USER_DOCUMENT_REQUEST: undefined,
   GET_USER_DOCUMENT_SUCCESS: undefined,
 
   UPDATE_SKILL_REQUEST: undefined,
@@ -25,19 +25,20 @@ export const actions = createActions({
   FAILURE: undefined,
 
   UPLOAD_PROFILE_PHOTO: undefined,
+  DELETE_PROFILE_PHOTO: undefined,
   GET_PROFILE_PHOTO: undefined,
   GET_BACKGROUND_IMAGE: undefined,
   UPLOAD_PORTFOLIO_IMAGE: undefined,
   GET_PORTFOLIO_IMAGE: undefined,
-  DELETE_PORTFOLIO : undefined,
-  DELETE_FOLIO_SUCCESS:undefined,
+  DELETE_PORTFOLIO: undefined,
+  DELETE_FOLIO_SUCCESS: undefined,
 
   UPLOAD_DOCUMENT_REQUEST: undefined,
   UPLOAD_DOCUMENT_SUCCESS: undefined,
-  
+
   UPDATE_BASIC_INFO_REQUEST: undefined,
   UPDATE_BASIC_INFO_SUCCESS: undefined,
-  
+
   UPLOAD_VETERAN_CARD: undefined,
 });
 
@@ -60,6 +61,7 @@ const reducer = handleActions(
     [actions.loadPreference, handlers.loadPreference],
 
     [actions.uploadProfilePhoto, handlers.uploadProfilePhoto],
+    [actions.deleteProfilePhoto, handlers.deleteProfilePhoto],
     [actions.getProfilePhoto, handlers.getProfilePhoto],
     [actions.getBackgroundImage, handlers.getBackgroundImage],
     [actions.uploadPortfolioImage, handlers.uploadPortfolioImage],
@@ -78,9 +80,8 @@ const reducer = handleActions(
     [actions.updateBasicInfoSuccess, handlers.updateBasicInfoSuccess],
 
     [actions.uploadVeteranCard, handlers.uploadVeteranCard],
-    
   ]),
-  initialState,
+  initialState
 );
 
 export default reducer;

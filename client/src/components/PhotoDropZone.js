@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import Dropzone from 'react-dropzone';
-import { makeStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import Dropzone from "react-dropzone";
+import { makeStyles } from "@material-ui/styles";
+import Typography from "@material-ui/core/Typography";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
 // import setAlert from '../../store/actions/alert';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   dropzoneStyle: {},
   dropzoneContainer: {
-    justifyContent: 'center',
-    alignSelf: 'center',
-    textAlign: 'center',
-    border: 'none',
+    justifyContent: "center",
+    alignSelf: "center",
+    textAlign: "center",
+    border: "none",
     backgroundColor: theme.palette.secondary.main,
-    outline: 'none',
-    '&:hover': {
+    outline: "none",
+    "&:hover": {
       backgroundColor: theme.palette.primary.main,
     },
-    '&:active': {
+    "&:active": {
       backgroundColor: theme.palette.primary.light,
     },
   },
@@ -34,28 +34,33 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     height: 300,
     zIndex: 1,
-    overflow: 'hidden'
+    overflow: "hidden",
   },
-  button: {
-    marginLeft: "1rem"
+  userdialog: {
+    justifyContent: "space-between",
+  },
+  userdialogform: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
   },
   avatar: {
     width: 300,
-    marginLeft: '20px'
+    marginLeft: "20px",
   },
   dropzoneText: {
     color: theme.palette.common.white,
     fontWeight: 700,
-    textDecoration: 'underline',
-    marginBottom: '1rem',
-    cursor: 'pointer',
+    textDecoration: "underline",
+    marginBottom: "1rem",
+    cursor: "pointer",
   },
   dropzoneTextSub: {
-    fontSize: '0.5rem',
+    fontSize: "0.5rem",
     color: theme.palette.error.main,
   },
   inputContainer: {
-    margin: '0 auto 1rem auto',
+    margin: "0 auto 1rem auto",
   },
 }));
 
@@ -67,6 +72,7 @@ const PhotoDropZone = ({
   fileNames,
   setFileNames,
   connectFunc,
+  deleteFunc,
   image,
   open,
   headerTitle,
@@ -78,9 +84,10 @@ const PhotoDropZone = ({
   const classes = useStyles();
 
   // title for Photo
-  const [title, setTitle] = useState('');
-  const [titleError, setTitleError] = useState('')
+  const [title, setTitle] = useState("");
+  const [titleError, setTitleError] = useState("");
   const handleClose = () => {
+    setFileNames("");
     setOpen(false);
   };
 
@@ -95,7 +102,9 @@ const PhotoDropZone = ({
     const imgName = acceptedFiles.map((file) => file.name);
     console.log(imgName);
     // setPhoto({ photo: imgName[0] });
+    console.log("file upload object ==> ", acceptedFiles[0].name);
     setFileNames({ file: URL.createObjectURL(acceptedFiles[0]) });
+    // setFileNames(acceptedFiles[0].name);
     //setDropzoneStyle('dropped');
     setSendPhoto(acceptedFiles[0]);
     // uploadPhoto(acceptedFiles[0]);  //if you want to send photo onDrop
@@ -107,41 +116,47 @@ const PhotoDropZone = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (photoType === 'portfolio' && !title) {
-      return setTitleError("Please Input the Description")
+    if (photoType === "portfolio" && !title) {
+      return setTitleError("Please Input the Description");
     }
     connectFunc(photoType, sendPhoto, fileNames, title);
-    handleClose()
+    handleClose();
   };
 
+  const deletephoto = (e) => {
+    deleteFunc(photoType, sendPhoto, fileNames, title);
+    handleClose();
+  };
+
+  console.log("fileNames ==> ", fileNames);
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="dialog-title">
       <DialogTitle id="dialog-title">
-        <Typography>
-          {headerTitle}
-        </Typography>
+        <Typography>{headerTitle}</Typography>
         {fileNames &&
-          photoType === 'portfolio' &&
-          'Almost there! Create image title and CONFIRM'}
+          photoType === "portfolio" &&
+          "Almost there! Create image title and CONFIRM"}
         {fileNames &&
-          photoType !== 'portfolio' &&
-          'Almost there! Please click CONFIRM'}
+          photoType !== "portfolio" &&
+          "Almost there! Please click CONFIRM"}
       </DialogTitle>
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           <img
-            src={fileNames ? fileNames.file : "data:image/jpeg;base64, " + image}
+            src={
+              fileNames ? fileNames.file : "data:image/jpeg;base64, " + image
+            }
             // onClick={handleClickOpen}
             alt="profile"
             className={classes.avatar}
           />
         </Grid>
       </DialogContent>
-      {photoType === 'portfolio' && (
+      {photoType === "portfolio" && (
         <div className={classes.inputContainer}>
           <TextField
-            error={titleError === '' ? false : true}
-            helperText={'Please add title'}
+            error={titleError === "" ? false : true}
+            helperText={"Please add title"}
             label="Description"
             required
             fullWidth
@@ -152,7 +167,6 @@ const PhotoDropZone = ({
       )}
       {/* accept file max size 1MB (1048576 Bytes) */}
       <Dropzone onDrop={onDrop} accept="image/*" minSize={0}>
-
         {({ getRootProps, getInputProps }) => (
           <div
             {...getRootProps({ className: `dropzoneStyle` })}
@@ -176,43 +190,51 @@ const PhotoDropZone = ({
                 </DialogContent>
               </div>
             ) : (
-                <div className={classes.dropzoneContainer}>
-                  <DialogContent>
-                    <Typography
-                      variant="caption"
-                      className={classes.dropzoneText}
-                    >
-                      If you want to change the photo, drag and drop again
+              <div className={classes.dropzoneContainer}>
+                <DialogContent>
+                  <Typography
+                    variant="caption"
+                    className={classes.dropzoneText}
+                  >
+                    If you want to change the photo, drag and drop again
                   </Typography>
-                  </DialogContent>
-                </div>
-              )}
+                </DialogContent>
+              </div>
+            )}
           </div>
         )}
       </Dropzone>
-
+      {image && !fileNames && (
+        <DialogActions className={classes.userdialog}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={(e) => deletephoto()}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      )}
       {fileNames && (
-        <DialogActions>
-          <form onSubmit={(e) => onSubmit(e)}>
-            <Button className={classes.button}
+        <DialogActions className={classes.userdialog}>
+          <form
+            onSubmit={(e) => onSubmit(e)}
+            className={classes.userdialogform}
+          >
+            <Button
               variant="outlined"
               color="primary"
-              onClick={e => handleClose()}
+              onClick={(e) => handleClose()}
             >
               Cancel
             </Button>
-            <Button className={classes.button}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
+            <Button type="submit" variant="contained" color="primary">
               Confirm
             </Button>
           </form>
         </DialogActions>
-      )
-      }
-    </Dialog >
+      )}
+    </Dialog>
   );
 };
 

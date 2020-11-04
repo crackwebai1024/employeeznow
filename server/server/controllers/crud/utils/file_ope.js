@@ -5,6 +5,7 @@ const find_ByID = async (req, res, Model) => {
   const role = "employee";
   const type = req.query.type;
   let fileByID = await CRUD.find_ByID(Model, role, req.query.id, res);
+  console.log("photodata ==> ", fileByID);
   await AWSOP.read(type, req.query.id)
     .then((data) => {
       return res.status(200).json({
@@ -26,6 +27,7 @@ const updateByID = async (req, res, Model) => {
   console.log(req.body);
   req.body[type].fname = req.body.fname;
   req.body[type].createdAt = Date.now();
+  console.log("fileName ==> ", req.body.fname);
   await CRUD.updateByID(Model, role, req.body.id, req, res);
 };
 

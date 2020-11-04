@@ -6,6 +6,7 @@ import CRUD from "../crud/utils/general";
 import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import config from "../../../config/config";
+import errorHandler from "../../helpers/dbErrorHandler";
 
 // create token for signin user
 const createToken = (id) => {
@@ -224,9 +225,44 @@ const isValidEmail = async (req, res, next) => {
   }
 };
 
+// change password(this is not the case that forget the password, but just change old one)
+const changePassword = async (req, res) => {
+  let Model;
+  let role = req.body.role;
+
+  if (role === "employee") {
+    Model = Employee;
+  } else {
+    Model = Employer;
+  }
+
+  console.log("request", req.body);
+  try {
+    let user = await Model.findOne({ _id: req.body.id });
+    console.log("user", user);
+    if (user.authenticate(req.body.currentPassword)) {
+      user.password = req.body.password;
+      user.passwordConfirm = req.body.passwordConfirm;
+      await user.save();
+      res.status(200).json({
+        success: "password successfully updated",
+      });
+    } else {
+      res.status(403).json({
+        error: "current password is not correct",
+      });
+    }
+  } catch (err) {
+    res.status(403).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 export default {
   forgotPassword,
   resetPassword,
+  changePassword,
   signIn,
   create,
   requireSignin,

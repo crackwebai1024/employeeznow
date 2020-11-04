@@ -1,57 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Radio from '@material-ui/core/Radio';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { jobTypes, roles } from '../professionTypes';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Select from "@material-ui/core/Select";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Radio from "@material-ui/core/Radio";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { jobTypes, roles } from "../professionTypes";
 import {
   loadProfessionDetails,
   updateProfessionDetails,
-} from '../../../store/actions/professionDetails';
+} from "../../../store/actions/professionDetails";
 
 // set style
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    marginTop: '1.5rem',
-    marginBottom: '1.5rem',
-    fontSize: '2rem',
+    marginTop: "1.5rem",
+    marginBottom: "1.5rem",
+    fontSize: "2rem",
     color: theme.palette.primary.main,
   },
   formContainer: {
-    marginTop: '3rem',
+    marginTop: "3rem",
   },
   textContainer: {
-    marginTop: '2rem',
+    marginTop: "2rem",
   },
   checkboxText: {
-    marginTop: '1.5rem',
+    marginTop: "1.5rem",
   },
   item: {
-    '& .MuiInput-input': {
+    "& .MuiInput-input": {
       color: theme.palette.grey[700],
     },
-    '& .MuiFormControlLabel-label': {
-      fontSize: '0.85rem',
+    "& .MuiFormControlLabel-label": {
+      fontSize: "0.85rem",
       color: theme.palette.grey[700],
     },
   },
   button: {
-    marginTop: '2rem',
-    marginBottom: '5rem',
+    marginTop: "2rem",
+    marginBottom: "5rem",
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
 }));
 
@@ -66,19 +66,19 @@ const EditProfessionDetailsForm = ({
   errorMessage,
 }) => {
   const [formData, setFormData] = useState({
-    primaryJob: { company: '', startDate: '', endDate: '', current: false },
-    secondaryJob: { company: '', startDate: '', endDate: '' },
-    employmentStatus: '',
+    primaryJob: { company: "", startDate: "", endDate: "", current: false },
+    secondaryJob: { company: "", startDate: "", endDate: "" },
+    employmentStatus: "",
     // milesToWork: '',
-    idealSalary: { amount: '', unit: '' },
-    planningToMove: { planning: false, location: '', dateToMove: '' },
+    idealSalary: { amount: "", unit: "" },
+    planningToMove: { planning: false, location: "", dateToMove: "" },
     randomShift: false,
     randomShiftRole: [],
-    newOpportunity: { availability: false, title: '' },
-    veteran: { status: false, veteranId: '' },
-    dateOfBirth: '',
-    employee: '',
-    _id: '',
+    newOpportunity: { availability: false, title: "" },
+    veteran: { status: false, veteranId: "" },
+    dateOfBirth: "",
+    employee: "",
+    _id: "",
   });
 
   // set error
@@ -89,16 +89,16 @@ const EditProfessionDetailsForm = ({
   // material-ui
   const classes = useStyles();
   const theme = useTheme();
-  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // disablt 'end date' for primaryJob if current was checked
   const [toDisabled, setToDisabled] = useState(formData.primaryJob.current);
   const [toggleBox, setToggleBox] = useState(false);
 
   const units = [
-    { value: 'hourly' },
-    { value: 'weekly' },
-    { value: 'annually' },
+    { value: "hourly" },
+    { value: "weekly" },
+    { value: "annually" },
   ];
 
   // convert date (MongoDB/UTC) to "month, year"
@@ -116,15 +116,15 @@ const EditProfessionDetailsForm = ({
         ...formData.primaryJob,
         company:
           loading || !currentData.primaryJob.company
-            ? ''
+            ? ""
             : currentData.primaryJob.company,
         startDate:
           loading || !currentData.primaryJob.startDate
-            ? ''
+            ? ""
             : convertDate(currentData.primaryJob.startDate),
         endDate:
           loading || !currentData.primaryJob.endDate
-            ? ''
+            ? ""
             : convertDate(currentData.primaryJob.endDate),
         current:
           loading || !currentData.primaryJob.current
@@ -135,20 +135,20 @@ const EditProfessionDetailsForm = ({
         ...formData.secondaryJob,
         company:
           loading || !currentData.secondaryJob.company
-            ? ''
+            ? ""
             : currentData.secondaryJob.company,
         startDate:
           loading || !currentData.secondaryJob.startDate
-            ? ''
+            ? ""
             : convertDate(currentData.secondaryJob.startDate),
         endDate:
           loading || !currentData.secondaryJob.endDate
-            ? ''
+            ? ""
             : convertDate(currentData.secondaryJob.endDate),
       },
       employmentStatus:
         loading || !currentData.employmentStatus
-          ? ''
+          ? ""
           : currentData.employmentStatus,
       // milesToWork:
       //   loading || !currentData.milesToWork ? '' : currentData.milesToWork,
@@ -160,18 +160,18 @@ const EditProfessionDetailsForm = ({
             : currentData.idealSalary.amount,
         unit:
           loading || !currentData.idealSalary.unit
-            ? ''
+            ? ""
             : currentData.idealSalary.unit,
       },
       dateOfBirth:
         loading || !currentData.dateOfBirth
-          ? ''
+          ? ""
           : convertDate(currentData.dateOfBirth),
       planningToMove: {
         ...formData.planningToMove,
         planning: loading || false,
-        location: loading || '',
-        dateToMove: loading || '',
+        location: loading || "",
+        dateToMove: loading || "",
       },
       randomShiftRole: loading || [],
       newOpportunity: loading || false,
@@ -225,11 +225,11 @@ const EditProfessionDetailsForm = ({
   } = formData;
 
   const onChange = ({ target: { id, name, value, checked } }) => {
-    console.log('id:', id, 'name:', name, 'value:', value, 'checked', checked);
+    console.log("id:", id, "name:", name, "value:", value, "checked", checked);
 
     switch (name) {
-      case 'dateOfBirth':
-      case 'employmentStatus': {
+      case "dateOfBirth":
+      case "employmentStatus": {
         return setFormData({ ...formData, [name]: value });
       }
       // case 'milesToWork': {
@@ -240,21 +240,21 @@ const EditProfessionDetailsForm = ({
       //   setError({ milesToWork: '' });
       //   return setFormData({ ...formData, [name]: value });
       // }
-      case 'endDate':
-      case 'company':
-      case 'startDate':
-      case 'amount':
-      case 'unit':
-      case 'location':
-      case 'dateToMove':
-      case 'title':
-      case 'veteranId': {
+      case "endDate":
+      case "company":
+      case "startDate":
+      case "amount":
+      case "unit":
+      case "location":
+      case "dateToMove":
+      case "title":
+      case "veteranId": {
         return setFormData({
           ...formData,
           [id]: { ...formData[id], [name]: value },
         });
       }
-      case 'current': {
+      case "current": {
         setFormData((prevState) => ({
           ...prevState,
           [id]: { ...prevState[id], [name]: checked },
@@ -262,9 +262,9 @@ const EditProfessionDetailsForm = ({
         setToDisabled(!toDisabled);
         break;
       }
-      case 'planning':
-      case 'availability':
-      case 'status': {
+      case "planning":
+      case "availability":
+      case "status": {
         setFormData((prevState) => ({
           ...prevState,
           [id]: { ...prevState[id], [name]: checked },
@@ -272,13 +272,13 @@ const EditProfessionDetailsForm = ({
         setToggleBox(!toggleBox);
         break;
       }
-      case 'randomShiftRole': {
+      case "randomShiftRole": {
         const newArray = [...formData[name]];
 
         //  uncheck - if the same shift already exists in state, the shift is removed from state
         if (newArray.includes(id)) {
           const idx = newArray.indexOf(id);
-          newArray.splice(idx, idx + 1);
+          newArray.splice(idx, 1);
 
           return setFormData({
             ...formData,
@@ -293,7 +293,7 @@ const EditProfessionDetailsForm = ({
         });
       }
 
-      case 'randomShift': {
+      case "randomShift": {
         return setFormData({
           ...formData,
           randomShift: !randomShift,
@@ -315,7 +315,7 @@ const EditProfessionDetailsForm = ({
       <Grid
         container
         direction="column"
-        alignItems={matchesXS ? 'center' : 'flex-start'}
+        alignItems={matchesXS ? "center" : "flex-start"}
       >
         <Grid item>
           <Typography variant="h1" className={classes.heading1}>
@@ -328,7 +328,7 @@ const EditProfessionDetailsForm = ({
         <Grid
           container
           direction="column"
-          alignItems={matchesXS ? 'center' : 'flex-start'}
+          alignItems={matchesXS ? "center" : "flex-start"}
         >
           {/* primary job */}
           <Grid item>
@@ -340,7 +340,7 @@ const EditProfessionDetailsForm = ({
           <Grid
             container
             justify="flex-start"
-            direction={matchesXS ? 'column' : 'row'}
+            direction={matchesXS ? "column" : "row"}
             alignItems="center"
           >
             <Grid item sm={4}>
@@ -381,7 +381,7 @@ const EditProfessionDetailsForm = ({
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={toDisabled ? '' : primaryJob.endDate}
+                value={toDisabled ? "" : primaryJob.endDate}
                 disabled={toDisabled ? true : false}
                 onChange={(e) => onChange(e)}
                 className={classes.item}
@@ -413,7 +413,7 @@ const EditProfessionDetailsForm = ({
           <Grid
             container
             justify="flex-start"
-            direction={matchesXS ? 'column' : 'row'}
+            direction={matchesXS ? "column" : "row"}
             alignItems="center"
           >
             <Grid item xs={12} sm={4}>
@@ -626,7 +626,7 @@ const EditProfessionDetailsForm = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
+              ""
             )}
           </Grid>
 
@@ -672,7 +672,7 @@ const EditProfessionDetailsForm = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
+              ""
             )}
           </Grid>
 
@@ -719,7 +719,7 @@ const EditProfessionDetailsForm = ({
                 </Grid>
               </Grid>
             ) : (
-              ''
+              ""
             )}
           </Grid>
 
@@ -754,7 +754,7 @@ const EditProfessionDetailsForm = ({
                 />
               </Grid>
             ) : (
-              ''
+              ""
             )}
           </Grid>
 
