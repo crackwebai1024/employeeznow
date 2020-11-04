@@ -19,7 +19,6 @@ import { getUser } from '@helpers/auth-helpers';
 import PublishIcon from '@material-ui/icons/Publish';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-// import { updateEmployee } from '../../../store/actions/employee';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -101,13 +100,7 @@ const EditEmployeeAccountForm = ({
     address,
     employeezNowId,
   },
-  actions,
-  updateEmployee,
-  errorMessage,
-  updateLoading,
-  setOpenAccount,
-  history,
-  slug,
+  actions, errorMessage, updateLoading, setOpenAccount, updateSuccess
 }) => {
   // react-hook-form
   const { register, handleSubmit, errors } = useForm({
@@ -584,10 +577,10 @@ const EditEmployeeAccountForm = ({
 
 const mapStateToProps = ({
   employee: {
-    experience, loading, updateLoading, updateEmployee
+    experience, loading, updateLoading, updateEmployee, updateSuccess
   },
 }) => ({
-  experience, loading, updateLoading, updateEmployee
+  experience, loading, updateLoading, updateEmployee, updateSuccess
 });
 
 const mapDispatchToProps = (dispatch) => ({

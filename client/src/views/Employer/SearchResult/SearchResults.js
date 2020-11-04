@@ -214,6 +214,7 @@ const SearchResults = (props) => {
                     <CandidateList
                       key={result._id}
                       id={result._id} // This _id is professionId
+                      purchased={result.purchased}
                       employeezNowId={result.employeezNowId}
                       employeeId={result.employeeId}
                       primaryTitle={result.employeeskill.primaryJob.title}

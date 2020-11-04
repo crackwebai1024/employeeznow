@@ -18,6 +18,9 @@ import _ from 'lodash';
 import { getUser } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    ...theme.root
+  },
   formControl: {
     marginTop: '1.3rem',
     backgroundColor: 'transparent',
@@ -116,7 +119,7 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
 
   useEffect(() => {
     if (!_.isEmpty(employerData)) {
-      setFormData({ defaultValues: employerData })      
+      setFormData({ defaultValues: employerData })
     }
   }, [employerData])
 
@@ -142,6 +145,7 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   margin="normal"
                   size="small"
                   fullWidth
+                  className={classes.root}
                   name="name"
                   label="Company Name"
                   type="email"

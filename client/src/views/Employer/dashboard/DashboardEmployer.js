@@ -43,8 +43,13 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
     padding: '2rem'
   },
+  subWrapper: {
+    width: 'fit-content',
+    margin: 'auto'
+  },
   accountButton: {
-    marginLeft: '1rem',
+    width: '200px',
+    marginTop: "2rem"
   },
   dialog: {
     marginTop: '5rem',
@@ -66,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
     float: 'right',
     paddingBottom: '2rem'
+  },
+  center: {
+    textAlign: 'center'
   },
   description: {
     textAlign: 'center',
@@ -239,43 +247,50 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
                 )}
             </Grid>
             {name && (
-              <Grid item>
-                <Typography variant="h6" className={classes.title}>
-                  COMPANY INFORMATION
-            </Typography>
-                <Typography>
-                  {address.street1} {address.street2}
-                </Typography>
-                <Typography>
-                  {address.city} {address.state} {address.zipcode}
-                </Typography>
+              <Grid container item spacing={3}>
+                <Grid item xs={12} md={6}>
+                  <Box className={classes.subWrapper}>
+                    <Typography variant="h6" className={classes.title}>
+                      COMPANY INFORMATION
+                  </Typography>
+                    <Typography>
+                      {address.street1} {address.street2}
+                    </Typography>
+                    <Typography>
+                      {address.city} {address.state} {address.zipcode}
+                    </Typography>
 
-                <Typography className={classes.generalEmail}>
-                  Email: {generalEmail}
-                </Typography>
+                    <Typography className={classes.generalEmail}>
+                      Email: {generalEmail}
+                    </Typography>
 
-                <Typography>
-                  Website:{' '}
-                  <a href="{website}" target="_blank" className={classes.link}>
-                    {website}
-                  </a>
-                </Typography>
+                    <Typography>
+                      Website:{' '}
+                      <a href="{website}" target="_blank" className={classes.link}>
+                        {website}
+                      </a>
+                    </Typography>
 
-                <Typography>Phone: {phone}</Typography>
+                    <Typography>Phone: {phone}</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Box className={classes.subWrapper}>
+                    <Typography variant="h6" className={classes.title}>
+                      CONTACT PERSON
+                    </Typography>
 
-                <Typography variant="h6" className={classes.title}>
-                  CONTACT PERSON
-            </Typography>
+                    <Typography>
+                      {firstName} {lastName}
+                    </Typography>
 
-                <Typography>
-                  {firstName} {lastName}
-                </Typography>
-
-                <Typography>{title}</Typography>
-                <Typography>Email: {email}</Typography>
+                    <Typography>{title}</Typography>
+                    <Typography>Email: {email}</Typography>
+                  </Box>
+                </Grid>
               </Grid>
             )}
-            <Grid item>
+            <Grid item xs={12} className={classes.center}>
               {/* Employer account page */}
               <Button component={Link}
                 to={`/employers/${user.slug}/account`}
