@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
 =======
     ...theme.typography.h1,
     marginBottom: "1.5rem",
+<<<<<<< HEAD
+>>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
+=======
 >>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
   },
   button: {
@@ -54,7 +57,11 @@ const useStyles = makeStyles((theme) => ({
   },
   linkContainer: {
 <<<<<<< HEAD
+<<<<<<< HEAD
     marginBottom: '2rem',
+=======
+    marginBottom: "8rem",
+>>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
 =======
     marginBottom: "8rem",
 >>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
@@ -145,15 +152,21 @@ const EmployeeForm = ({
       return setVeteran({
         ...veteran,
 <<<<<<< HEAD
+<<<<<<< HEAD
         status: !veteran.status
       })
 
     if (e.target.name == 'veteranId') {
 =======
+=======
+>>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
         status: !veteran.status,
       });
 
     if (e.target.name == "veteranId") {
+<<<<<<< HEAD
+>>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
+=======
 >>>>>>> 8ac726cb64a9848e5a58e6d1065210b8479beab6
       setVeteran({
         ...veteran,
