@@ -95,12 +95,12 @@ export default function ContestSection() {
               background="green"
               color="color"
               border="green"
-              hoverColor=""
-              hoverBack="white"
+              hoverColor="white"
+              hoverBack="#007000"
               pd={60} fontSize={18}
               label="Go To Contest"
-              color="white" yellow
-              hoverColor="green"
+              color="white"
+              hoverColor="white"
               to="" width="260px">
             </MainButton>
           </Grid>

@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Sidebar = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFilterUpdate }) => {
+const FilterList = ({ searchQuery, mobileOpen, setMobileOpen, actions, slug, setFilterUpdate }) => {
   const classes = useStyles();
   const theme = useTheme();
   const user = JSON.parse(getUser());
@@ -145,4 +145,4 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(FilterList);

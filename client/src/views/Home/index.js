@@ -154,10 +154,10 @@ const Home = () => {
                         label="Get Started"
                         to="/signup"
                         width="200px"
-                        hoverBack="white"
+                        hoverBack="#007000"
                         border="green"
                         color="white"
-                        hoverColor="green"
+                        hoverColor="white"
                       >
                       </MainButton>
                     </Box>
@@ -278,13 +278,13 @@ const Home = () => {
             <Grid item xs={12} md={6}>
               <MainButton
                 background="green"
-                hoverBack="white"
+                hoverBack="#007000"
                 pd={50} fontSize={24}
                 label="SIGN UP USER"
                 to="/signup"
                 width="280px"
                 border="green"
-                hoverColor="green"
+                hoverColor="white"
                 color="white"
               >
               </MainButton>

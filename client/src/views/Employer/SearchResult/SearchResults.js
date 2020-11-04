@@ -19,7 +19,7 @@ import SearchForm from '../form/SearchForm';
 import CandidateList from './CandidateList';
 import Dialog from '@material-ui/core/Dialog';
 import EditSearchForm from '../form/EditSearchForm';
-import Sidebar from './Sidebar';
+import FilterList from './FilterList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -153,13 +153,13 @@ const SearchResults = (props) => {
             }}
           >
             <div className={classes.toolbar} />
-            <Sidebar
+            {/* <Sidebar
               searchQuery={searchQueries}
               setMobileOpen={setMobileOpen}
               mobileOpen={mobileOpen}
               setFilterUpdate={setFilterUpdateHandle}
               slug={slug}
-            />
+            /> */}
           </SwipeableDrawer>
         </Hidden>
       </nav>
@@ -203,7 +203,7 @@ const SearchResults = (props) => {
                   open
                 >
                   <div className={classes.toolbar} />
-                  {/* <Sidebar searchQuery={searchQueries} slug={slug} setFilterUpdate={setFilterUpdateHandle} /> */}
+                  <FilterList searchQuery={searchQueries} slug={slug} setFilterUpdate={setFilterUpdateHandle} />
                 </Drawer>
               </Hidden>
             </Grid>

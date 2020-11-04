@@ -172,8 +172,8 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
               label="LOG IN"
               background="green"
               border="green"
-              hoverColor="green"
-              hoverBack="white"
+              hoverColor="white"
+              hoverBack="#007000"
               color="white"
               fontSize={16}
               onClick={handleSubmit(onSubmit)}
