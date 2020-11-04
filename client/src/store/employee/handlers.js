@@ -4,6 +4,7 @@ const initialState = {
   photo: null,
   reload: false,
   background: undefined,
+  success: "",
 };
 
 export const getUserDataRequest = (state, { payload }) => ({
@@ -16,11 +17,13 @@ export const getUserDocumentRequest = (state, { payload }) => ({
 
 export const getUserDocumentSuccess = (state, { payload }) => ({
   ...state,
+  success: true,
 });
 
 export const getUserDataSuccess = (state, { payload }) => ({
   ...state,
   employeeData: payload,
+  success: true,
 });
 
 export const loadSkillData = (state, { payload }) => ({
@@ -35,6 +38,7 @@ export const updateSkillSuccess = (state, { payload }) => ({
   ...state,
   skill: payload,
   loading: false,
+  success: true,
 });
 
 export const updateJobExperience = (state, { payload }) => ({
@@ -53,6 +57,7 @@ export const success = (state, { payload }) => {
     loading: false,
     reload: !state.reload,
     [payload.type]: payload.data,
+    success: true,
   };
 };
 
@@ -64,6 +69,7 @@ export const updatePreference = (state, { payload }) => ({
 export const failure = (state, { payload }) => ({
   ...state,
   loading: false,
+  success: false,
 });
 
 export const loadPreference = (state, { payload }) => ({
@@ -120,6 +126,7 @@ export const uploadDocumentSuccess = (state, { payload }) => {
     ...state,
     [type]: content,
     [loading]: false,
+    success: true,
   };
 };
 
@@ -137,6 +144,7 @@ export const updateBasicInfoSuccess = (state, { payload }) => ({
   },
   updateLoading: false,
   updateEmployee: true,
+  success: true,
 });
 
 export const uploadVeteranCard = (state, { payload }) => ({

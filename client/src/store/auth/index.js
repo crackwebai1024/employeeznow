@@ -1,6 +1,6 @@
-import { handleActions, createActions } from 'redux-actions';
+import { handleActions, createActions } from "redux-actions";
 
-import initialState, * as handlers from './handlers';
+import initialState, * as handlers from "./handlers";
 
 export const actions = createActions({
   SIGNUP_REQUEST: undefined,
@@ -14,7 +14,7 @@ export const actions = createActions({
   SIGNUP_CONFIRM_REQUEST: undefined,
   SIGNUP_CONFIRM_SUCCESS: undefined,
   SIGNUP_CONFIRM_FAILURE: undefined,
-  
+
   LOGIN_REQUEST: undefined,
   LOGIN_SUCCESS: undefined,
   LOGIN_FAILURE: undefined,
@@ -36,10 +36,10 @@ export const actions = createActions({
   SIGNUPUSER_EMPTY: undefined,
 
   EMPLOYER_SIGNUP_REQUEST: undefined,
-  EMPLOYER_EMAIL_VERIFY : undefined,
-  
+  EMPLOYER_EMAIL_VERIFY: undefined,
+
   EMPLOYER_EMAIL_VERIFY_FAILURE: undefined,
-  EMPLOYER_EMAIL_CODE_SEND : undefined,
+  EMPLOYER_EMAIL_CODE_SEND: undefined,
   EMAIL_CODE_SEND_FAILURE: undefined,
 
   FORGOT_PASSWORD_REQUEST: undefined,
@@ -50,7 +50,11 @@ export const actions = createActions({
   RESET_PASSWORD_SUCCESS: undefined,
   RESET_PASSWORD_FAILURE: undefined,
 
-  SAVE_VETERAN_CARD: undefined
+  CHANGE_PASSWORD_REQUEST: undefined,
+  CHANGE_PASSWORD_SUCCESS: undefined,
+  CHANGE_PASSWORD_FAILURE: undefined,
+
+  SAVE_VETERAN_CARD: undefined,
 });
 
 const reducer = handleActions(
@@ -70,7 +74,7 @@ const reducer = handleActions(
     [actions.phoneVerifyRequestRequest, handlers.phoneVerifyRequestRequest],
     [actions.phoneVerifyRequestSuccess, handlers.phoneVerifyRequestSuccess],
     [actions.phoneVerifyRequestFailure, handlers.phoneVerifyRequestFailure],
-    
+
     [actions.authenticateRequest, handlers.authenticateRequest],
     [actions.authenticateSuccess, handlers.authenticateSuccess],
     [actions.authenticateFailure, handlers.authenticateFailure],
@@ -100,11 +104,14 @@ const reducer = handleActions(
     [actions.resetPasswordRequest, handlers.resetPasswordRequest],
     [actions.resetPasswordSuccess, handlers.resetPasswordSuccess],
     [actions.resetPasswordFailure, handlers.resetPasswordFailure],
-    
+
+    [actions.changePasswordRequest, handlers.changePasswordRequest],
+    [actions.changePasswordSuccess, handlers.changePasswordSuccess],
+    [actions.changePasswordFailure, handlers.changePasswordFailure],
+
     [actions.saveVeteranCard, handlers.saveVeteranCard],
-    
   ]),
-  initialState,
+  initialState
 );
 
 export default reducer;

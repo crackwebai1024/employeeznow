@@ -5,8 +5,7 @@ export async function employeeEmailVerify(data) {
 }
 
 export async function phoneVerifyRequest(data) {
-
-  return await Axios.post('/auth/employee/isvalidphone', data)
+  return await Axios.post("/auth/employee/isvalidphone", data);
 }
 
 export async function signupConfirm(data) {
@@ -29,6 +28,10 @@ export async function onForgotPassword(data) {
 
 export async function onResetPassword(data) {
   return await Axios.post("/auth/common/resetpassword", data);
+}
+
+export async function onChangePassword(data) {
+  return await Axios.post("/auth/common/changepassword", data);
 }
 
 export async function onUploadVeteranCard(data) {
