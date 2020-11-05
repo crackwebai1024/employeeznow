@@ -197,7 +197,8 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto'
   },
   contestSection: {
-    background: '#FAFAFA'
+    background: '#FAFAFA',
+    width: '100vw'
   },
   bigTitle: {
     fontSize: '30px',
@@ -276,11 +277,9 @@ const LearnMore = () => {
 
     </Container>
 
-    <Grid className={classes.contestSection}>
-      <Grid container ustify="center" spacing={3}>
+    <Grid container className={classes.contestContainer}>
         <ContestSection />
       </Grid>
-    </Grid>
 
     <Container width="sm" className={classes.mainContainer}>
       <Grid container ustify="center" spacing={5} style={{ marginTop: '100px', textAlign: 'center' }}>

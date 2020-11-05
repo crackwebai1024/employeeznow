@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // User change, changePassword, etc
-const EmployeeAccount = ({ employeeData, history, actions, updateSuccess }) => {
+const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, changepassword }) => {
 
   // material-ui
   const classes = useStyles();
@@ -99,6 +99,11 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess }) => {
     setOpenAccount(true);
   };
 
+  useEffect(() => {
+    if(changepassword == "SUCCESS"){
+      setOpenPassword(false)
+    }
+  }, [changepassword])
   // update password dialog
   const passwordClose = () => {
     setOpenPassword(false);
@@ -281,8 +286,11 @@ const mapStateToProps = ({
   employee: {
     employeeData, updateSuccess
   },
+  auth: {
+    changepassword
+  }
 }) => ({
-  employeeData, updateSuccess
+  employeeData, updateSuccess, changepassword
 });
 
 const mapDispatchToProps = (dispatch) => ({
