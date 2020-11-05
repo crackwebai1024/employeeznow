@@ -70,7 +70,7 @@ export default function ContestSection() {
   const classes = useStyles()
   return (
     <Container>
-      <Grid container>
+      <Grid container xs={12}>
         <Grid item xs={12} md={6}>
           <Paper elevation={0} className={classes.paper2}>
             <img
@@ -95,12 +95,12 @@ export default function ContestSection() {
               background="green"
               color="color"
               border="green"
-              hoverColor=""
-              hoverBack="white"
+              hoverColor="white"
+              hoverBack="#007000"
               pd={60} fontSize={18}
               label="Go To Contest"
-              color="white" yellow
-              hoverColor="green"
+              color="white"
+              hoverColor="white"
               to="" width="260px">
             </MainButton>
           </Grid>

@@ -93,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
     maxWidth: '500px',
     position: "relative",
+    background: theme.palette.common.white,
     top: '5rem',
     padding: '2rem',
     margin: 'auto',
@@ -210,7 +211,7 @@ const EmployeeForm = ({
   }
 
   return (
-    <Container component="main" maxWidth="sm" style={{ paddingBottom: '10rem' }}>
+    <Container component="main" maxWidth="sm" style={{ paddingBottom: '10rem'}}>
       <Grid container direction="column" justify="center" alignItems="center" className={classes.wrapper}>
         <Grid item style={{ display: 'flex' }}>
           <Avatar className={classes.avatar}>

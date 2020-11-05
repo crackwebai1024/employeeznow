@@ -208,6 +208,7 @@ export const resetPasswordFailure = (state) => ({
 export const changePasswordRequest = (state) => ({
   ...state,
   loading: true,
+  changepassword: "REQUEST"
 });
 
 export const changePasswordSuccess = (state) => ({

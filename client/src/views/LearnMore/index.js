@@ -197,19 +197,23 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto'
   },
   contestSection: {
-    background: '#FAFAFA'
+    background: '#FAFAFA',
+    width: '100vw'
   },
   bigTitle: {
     fontSize: '30px',
     fontWeight: 200,
     textAlign: 'center',
     marginBottom: '30px'
+  },
+  Wrapper: {
+    background: 'white'
   }
 }));
 
 const LearnMore = () => {
   const classes = useStyles();
-  return (<Fragment>
+  return (<Box className={classes.Wrapper}>
     <Container width="sm" className={classes.mainContainer}>
       <Grid container ustify="center" spacing={0} style={{ paddingTop: '100px' }}>
         <Grid item xs={12} md={12} className={classes.title}>
@@ -276,11 +280,9 @@ const LearnMore = () => {
 
     </Container>
 
-    <Grid className={classes.contestSection}>
-      <Grid container ustify="center" spacing={3}>
+    <Grid container className={classes.contestContainer}>
         <ContestSection />
       </Grid>
-    </Grid>
 
     <Container width="sm" className={classes.mainContainer}>
       <Grid container ustify="center" spacing={5} style={{ marginTop: '100px', textAlign: 'center' }}>
@@ -362,7 +364,7 @@ const LearnMore = () => {
         </Grid>
       </Grid>
     </Container>
-  </Fragment>
+  </Box>
   );
 };
 

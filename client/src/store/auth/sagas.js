@@ -154,12 +154,10 @@ function* onResetPassword({ payload }) {
 function* onChangePassword({ payload }) {
   try {
     const res = yield call(AuthAPI.onChangePassword, payload);
-    console.log("change password result ==> ", res);
     if (res && res.data) {
       yield put(types.changePasswordSuccess());
     }
   } catch {
-    console.log("change password result ==> ");
     yield put(types.changePasswordFailure());
   }
 }

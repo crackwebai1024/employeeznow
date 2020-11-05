@@ -13,6 +13,7 @@ import { actions, actions as types } from "./index";
 import * as EmployeeAPI from "@services/EmployeeAPI";
 import Axios from "@lib/axios";
 import { _arrayBufferToBase64 } from "@helpers/utils";
+import { updateBasicInfoSuccess } from "./handlers";
 
 function* getUserData({ payload }) {
   try {
@@ -251,7 +252,9 @@ function* onUpdateBasicInfo({ payload }) {
     if (res && res.data) {
       yield put(types.updateBasicInfoSuccess(res.data));
     }
-  } catch {}
+  } catch {
+    yield put(types.updateBasicInfoFailure())
+  }
 }
 
 function* onUploadVeteranCard({ payload }) {

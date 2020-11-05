@@ -5,11 +5,13 @@ const initialState = {
   reload: false,
   background: undefined,
   success: "",
+  updateSuccess: "NONE"
 };
 
 export const initiateSuccess = (state) => ({
   ...state,
   success: "",
+  updateSuccess: "NONE"
 });
 
 export const getUserDataRequest = (state, { payload }) => ({
@@ -137,6 +139,7 @@ export const updateBasicInfoRequest = (state, { payload }) => ({
   ...state,
   updateLoading: true,
   updateEmployee: false,
+  updateSuccess: "REQUEST"
 });
 
 export const updateBasicInfoSuccess = (state, { payload }) => ({
@@ -147,8 +150,13 @@ export const updateBasicInfoSuccess = (state, { payload }) => ({
   },
   updateLoading: false,
   updateEmployee: true,
-  success: true,
+  updateSuccess: "SUCCESS",
 });
+
+export const updateBasicInfoFailure = (state) => ({
+  ...state,
+  updateSuccess : "FAILURE"
+})
 
 export const setSuccess = (state) => ({
   ...state,

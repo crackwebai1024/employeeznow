@@ -10,7 +10,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 import { getUser } from '@helpers/auth-helpers';
 import _ from 'lodash'
-// import { loadEmployee } from '../../../store/actions/employee';
+import Alert from '@material-ui/lab/Alert';
 import EditEmployeeAccountForm from '../form/EditEmployeeAccountForm';
 import ChangePasswordForm from '../../Auth/Password/ChangePasswordForm';
 
@@ -81,10 +81,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // User change, changePassword, etc
-const EmployeeAccount = ({ employeeData, history, actions }) => {
-  // useEffect(() => {
-  //   loadEmployee();
-  // }, []);
+const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, changepassword }) => {
 
   // material-ui
   const classes = useStyles();
@@ -102,6 +99,11 @@ const EmployeeAccount = ({ employeeData, history, actions }) => {
     setOpenAccount(true);
   };
 
+  useEffect(() => {
+    if(changepassword == "SUCCESS"){
+      setOpenPassword(false)
+    }
+  }, [changepassword])
   // update password dialog
   const passwordClose = () => {
     setOpenPassword(false);
@@ -120,160 +122,175 @@ const EmployeeAccount = ({ employeeData, history, actions }) => {
     setOpenPassword(true);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      actions.initiateSuccess()
+    }, 3000);
+  }, [updateSuccess])
+
   return (
     !_.isEmpty(employeeData) ?
-    <Container className={classes.container}>
-      <Grid container direction="column" alignItems="center">
-        <Grid item>
-          <Typography variant="h1" className={classes.heading1}>
-            Your account information
-          </Typography>
-        </Grid>
-
-        {employeeData.basic._id && (
+      <Container className={classes.container}>
+        {
+          updateSuccess == "SUCCESS" && <Alert severity="success">Profile update is successed!</Alert>
+        }
+        {
+          updateSuccess == "FAILURE" && <Alert severity="warning">Profile update is failed!</Alert>
+        }
+        <Grid container direction="column" alignItems="center">
           <Grid item>
-            <Grid container justify="flex-start" className={classes.wrapper}>
-              {/* column 1 / 6 name */}
-              <Grid item xs={3}>
-                <Typography>Name</Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <Typography className={classes.item}>
-                  {' '}
-                  {employeeData.basic.firstName} 
-                  {employeeData.basic.middleName} 
-                  {employeeData.basic.lastName}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            {/* column 2 / 6 email */}
-            <Grid
-              item
-              container
-              justify="flex-start"
-              className={classes.wrapper}
-            >
-              <Grid item xs={3}>
-                <Typography>Email</Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <Typography className={classes.item}>{employeeData.basic.email}</Typography>
-              </Grid>
-            </Grid>
-
-            {/* column 3 / 6 mobile */}
-            <Grid
-              item
-              container
-              justify="flex-start"
-              className={classes.wrapper}
-            >
-              <Grid item xs={3}>
-                <Typography>Mobile</Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <Typography className={classes.item}>{employeeData.basic.cell}</Typography>
-              </Grid>
-            </Grid>
-
-            {/* column 4 / 6 address */}
-            <Grid
-              item
-              container
-              justify="flex-start"
-              className={classes.wrapper}
-            >
-              <Grid item xs={3}>
-                <Typography>Address</Typography>
-              </Grid>
-              <Grid item xs={9}>
-                <Typography className={classes.item}>
-                  {employeeData.basic.address.street1} 
-                  {employeeData.basic.address.street2}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            {/* column 5 / 6 address */}
-            <Grid
-              item
-              container
-              justify="flex-start"
-              className={classes.wrapper}
-            >
-              <Grid item xs={3} />
-              <Grid item xs={9}>
-                <Typography className={classes.item}>
-                  {employeeData.basic.address.city}
-                  {employeeData.basic.address.state}
-                  {employeeData.basic.address.zipcode}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            {/* column 6 / 6 button/dialog */}
-            <Grid item className={classes.buttonColumn}>
-              <Grid container justify="space-evenly">
-                <Grid item>
-                  <Button
-                    onClick={accountClickOpen}
-                    className={`${classes.button} ${classes.button1}`}
-                  >
-                    Update Account
-                  </Button>
-                  <Dialog
-                    open={openAccount}
-                    onClose={accountClose}
-                    aria-labelledby="dialog-title"
-                    className={classes.dialog}
-                  >
-                    <EditEmployeeAccountForm
-                      employee={employeeData.basic}
-                      history={history}
-                      slug={employeeData.basic.slug}
-                      setOpenAccount={setOpenAccount}
-                    />
-                  </Dialog>
-                </Grid>
-
-                <Grid item>
-                  <Button
-                    onClick={passwordClickOpen}
-                    className={`${classes.button} ${classes.button2}`}
-                  >
-                    Update Password
-                  </Button>
-                  <Dialog
-                    open={openPassword}
-                    onClose={passwordClose}
-                    aria-labelledby="dialog-title"
-                    fullWidth
-                    className={classes.dialog}
-                  >
-                    <ChangePasswordForm
-                      history={history}
-                      slug={employeeData.basic.slug}
-                      setOpenPassword={setOpenPassword}
-                    />
-                  </Dialog>
-                </Grid>
-              </Grid>
-            </Grid>
+            <Typography variant="h1" className={classes.heading1}>
+              Your account information
+          </Typography>
           </Grid>
-        )}
-      </Grid>
-    </Container>:
-    <Fragment></Fragment>
+
+          {employeeData.basic._id && (
+            <Grid item>
+              <Grid container justify="flex-start" className={classes.wrapper}>
+                {/* column 1 / 6 name */}
+                <Grid item xs={3}>
+                  <Typography>Name</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography className={classes.item}>
+                    {' '}
+                    {employeeData.basic.firstName}
+                    {employeeData.basic.middleName}
+                    {employeeData.basic.lastName}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              {/* column 2 / 6 email */}
+              <Grid
+                item
+                container
+                justify="flex-start"
+                className={classes.wrapper}
+              >
+                <Grid item xs={3}>
+                  <Typography>Email</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography className={classes.item}>{employeeData.basic.email}</Typography>
+                </Grid>
+              </Grid>
+
+              {/* column 3 / 6 mobile */}
+              <Grid
+                item
+                container
+                justify="flex-start"
+                className={classes.wrapper}
+              >
+                <Grid item xs={3}>
+                  <Typography>Mobile</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography className={classes.item}>{employeeData.basic.cell}</Typography>
+                </Grid>
+              </Grid>
+
+              {/* column 4 / 6 address */}
+              <Grid
+                item
+                container
+                justify="flex-start"
+                className={classes.wrapper}
+              >
+                <Grid item xs={3}>
+                  <Typography>Address</Typography>
+                </Grid>
+                <Grid item xs={9}>
+                  <Typography className={classes.item}>
+                    {employeeData.basic.address.street1}
+                    {employeeData.basic.address.street2}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              {/* column 5 / 6 address */}
+              <Grid
+                item
+                container
+                justify="flex-start"
+                className={classes.wrapper}
+              >
+                <Grid item xs={3} />
+                <Grid item xs={9}>
+                  <Typography className={classes.item}>
+                    {employeeData.basic.address.city}
+                    {employeeData.basic.address.state}
+                    {employeeData.basic.address.zipcode}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              {/* column 6 / 6 button/dialog */}
+              <Grid item className={classes.buttonColumn}>
+                <Grid container justify="space-evenly">
+                  <Grid item>
+                    <Button
+                      onClick={accountClickOpen}
+                      className={`${classes.button} ${classes.button1}`}
+                    >
+                      Update Account
+                  </Button>
+                    <Dialog
+                      open={openAccount}
+                      onClose={accountClose}
+                      aria-labelledby="dialog-title"
+                      className={classes.dialog}
+                    >
+                      <EditEmployeeAccountForm
+                        employee={employeeData.basic}
+                        history={history}
+                        slug={employeeData.basic.slug}
+                        setOpenAccount={setOpenAccount}
+                      />
+                    </Dialog>
+                  </Grid>
+
+                  <Grid item>
+                    <Button
+                      onClick={passwordClickOpen}
+                      className={`${classes.button} ${classes.button2}`}
+                    >
+                      Update Password
+                  </Button>
+                    <Dialog
+                      open={openPassword}
+                      onClose={passwordClose}
+                      aria-labelledby="dialog-title"
+                      fullWidth
+                      className={classes.dialog}
+                    >
+                      <ChangePasswordForm
+                        history={history}
+                        slug={employeeData.basic.slug}
+                        setOpenPassword={setOpenPassword}
+                      />
+                    </Dialog>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
+        </Grid>
+      </Container> :
+      <Fragment></Fragment>
   );
 };
 
 const mapStateToProps = ({
   employee: {
-    employeeData
+    employeeData, updateSuccess
   },
+  auth: {
+    changepassword
+  }
 }) => ({
-  employeeData
+  employeeData, updateSuccess, changepassword
 });
 
 const mapDispatchToProps = (dispatch) => ({

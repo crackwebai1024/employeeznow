@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
     maxWidth: '500px',
     position: "relative",
+    background: theme.palette.common.white,
     top: '5rem',
     padding: '2rem',
     margin: 'auto',
@@ -172,8 +173,8 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
               label="LOG IN"
               background="green"
               border="green"
-              hoverColor="green"
-              hoverBack="white"
+              hoverColor="white"
+              hoverBack="#007000"
               color="white"
               fontSize={16}
               onClick={handleSubmit(onSubmit)}

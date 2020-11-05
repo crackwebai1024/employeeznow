@@ -18,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
   companyName: {
     border: `1px solid ${theme.palette.grey[200]}`,
     textAlign: 'center',
-    marginTop: '1rem',
-    marginBottom: '1rem',
+    margin: '1rem',
+    cursor: 'pointer',
+    padding: '1rem',
   },
   title: {
     marginTop: '3rem',
@@ -40,11 +41,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   leftSection: {
+    background: theme.palette.common.white,
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
     padding: '2rem'
   },
+  subWrapper: {
+    width: 'fit-content',
+    margin: 'auto'
+  },
   accountButton: {
-    marginLeft: '1rem',
+    width: '200px',
+    marginTop: "2rem"
   },
   dialog: {
     marginTop: '5rem',
@@ -61,11 +68,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '0.5rem',
   },
   rightSection: {
-    maxWidth: '260px',
     width: '260px',
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
     float: 'right',
-    paddingBottom: '2rem'
+    background: theme.palette.common.white,
+    paddingBottom: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      float: 'left',
+      width: '100%'
+    },
+  },
+  center: {
+    textAlign: 'center'
   },
   description: {
     textAlign: 'center',
@@ -88,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     transition: '0.1s',
     '&:hover': {
-      background: theme.palette.common.white,
+      background: "#00800010",
       borderLeft: "solid 3px green"
     },
 
@@ -179,14 +193,6 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
               <Typography>
                 <SearchOutlinedIcon className={classes.filterIcon} /> {searchQuery.name}
               </Typography>
-              {/* <Button 
-                  type="submit" variant="outlined"
-                  color="secondary" size="small"
-                  startIcon={<SearchOutlinedIcon />}
-                  id={searchQuery._id} 
-                >
-                  {searchQuery.name}
-                </Button> */}
             </li>
           ))}
         </Grid>
@@ -197,7 +203,7 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
   return (
     <Container width="sm" className={classes.container}>
       <Grid container justify="center" spacing={4}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={4}>
           <Box className={classes.rightSection}>
             {name && (
               <Grid item className={classes.companyName}>
@@ -215,7 +221,7 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} md={8}>
           <Box item className={classes.leftSection}>
             <Grid item>
               {/* only signed employer can see the button  - need to check later */}
@@ -239,47 +245,54 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
                 )}
             </Grid>
             {name && (
-              <Grid item>
-                <Typography variant="h6" className={classes.title}>
-                  COMPANY INFORMATION
-            </Typography>
-                <Typography>
-                  {address.street1} {address.street2}
-                </Typography>
-                <Typography>
-                  {address.city} {address.state} {address.zipcode}
-                </Typography>
+              <Grid container item spacing={3}>
+                <Grid item xs={12} sm={6}>
+                  <Box className={classes.subWrapper}>
+                    <Typography variant="h6" className={classes.title}>
+                      COMPANY INFORMATION
+                  </Typography>
+                    <Typography>
+                      {address.street1} {address.street2}
+                    </Typography>
+                    <Typography>
+                      {address.city} {address.state} {address.zipcode}
+                    </Typography>
 
-                <Typography className={classes.generalEmail}>
-                  Email: {generalEmail}
-                </Typography>
+                    <Typography className={classes.generalEmail}>
+                      Email: {generalEmail}
+                    </Typography>
 
-                <Typography>
-                  Website:{' '}
-                  <a href="{website}" target="_blank" className={classes.link}>
-                    {website}
-                  </a>
-                </Typography>
+                    <Typography>
+                      Website:{' '}
+                      <a href="{website}" target="_blank" className={classes.link}>
+                        {website}
+                      </a>
+                    </Typography>
 
-                <Typography>Phone: {phone}</Typography>
+                    <Typography>Phone: {phone}</Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box className={classes.subWrapper}>
+                    <Typography variant="h6" className={classes.title}>
+                      CONTACT PERSON
+                    </Typography>
 
-                <Typography variant="h6" className={classes.title}>
-                  CONTACT PERSON
-            </Typography>
+                    <Typography>
+                      {firstName} {lastName}
+                    </Typography>
 
-                <Typography>
-                  {firstName} {lastName}
-                </Typography>
-
-                <Typography>{title}</Typography>
-                <Typography>Email: {email}</Typography>
+                    <Typography>{title}</Typography>
+                    <Typography>Email: {email}</Typography>
+                  </Box>
+                </Grid>
               </Grid>
             )}
-            <Grid item>
+            <Grid item xs={12} className={classes.center}>
               {/* Employer account page */}
               <Button component={Link}
                 to={`/employers/${user.slug}/account`}
-                variant="outlined" color="primary" className={classes.accountButton}
+                variant="contained" color="secondary" className={classes.accountButton}
               >
                 Account
               </Button>
