@@ -12,7 +12,6 @@ import theme from "@helpers/Theme";
 import AppRouter from "@router/AppRouter";
 import { getBoxSize } from "@helpers/utils";
 import "./App.css";
-import TakeMoney from "./TakeMoney";
 
 function App(props) {
   const [value, setValue] = useState(1);
@@ -30,7 +29,6 @@ function App(props) {
             // selectedIndex={selectedIndex}
             // setSelectedIndex={setSelectedIndex}
           />
-          <TakeMoney />
           <Box minHeight={getBoxSize()} style={{ background: "white" }}>
             <AppRouter />
           </Box>

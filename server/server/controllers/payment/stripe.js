@@ -8,33 +8,52 @@ const _stripe = stripe(
 const stripePay = async (req, res) => {
   const { product, token } = req.body;
   console.log("data from frontend", token, product);
-  const idempontencyKey = uuid();
-  console.log("uuid generated key ==> ", idempontencyKey);
-  return _stripe.customers
-    .create({
-      email: token.email,
-      source: token.id,
-    })
-    .then((customer) => {
-      _stripe.charges.create(
-        {
-          amount: 8 * 100,
-          currency: "usd",
-          customer: customer.id,
-          receipt_email: token.email,
-          description: "Buy Employee Profile",
-          shipping: {
-            name: token.card.name,
-            address: {
-              country: token.card.address_country,
-            },
-          },
-        },
-        { idempontencyKey }
-      );
-    })
-    .then((result) => res.status(200).json(result))
-    .catch((err) => console.log(err));
+  const idempotencyKey = uuid();
+  console.log("uuid generated key ==> ", idempotencyKey);
+  try {
+    await _stripe.customers.create({ email: token.email, source: token.id });
+    await _stripe.charges.create(
+      {
+        amount: 8 * 100,
+        currency: "usd",
+        customer: customer.id,
+        receipt_email: token.email,
+        description: "Buy Employee Profile",
+      },
+      { idempotencyKey }
+    );
+    return res.status(200).json({
+      success: "payment success",
+    });
+  } catch (err) {
+    return res.status(403).json({
+      error: "there happens error for dealing",
+    });
+  }
+  // return _stripe.customers
+  //   .create({
+  //     email: token.email,
+  //     source: token.id,
+  //   })
+  //   .then(async (customer) => {
+  //     try {
+  //       await _stripe.charges.create(
+  //         {
+  //           amount: 8 * 100,
+  //           currency: "usd",
+  //           customer: customer.id,
+  //           receipt_email: token.email,
+  //           description: "Buy Employee Profile",
+  //         },
+  //         { idempotencyKey }
+  //       );
+  //       console.log("success");
+  //     } catch (err) {
+  //       console.log("error happened in stripe charge", err);
+  //     }
+  //   })
+  //   .then((result) => res.status(200).json(result))
+  //   .catch((err) => console.log(err));
 };
 
 export default { stripePay };
