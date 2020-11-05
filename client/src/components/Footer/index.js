@@ -33,7 +33,12 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.caption,
     textAlign: 'center',
   },
-
+  Facebook: {
+    color : '#3c579d'
+  },
+  Linkedin: {
+    color : '#1179b5'
+  },
   logoContainer: {
     // width: '20rem',
     marginLeft: '-5rem',
@@ -65,8 +70,25 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: '300px'
   },
+  iconBack: {
+    background: 'white'
+  },
+  iconsBack: {
+    background: 'white',
+    width: '3.33rem',
+    marginTop: '0.6rem',
+    borderRadius: '5px',
+    marginLeft: '0.6rem',
+    height: '3.33rem',
+    position: 'absolute',
+    zIndex: -1
+  },
+  iconsLayout: {
+    margin: 'auto',
+    width: 'fit-content',
+    display: 'flex'
+  },
   socialIcon: {
-    color: theme.palette.common.white,
     width: '4.5rem',
     height: '4.5rem',
     [theme.breakpoints.down('xs')]: {
@@ -122,8 +144,16 @@ export default function Footer({ isAuthenticated, value, setValue }) {
                 <Typography>
                   (888) 66EZ-NOW
                 </Typography>
-                <FacebookIcon className={classes.socialIcon} />
-                <LinkedInIcon className={classes.socialIcon} />
+                <Box className={classes.iconsLayout}>
+                  <Box>
+                    <Box className={classes.iconsBack}></Box>
+                    <FacebookIcon className={`${classes.socialIcon} ${classes.Facebook}`} />
+                  </Box>
+                  <Box>
+                    <Box className={classes.iconsBack}></Box>
+                    <LinkedInIcon className={`${classes.socialIcon} ${classes.Linkedin}`} />
+                  </Box>
+                </Box>
               </Box>
             </Grid>
           </Grid>
