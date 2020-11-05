@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   leftSection: {
+    background: theme.palette.common.white,
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
     padding: '2rem'
   },
@@ -70,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
     width: '260px',
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
     float: 'right',
+    background: theme.palette.common.white,
     paddingBottom: '2rem',
     [theme.breakpoints.down('sm')]: {
       float: 'left',

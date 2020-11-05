@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Button = styled.button`
+const Button = styled.div`
   background: ${props => props.background};
   border: 2px solid ${props => props.border};
   width: ${props => props.width};

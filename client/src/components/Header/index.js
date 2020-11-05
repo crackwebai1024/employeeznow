@@ -22,7 +22,7 @@ import {
   employerRoutes,
   noAuthRoutes
 } from './HeaderUrls'
-import logo from '@assets/logo.svg';
+import logo from '@assets/logo1.svg';
 import { Typography } from '@material-ui/core';
 import { Router } from '@material-ui/icons';
 
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    width: '95%',
+    width: '80%',
   },
   bottomEffect: {
     width: "100%",

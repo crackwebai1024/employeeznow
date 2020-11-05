@@ -22,9 +22,9 @@ import EditSearchForm from '../form/EditSearchForm';
 import FilterList from './FilterList';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  wrapper: {
     display: 'flex',
-    minHeight: '95vh',
+    paddingTop: '4rem',
     [theme.breakpoints.down('sm')]: {
       display: 'block',
     },
@@ -149,12 +149,15 @@ const SearchResults = (props) => {
     setOpenSearchForm(true)
     setSearchFormdata(data)
   }
-  console.log(filter, "searchFormData")
+
+  const handleSubmit = () => {
+
+  }
 
   // Render search query button
   const FilterLists = filter && filter.filters.length !== 0 && (
-    <>
-      <Grid item className={classes.filterTitleContainer}>
+    <Box className={classes.filterTitleContainer}>
+      <Grid item >
         <Typography variant="h6" color="secondary" className={classes.filterTitle}>
           SEARCH FILTERS
         </Typography>
@@ -168,7 +171,7 @@ const SearchResults = (props) => {
         >
           {filter.filters.map((searchQuery, i) => (
             <li item key={searchQuery._id}
-              // onClick={(e) => handleSubmit(e, i)}
+              onClick={(e) => handleSubmit(e, i)}
               className={classes.filterList}
             >
               <Typography>
@@ -178,31 +181,27 @@ const SearchResults = (props) => {
           ))}
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.wrapper}>
       <Grid container direction="column">
-        <Grid container item xs={12}>
+        <Grid container item xs={12} spacing={4}>
           <Grid item xs={12} sm={4}>
-            <Button onClick={e => setOpenMobile(true)}>Filter</Button>
-            <SwipeableDrawer
-              anchor="top"
-              open={openMobile}
-              onClose={e => setOpenMobile(false)}
-              onOpen={e => setOpenMobile(true)}
-            >
-              {FilterLists}
-            </SwipeableDrawer>
-            {/* {
-              filterResult.length > 0 && filterResult.map(filter => {
-                return (
-                  <FilterList />
-                )
-              })
-            } */}
+            <Box>
+              <Button onClick={e => setOpenMobile(true)}>Filter</Button>
+              <SwipeableDrawer
+                anchor="top"
+                open={openMobile}
+                onClose={e => setOpenMobile(false)}
+                onOpen={e => setOpenMobile(true)}
+              >
+                {FilterLists}
+              </SwipeableDrawer>
+            </Box>
+            {FilterLists}
           </Grid>
           <Grid item xs={12} sm={8}>
             {

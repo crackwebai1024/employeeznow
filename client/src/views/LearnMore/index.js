@@ -205,12 +205,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 200,
     textAlign: 'center',
     marginBottom: '30px'
+  },
+  Wrapper: {
+    background: 'white'
   }
 }));
 
 const LearnMore = () => {
   const classes = useStyles();
-  return (<Fragment>
+  return (<Box className={classes.Wrapper}>
     <Container width="sm" className={classes.mainContainer}>
       <Grid container ustify="center" spacing={0} style={{ paddingTop: '100px' }}>
         <Grid item xs={12} md={12} className={classes.title}>
@@ -361,7 +364,7 @@ const LearnMore = () => {
         </Grid>
       </Grid>
     </Container>
-  </Fragment>
+  </Box>
   );
 };
 

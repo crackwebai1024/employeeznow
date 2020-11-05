@@ -63,8 +63,7 @@ const useStyles = makeStyles((theme) => ({
     top: '5rem',
     padding: '2rem',
     margin: 'auto',
-    // marginBottom: '4rem',
-    // borderBottom: '2rem',
+    background: theme.palette.common.white,
     [theme.breakpoints.down('xs')]: {
       padding: "1rem"
     },

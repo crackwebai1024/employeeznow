@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     fontSize: '16px',
   },
+  HomeWrapper: {
+    background: "white"
+  },
   paper1: {
     padding: '10px',
     marginTop: "1.5rem",
@@ -127,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   return (
-    <Fragment>
+    <Box className={classes.HomeWrapper}>
       <Container width="sm" className={classes.mainContainer}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
@@ -298,7 +301,7 @@ const Home = () => {
       <Grid xs={12}>
         <VeteranSection />
       </Grid>
-    </Fragment>
+    </Box>
   );
 };
 

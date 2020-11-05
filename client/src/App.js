@@ -29,7 +29,7 @@ function App(props) {
           // selectedIndex={selectedIndex}
           // setSelectedIndex={setSelectedIndex}
           />
-          <Box minHeight={getBoxSize()} style={{ background: 'white' }}>
+          <Box minHeight={getBoxSize()} style={{ background: '#f3f2ef' }}>
             <AppRouter />
           </Box>
           <Footer
