@@ -1,25 +1,5 @@
 import Employee from "../../models/employee/basic.model";
-import twilio from "twilio";
-const phoneTest = async (req, res) => {
-  let twilioClient = twilio(
-    "ACc843caee22d5fd96f2c76b63adeee9ae",
-    "02b8175cdc6a80141bc942b379c64b09"
-  );
-  var params = {
-    to: "8615140345091",
-    from: "8618241108713", // Your twilio phone number
-    // url: process.env.TWIML_SERVER_URL // full URL of /twiml route on your server
-  };
-
-  twilioClient.makeCall(params, (err, message) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send(err);
-    } else {
-      res.send({ verificationCode: verificationCode });
-    }
-  });
-};
+import Employer from "../../models/employer/basic.model";
 
 const searchEmployee = async (filter) => {
   // {
@@ -49,8 +29,10 @@ const searchEmployee = async (filter) => {
   const cuisine = filter.cuisine;
   const operatingsys = filter.systems[0];
   const reservationsys = filter.systems[1];
+  const employerID = filter.employer;
   console.log(lng, lat);
   try {
+    const employer = await Employer.findById(employerID);
     const professions = await Employee.aggregate([
       {
         $geoNear: {
@@ -60,7 +42,22 @@ const searchEmployee = async (filter) => {
           spherical: true,
         },
       },
-      { $project: { _id: 1, locations: 1, slug: 1, distBetweenEmp: 1 } },
+      {
+        $project: {
+          _id: 1,
+          locations: 1,
+          slug: 1,
+          distBetweenEmp: 1,
+          employeezNowId: 1,
+          purchased: {
+            $cond: {
+              if: { $in: ["$_id", employer.interestedEmployees] },
+              then: true,
+              else: false,
+            },
+          },
+        },
+      },
       {
         $lookup: {
           from: "employeeskills",
@@ -172,10 +169,11 @@ const searchEmployee = async (filter) => {
       },
       { $sort: { totalpoints: -1 } },
     ]);
+    console.log(professions);
     return professions;
   } catch (err) {
     return err;
   }
 };
 
-export default { searchEmployee, phoneTest };
+export default { searchEmployee };

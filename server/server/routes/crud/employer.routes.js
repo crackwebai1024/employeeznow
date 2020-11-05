@@ -6,7 +6,7 @@ import ComCtrl from "../../controllers/crud/common/common.crud";
 
 const router = express.Router();
 const { requireSignin, hasAuthorization } = authCtrl;
-const { find_ByID, updateByID, test } = EmpCtrl;
+const { find_ByID, updateByID } = EmpCtrl;
 // update employer basic data
 router.route("/update").get(requireSignin, hasAuthorization, updateByID);
 // update password
