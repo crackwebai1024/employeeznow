@@ -10,13 +10,14 @@ const getPurchaseRequest = async (req, res) => {
     let employer = await Employer.findById(employerID);
     // check if the number of employee that employer bought is more than 4
     if (employer.interestedEmployees.length < 4) {
-      employer.interestedEmployees.push(employeeID);
-
+      let idx = employer.interestedEmployees.indexOf(employeeID);
+      if (idx === -1) {
+        employer.interestedEmployees.push(employeeID);
+        await employer.save();
+      }
       //   update employer and save
       req.query = {};
       req.query.id = employeeID;
-      await employer.save();
-
       //   find whole employee data from employee database
       await EmpeeCtrl.read(req, res);
     } else {

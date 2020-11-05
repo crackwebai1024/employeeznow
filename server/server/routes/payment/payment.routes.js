@@ -2,9 +2,10 @@
 import express from "express";
 import PurchaseCtrl from "../../controllers/payment/purchase";
 import authCtrl from "../../controllers/auth/common.auth";
+import StripeCtrl from "../../controllers/payment/stripe";
 
 const { requireSignin, hasAuthorization } = authCtrl;
-
+const { stripePay } = StripeCtrl;
 const router = express.Router();
 const { getPurchaseRequest } = PurchaseCtrl;
 
@@ -13,6 +14,7 @@ router
   .route("/sendrequest")
   .post(requireSignin, hasAuthorization, getPurchaseRequest);
 
+router.route("/purchase").post(stripePay);
 /* purchase employee by paypal 
 // paypal payment request
 router

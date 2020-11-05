@@ -1,6 +1,5 @@
 import Employer from "../../../models/employer/basic.model";
 import CRUD from "../utils/general";
-const geocoder = require("../../../utils/geocoder");
 
 const find_ByID = async (req, res) => {
   let role = "_id";

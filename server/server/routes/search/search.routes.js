@@ -1,11 +1,15 @@
 import express from "express";
-import searchCtrl from "../../controllers/search/search";
+import authCtrl from "../../controllers/auth/common.auth";
 import searchResCtrl from "../../controllers/crud/employer/searchres.crud";
+import getEmpCtrl from "../../controllers/search/getemployee";
 
 const router = express.Router();
-const { searchEmployee, phoneTest } = searchCtrl;
+const { requireSignin, hasAuthorization } = authCtrl;
 const { find_ByID } = searchResCtrl;
-router.route("/aggtable").post(phoneTest);
-router.route("/searchresult").get(find_ByID);
+const { getEmployeeData } = getEmpCtrl;
+router.route("/searchresult").get(requireSignin, hasAuthorization, find_ByID);
+router
+  .route("/getsearchemployee")
+  .get(requireSignin, hasAuthorization, getEmployeeData);
 
 export default router;
