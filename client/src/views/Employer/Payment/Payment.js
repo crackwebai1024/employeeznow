@@ -13,22 +13,25 @@ const useStyles = makeStyles(() => ({
   container: {
     position: "relative",
     zIndex: "1100",
-    marginTop: "95px",
+    paddingTop: "95px",
+    maxWidth: '600px',
     marginBottom: "45px",
   }
 }));
 
-const Payment = () => {
+const Payment = (props) => {
   const [stripe, setStripe] = useState("")
   const classes = useStyles();
 
   useEffect(() => {
     if (window.Stripe) {
-      setStripe(window.Stripe("pk_test_28rk6OSjfyVC9jxrH4DkHZAm00N57JKFdB"))
+      setStripe(window.Stripe("pk_test_51HhcEXCIGo4tK7NRfokSRfbsGqdhAiPmcxtnvzawvIEEfItfSZ5Rp3sRmWLWITsOtxFy1hzmISMbJuKn6GQaZj2N00LGjvHZqr"))
     } else {
-      document.querySelector("#stripe-js").addEventListener("load", () => {
-        setStripe(window.Stripe("pk_test_28rk6OSjfyVC9jxrH4DkHZAm00N57JKFdB"))
-      });
+      if (document.querySelector("#stripe-js")) {
+        document.querySelector("#stripe-js").addEventListener("load", () => {
+          setStripe(window.Stripe("pk_test_51HhcEXCIGo4tK7NRfokSRfbsGqdhAiPmcxtnvzawvIEEfItfSZ5Rp3sRmWLWITsOtxFy1hzmISMbJuKn6GQaZj2N00LGjvHZqr"))
+        });
+      }
     }
   }, [])
 
@@ -39,7 +42,7 @@ const Payment = () => {
           stripe && (
             <StripeProvider stripe={stripe}>
               <Elements>
-                <PaymentForm />
+                <PaymentForm match={props.match} />
               </Elements>
             </StripeProvider>
           )

@@ -10,7 +10,9 @@ const initialState = {
     service: "", facebook: "", twitter: "", firstname: "", lastname: "",
     email: "", line1: "", line2: "", postal_code: "", city: "", country: null,
     currency: null, amount: "",
-  }
+  },
+  employeeData: {},
+  isLimited: false
 };
 
 export const getEmployerData = (state) => ({
@@ -141,6 +143,56 @@ export const askInterestStatusHidden = (state) => ({
 export const setFormValues = (state, { payload }) => ({
   ...state,
   formValues: payload
+})
+
+export const getSearchEmployee = (state, { payload }) => ({
+  ...state,
+})
+
+export const getSearchEmployeeSuccess = (state, { payload }) => ({
+  ...state,
+  employeeData: payload
+})
+
+export const getSearchEmployeeFailure = (state, { payload }) => ({
+  ...state,
+})
+
+export const purchaseRequest = (state, { payload }) => ({
+  ...state,
+})
+
+export const purchaseSuccess = (state, { payload }) => ({
+  ...state,
+  employeeData: payload
+})
+
+export const purchaseFailure = (state, { payload }) => ({
+  ...state,
+})
+
+export const purchaseLimited = (state) => ({
+  ...state,
+  isLimited: true,
+  paid: false
+})
+
+export const payRequest = (state) => ({
+  ...state,
+  paid: false
+})
+
+export const paySuccess = (state, { payload }) => ({
+  ...state,
+  employeeData: payload,
+  paid: true,
+  isLimited: false
+})
+
+export const payFailure = (state) => ({
+  ...state,
+  paid: false,
+  isLimited: false
 })
 
 export default initialState;

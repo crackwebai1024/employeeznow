@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Only employer can access
-const CallToAction = ({ actions, onAskInterest, purchaseProfile }) => {
+const CallToAction = ({ actions, onAskInterest, purchaseProfile, purchased }) => {
   const classes = useStyles();
   const history = useHistory()
   const filterID = getFilterID()
@@ -66,19 +66,21 @@ const CallToAction = ({ actions, onAskInterest, purchaseProfile }) => {
   return (
     <Grid container justify="space-evenly">
       <Grid item className={classes.buttonContainer}>
-        <Button className={`${classes.button} ${classes.button1}`} onClick ={purchaseProfile}>
-          PURCHASE THIS PROFILE
-        </Button>
+        {!purchased &&
+          <Button className={`${classes.button} ${classes.button1}`} onClick={purchaseProfile}>
+            PURCHASE THIS PROFILE
+          </Button>
+        }
       </Grid>
 
       <Grid item className={classes.buttonContainer}>
-        <Button className={`${classes.button} ${classes.button2}`} onClick = {onAskInterest}>
+        <Button className={`${classes.button} ${classes.button2}`} onClick={onAskInterest}>
           ASK ABOUT INTEREST
         </Button>
       </Grid>
       <Grid item className={classes.buttonContainer}>
         <Button className={`${classes.button} ${classes.button1}`} onClick={backToFilter}>
-        <ReplayIcon /> Back To Filter Page
+          <ReplayIcon /> Back To Filter Page
         </Button>
       </Grid>
     </Grid>

@@ -20,10 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     borderRadius: '0px',
-    borderBottom: "1px solid gray",
+    borderBottom: `1px solid ${theme.palette.common.white}`,
     cursor: 'pointer',
+    transition: '0.2s',
     '&:hover': {
-      background: theme.palette.common.white
+      background: theme.palette.common.hover_white
     }
   },
   subtitle: {
@@ -63,13 +64,13 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
   return (
     <Card key={id} className={classes.wrapper}>
       <CardContent>
-        <Grid container xs={12}>
-          <Grid xs={12} sm={6}>
+        <Grid item container xs={12}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6" color="primary">
               Candidate ID: {employeezNowId}
             </Typography>
           </Grid>
-          <Grid xs={12} sm={6}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h6" color="secondary" style={{textAlign: "right"}}>
               {purchased && "purchased"}
             </Typography>

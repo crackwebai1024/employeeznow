@@ -5,7 +5,6 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { actions as employeeActions } from '@store/employee';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { getUser, getFilterID } from '@helpers/auth-helpers';
@@ -117,9 +116,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, background, match, employeeData }) => {
-  console.log(location.data);
-  const { basic, document, experience, portfolio, preference, skill } = employeeData
+const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isLimited, background, match, employeeData }) => {
+
+  const { basic, document, experience, portfolio, preference, skill, purchased } = employeeData
   const classes = useStyles();
   const history = useHistory()
   const theme = useTheme();
@@ -137,7 +136,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
       employeeID: slug,
       id: user._id
     }
-    actions.getUserDataRequest(data)
+    actions.getSearchEmployee(data)
   }, [])
 
   useEffect(() => {
@@ -159,10 +158,18 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
   }
 
   const purchaseProfile = () => {
-    history.push('/payment')
+    const data = {
+      id: user._id,
+      employeeID: slug
+    }
+    actions.purchaseRequest(data)
   }
 
-  console.log(askInterestStatus, "employeeData")
+  if (isLimited) {
+    history.push(`/payment/${slug}`)
+  }
+
+  console.log(employeeData, "employeeData")
   return (
     <Container className={classes.container} maxWidth="md">
       {/* Dashboard whole page column root */}
@@ -183,7 +190,10 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
         <Grid item container className={classes.basicInfo}>
           <Grid item xs={12} md={6}>
             <Typography className={classes.basicTitle}>
-              CandidateID : {basic && basic.employeezNowId}
+              {
+                purchased ? `Name : ${basic.firstName} ${basic.lastName}` :
+                  `CandidateID : ${basic && basic.employeezNowId}`
+              }
             </Typography>
             <Typography className={classes.basicTitle}>
               {basic && `${basic.address.city} ${basic.address.state} ${basic.address.street1}`}
@@ -192,7 +202,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
               {preference && preference.employmentStatus}
             </Typography>
             <Typography className={classes.basicTitle}>
-
+              {purchased && `Email : ${basic.email}`}
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -222,8 +232,8 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
               </Grid>
             </Grid>
             <Grid container item sm={12} className={classes.content}>
-              {skill.cuisine.map(cu => {
-                return <Grid container item xs={12} sm={6} className={classes.contentItem}>
+              {skill.cuisine.map((cu, i) => {
+                return <Grid container key={i} item xs={12} sm={6} className={classes.contentItem}>
                   <Grid item xs={6}>
                     <Typography> {cu.type} </Typography>
                   </Grid>
@@ -239,7 +249,6 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
               </Grid>
               <Grid container item xs={12} sm={6} className={classes.contentItem}>
                 <Typography>Desired Salary : {`${preference.idealSalary.amount} / ${preference.idealSalary.unit}`}</Typography>
-                <Typography>Desired Salary : {`${preference.idealSalary.amount} / ${preference.idealSalary.unit}`}</Typography>
               </Grid>
             </Grid>
           </Fragment>
@@ -248,7 +257,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
         <CandidateDocuments />
         <Grid item container className={classes.callToAction}>
           <Grid item xs={12}>
-            <CallToAction onAskInterest={onAskInterest} purchaseProfile = {purchaseProfile} />
+            <CallToAction onAskInterest={onAskInterest} purchased={purchased} purchaseProfile={purchaseProfile} />
           </Grid>
         </Grid>
         <Grid className={classes.section}>
@@ -264,19 +273,15 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, bac
 };
 
 const mapStateToProps = ({
-  employee: {
-    employeeData
-  },
   employer: {
-    askInterestStatus
+    askInterestStatus, employeeData, isLimited
   }
 }) => ({
-  employeeData, askInterestStatus
+  employeeData, askInterestStatus, isLimited
 });
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({
-    ...employeeActions,
     ...employerActions
   }, dispatch),
 });

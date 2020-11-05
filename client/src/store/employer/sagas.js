@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, take, takeEvery } from 'redux-saga/effects';
 import * as Sentry from '@sentry/browser';
 import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUser, setRole } from '@helpers/auth-helpers';
 import { actions as types } from './index';
@@ -110,6 +110,46 @@ function* onAskInterest({ payload }) {
     yield put(types.askInterestFailure())
   }
 }
+
+function* onGetSearchEmployee({ payload }) {
+  try {
+    const queryString = `?id=${payload.id}&employeeID=${payload.employeeID}`
+    const res = yield call(EmployerAPI.onGetEmployerData, queryString)
+    if (res && res.data) {
+      yield put(types.getSearchEmployeeSuccess(res.data))
+    }
+  } catch {
+    yield put(types.getSearchEmployeeFailure())
+  }
+}
+
+function* onPurhcaseEmployee({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onPurhcaseEmployee, payload)
+    if (res && res.data) {
+      const employeeData = res.data
+      if (res.data.islimit) {
+        yield put(types.purchaseLimited())
+      } else {
+        yield put(types.purchaseSuccess(employeeData))
+      }
+    }
+  } catch {
+    yield put(types.purchaseFailure())
+  }
+}
+
+function* onPayRequest({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onPayRequest, payload)
+    if (res && res.data) {
+      yield put(types.paySuccess(res.data))
+    }
+  } catch {
+    yield put(types.payFailure())
+  }
+}
+
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
   takeEvery(types.saveFilterRequest, onSaveFilter),
@@ -117,7 +157,10 @@ const employerSagas = [
   takeEvery(types.searchEmployee, onSearchEmployee),
   takeEvery(types.getSearchResult, onGetSearchResult),
   takeEvery(types.removeFilter, onRemoveFilter),
-  takeEvery(types.askInterestRequest, onAskInterest)
+  takeEvery(types.askInterestRequest, onAskInterest),
+  takeEvery(types.getSearchEmployee, onGetSearchEmployee),
+  takeEvery(types.purchaseRequest, onPurhcaseEmployee),
+  takeEvery(types.payRequest, onPayRequest)
 ];
 
 export default employerSagas;

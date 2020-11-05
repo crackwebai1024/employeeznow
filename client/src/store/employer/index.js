@@ -37,7 +37,20 @@ export const actions = createActions({
 
   ASK_INTEREST_STATUS_HIDDEN: undefined,
 
-  SET_FORM_VALUES: undefined
+  SET_FORM_VALUES: undefined,
+
+  GET_SEARCH_EMPLOYEE: undefined,
+  GET_SEARCH_EMPLOYEE_SUCCESS: undefined,
+  GET_SEARCH_EMPLOYEE_FAILURE: undefined,
+
+  PURCHASE_REQUEST: undefined,
+  PURCHASE_SUCCESS: undefined,
+  PURCHASE_FAILURE: undefined,
+  PURCHASE_LIMITED: undefined,
+
+  PAY_REQUEST: undefined,
+  PAY_SUCCESS: undefined,
+  PAY_FAILUED: undefined
 });
 
 const reducer = handleActions(
@@ -75,6 +88,19 @@ const reducer = handleActions(
     // payment form values
     [actions.setFormValues, handlers.setFormValues],
 
+    [actions.getSearchEmployee, handlers.getSearchEmployee],
+    [actions.getSearchEmployeeSuccess, handlers.getSearchEmployeeSuccess],
+    [actions.getSearchEmployeeFailure, handlers.getSearchEmployeeFailure],
+
+    [actions.purchaseRequest, handlers.purchaseRequest],
+    [actions.purchaseSuccess, handlers.purchaseSuccess],
+    [actions.purchaseFailure, handlers.purchaseFailure],
+    [actions.purchaseLimited, handlers.purchaseLimited],
+
+    [actions.payRequest, handlers.payRequest],
+    [actions.paySuccess, handlers.paySuccess],
+    [actions.payFailure, handlers.payFailure],
+    
   ]),
   initialState,
 );

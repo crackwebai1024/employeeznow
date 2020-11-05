@@ -4,39 +4,42 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
-import { Grid, Box } from '@material-ui/core';
-import Hidden from '@material-ui/core/Hidden';
-import Drawer from '@material-ui/core/Drawer';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import {
+  Grid, Box, Dialog, DialogActions, DialogContent, Button,
+  DialogContentText, DialogTitle, SwipeableDrawer, Typography
+} from '@material-ui/core';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { getUser, setFilterID } from '@helpers/auth-helpers';
 import professions from './data';
 import SearchForm from '../form/SearchForm';
 import CandidateList from './CandidateList';
-import Dialog from '@material-ui/core/Dialog';
-import EditSearchForm from '../form/EditSearchForm';
-import FilterList from './FilterList';
 
 const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    paddingTop: '4rem',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
-    },
+  container: {
+    paddingTop: '5rem',
+    paddingBottom: '5rem',
   },
   title: {
     fontSize: 20,
   },
-  drawer: {
-    [theme.breakpoints.up('md')]: {
-      width: '15rem',
-      flexShrink: 0,
+  swipeableButton: {
+    width: '100%',
+    background: theme.palette.common.white,
+    fontSize: '20px',
+    padding: '1rem',
+    cursor: 'pointer',
+    display: 'none',
+    transition: '0.3s',
+    '&:hover': {
+      background: theme.palette.common.darkgray
     },
+    [theme.breakpoints.down('xs')]: {
+      display: "block"
+    }
   },
   filterTitleContainer: {
     marginTop: '50px',
@@ -50,6 +53,15 @@ const useStyles = makeStyles((theme) => ({
     top: "0.5rem",
     margin: '0 0.5rem 0 0.5rem'
   },
+  currentfilter: {
+    background: "#00800010",
+    borderLeft: "solid 3px green"
+  },
+  no_result: {
+    fontSize: '20px',
+    textAlign:'center',
+    paddingTop: '100px'
+  },
   filterList: {
     width: '100%',
     listStyle: 'none',
@@ -60,21 +72,28 @@ const useStyles = makeStyles((theme) => ({
       background: "#00800010",
       borderLeft: "solid 3px green"
     },
-
   },
   dialog: {
     marginTop: '5rem',
     zIndex: 13033, // larger than header and footer
+  },
+  removeIcon: {
+    float: 'right',
+    marginRight: '1rem',
+    marginTop: "10px",
+    fontSize: '20px'
+  },
+  editIcon: {
+    float: 'right',
+    marginRight: '10px',
+    marginTop: '10px',
+    fontSize: '20px'
   },
   drawerButton: {
     marginBottom: '2rem',
   },
   filterButttonContainer: {
     marginTop: '0.5rem',
-  },
-  toolbar: {
-    ...theme.mixins.toolbar,
-    marginTop: '5rem',
   },
   content: {
     flexGrow: 1,
@@ -85,6 +104,29 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: 0,
       flexGrow: 0,
       marginLeft: 0,
+    },
+  },
+  rightSection: {
+    width: '260px',
+    boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
+    float: 'right',
+    background: theme.palette.common.white,
+    marginBottom: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      display: "none"
+    }
+  },
+  leftSection: {
+    alignItems: 'center',
+    background: theme.palette.common.white,
+    width: '100%',
+    boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
+    marginLeft: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '0rem'
     },
   },
   titleContainer: {
@@ -100,9 +142,10 @@ const SearchResults = (props) => {
   const history = useHistory()
 
   const user = JSON.parse(getUser());
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false)
   const [openSearchForm, setOpenSearchForm] = useState(false)
   const [searchFormData, setSearchFormdata] = useState({})
+  const [removeData, setRemoveData] = useState({})
 
   const [searchQueries, setSearchQueries] = useState([])
   const [reload, setReload] = useState(false)
@@ -145,15 +188,37 @@ const SearchResults = (props) => {
     setFilterID(filterID)
   }, [filterID])
 
-  const setFilterUpdateHandle = (data) => {
+  const setFilterUpdate = (data) => {
     setOpenSearchForm(true)
     setSearchFormdata(data)
   }
 
-  const handleSubmit = () => {
-
+  const onFilterClick = (e, id) => {
+    const searchData = {
+      filterID: id,
+      id: user._id
+    }
+    actions.searchEmployee(searchData)
   }
 
+  const clickClose = () => {
+    setOpenDelete(false)
+  }
+
+  const onDeleteFilter = () => {
+    const removeQuery = {
+      id: user._id,
+      filterID: removeData._id
+    }
+    const searchQuery = filter && filter.filters
+    actions.removeFilter({ removeQuery, searchQuery })
+    setOpenDelete(false)
+  }
+
+  const removeFilter = (data) => {
+    setRemoveData(data)
+    setOpenDelete(true)
+  }
   // Render search query button
   const FilterLists = filter && filter.filters.length !== 0 && (
     <Box className={classes.filterTitleContainer}>
@@ -170,12 +235,14 @@ const SearchResults = (props) => {
           justify="center"
         >
           {filter.filters.map((searchQuery, i) => (
-            <li item key={searchQuery._id}
-              onClick={(e) => handleSubmit(e, i)}
-              className={classes.filterList}
+            <li key={searchQuery._id}
+              onClick={e => onFilterClick(e, searchQuery._id)}
+              className={`${classes.filterList} ${searchQuery._id === slug && classes.currentfilter}`}
             >
               <Typography>
                 <SearchOutlinedIcon className={classes.filterIcon} /> {searchQuery.name}
+                <DeleteIcon onClick={e => removeFilter(searchQuery)} className={`${classes.removeIcon}`} />
+                <EditOutlinedIcon onClick={e => setFilterUpdate(searchQuery)} className={`${classes.editIcon} ${classes.green}`} />
               </Typography>
             </li>
           ))}
@@ -186,58 +253,88 @@ const SearchResults = (props) => {
 
 
   return (
-    <Container className={classes.wrapper}>
-      <Grid container direction="column">
-        <Grid container item xs={12} spacing={4}>
-          <Grid item xs={12} sm={4}>
-            <Box>
-              <Button onClick={e => setOpenMobile(true)}>Filter</Button>
-              <SwipeableDrawer
-                anchor="top"
-                open={openMobile}
-                onClose={e => setOpenMobile(false)}
-                onOpen={e => setOpenMobile(true)}
-              >
-                {FilterLists}
-              </SwipeableDrawer>
+    <Box>
+      <Box>
+        <Box
+          onClick={e => setOpenMobile(true)}
+          className={classes.swipeableButton}
+        >Filter</Box>
+        <SwipeableDrawer
+          anchor="top"
+          open={openMobile}
+          onClose={e => setOpenMobile(false)}
+          onOpen={e => setOpenMobile(true)}
+        >
+          {FilterLists}
+        </SwipeableDrawer>
+      </Box>
+      <Container className={classes.container}>
+        <Grid container justify="center" >
+          <Grid item sm={12} md={4}>
+            <Box className={classes.rightSection}>
+              {FilterLists}
             </Box>
-            {FilterLists}
           </Grid>
-          <Grid item xs={12} sm={8}>
-            {
-              filterResult.length > 0
-                ? filterResult.map((result) => (
-                  <CandidateList
-                    key={result._id}
-                    id={result._id} // This _id is professionId
-                    purchased={result.purchased}
-                    employeezNowId={result.employeezNowId}
-                    employeeId={result.employeeId}
-                    primaryTitle={result.employeeskill.primaryJob.title}
-                    primaryYears={result.employeeskill.primaryJob.years}
-                    secondaryTitle={result.employeeskill.secondaryJob.title}
-                    secondaryYears={result.employeeskill.secondaryJob.years}
-                    shift={result.employeeskill.shift}
-                    style={result.employeeskill.style}
-                    cuisine={result.employeeskill.cuisine}
-                    wineKnowledge={result.employeeskill.wineKnowledge}
-                    cocktailKnowledge={result.employeeskill.cocktailKnowledge}
-                    systems={result.employeeskill.systems}
-                  />
-                ))
-                : 'There are no search results. Pleast try with different search.'}
+          <Grid container item sm={12} md={8}>
+            <Box className={classes.leftSection}>
+              {
+                filterResult.length > 0
+                  ? filterResult.map((result) => (
+                    <CandidateList
+                      key={result._id}
+                      id={result._id} // This _id is professionId
+                      purchased={result.purchased}
+                      employeezNowId={result.employeezNowId}
+                      employeeId={result.employeeId}
+                      primaryTitle={result.employeeskill.primaryJob.title}
+                      primaryYears={result.employeeskill.primaryJob.years}
+                      secondaryTitle={result.employeeskill.secondaryJob.title}
+                      secondaryYears={result.employeeskill.secondaryJob.years}
+                      shift={result.employeeskill.shift}
+                      style={result.employeeskill.style}
+                      cuisine={result.employeeskill.cuisine}
+                      wineKnowledge={result.employeeskill.wineKnowledge}
+                      cocktailKnowledge={result.employeeskill.cocktailKnowledge}
+                      systems={result.employeeskill.systems}
+                    />
+                  ))
+                  :
+                  <Typography className={classes.no_result}>
+                    There are no search results. Pleast try with different search.
+                  </Typography>}
+            </Box>
           </Grid>
         </Grid>
-      </Grid>
-      <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
+        <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
+          fullWidth className={classes.dialog}
+        >
+          <SearchForm employerId={user._id}
+            searchFormData={searchFormData}
+            slug={slug} setOpenSearchForm={setOpenSearchForm}
+          />
+        </Dialog>
+      </Container>
+
+      <Dialog open={openDelete} onClose={clickClose}
         fullWidth className={classes.dialog}
       >
-        <SearchForm employerId={user._id}
-          searchFormData={searchFormData}
-          slug={slug} setOpenSearchForm={setOpenSearchForm}
-        />
+        <DialogTitle id="alert-dialog-title">{"Delete Search Filter"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you really delete this item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={clickClose} color="primary" autoFocus>
+            CANCEL
+          </Button>
+          <Button onClick={onDeleteFilter} color="primary" >
+            DELETE
+          </Button>
+        </DialogActions>
       </Dialog>
-    </Container>
+
+    </Box>
   );
 };
 

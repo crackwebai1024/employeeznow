@@ -34,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   Facebook: {
-    color : '#3c579d'
+    color: '#3c579d'
   },
   Linkedin: {
-    color : '#1179b5'
+    color: '#1179b5'
   },
   logoContainer: {
     // width: '20rem',
@@ -147,11 +147,19 @@ export default function Footer({ isAuthenticated, value, setValue }) {
                 <Box className={classes.iconsLayout}>
                   <Box>
                     <Box className={classes.iconsBack}></Box>
-                    <FacebookIcon className={`${classes.socialIcon} ${classes.Facebook}`} />
+                    <Box component={'a'} target="_blank"
+                      href="https://www.facebook.com/pages/category/Internet-Company/EmployeezNow-113933870291852"
+                    >
+                      <FacebookIcon className={`${classes.socialIcon} ${classes.Facebook}`} />
+                    </Box>
                   </Box>
                   <Box>
                     <Box className={classes.iconsBack}></Box>
-                    <LinkedInIcon className={`${classes.socialIcon} ${classes.Linkedin}`} />
+                    <Box component={'a'} target="_blank"
+                      href="https://www.linkedin.com/company/employeeznow/"
+                    >
+                      <LinkedInIcon className={`${classes.socialIcon} ${classes.Linkedin}`} />
+                    </Box>
                   </Box>
                 </Box>
               </Box>
