@@ -2,15 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Box, Typography } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import logo from '../../assets/logo-white.svg';
+import logo from '@assets/white-logo.svg';
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.common.gray,
     //width: 'auto',
     zIndex: 1300,
     position: 'relative',
@@ -20,8 +21,13 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography,
     padding: '3rem 7rem 1rem 7rem',
     [theme.breakpoints.down('sm')]: {
-      // paddingRight: '3rem',
+      padding: '3rem 2rem 1rem 2rem',
     },
+  },
+  col_center: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '2rem'
   },
   copyright: {
     ...theme.typography.caption,
@@ -47,13 +53,25 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     margin: '1rem',
   },
+  marginCenter: {
+    margin: 'auto',
+  },
+  center: {
+    textAlign: "center",
+    width: 'fit-content'
+  },
+  image: {
+    margin: 'auto',
+    width: "100%",
+    maxWidth: '300px'
+  },
   socialIcon: {
     color: theme.palette.common.white,
     width: '4.5rem',
     height: '4.5rem',
     [theme.breakpoints.down('xs')]: {
-      width: '2.5rem',
-      height: '2.5rem',
+      // width: '2.5rem',
+      // height: '2.5rem',
     },
   },
 }));
@@ -66,81 +84,51 @@ export default function Footer({ isAuthenticated, value, setValue }) {
   /** value/setValue is connected with value of Nav(Header) If eigther Nav/Footer change the order, value has to be matched */
   return (
     <footer className={classes.footer}>
-      <Grid container direction="column" alignItems={matchesXS ? 'center' : undefined} style={{ width: '100%' }} >
-        {/* column 1-1 */}
-        <Grid item>
-          {/* nested row */}
-          {/* row 1-1 */}
-          <Grid
-            container
-            justify={matchesXS ? 'center' : 'space-evenly'}
-            alignItems="center"
-            direction={matchesXS ? 'column' : 'row'}
-          >
-            <Grid
-              item
-              className={classes.logoContainer}
-              onClick={() => setValue(0)}
-            >
-              <img src={logo} alt="company logo" className={classes.logo} />
+      <Container>
+        <Grid container item xs={12}>
+          <Grid item xs={12} md={6} className={classes.col_center}>
+            <img src={logo} className={classes.image} />
+          </Grid>
+          <Grid container item xs={12} md={6} >
+            <Grid item xs={12} sm={6} className={classes.col_center}>
+              <Box className={classes.marginCenter}>
+                <Typography>
+                  <Typography component={Link} to="/about" className={classes.link}>
+                    Learn More
+                  </Typography>
+                </Typography>
+                <Typography>
+                  <Typography component={Link} to="/login" className={classes.link}>
+                    Log In
+                  </Typography>
+                </Typography>
+                <Typography>
+                  <Typography component={Link} to="/signup" className={classes.link}>
+                    Sign Up
+                  </Typography>
+                </Typography>
+                <Typography>
+                  <Typography component={Link} to="/contactus" className={classes.link}>
+                    Contact Us
+                  </Typography>
+                </Typography>
+              </Box>
             </Grid>
-            <Hidden smDown>
-              {/* company links */}
-              <Grid item className={classes.mainLinks}>
-                <Grid container>
-                  <Grid
-                    item
-                    component={Link}
-                    to="/"
-                    onClick={() => setValue(0)}
-                    className={classes.link}
-                  >
-                    Home
-                  </Grid>
-                  <Grid
-                    item
-                    component={Link}
-                    to="/"
-                    onClick={() => setValue(1)}
-                    className={classes.link}
-                  >
-                    About
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Hidden>
-            {/* row 1-2 */}
-            <Grid item>
-              <Grid container justify="flex-end" alignItems="flex-end">
-                <Grid
-                  item
-                  component={'a'}
-                  href="https://www.facebook.com/pages/category/Internet-Company/EmployeezNow-113933870291852"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className={classes.sociallink}
-                >
-                  <FacebookIcon className={classes.socialIcon} />
-                </Grid>
-                <Grid
-                  item
-                  component={'a'}
-                  href="https://www.linkedin.com/company/employeeznow/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className={classes.sociallink}
-                >
-                  <LinkedInIcon className={classes.socialIcon} />
-                </Grid>
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box className={`${classes.center} ${classes.marginCenter}`}>
+                <Typography>
+                  Question@EmployeezNow.com
+                </Typography>
+                <Typography>
+                  (888) 66EZ-NOW
+                </Typography>
+                <FacebookIcon className={classes.socialIcon} />
+                <LinkedInIcon className={classes.socialIcon} />
+              </Box>
             </Grid>
           </Grid>
         </Grid>
-        {/* column 1-2 */}
-        <Grid item className={classes.copyright}>
-          &#169; 2020 EmployeezNow All Rights Resered
-        </Grid>
-      </Grid>
+      </Container>
     </footer>
   );
 }
