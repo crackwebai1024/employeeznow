@@ -22,7 +22,7 @@ import {
   employerRoutes,
   noAuthRoutes
 } from './HeaderUrls'
-import logo from '@assets/logo1.svg';
+import logo from '@assets/logo2.png';
 import { Typography } from '@material-ui/core';
 import { Router } from '@material-ui/icons';
 
@@ -45,20 +45,21 @@ function ElevationScroll(props) {
 const useStyles = makeStyles((theme) => ({
   appbar: {
     height: '5rem',
-    paddingLeft: '4rem',
-    paddingRight: '4rem',
+    paddingRight: '1rem',
     backgroundColor: "#FDFDFD",
     color: theme.palette.common.black,
     zIndex: theme.zIndex.modal + 1, //zIndex of modal default + 1
   },
   logoContainer: {
     width: "25rem",
+    paddingTop: "15px",
+    padding: '0rem',
     '&:hover': {
       backgroundColor: 'transparent',
     },
   },
   logo: {
-    width: '80%',
+    width: '70%',
   },
   bottomEffect: {
     width: "100%",
