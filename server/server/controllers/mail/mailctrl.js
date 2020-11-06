@@ -1,6 +1,6 @@
 import Employee from "../../models/employee/basic.model";
 import Employer from "../../models/employer/basic.model";
-import { sendEmail } from "../../utils/email";
+import { sendEmail } from "../utils/sendgridemail";
 import jwt from "jsonwebtoken";
 import config from "../../../config/config";
 

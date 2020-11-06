@@ -1,6 +1,6 @@
 import Employee from "../../../models/employee/basic.model";
 import Employer from "../../../models/employer/basic.model";
-import CRUD from "../utils/general";
+import CRUD from "../../utils/general";
 import extend from "lodash/extend";
 
 const updatePWD = async (req, res) => {

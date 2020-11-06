@@ -1,5 +1,5 @@
 import EmployeeSkill from "../../../models/employee/skills.model";
-import CRUD from "../utils/general";
+import CRUD from "../../utils/general";
 
 const find_ByID = async (req, res) => {
   let role = "employee";

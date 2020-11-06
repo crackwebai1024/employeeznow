@@ -1,6 +1,6 @@
 import EmployeePortfolio from "../../../models/employee/portfolio.model";
-import CRUD from "../utils/general";
-import AWSOP from "../utils/aws_ope";
+import CRUD from "../../utils/general";
+import AWSOP from "../../utils/aws_ope";
 
 const create = async (req, res, next) => {
   await CRUD.create(EmployeePortfolio, req, res, next);

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 import validator from "validator";
 import slugify from "slugify";
-const geocoder = require("../../utils/geocoder");
+const geocoder = require("../utils/geocoder");
 
 const EmployeeSchema = new mongoose.Schema(
   {

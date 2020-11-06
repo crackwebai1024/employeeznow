@@ -1,6 +1,7 @@
 import Employer from "../../models/employer/basic.model";
 import TempEmployer from "../../models/employer/temp.model";
-import { sendEmail } from "../../utils/email";
+// import { sendEmail } from "../utils/email";
+import { sendEmail } from "../utils/sendgridemail";
 import errorHandler from "../../helpers/dbErrorHandler";
 import randomize from "randomatic";
 

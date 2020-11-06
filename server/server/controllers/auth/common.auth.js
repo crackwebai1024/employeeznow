@@ -1,8 +1,8 @@
 import crypto from "crypto";
 import Employee from "../../models/employee/basic.model";
 import Employer from "../../models/employer/basic.model";
-import { sendEmail } from "../../utils/email";
-import CRUD from "../crud/utils/general";
+import { sendEmail } from "../utils/email";
+import CRUD from "../utils/general";
 import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import config from "../../../config/config";

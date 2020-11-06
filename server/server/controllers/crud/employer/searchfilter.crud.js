@@ -25,7 +25,6 @@ const findByID = async (req, res) => {
 
 const updateByID = async (req, res, next) => {
   req.body.employer = req.body.id;
-  console.log(req.body);
   try {
     let se_filter = await findByID(req, res);
     if (se_filter === null) {

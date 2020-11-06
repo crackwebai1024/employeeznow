@@ -1,5 +1,5 @@
 import Employer from "../../../models/employer/basic.model";
-import CRUD from "../utils/general";
+import CRUD from "../../utils/general";
 
 const find_ByID = async (req, res) => {
   let role = "_id";

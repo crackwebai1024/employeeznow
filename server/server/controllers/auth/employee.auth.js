@@ -1,9 +1,7 @@
 import Employee from "../../models/employee/basic.model";
 import errorHandler from "../../helpers/dbErrorHandler";
-import { Verification } from "twilio-phone-verification";
-import geocoder from "../../utils/geocoder";
-// import authy from "authy";
 
+// import authy from "authy";
 const _authy = require("authy")(process.env.AUTHY_API_KEY);
 
 /**
@@ -33,7 +31,6 @@ const isValidPhone = async (req, res) => {
           countryCode,
           { via: "sms", locale: "en", code_length: "6" },
           function (err, resp) {
-            console.log("authy_api_key ==> ", process.env.AUTHY_API_KEY);
             if (err) {
               console.log(err);
               return res.status(403).json({
@@ -68,7 +65,6 @@ const isPhoneVerified = async (req, res, next) => {
   let sixDigitCode = req.body.sixDigitCode;
   let phoneNumber = req.body.phoneNumber;
   let countryCode = req.body.countryCode;
-  console.log("phone verified body ==> ", req.body);
 
   _authy
     .phones()
@@ -81,7 +77,6 @@ const isPhoneVerified = async (req, res, next) => {
           error: "phone verification failed",
         });
       }
-      console.log(res);
       await next();
     });
 

@@ -9,12 +9,14 @@ const { stripePay } = StripeCtrl;
 const router = express.Router();
 const { getPurchaseRequest } = PurchaseCtrl;
 
-// employee interest
+// employee interest first step to check if the employee is in the interestedemployees list
 router
   .route("/sendrequest")
   .post(requireSignin, hasAuthorization, getPurchaseRequest);
 
-router.route("/purchase").post(stripePay);
+// if not buy the employee profile
+router.route("/purchase").post(requireSignin, hasAuthorization, stripePay);
+
 /* purchase employee by paypal 
 // paypal payment request
 router

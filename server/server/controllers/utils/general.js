@@ -1,5 +1,5 @@
 import extend from "lodash/extend";
-import errorHandler from "../../../helpers/dbErrorHandler";
+import errorHandler from "../../helpers/dbErrorHandler";
 
 const create = async (Model, req, res, next) => {
   const element = new Model(req.body);
@@ -36,7 +36,6 @@ const find_ByID = async (Model, role, id, res) => {
 const updateByID = async (Model, role, id, req, res) => {
   try {
     let user = await find_ByID(Model, role, id, res);
-    console.log("===================================================", user);
     delete req.body.id;
     req.body[role] = id;
     // check create or update
@@ -45,7 +44,7 @@ const updateByID = async (Model, role, id, req, res) => {
     } else {
       user = extend(user, req.body);
     }
-    console.log(user);
+    console.log(" user ==> ", user);
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
