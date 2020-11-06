@@ -9,7 +9,7 @@ export async function onSaveFilter(data) {
 }
 
 export async function onGetfilterList(data) {
-  return await Axios.get('/crud/employer/searchfilter' +  data)
+  return await Axios.get('/crud/employer/searchfilter' + data)
 }
 
 export async function onSearchEmployee(data) {
@@ -26,4 +26,16 @@ export async function onRemoveFilter(data) {
 
 export async function onAskInterest(data) {
   return await Axios.post('/mail/employee/interest', data)
+}
+
+export async function onGetEmployerData(data) {
+  return await Axios.get('/search/getsearchemployee' + data)
+}
+
+export async function onPurhcaseEmployee(data) {
+  return await Axios.post('/payment/sendrequest', data)
+}
+
+export async function onPayRequest(data) {
+  return await Axios.post('/payment/purchase', data)
 }

@@ -44,7 +44,7 @@ export const AppPrivateRouterEmployerData = [
   { 'path': `/employers/${user && user.slug}`, component: EmployerDashbaord },
   { 'path': `/employers/${user && user.slug}/account`, component: EmployerAccount },
   { 'path': `/candidate/:slug`, component: DashboardCandidate },
-  { 'path': `/payment`, component: Payment },
+  { 'path': `/payment/:slug`, component: Payment },
 ]
 
 export const AppPrivateRouteeEmployeeData = [

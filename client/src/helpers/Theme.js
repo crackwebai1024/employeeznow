@@ -37,6 +37,7 @@ export default createMuiTheme({
   palette: {
     common: {
       white: '#fcfcfc',
+      hover_white: '#f3f3f3',
       blue: '#6098E0',
       black: '#100C08',
       gray: '#9E9E9E',

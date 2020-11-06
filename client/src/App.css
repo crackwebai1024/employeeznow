@@ -6,3 +6,7 @@
 .MuiPaper-elevation4 {
   box-shadow: '4px 2px 8px -1px rgba(0, 0, 0, 0.25), 0px 4px 8px 0px rgba(0,0,200,0.14), 0px 1px 10px 0px rgba(0,0,200,0.12)';
 }
+
+.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: "green" !important
+}
