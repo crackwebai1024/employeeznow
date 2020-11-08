@@ -25,11 +25,11 @@ const Payment = (props) => {
 
   useEffect(() => {
     if (window.Stripe) {
-      setStripe(window.Stripe("pk_test_51HhcEXCIGo4tK7NRfokSRfbsGqdhAiPmcxtnvzawvIEEfItfSZ5Rp3sRmWLWITsOtxFy1hzmISMbJuKn6GQaZj2N00LGjvHZqr"))
+      setStripe(window.Stripe("publish_key"))
     } else {
       if (document.querySelector("#stripe-js")) {
         document.querySelector("#stripe-js").addEventListener("load", () => {
-          setStripe(window.Stripe("pk_test_51HhcEXCIGo4tK7NRfokSRfbsGqdhAiPmcxtnvzawvIEEfItfSZ5Rp3sRmWLWITsOtxFy1hzmISMbJuKn6GQaZj2N00LGjvHZqr"))
+          setStripe(window.Stripe("publish_key"))
         });
       }
     }

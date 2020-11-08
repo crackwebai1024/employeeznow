@@ -22,6 +22,11 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         margin: 'auto',
     },
+    description: {
+        fontSize: '24px',
+        textAlign: 'center',
+        color: theme.palette.common.green
+    },
     error: {
         color: 'red',
         fontSize: '12px'
@@ -101,6 +106,11 @@ const PaymentForm = (props) => {
                     <Grid item xs={12} justify="space-between">
                         {cardsLogo.map(e => <img key={e} src={`../img/cards/${e}.png`} alt={e} width="50px" align="bottom" style={{ padding: "0 5px" }} />)}
                     </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography className={classes.description}>
+                        You have to pay $8 to get this profile
+                    </Typography>
                 </Grid>
                 <Grid container item xs={12} spacing={3}>
                     <Grid item xs={12}>
