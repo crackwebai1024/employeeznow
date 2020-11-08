@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 //  with nodemailer - still in development****
 // Create a transporter
@@ -11,6 +12,7 @@ const sendEmail = async (options) => {
     },
   });
 
+  console.log("process.env.EMAIL_USERNAME", process.env.EMAIL_USERNAME);
   // Define the email option
   const mailOptions = {
     from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,

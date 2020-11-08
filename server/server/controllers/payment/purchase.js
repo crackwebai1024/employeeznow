@@ -1,6 +1,6 @@
 import Employer from "../../models/employer/basic.model";
-import EmpeeCtrl from "../../controllers/crud/employee/main.crud";
 import errorHandler from "../../helpers/dbErrorHandler";
+import { getPurchasedEmployee } from "../utils/getemployee";
 
 const getPurchaseRequest = async (req, res) => {
   const employeeID = req.body.employeeID;
@@ -9,7 +9,7 @@ const getPurchaseRequest = async (req, res) => {
     //find the employer by id from database
     let employer = await Employer.findById(employerID);
     // check if the number of employee that employer bought is more than 4
-    if (employer.interestedEmployees.length < 4) {
+    if (employer.interestedEmployees.length < 3) {
       let idx = employer.interestedEmployees.indexOf(employeeID);
       if (idx === -1) {
         employer.interestedEmployees.push(employeeID);
@@ -18,11 +18,12 @@ const getPurchaseRequest = async (req, res) => {
       //   update employer and save
       req.query = {};
       req.query.id = employeeID;
+      let purchased = true;
       //   find whole employee data from employee database
-      await EmpeeCtrl.read(req, res);
+      await getPurchasedEmployee(req, res, employeeID, purchased);
     } else {
       return res.status(200).json({
-        data: "Your interest number limited. Please purchase with payment.",
+        islimit: true,
       });
     }
   } catch (err) {

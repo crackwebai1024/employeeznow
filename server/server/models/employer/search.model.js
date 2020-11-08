@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const geocoder = require("../../utils/geocoder");
+const geocoder = require("../utils/geocoder");
 
 const SearchFilterSchema = new mongoose.Schema({
   searchAddress: {

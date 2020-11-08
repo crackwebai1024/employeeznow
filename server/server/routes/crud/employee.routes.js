@@ -8,7 +8,7 @@ import ExpCtrl from "../../controllers/crud/employee/experience.crud";
 import DocCtrl from "../../controllers/crud/employee/document.crud";
 import ImgCtrl from "../../controllers/crud/employee/img.crud";
 import PortCtrl from "../../controllers/crud/employee/portfolio.crud";
-import AWSCtrl from "../../controllers/crud/utils/aws_ope";
+import AWSCtrl from "../../controllers/utils/aws_ope";
 import ComCtrl from "../../controllers/crud/common/common.crud";
 
 const router = express.Router();

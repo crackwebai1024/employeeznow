@@ -7,6 +7,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import multer from "multer";
+// route files
 import authEmployeeRoutes from "./routes/auth/employee.routes";
 import authEmployerRoutes from "./routes/auth/employer.routes";
 import authCommonRoutes from "./routes/auth/common.routes";
@@ -14,13 +15,9 @@ import crudEmployeeRoutes from "./routes/crud/employee.routes";
 import crudEmployerRoutes from "./routes/crud/employer.routes";
 import mailSendRoutes from "./routes/mail/mail.routes";
 import paymentRoutes from "./routes/payment/payment.routes";
-
 import searchEmployeeRoutes from "./routes/search/search.routes";
-import dotenv from "dotenv";
 
 const CURRENT_WORKING_DIR = process.cwd();
-// Config file
-dotenv.config({ path: path.join(CURRENT_WORKING_DIR, "/.env") });
 
 const app = express();
 const upload = multer();

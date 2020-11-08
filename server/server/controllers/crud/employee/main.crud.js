@@ -4,7 +4,7 @@ import EmployeeExperience from "../../../models/employee/experience.model";
 import EmployeePortfolio from "../../../models/employee/portfolio.model";
 import EmployeePreference from "../../../models/employee/preference.model";
 import EmployeeSkill from "../../../models/employee/skills.model";
-import CRUD from "../utils/general";
+import CRUD from "../../utils/general";
 
 const { find_ByID } = CRUD;
 

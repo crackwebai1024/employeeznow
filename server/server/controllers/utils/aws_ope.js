@@ -1,12 +1,12 @@
 var AWS = require("aws-sdk");
 var fs = require("fs");
-
+require("dotenv").config();
 // For dev purposes test only
 AWS.config.update({
   accessKeyId: process.env.AWS_KEY_ID,
   secretAccessKey: process.env.AWS_ACCESS_KEY,
 });
-
+console.log("process.env.AWS_KEY_ID", process.env.AWS_KEY_ID);
 var s3 = new AWS.S3({});
 
 // const s3download = function (params) {
