@@ -34,6 +34,9 @@ const useStlyes = makeStyles((theme) => ({
     fontSize: '26px',
     padding: '30px'
   },
+  image: {
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)"
+  },
   listDescription: {
     width: 'fit-content',
     margin: 'auto',
@@ -81,7 +84,7 @@ const Hospitality = () => {
         </Typography>
       </Grid>
       <Grid xs={12} sm={6} className={classes.center}>
-        <img src={`${process.env.PUBLIC_URL}/img/img4.svg`} />
+        <img src={`${process.env.PUBLIC_URL}/img/img4.svg`} className={classes.image}/>
       </Grid>
     </Grid>
     <Grid xs={12}>

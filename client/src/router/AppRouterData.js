@@ -20,6 +20,7 @@ import ResetPasswordForm from '@views/Auth/Password/ResetPasswordForm';
 import SearchResults from '@views/Employer/SearchResult/SearchResults';
 import Payment from '@views/Employer/Payment/Payment'
 import { getUser } from '@helpers/auth-helpers';
+import Contact from '@views/Contact';
 
 
 const user = JSON.parse(getUser())
@@ -35,6 +36,7 @@ export const AppRouterData = [
   { "path": "/signup/employee", component: EmployeeForm },
   { "path": "/login", component: Login },
   { 'path': `/forgotPassword`, component: ForgotPassword },
+  { 'path': `/contactus`, component: Contact },
 ]
 
 export const AppPrivateRouterEmployerData = [
@@ -45,6 +47,7 @@ export const AppPrivateRouterEmployerData = [
   { 'path': `/employers/${user && user.slug}/account`, component: EmployerAccount },
   { 'path': `/candidate/:slug`, component: DashboardCandidate },
   { 'path': `/payment/:slug`, component: Payment },
+  { 'path': `/contactus`, component: Contact },
 ]
 
 export const AppPrivateRouteeEmployeeData = [
@@ -55,6 +58,7 @@ export const AppPrivateRouteeEmployeeData = [
   { 'path': `/${user && user.slug}/skills`, component: SkillsForm },
   { 'path': `/${user && user.slug}/professiondetails-form`, component: ProfessionDetailsForm },
   { 'path': `/${user && user.slug}/work-experience`, component: ExperienceForm },
+  { 'path': `/contactus`, component: Contact },
 ]
 
 

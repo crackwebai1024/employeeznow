@@ -27,9 +27,17 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
     },
   },
+  video: {
+    padding: "80% 0 0 0",
+    position: 'relative'
+  },
   profile: {
     fontSize: '26px',
-    textAlign: 'center'
+    textAlign: 'center',
+    boxShadow: ''
+  },
+  image: {
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)"
   },
   col_center: {
     display: 'flex',
@@ -50,7 +58,7 @@ const ProfileDescription = () => {
     </Grid>
     <Grid item xs={12} md={6}>
       <Grid className={classes.ContainerLeft}>
-        <img src={`${process.env.PUBLIC_URL}/img/img1.svg`} />
+        <img src={`${process.env.PUBLIC_URL}/img/img1.svg`} className={classes.image}/>
       </Grid>
     </Grid>
     <Grid item xs={12} md={6}>
@@ -77,10 +85,16 @@ const ProfileDescription = () => {
       </Box>
     </Grid>
     <Grid item xs={12} md={6} className={classes.center}>
-      <img src={`${process.env.PUBLIC_URL}/img/img2(2).svg`} />
+      <div className={classes.video}>
+        <iframe src="https://player.vimeo.com/video/472816351" 
+          style={{position:"absolute", top:"0", left:"0", width:"100%", height:"100%" }} 
+          allow="autoplay; fullscreen" frameborder="0" allowfullscreen>
+        </iframe>
+        </div>
+          <script src="https://player.vimeo.com/api/player.js"></script>
     </Grid>
     <Grid item xs={12} md={6} className={classes.center}>
-      <img src={`${process.env.PUBLIC_URL}/img/img3.svg`} />
+      <img src={`${process.env.PUBLIC_URL}/img/img3.svg`} className={classes.image}/>
     </Grid>
     <Grid item xs={12} md={6} className={classes.col_center}>
       <Box style={{ margin: 'auto' }}>
