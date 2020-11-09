@@ -22,6 +22,7 @@ const SearchFilterSchema = new mongoose.Schema({
   shift: {
     type: [String],
     enum: ["Breakfast", "Lunch", "Dinner", ""],
+    required: true,
   },
   primary: {
     type: String,
