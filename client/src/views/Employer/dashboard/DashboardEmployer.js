@@ -300,15 +300,6 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
           </Box>
         </Grid>
 
-        <Grid item xs={12} className={classes.description}>
-          <Typography>
-            Click the button to use the saved filter for your employee search.
-            </Typography>
-          <Typography>
-            If you want to create a new filter. Click NEW FILTER above.
-            </Typography>
-        </Grid>
-
       </Grid>
     </Container>
   );

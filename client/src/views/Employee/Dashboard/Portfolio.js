@@ -73,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
       color: "#333333",
     },
   },
+  section: {
+    borderRadius: "0px"
+  }
 }));
 
 function Portfolio({ actions, portfolios }) {
@@ -111,9 +114,13 @@ function Portfolio({ actions, portfolios }) {
     setOpen(true);
   };
 
-  const handleUpdateOpen = (id, image) => {
+  const handleUpdateOpen = (id, image, note) => {
     setUpdateOpen(true);
-    setCurrentFolioImage(image);
+
+    setCurrentFolioImage({ 
+      url: image,
+      description: note
+    });
     setFolioID(id);
   };
 
@@ -188,15 +195,15 @@ function Portfolio({ actions, portfolios }) {
                           className={classes.gridList}
                         >
                           <GridListTile cols={2} rows={2}>
-                            {p.image && (
+                            {p && (
                               <Fragment>
                                 <img
                                   src={
-                                    p.image &&
-                                    "data:image/jpeg;base64, " + p.image
+                                    p.url &&
+                                    `${p.url}?${Date.now()}`
                                   }
                                   className={classes.image}
-                                ></img>
+                                />
                                 <Box className={classes.imageBox}></Box>
                                 <Typography className={classes.note}>
                                   {p.note}
@@ -207,7 +214,7 @@ function Portfolio({ actions, portfolios }) {
                                   actionIcon={
                                     <IconButton
                                       onClick={(e) =>
-                                        handleUpdateOpen(p.index, p.image)
+                                        handleUpdateOpen(p.index, p.url, p.note)
                                       }
                                       aria-label={`star Morning`}
                                     >

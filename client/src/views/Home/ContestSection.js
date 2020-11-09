@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '20px',
     marginBottom: '20px',
     color: theme.palette.common.lightBlack,
-    fontWeight: 300
+    fontWeight: 600
   },
   paper2: {
     background: "#fcfcfc",
@@ -74,7 +74,7 @@ export default function ContestSection() {
         <Grid item xs={12} md={6}>
           <Paper elevation={0} className={classes.paper2}>
             <img
-              src={`${process.env.PUBLIC_URL}/img/img2.svg`}
+              src={`${process.env.PUBLIC_URL}/img/img2.png`}
               alt="chef"
               className={classes.image}
             />
@@ -83,13 +83,13 @@ export default function ContestSection() {
         <Grid item xs={12} md={6} className={classes.col_center}>
           <Grid style={{ margin: 'auto'}}>
             <Typography variant="h1" style={{ textAlign: "center" }} className={classes.heading1}>
-              Check out our Contest Page
+              Check out our <span style={{fontWeight: '700'}}>HOSPITALITY CHALLENGE</span>
             </Typography >
             <Typography variant="h1" style={{ textAlign: "center", color: 'green' }} className={classes.heading1}>
-              Enter a video or Vote on others
+              Enter a video or vote on others
             </Typography>
             <Typography className={classes.list}>
-              Best Cocktail &nbsp;&nbsp;&nbsp; Best Entrée &nbsp;&nbsp;&nbsp; Best Sandwich &nbsp;&nbsp;&nbsp; Best Coffee
+              BEST COCKTAIL &nbsp;&nbsp;&nbsp; BEST ENTREE &nbsp;&nbsp;&nbsp; BEST SANDWICH/BURGER &nbsp;&nbsp;&nbsp; BEST COFFEE
             </Typography>
             <MainButton
               background="green"

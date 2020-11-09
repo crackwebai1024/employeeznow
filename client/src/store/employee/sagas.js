@@ -162,30 +162,10 @@ function* onGetPortfolio({ payload }) {
   try {
     let queryString = `?id=${payload.id}`;
     const res = yield call(EmployeeAPI.getPortfolioImage, queryString);
+    debugger
     if (res && res.data) {
       let portfolios = res.data.portfolio.portfolios;
       yield put(types.success({ type: "portfolios", data: portfolios }));
-
-      let requests = res.data.portfolio.portfolios.map((porID) => {
-        return Axios.get(
-          "/crud/employee/portfolio/" + porID.index + "?id=" + payload.id
-        );
-      });
-
-      const response = yield Promise.all(requests).then((responses) => {
-        return responses.map((response) =>
-          _arrayBufferToBase64(response.data.content.Body.data)
-        );
-      });
-
-      let images = response;
-      let data = portfolios.map((p, i) => {
-        return {
-          ...p,
-          image: images[i],
-        };
-      });
-      yield put(types.success({ type: "portfolios", data: data }));
     }
   } catch {}
 }

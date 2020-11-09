@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import _ from 'lodash';
 import { getUser } from '@helpers/auth-helpers';
 import { usaStates, shifts, jobTypes, styles, cuisines, wineKnowledges, cocktailKnowledges, poss, reservations } from '../../Employee/professionTypes';
@@ -140,7 +141,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
 
                 <Grid item>
                   <Typography variant="body2" className={classes.inputTitle}>
-                    WORKPLACE
+                    ADDRESS OF EMPLOYMENT OPPORTUITY
                 </Typography>
                 </Grid>
               </Grid>
@@ -205,7 +206,9 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                   })}
                 />
               </Grid>
-
+              <Grid style={{ marginTop: '2rem', fontWeight: 600 }}>
+                REQUIRED FILTERS:
+              </Grid>
               <Grid item container alignItems="flex-end">
                 <Grid item>
                   <AssignmentOutlinedIcon fontSize="small" />
@@ -288,24 +291,23 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                 helperText={errors.secondary && errors.secondary
                   ? 'This filed is required' : ''
                 }
-                required select fullWidth margin="none" name="secondary" label="Secondary Job"
-                id="secondary" inputRef={register({ required: true })}
+                type="number"
+                required fullWidth margin="none" name="minimumexp" label="Minimum years of experience"
+                id="minimumexp" inputRef={register({ required: true })}
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: true }}
               >
-                <option value=""></option>
-                {jobTypes.map((jobType) => (
-                  <option key={jobType} value={jobType}>
-                    {jobType}
-                  </option>
-                ))}
               </TextField>
+
+              <Grid style={{ marginTop: '2rem', marginBottom: "1rem", fontWeight: 600 }}>
+                OPTIONAL FILTERS:
+              </Grid>
 
               <TextField
                 error={errors.style && errors.style ? true : false}
                 helperText={errors.style && errors.style ? 'This filed is required' : ''
                 }
-                required select fullWidth margin="none" name="style" label="Style"
+                required select fullWidth margin="none" name="style" label="Preferred work experience"
                 id="style" inputRef={register({ required: true })}
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: true }}
@@ -318,10 +320,25 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                 ))}
               </TextField>
 
+              <Autocomplete
+                multiple
+                id="tags-standard"
+                options={styles}
+                getOptionLabel={(option) => option.title}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Preferred work experience"
+                    placeholder="Favorites"
+                  />
+                )}
+              />
+
               <TextField
                 error={errors.cuisine && errors.cuisine ? true : false}
                 helperText={errors.cuisine && errors.cuisine ? 'This filed is required' : ''}
-                required select fullWidth margin="none" name="cuisine" label="Cuisine"
+                required select fullWidth margin="none" name="cuisine" label="Preferred cuisine experience"
                 id="cuisine" inputRef={register({ required: true })}
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ native: true }}

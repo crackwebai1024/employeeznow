@@ -75,12 +75,12 @@ const Hospitality = () => {
     <Grid container xs={12}>
       <Grid xs={12} sm={6}>
         <Typography className={classes.profileSubtitle}>
-          THE PASTEST WAY TO HIRE
+          THE FASTEST WAY TO HIRE
         </Typography>
         <Typography className={classes.profileSubdescription}>
           The next time you have a job opening, don't spend days with multiple
           sites just to get a list of qualified candidates. Register your company profile &
-          get your candidates in just a few munites!
+          get your candidates in just a few minutes!
         </Typography>
       </Grid>
       <Grid xs={12} sm={6} className={classes.center}>
