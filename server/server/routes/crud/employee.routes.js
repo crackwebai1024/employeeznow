@@ -56,7 +56,7 @@ router
   .post(requireSignin, hasAuthorization, AWSCtrl.save, ImgCtrl.updateByID);
 router
   .route("/image/delete")
-  .post(requireSignin, hasAuthorization, AWSCtrl.del, ImgCtrl.updateByID);
+  .post(requireSignin, hasAuthorization, AWSCtrl.del, ImgCtrl.deleteByID);
 
 // portfolio crud
 router
@@ -66,8 +66,8 @@ router
 router
   .route("/portfolio/delete")
   .post(requireSignin, hasAuthorization, AWSCtrl.del, PortCtrl.updateByID);
-router
-  .route("/portfolio/:fileid")
-  .get(requireSignin, hasAuthorization, PortCtrl.get_file_ByID);
+// router
+//   .route("/portfolio/:fileid")
+//   .get(requireSignin, hasAuthorization, PortCtrl.get_file_ByID);
 
 export default router;

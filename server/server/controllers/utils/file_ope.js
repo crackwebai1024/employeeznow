@@ -23,9 +23,31 @@ const find_ByID = async (req, res, Model) => {
 const updateByID = async (req, res, Model) => {
   let role = "employee";
   let type = req.body.type;
+  let bucketName = process.env.AWS_BUCKET_NAME;
+  let fileName = "";
+  if (req.body.type !== "portfolio") {
+    fileName = req.body.id + req.body.type;
+  } else {
+    fileName = req.body.id + req.body.folioID + req.body.type;
+  }
   req.body[type] = {};
   console.log(req.body);
   req.body[type].fname = req.body.fname;
+  req.body[type].url = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
+  req.body[type].createdAt = Date.now();
+  console.log("fileName ==> ", req.body.fname);
+  await CRUD.updateByID(Model, role, req.body.id, req, res);
+};
+
+const deleteByID = async (req, res, Model) => {
+  let role = "employee";
+  let type = req.body.type;
+  let bucketName = process.env.AWS_BUCKET_NAME;
+  let fileName = "";
+  req.body[type] = {};
+  console.log(req.body);
+  req.body[type].fname = req.body.fname;
+  req.body[type].url = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
   req.body[type].createdAt = Date.now();
   console.log("fileName ==> ", req.body.fname);
   await CRUD.updateByID(Model, role, req.body.id, req, res);

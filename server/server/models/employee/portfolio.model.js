@@ -5,6 +5,7 @@ const PortfolioSchema = new mongoose.Schema({
     {
       index: String,
       fileName: String,
+      url: String,
       note: String,
     },
   ],

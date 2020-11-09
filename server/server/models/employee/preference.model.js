@@ -5,9 +5,9 @@ const PreferenceSchema = new mongoose.Schema({
     type: String,
     enum: {
       values: [
-        "Unemployed and looking for",
-        "Employed and looking for",
-        "Employed and not looking for",
+        "Unemployed and looking",
+        "Employed and looking",
+        "Employed and not looking",
         "",
       ],
     },
