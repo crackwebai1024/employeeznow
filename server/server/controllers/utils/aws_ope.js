@@ -49,7 +49,7 @@ const save = async (req, res, next) => {
     fileName = req.body.id + req.body.folioID + req.body.type;
   }
 
-  let bucketName = "mytestbucket626";
+  let bucketName = process.env.AWS_BUCKET_NAME;
   let fcont = req.file;
   console.log(fileName, bucketName);
   const params = {
@@ -64,7 +64,7 @@ const save = async (req, res, next) => {
       Body: fcont.buffer,
       ACL: "public-read",
     },
-    function (err) {
+    function (err, data) {
       if (err) {
         console.log(err);
         return res.status(500).json({

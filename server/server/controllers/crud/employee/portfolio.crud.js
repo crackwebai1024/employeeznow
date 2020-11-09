@@ -34,7 +34,7 @@ const find_ByID = async (req, res) => {
 
 const updateByID = async (req, res) => {
   let role = "employee";
-  const { id, folioID, fname, file, note } = req.body;
+  const { id, folioID, fname, type, note } = req.body;
   let portfolioByID = await CRUD.find_ByID(
     EmployeePortfolio,
     role,
@@ -44,7 +44,8 @@ const updateByID = async (req, res) => {
 
   let ind = -1;
   let findRS = undefined;
-
+  let fileName = id + folioID + type;
+  let bucketName = process.env.AWS_BUCKET_NAME;
   if (portfolioByID === null) {
     let portfolio = new EmployeePortfolio({
       portfolios: [
@@ -52,6 +53,7 @@ const updateByID = async (req, res) => {
           index: folioID,
           fileName: fname,
           note: note,
+          url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
         },
       ],
       employee: id,
@@ -74,6 +76,7 @@ const updateByID = async (req, res) => {
             index: folioID,
             fileName: fname,
             note: note,
+            url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
           },
         ];
       } else {
@@ -81,6 +84,7 @@ const updateByID = async (req, res) => {
           index: folioID,
           fileName: fname,
           note: note,
+          url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
         };
       }
 
@@ -92,19 +96,19 @@ const updateByID = async (req, res) => {
   }
 };
 
-const get_file_ByID = async (req, res) => {
-  let type = "portfolio";
-  await AWSOP.read(type, req.query.id + req.params.fileid)
-    .then((data) => {
-      return res.status(200).json({
-        content: data,
-      });
-    })
-    .catch((err) => {
-      return res.status(500).json({
-        error: "Internal server error, can not read data from aws",
-      });
-    });
-};
+// const get_file_ByID = async (req, res) => {
+//   let type = "portfolio";
+//   await AWSOP.read(type, req.query.id + req.params.fileid)
+//     .then((data) => {
+//       return res.status(200).json({
+//         content: data,
+//       });
+//     })
+//     .catch((err) => {
+//       return res.status(500).json({
+//         error: "Internal server error, can not read data from aws",
+//       });
+//     });
+// };
 
-export default { create, find_ByID, updateByID, get_file_ByID };
+export default { create, find_ByID, updateByID };

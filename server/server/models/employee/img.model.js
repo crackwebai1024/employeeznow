@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const ImgSchema = new mongoose.Schema({
   photo: {
     fname: String,
+    url: String,
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -10,6 +11,7 @@ const ImgSchema = new mongoose.Schema({
   },
   background: {
     fname: String,
+    url: String,
     createdAt: {
       type: Date,
       default: Date.now(),

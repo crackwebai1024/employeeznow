@@ -21,7 +21,7 @@ const searchEmployee = async (filter) => {
   const lat = filter.locations.coordinates[0];
   const lng = filter.locations.coordinates[1];
   const primaryJob = filter.primary;
-  const secondaryJob = filter.secondary;
+  const minimumExp = filter.minimumexp;
   const shift = filter.shift;
   const wine = filter.wineKnowledge;
   const cocktail = filter.cocktailKnowledge;
@@ -87,8 +87,10 @@ const searchEmployee = async (filter) => {
       {
         $match: {
           "employeeskill.shift": { $all: shift },
-          "employeeskill.primaryJob.title": primaryJob,
-          "employeeskill.secondaryJob.title": secondaryJob,
+          "employeeskill.primaryJob": {
+            title: primaryJob,
+            years: { $gt: minimumExp },
+          },
         },
       },
       {
@@ -118,7 +120,7 @@ const searchEmployee = async (filter) => {
               // Add points if style matched (years x 1.5)
               {
                 $cond: {
-                  if: { $eq: ["$employeeskill.style.type", style] },
+                  if: { $in: ["$employeeskill.style.type", style] },
                   then: {
                     $add: [{ $multiply: ["$employeeskill.style.years", 1.5] }],
                   },
@@ -128,7 +130,7 @@ const searchEmployee = async (filter) => {
               // Add points if cuisine matched(years x 1.0)
               {
                 $cond: {
-                  if: { $in: [cuisine, "$employeeskill.cuisine.type"] },
+                  if: { $in: [cuisine[0], "$employeeskill.cuisine.type"] },
                   then: {
                     $add: [
                       {
@@ -137,7 +139,49 @@ const searchEmployee = async (filter) => {
                           {
                             $indexOfArray: [
                               "$employeeskill.cuisine.type",
-                              cuisine,
+                              cuisine[0],
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  else: 0,
+                },
+              },
+              {
+                $cond: {
+                  if: { $in: [cuisine[1], "$employeeskill.cuisine.type"] },
+                  then: {
+                    $add: [
+                      {
+                        $arrayElemAt: [
+                          "$employeeskill.cuisine.years",
+                          {
+                            $indexOfArray: [
+                              "$employeeskill.cuisine.type",
+                              cuisine[1],
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  else: 0,
+                },
+              },
+              {
+                $cond: {
+                  if: { $in: [cuisine[2], "$employeeskill.cuisine.type"] },
+                  then: {
+                    $add: [
+                      {
+                        $arrayElemAt: [
+                          "$employeeskill.cuisine.years",
+                          {
+                            $indexOfArray: [
+                              "$employeeskill.cuisine.type",
+                              cuisine[2],
                             ],
                           },
                         ],
