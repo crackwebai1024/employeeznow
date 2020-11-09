@@ -293,14 +293,14 @@ const ProfessionDetailsForm = ({
                   onChange={(e) => onChange(e)}
                 >
                   <option aria-label="none" value="" />
-                  <option value="Unemployed and looking for">
-                    Unemployed and looking for
+                  <option value="Unemployed and looking">
+                    Unemployed and looking
                   </option>
-                  <option value="Employed and looking for">
-                    Employed and looking for
+                  <option value="Employed and looking">
+                    Employed and looking
                   </option>
-                  <option value="Employed and not looking for">
-                    Employed and not looking for
+                  <option value="Employed and not looking">
+                    Employed and not looking
                   </option>
                 </Select>
               </FormControl>

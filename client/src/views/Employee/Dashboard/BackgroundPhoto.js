@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
   },
   gridList: {
-    height: 300,
+    height: 200,
     overflow: "hidden",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
@@ -100,7 +100,7 @@ const BackgourndPhoto = ({ background, actions }) => {
 
   //fileNames is blob url - pass to dropzone, assign there, and display here
   const [bgfileNames, setbgFileNames] = useState();
-
+  console.log(background, "background")
   return (
     <Fragment>
       {localStorage.role === "employee" && (
@@ -119,7 +119,7 @@ const BackgourndPhoto = ({ background, actions }) => {
       <GridList cellHeight={200} spacing={1} className={classes.gridList}>
         <GridListTile cols={2} rows={2}>
           <img
-            src={background ? "data:image/jpeg;base64, " + background : image}
+            src={background && background.url ? `${background.url}?${Date.now()}` : image}
             alt="alt"
           />
           {localStorage.role === "employee" && (
