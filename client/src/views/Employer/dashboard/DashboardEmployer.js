@@ -113,7 +113,7 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
 
   const classes = useStyles();
   //open dialog(modal) - sarch form modal
-  const [openSearchForm, setOpenSearchForm] = useState(false);
+  const [openSearchForm, setOpenSearchForm] = useState(true);
   const [searchQueries, setSearchQueries] = useState([])
   const [employer, getEmployer] = useState({})
   const [reload, setReload] = useState(false)
