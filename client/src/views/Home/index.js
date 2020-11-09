@@ -15,6 +15,7 @@ import MovieFilterOutlinedIcon from '@material-ui/icons/MovieFilterOutlined';
 import DirectionsCarOutlinedIcon from '@material-ui/icons/DirectionsCarOutlined';
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import AutorenewOutlinedIcon from '@material-ui/icons/AutorenewOutlined';
+import { getUser, getFilterID } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
   contestContainer: {
@@ -129,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
+  const user = JSON.parse(getUser())
   return (
     <Box className={classes.HomeWrapper}>
       <Container width="sm" className={classes.mainContainer}>
@@ -150,23 +152,27 @@ const Home = () => {
                     <Typography variant="h2" className={classes.heading2}>
                       Get EmpoyeezNow in Just a few minutes!
                     </Typography>
-                    <Box className={classes.getStartedButton}>
-                      <MainButton
-                        background="green"
-                        pd={30} fontSize={20}
-                        label="Get Started"
-                        to="/signup"
-                        width="200px"
-                        hoverBack="#007000"
-                        border="green"
-                        color="white"
-                        hoverColor="white"
-                      >
-                      </MainButton>
-                    </Box>
-                    <Typography className={classes.heading3}>
-                      FREE to Register
-                  </Typography>
+                    {
+                      !user && <Box>
+                        <Box className={classes.getStartedButton}>
+                          <MainButton
+                            background="green"
+                            pd={30} fontSize={20}
+                            label="Get Started"
+                            to="/signup"
+                            width="200px"
+                            hoverBack="#007000"
+                            border="green"
+                            color="white"
+                            hoverColor="white"
+                          >
+                          </MainButton>
+                        </Box>
+                        <Typography className={classes.heading3}>
+                          FREE to Register
+                    </Typography>
+                      </Box>
+                    }
                   </Grid>
                   {/* nested column 1/2 button */}
                 </Grid>
@@ -270,32 +276,35 @@ const Home = () => {
           <ProfileDescription />
         </Grid>
       </Container>
-      <Grid container className={classes.profileSection} style={{ marginTop: "100px" }}>
-        <Container width="sm">
-          <Grid container item xs={12}>
-            <Grid item xs={12} md={6} className={classes.col_center}>
-              <Typography className={`${classes.font24}`} style={{margin: 'auto'}}>
-                REGISTER YOUR PROFILE
+      {
+        !user &&
+        <Grid container className={classes.profileSection} style={{ marginTop: "100px" }}>
+          <Container width="sm">
+            <Grid container item xs={12}>
+              <Grid item xs={12} md={6} className={classes.col_center}>
+                <Typography className={`${classes.font24}`} style={{ margin: 'auto' }}>
+                  REGISTER YOUR EMPLOYEE PROFILE
               </Typography>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <MainButton
+                  background="green"
+                  hoverBack="#007000"
+                  pd={50} fontSize={24}
+                  label="SIGN UP NOW"
+                  to="/signup"
+                  width="280px"
+                  border="green"
+                  hoverColor="white"
+                  color="white"
+                >
+                </MainButton>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <MainButton
-                background="green"
-                hoverBack="#007000"
-                pd={50} fontSize={24}
-                label="SIGN UP USER"
-                to="/signup"
-                width="280px"
-                border="green"
-                hoverColor="white"
-                color="white"
-              >
-              </MainButton>
-            </Grid>
-          </Grid>
-        </Container>
-      </Grid>
-      <Container width="sm" className={classes.mainContainer} style={{marginTop: '4rem'}}>
+          </Container>
+        </Grid>
+      }
+      <Container width="sm" className={classes.mainContainer} style={{ marginTop: '4rem' }}>
         <Hospitality />
       </Container >
       <Grid xs={12}>

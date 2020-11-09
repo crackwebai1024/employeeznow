@@ -114,10 +114,13 @@ function Portfolio({ actions, portfolios }) {
     setOpen(true);
   };
 
-  const handleUpdateOpen = (id, image) => {
+  const handleUpdateOpen = (id, image, note) => {
     setUpdateOpen(true);
 
-    setCurrentFolioImage({ url: image });
+    setCurrentFolioImage({ 
+      url: image,
+      description: note
+    });
     setFolioID(id);
   };
 
@@ -200,7 +203,7 @@ function Portfolio({ actions, portfolios }) {
                                     `${p.url}?${Date.now()}`
                                   }
                                   className={classes.image}
-                                ></img>
+                                />
                                 <Box className={classes.imageBox}></Box>
                                 <Typography className={classes.note}>
                                   {p.note}
@@ -211,7 +214,7 @@ function Portfolio({ actions, portfolios }) {
                                   actionIcon={
                                     <IconButton
                                       onClick={(e) =>
-                                        handleUpdateOpen(p.index, p.url)
+                                        handleUpdateOpen(p.index, p.url, p.note)
                                       }
                                       aria-label={`star Morning`}
                                     >

@@ -8,6 +8,7 @@ import RegisterSection from '../Home/RegisterSection';
 import SelfInterviewSection from '../Home/SelfInterviewSection';
 import ContestSection from '../Home/ContestSection';
 import RestaurantOutlinedIcon from '@material-ui/icons/RestaurantOutlined';
+import { getUser, getFilterID } from '@helpers/auth-helpers';
 
 const imageList = ["desktop", "binoculars", "memo", "profile", "question", "", "", "calendar"]
 
@@ -21,7 +22,7 @@ const listData = [
 const listData1 = [
   { img: 'question', title: "INVEST REQUEST", description: "Employers can send a request through EmployeezNow to inquire if the candidate would be interested in their specific job opportunity" },
   { img: 'podium', title: "COMPLETE PROFILE", description: "Profiles that contain all of the candidate's contact information can be purchased by the employer to continue with the hiring process." },
-  { img: 'finger', title: "ONE TIME FEE", description: "Complete profiles are just $8.00 and that employer will have access to their purchased profiles indefinitely." },
+  { img: 'finger', title: "ONE TIME FEE", description: "Complete profiles are just $8.99 and that employer will have access to their purchased profiles indefinitely." },
   { img: 'calendar', title: "AUTOMATION", description: "<b>EmployeezNow</b> will keep all profiles current so employers know the information is accurate. Because <b>EmployeezNow</b> does the work for you the candidates, registering once until you are ready to retire!" },
 ]
 
@@ -213,6 +214,8 @@ const useStyles = makeStyles((theme) => ({
 
 const LearnMore = () => {
   const classes = useStyles();
+  const user = JSON.parse(getUser())
+
   return (<Box className={classes.Wrapper}>
     <Container width="sm" className={classes.mainContainer}>
       <Grid container ustify="center" spacing={0} style={{ paddingTop: '100px' }}>
@@ -281,8 +284,8 @@ const LearnMore = () => {
     </Container>
 
     <Grid container className={classes.contestContainer}>
-        <ContestSection />
-      </Grid>
+      <ContestSection />
+    </Grid>
 
     <Container width="sm" className={classes.mainContainer}>
       <Grid container ustify="center" spacing={5} style={{ marginTop: '100px', textAlign: 'center' }}>
@@ -318,11 +321,11 @@ const LearnMore = () => {
           </Typography>
         </Grid>
       </Grid>
-
-      {/* <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
-        <RegisterSection />
-      </Grid> */}
-
+      {
+        !user && <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
+          <RegisterSection />
+        </Grid>
+      }
       <Grid container ustify="center" spacing={0} style={{ marginTop: '100px', paddingBottom: '6rem' }}>
         <Grid xs={12}>
           <Typography className={classes.title}>

@@ -86,11 +86,11 @@ export default function CandidateDocuments() {
     <div className={classes.root}>
       <div className={classes.demo1}>
         <AntTabs value={value} onChange={handleChange} aria-label="ant example">
-          <AntTab label="Resume" />
-          <AntTab label="Reference" />
-          <AntTab label="At Work Videos" />
-          <AntTab label="Diploma" />
+          <AntTab label="Work History" />
+          <AntTab label="At-work Videos" />
+          <AntTab label="Self-Interview" />
           <AntTab label="Portfolio" />
+          <AntTab label="Documentation" />
         </AntTabs>
         <Typography>
           {document}

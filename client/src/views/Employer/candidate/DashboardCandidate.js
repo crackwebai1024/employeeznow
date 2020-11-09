@@ -205,11 +205,11 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
               {purchased && `Email : ${basic.email}`}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={6}>
+          {/* <Grid item xs={12} md={6}>
             <Box component="fieldset" mb={3} borderColor="transparent">
               <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly size="large" />
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
         {skill &&
           <Fragment>

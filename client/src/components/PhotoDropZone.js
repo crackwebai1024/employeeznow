@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Dropzone from "react-dropzone";
 import { makeStyles } from "@material-ui/styles";
@@ -88,10 +88,17 @@ const PhotoDropZone = ({
 }) => {
   // style material-ui
   const classes = useStyles();
-
+  console.log(image, "image---")
   // title for Photo
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState("");
+
+  useEffect(() => {
+    if(image) {
+      setTitle(image.description)
+    }
+  }, [image])
+
   const handleClose = () => {
     setFileNames("");
     setOpen(false);
@@ -169,6 +176,7 @@ const PhotoDropZone = ({
             helperText={"Please add title"}
             label="Description"
             required
+            value={title}
             fullWidth
             color="primary"
             onChange={(e) => setTitle(e.target.value)}

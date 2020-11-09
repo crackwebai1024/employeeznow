@@ -156,6 +156,9 @@ const EmployeeForm = ({
   }, [emailFailure]);
 
   useEffect(() => {
+    
+    window.scrollTo(0,0)
+    
     setValue("firstName", signupUser.firstName);
     setValue("lastName", signupUser.lastName);
     setValue("middleName", signupUser.middleName);

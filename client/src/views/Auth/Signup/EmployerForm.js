@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -130,6 +130,10 @@ const EmployerForm = ({
       actions.employerSignupRequest(data)
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
 
   // Redirect to employer account page after sign up
   if (isAuthenticated) {
@@ -485,7 +489,7 @@ const EmployerForm = ({
             <Box className={classes.buttonWrapper}>
               <MainButton
                 width="100%"
-                label="SING UP"
+                label="SIGN UP"
                 color="white"
                 border="green"
                 background="green"

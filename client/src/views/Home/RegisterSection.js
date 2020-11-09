@@ -98,7 +98,7 @@ export default function RegisterSection() {
             <DesktopMacIcon className={classes.icon1} />
           </Typography>
           <Typography className={classes.title}>
-            I'm Employer
+            EMPLOYERS
           </Typography>
           <Typography>
             <img
@@ -107,15 +107,15 @@ export default function RegisterSection() {
               alt="chef"
             />
           </Typography>
-          <Typography>
+          {/* <Typography>
             Signed in companies are able to searching for Ideal candidated...
-          </Typography>
+          </Typography> */}
           <Button
             variant="contained"
             color="primary"
             className={classes.button1}
             component={Link}
-            to="/signup"
+            to="/signup/employer"
             startIcon={<AddCircleIcon />}
           >
             Register as company
@@ -128,7 +128,7 @@ export default function RegisterSection() {
             <PeopleOutlineIcon className={classes.icon2} />
           </Typography>
           <Typography className={classes.title}>
-            I'm Employee
+            EMPLOYEES
           </Typography>
           <Typography>
             <img
@@ -137,15 +137,15 @@ export default function RegisterSection() {
               alt="chef"
             />
           </Typography>
-          <Typography>
+          {/* <Typography>
             Submit your resume and start your next chapter
-          </Typography>
+          </Typography> */}
           <Button
             variant="contained"
             color="primary"
             component={Link}
             className={classes.button2}
-            to="/signup"
+            to="/signup/employee"
             startIcon={<AddCircleIcon />}
           >
             Register candidate
