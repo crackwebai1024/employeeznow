@@ -51,7 +51,6 @@ export const emailFailure = (state, { payload }) => ({
 });
 
 export const phoneVerifyRequestRequest = (state, { payload }) => {
-  debugger;
   return {
     ...state,
     isSentPhoneNumber: false,

@@ -103,7 +103,7 @@ function* onUploadPhoto({ payload }) {
   try {
     const res = yield call(EmployeeAPI.uploadProfilePhoto, payload.formData);
     if (res && res.data) {
-      let photo = _arrayBufferToBase64(res.data.content.data);
+      let photo = res.data[payload.photoType];
       yield put(
         types.success({ type: payload.photoType, success: true, data: photo })
       );
@@ -114,7 +114,6 @@ function* onUploadPhoto({ payload }) {
 function* onDeletePhoto({ payload }) {
   try {
     const res = yield call(EmployeeAPI.deleteProfilePhoto, payload.formData);
-    console.log("delete result ==> ", res);
     if (res) {
       yield put(types.success({ type: payload.photoType, data: "" }));
     }
@@ -125,10 +124,9 @@ function* onGetProfilePhoto({ payload }) {
   try {
     let queryString = `?id=${payload.id}&type=${payload.type}`;
     const res = yield call(EmployeeAPI.getProfilePhoto, queryString);
-    console.log("response for getting photodata from backend ==> ", res);
     if (res && res.data) {
-      let photo = _arrayBufferToBase64(res.data.content.Body.data);
-      yield put(types.success({ type: payload.type, data: photo }));
+      // let photo = _arrayBufferToBase64(res.data.content.Body.data);
+      yield put(types.success({ type: payload.type, data: res.data }));
     }
   } catch {
     yield put(types.failure());
@@ -140,7 +138,7 @@ function* onGetBackground({ payload }) {
     let queryString = `?id=${payload.id}&type=${payload.type}`;
     const res = yield call(EmployeeAPI.getBackgroundImage, queryString);
     if (res && res.data) {
-      let photo = _arrayBufferToBase64(res.data.content.Body.data);
+      const photo = res.data
       yield put(types.success({ type: payload.type, data: photo }));
     }
   } catch {

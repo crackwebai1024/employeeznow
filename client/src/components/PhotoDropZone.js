@@ -10,6 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import BackupIcon from '@material-ui/icons/Backup';
 import Avatar from "@material-ui/core/Avatar";
 // import setAlert from '../../store/actions/alert';
 
@@ -43,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
+  },
+  uploadIcon: {
+    color: theme.palette.common.hover_white,
+    width: '100%',
+    height: "100%"
   },
   avatar: {
     width: 300,
@@ -128,7 +134,7 @@ const PhotoDropZone = ({
     handleClose();
   };
 
-  console.log("fileNames ==> ", fileNames);
+  console.log("fileNames ==> ", fileNames, image);
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="dialog-title">
       <DialogTitle id="dialog-title">
@@ -142,14 +148,18 @@ const PhotoDropZone = ({
       </DialogTitle>
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
-          <img
-            src={
-              fileNames ? fileNames.file : "data:image/jpeg;base64, " + image
-            }
-            // onClick={handleClickOpen}
-            alt="profile"
-            className={classes.avatar}
-          />
+          {
+            fileNames || image && image.url ?
+              <img src={
+                fileNames ? `${fileNames.file}` : `${image.url}?${Date.now()}`
+              }
+                alt="profile"
+                className={classes.avatar}
+              /> :
+              <div>
+                <BackupIcon className={classes.uploadIcon} />
+              </div>
+          }
         </Grid>
       </DialogContent>
       {photoType === "portfolio" && (
@@ -190,17 +200,17 @@ const PhotoDropZone = ({
                 </DialogContent>
               </div>
             ) : (
-              <div className={classes.dropzoneContainer}>
-                <DialogContent>
-                  <Typography
-                    variant="caption"
-                    className={classes.dropzoneText}
-                  >
-                    If you want to change the photo, drag and drop again
+                <div className={classes.dropzoneContainer}>
+                  <DialogContent>
+                    <Typography
+                      variant="caption"
+                      className={classes.dropzoneText}
+                    >
+                      If you want to change the photo, drag and drop again
                   </Typography>
-                </DialogContent>
-              </div>
-            )}
+                  </DialogContent>
+                </div>
+              )}
           </div>
         )}
       </Dropzone>

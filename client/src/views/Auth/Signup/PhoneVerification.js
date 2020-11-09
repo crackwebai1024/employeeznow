@@ -152,7 +152,6 @@ const PhoneVerification = ({
             countryCode: number.getCountryCode(),
           };
           setPhoneData(data);
-          debugger;
           actions.phoneVerifyRequestRequest(data);
           console.log(data, "data is sent!");
         } else {

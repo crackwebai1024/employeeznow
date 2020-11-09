@@ -67,22 +67,19 @@ const ProfilePhoto = ({ profile, actions, photo }) => {
   };
 
   const uploadPhoto = (photoType, sendPhoto, fileNames, title) => {
-    console.log("fileNames on upload ==> ", fileNames);
     const formData = new FormData();
     formData.append("id", user._id);
     formData.append("type", photoType);
     formData.append("content", sendPhoto);
-    formData.append("fname", fileNames);
+    formData.append("fname", sendPhoto.name);
     actions.uploadProfilePhoto({ formData, photoType });
   };
 
   const deletePhoto = (photoType, sendPhoto, fileNames, title) => {
-    console.log("fileNames on upload ==> ", fileNames);
     const formData = new FormData();
     formData.append("id", user._id);
     formData.append("type", photoType);
     formData.append("content", "");
-    formData.append("fname", "");
     actions.deleteProfilePhoto({ formData, photoType });
   };
 
@@ -94,6 +91,8 @@ const ProfilePhoto = ({ profile, actions, photo }) => {
       type: "photo",
     });
   }, []);
+
+  console.log(photo, "profile photo")
 
   return (
     <Grid item container direction={matchesXS ? "column-reverse" : "column"}>
@@ -113,9 +112,10 @@ const ProfilePhoto = ({ profile, actions, photo }) => {
 
       <Grid item className={classes.avatarContainer}>
         <Avatar
-          src={photo && "data:image/jpeg;base64, " + photo}
+          src={photo && `${photo.url}?${Date.now()}`}
           onClick={handleClickOpen}
-          alt="profile"
+          alt={photo && photo.fname}
+          onError={photo && true}
           className={classes.avatar}
         />
       </Grid>

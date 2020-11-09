@@ -44,7 +44,7 @@ const Steppers = ({ formValues, inputHandle, stripe}) => {
   const [loading, setLoading] = useState(false);
 
   const capture = async () => {
-    debugger
+    
   }
     const handleNext = (formdata) => {
       if (activeStep === 2) {

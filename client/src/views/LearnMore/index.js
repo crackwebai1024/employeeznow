@@ -319,9 +319,9 @@ const LearnMore = () => {
         </Grid>
       </Grid>
 
-      <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
+      {/* <Grid container ustify="center" spacing={0} style={{ marginTop: '100px' }}>
         <RegisterSection />
-      </Grid>
+      </Grid> */}
 
       <Grid container ustify="center" spacing={0} style={{ marginTop: '100px', paddingBottom: '6rem' }}>
         <Grid xs={12}>

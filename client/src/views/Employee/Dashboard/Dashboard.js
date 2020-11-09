@@ -37,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: "white",
   },
-  container: {},
+  container: {
+    paddingTop: '2rem'
+  },
   header: {
     background: "white",
     paddingBottom: "1rem",
