@@ -180,8 +180,8 @@ function Dashboard(props) {
             <Grid className={classes.name}>
               {basic &&
                 employeeData.basic.firstName +
-                  " " +
-                  employeeData.basic.lastName}
+                " " +
+                employeeData.basic.lastName}
               <Button
                 component={Link}
                 variant="outlined"
@@ -348,26 +348,29 @@ function Dashboard(props) {
                     </Fragment>
                   )}
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography className={classes.jobtitle}>
-                    {experience && experience.secondaryJob.title}
-                  </Typography>
-                  {experience && experience.secondaryJob && (
-                    <Fragment>
-                      <Typography className={classes.company}>
-                        {experience.secondaryJob.company}
-                      </Typography>
-                      <Typography className={classes.jobPeriod}>
-                        {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
-                        {experience.secondaryJob.current
-                          ? "Present"
-                          : experience.secondaryJob.endDate}
-                      </Typography>
-                    </Fragment>
-                  )}
-                </Grid>
+                {experience && experience.secondaryJob.title &&
+                  <Grid item xs={12} md={6}>
+                    <Typography className={classes.jobtitle}>
+                      {experience && experience.secondaryJob.title}
+                    </Typography>
+                    {experience && experience.secondaryJob && (
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {experience.secondaryJob.company}
+                        </Typography>
+                        <Typography className={classes.jobPeriod}>
+                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
+                                      {experience.secondaryJob.current
+                            ? "Present"
+                            : experience.secondaryJob.endDate}
+                        </Typography>
+                      </Fragment>
+                    )}
+                  </Grid>
+                }
                 {experience &&
                   experience.otherJob.map((job, i) => (
+                    job.title &&
                     <Grid item xs={12} md={6} key={i}>
                       <Typography className={classes.jobtitle}>
                         {job.title}
@@ -499,8 +502,8 @@ function Dashboard(props) {
       </Container>
     </Fragment>
   ) : (
-    <Fragment></Fragment>
-  );
+      <Fragment></Fragment>
+    );
 }
 
 const mapStateToProps = ({

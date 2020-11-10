@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -12,7 +13,6 @@ import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -109,11 +109,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1rem",
     marginBottom: "5rem",
   },
+  goback_button: {
+    float: 'right',
+    marginTop: "1rem",
+    marginBottom: "5rem",    
+  }
 }));
 
 ///*** This route should come from Dashboard (profession.js) because link has current profession data */
 const SkillsForm = ({
-  history,
   profession,
   actions,
   loading,
@@ -434,6 +438,12 @@ const SkillsForm = ({
     }
     actions.initiateSuccess();
   }, [success]);
+
+  const history = useHistory()
+  const onCancleHandle = () => {
+    const slug = user.slug;
+    history.push(`/employees/${slug}`)
+  }
 
   return (
     <Container maxWidth="sm" id="#">
@@ -876,16 +886,27 @@ const SkillsForm = ({
             </TextField>
           </Grid>
 
-          <Grid item>
+          <Grid container item xs={12}>
+            <Grid item xs={12} sm={6}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                onClick={(e) => handleSubmit(e)}
+                className={classes.button}
+              >
+                {!_.isEmpty(skill) ? "update" : "Add"}
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6}>
             <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              onClick={(e) => handleSubmit(e)}
-              className={classes.button}
-            >
-              {!_.isEmpty(skill) ? "update" : "Add"}
-            </Button>
+                variant="outlined"
+                onClick={onCancleHandle}
+                className={classes.goback_button}
+              >
+                Go Back
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Grid>

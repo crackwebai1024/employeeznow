@@ -77,7 +77,7 @@ export default function ContestSection() {
             <img
               src={`${process.env.PUBLIC_URL}/img/win.png`}
               alt="chef"
-              className={classes.image}
+              className={`${classes.image} animate__animated animate__bounce`}
             />
           </Paper>
         </Grid>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useHistory } from 'react-router-dom';
 import { connect } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -75,6 +76,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "2rem",
     marginBottom: "5rem",
   },
+  return_button: {
+    float: 'right',
+    marginTop: "2rem",
+    marginBottom: "5rem",    
+  },
   invalidMessage: {
     textAlign: "center",
     color: theme.palette.error.main,
@@ -117,10 +123,7 @@ const ProfessionDetailsForm = ({
   const [toDisabled, setToDisabled] = useState(false);
   const [toggleBox, setToggleBox] = useState(false);
 
-  // set error
-  // const [error, setError] = useState({
-  //   milesToWork: '',
-  // });
+  const history = useHistory()
 
   // style material-ui
   const classes = useStyles();
@@ -128,6 +131,7 @@ const ProfessionDetailsForm = ({
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   const user = JSON.parse(getUser());
+  const slug = user.slug;
 
   const units = [
     { value: "hourly" },
@@ -227,7 +231,7 @@ const ProfessionDetailsForm = ({
         return formData;
     }
   };
-  console.log(formData, "formdata");
+
   const onSubmit = (e) => {
     e.preventDefault();
     let data = {
@@ -236,6 +240,10 @@ const ProfessionDetailsForm = ({
     };
     actions.updatePreference(data);
   };
+
+  const goBackHandle = () => {
+    history.push(`/employees/${slug}`)
+  }
 
   return (
     !loading && (
@@ -385,8 +393,8 @@ const ProfessionDetailsForm = ({
                   </Grid>
                 </Grid>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </Grid>
 
             {/* random shift */}
@@ -435,8 +443,8 @@ const ProfessionDetailsForm = ({
                   </Grid>
                 </Grid>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </Grid>
 
             {/* new opportunity */}
@@ -483,19 +491,30 @@ const ProfessionDetailsForm = ({
                   </Grid>
                 </Grid>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </Grid>
 
-            <Grid item>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.button}
-              >
-                Save
-              </Button>
+            <Grid container item xs={12}>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Save
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="outlined"
+                  onClick={goBackHandle}
+                  className={classes.return_button}
+                >
+                  Go Back
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
 

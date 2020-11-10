@@ -350,15 +350,26 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                       ? 'This filed is required' : ''
                     }
                     type="number"
-                    required fullWidth margin="none" name="idealSalary.amount" label=""
-                    id="minimumexp" inputRef={register({ required: true })}
+                    required fullWidth margin="none" name="idealSalary.amount" label="Salary"
+                    inputRef={register({ required: true })}
                     InputLabelProps={{ shrink: true }} size="small"
                     SelectProps={{ native: true }} variant="outlined"
                   >
                   </TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  a
+                  <TextField
+                    select fullWidth margin="none" name="idealSalary.unit" label="Unit"
+                    inputRef={register()}
+                    InputLabelProps={{ shrink: true }}
+                    SelectProps={{ native: true }}
+                    size="small" variant="outlined"
+                  >
+                    <option value=""></option>
+                    <option value="hourly">hourly</option>
+                    <option value="weekely">weekely</option>
+                    <option value="annualy">annualy</option>
+                  </TextField>
                 </Grid>
               </Grid>
 

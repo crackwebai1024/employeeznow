@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
+import { useHistory } from 'react-router-dom';
 import { connect } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -70,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: "2rem",
-    marginBottom: "5rem",
   },
   invalidMessage: {
     textAlign: "center",
@@ -82,6 +82,11 @@ const useStyles = makeStyles((theme) => ({
   },
   close: {
     cursor: "pointer",
+  },
+  goback_button: {
+    marginTop: "2rem",
+    float: 'right',
+    marginBottom: '5rem'
   },
   menuItem: {
     maxHeight: "500px",
@@ -191,6 +196,7 @@ const ExperienceForm = ({
 
   // destructure
   const { primaryJob, secondaryJob } = formData;
+  const history = useHistory()
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
@@ -337,6 +343,10 @@ const ExperienceForm = ({
       [id]: { ...prevState[id], title: e.target.value },
     }));
   };
+
+  const goBackHandle = () => {
+    history.push(`/employees/${user.slug}`)
+  }
 
   console.log(primaryJob.title, "payload");
   return experience ? (
@@ -676,15 +686,26 @@ const ExperienceForm = ({
               </Button>
             </Grid>
           )}
-          <Grid item>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.button}
-            >
-              Save
-            </Button>
+          <Grid item container xs={12}>
+            <Grid item xs={12} sm={6}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button
+                variant="outlined"
+                onClick={goBackHandle}
+                className={classes.goback_button}
+              >
+                Go Back
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
 
@@ -723,8 +744,8 @@ const ExperienceForm = ({
       )}
     </Container>
   ) : (
-    ""
-  );
+      ""
+    );
 };
 
 const mapStateToProps = ({ employee: { experience, loading, success } }) => ({

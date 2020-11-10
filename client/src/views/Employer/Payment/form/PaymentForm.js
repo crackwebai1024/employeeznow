@@ -87,7 +87,7 @@ const PaymentForm = (props) => {
             })
     }
 
-    if(paid){
+    if (paid) {
         history.push(`/candidate/${slug}`)
     }
 
@@ -100,7 +100,6 @@ const PaymentForm = (props) => {
                 // direction="column"
                 justify="space-around"
                 alignItems="center"
-                style={{ height: "300px" }}
             >
                 <Grid container item xs={12}>
                     <Grid item xs={12} justify="space-between">
@@ -109,7 +108,7 @@ const PaymentForm = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography className={classes.description}>
-                        You have to pay $8 to get this profile
+                        Your total to purchase this profile will be $9.67
                     </Typography>
                 </Grid>
                 <Grid container item xs={12} spacing={3}>
@@ -185,27 +184,28 @@ const PaymentForm = (props) => {
                 <Typography className={classes.error}>
                     {error}
                 </Typography>
-            </Grid>
-            <Grid container item xs={12} spacing={3} className={classes.buttonWrapper}>
-                <Grid item xs={12} sm={6}>
-                    <Button
-                        type="submit"
-                        variant="outlined"
-                        color="secondary"
-                        className={classes.button}
-                    >
-                        cancel
+
+                <Grid container item xs={12} spacing={3} className={classes.buttonWrapper}>
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            type="submit"
+                            variant="outlined"
+                            color="secondary"
+                            className={classes.button}
+                        >
+                            cancel
                     </Button>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="secondary"
-                        className={classes.button}
-                    >
-                        PAY
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                        >
+                            PAY
                     </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </Box>
