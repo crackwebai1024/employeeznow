@@ -25,7 +25,7 @@ const invalidError = "This field is invalid!";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    marginRight: '2rem',
+    marginRight: "2rem",
     background: theme.palette.common.blue,
   },
   formControl: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     height: "150px",
   },
   heading1: {
-    fontSize: '30px',
+    fontSize: "30px",
     fontWeight: 600,
     marginBottom: "1.5rem",
   },
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 25,
   },
   linkContainer: {
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
   input: {
     display: "none",
@@ -91,12 +91,12 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
-    maxWidth: '500px',
+    maxWidth: "500px",
     position: "relative",
     background: theme.palette.common.white,
-    top: '5rem',
-    padding: '2rem',
-    margin: 'auto',
+    top: "5rem",
+    padding: "2rem",
+    margin: "auto",
   },
   stateError: {
     color: theme.palette.error.main,
@@ -137,10 +137,9 @@ const EmployeeForm = ({
     if (e.target.name == "status")
       return setVeteran({
         ...veteran,
-        status: !veteran.status
-      })
-
-    }
+        status: !veteran.status,
+      });
+  };
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
@@ -156,9 +155,8 @@ const EmployeeForm = ({
   }, [emailFailure]);
 
   useEffect(() => {
-    
-    window.scrollTo(0,0)
-    
+    window.scrollTo(0, 0);
+
     setValue("firstName", signupUser.firstName);
     setValue("lastName", signupUser.lastName);
     setValue("middleName", signupUser.middleName);
@@ -214,9 +212,19 @@ const EmployeeForm = ({
   }
 
   return (
-    <Container component="main" maxWidth="sm" style={{ paddingBottom: '10rem'}}>
-      <Grid container direction="column" justify="center" alignItems="center" className={classes.wrapper}>
-        <Grid item style={{ display: 'flex' }}>
+    <Container
+      component="main"
+      maxWidth="sm"
+      style={{ paddingBottom: "10rem" }}
+    >
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        className={classes.wrapper}
+      >
+        <Grid item style={{ display: "flex" }}>
           <Avatar className={classes.avatar}>
             <VpnKeyOutlinedIcon />
           </Avatar>

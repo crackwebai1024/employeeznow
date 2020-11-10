@@ -31,6 +31,7 @@ const searchEmployee = async (filter) => {
   const reservationsys = filter.systems[1];
   const employerID = filter.employer;
   console.log(lng, lat);
+  console.log("this is filter ==> ", filter);
   try {
     const employer = await Employer.findById(employerID);
     const professions = await Employee.aggregate([
@@ -89,7 +90,7 @@ const searchEmployee = async (filter) => {
           "employeeskill.shift": { $all: shift },
           "employeeskill.primaryJob": {
             title: primaryJob,
-            years: { $gt: minimumExp },
+            years: { $gte: minimumExp },
           },
         },
       },
