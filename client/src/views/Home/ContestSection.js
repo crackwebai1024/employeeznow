@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600
   },
   paper2: {
-    background: "#fcfcfc",
+    background: 'none',
     display: 'flex',
     borderRadius: '30px',
     marginTop: "30px",
     paddingTop: '20px',
+    marginRight: '50px',
     float: 'right',
     paddingBottom: "50px",
     [theme.breakpoints.down('sm')]: {
@@ -51,12 +52,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    width: '100%',
-    maxWidth: '400px',
-    maxHeight: '200px',
+    // width: '100%',
+    maxWidth: '600px',
+    maxHeight: '300px',
     cursor: 'pointer',
     transition: '0.2s',
-    padding: "10px",
+    // padding: "10px",
     '&:hover': {
     },
   },
@@ -74,7 +75,7 @@ export default function ContestSection() {
         <Grid item xs={12} md={6}>
           <Paper elevation={0} className={classes.paper2}>
             <img
-              src={`${process.env.PUBLIC_URL}/img/img2.png`}
+              src={`${process.env.PUBLIC_URL}/img/win.png`}
               alt="chef"
               className={classes.image}
             />

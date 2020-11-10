@@ -184,9 +184,9 @@ function Dashboard(props) {
           <Grid className={classes.section}>
             <Grid className={classes.name}>
               {basic &&
-                employeeData.basic.lastName +
+                employeeData.basic.firstName +
                   " " +
-                  employeeData.basic.firstName}
+                  employeeData.basic.lastName}
               <Button
                 component={Link}
                 variant="outlined"

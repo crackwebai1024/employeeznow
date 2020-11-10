@@ -15,7 +15,7 @@ import MovieFilterOutlinedIcon from '@material-ui/icons/MovieFilterOutlined';
 import DirectionsCarOutlinedIcon from '@material-ui/icons/DirectionsCarOutlined';
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import AutorenewOutlinedIcon from '@material-ui/icons/AutorenewOutlined';
-import { getUser, getFilterID } from '@helpers/auth-helpers';
+import { getUser, getRole } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
   contestContainer: {
@@ -131,6 +131,8 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const user = JSON.parse(getUser())
+  const role = getRole()
+
   return (
     <Box className={classes.HomeWrapper}>
       <Container width="sm" className={classes.mainContainer}>
@@ -152,15 +154,13 @@ const Home = () => {
                     <Typography variant="h2" className={classes.heading2}>
                       Get EmpoyeezNow in Just a few minutes!
                     </Typography>
-                    {
-                      !user && <Box>
                         <Box className={classes.getStartedButton}>
                           <MainButton
                             background="green"
                             pd={30} fontSize={20}
-                            label="Get Started"
-                            to="/signup"
-                            width="200px"
+                            label={user ? "Go To Dashboard" : "Get Started"}
+                            to={user ? `${role}s/${user.slug}` : "/signup"}
+                            width="250px"
                             hoverBack="#007000"
                             border="green"
                             color="white"
@@ -171,8 +171,6 @@ const Home = () => {
                         <Typography className={classes.heading3}>
                           FREE to Register
                     </Typography>
-                      </Box>
-                    }
                   </Grid>
                   {/* nested column 1/2 button */}
                 </Grid>

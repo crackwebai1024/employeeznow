@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.common.black
   },
+  contestContainer: {
+    background: "#FAFAFA",
+    textAlign: 'center',
+    width: '100%'
+  },
   veteranSectionTitle: {
     fontSize: "30px",
     fontWeight: 400,
