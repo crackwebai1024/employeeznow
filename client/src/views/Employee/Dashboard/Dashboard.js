@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { AccordionActions, Container } from "@material-ui/core";
+import { Container, Box } from "@material-ui/core";
 
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
@@ -9,23 +9,18 @@ import { connect } from "react-redux";
 import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
 import CardHeader from "@material-ui/core/CardHeader";
 import clsx from "clsx";
 import _ from "lodash";
-import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import ProfilePhoto from "./ProfilePhoto";
 import BackgroundPhoto from "./BackgroundPhoto";
 import Portfolio from "./Portfolio";
-import VideoGallery from "./VideoGallery";
 import { Link } from "react-router-dom";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Grid from "@material-ui/core/Grid";
 import Profession from "./Profession";
 
@@ -246,7 +241,7 @@ function Dashboard(props) {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
                   {preference && (
-                    <Typography className={classes.randomrole}>
+                    <Box className={classes.randomrole}>
                       <span>
                         <b className={classes.title}>Shift Availablity : </b>
                       </span>
@@ -260,7 +255,7 @@ function Dashboard(props) {
                           );
                         })}
                       </div>
-                    </Typography>
+                    </Box>
                   )}
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>

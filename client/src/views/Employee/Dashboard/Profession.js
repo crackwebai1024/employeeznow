@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Box } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import { spawn } from 'redux-saga/effects';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faEdit } from '@fortawesome/free-regular-svg-icons';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   container: {
-    border: `1px solid ${theme.palette.grey[200]}`,
-    boxShadow: theme.shadows[12],
+    // border: `1px solid ${theme.palette.grey[200]}`,
     padding: '2rem',
     marginTop: '1rem',
   },
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     fontSize: '0.9rem',
-    textAlign: 'left',
+    marginRight: '1rem',
     [theme.breakpoints.down('sm')]: {
       textAlign: 'left',
     },
@@ -82,10 +82,7 @@ const Profession = ({ profession }) => {
       container
       direction={'row'}
     >
-
-      {/* style */}
-
-      <Grid item xs={12}>
+      <Grid container item xs={12}>
         <Grid container>
           <Grid item xs={3} md={1}>
             <Typography className={classes.title}>Style</Typography>
@@ -126,39 +123,36 @@ const Profession = ({ profession }) => {
       <Grid item xs={12}>
         {shift && shift.length !== 0 && (
           <Grid container className={classes.wrapper} justify="flex-start">
-            {shift.map((sh, i) => (
-              <Grid
-                item
-                container
-                className={classes.wrapper}
-                justify="flex-start"
-                key={`${sh}${i}`}
-              >
-                <Grid item xs={3} md={5}>
-                  {i === 0 && (
-                    <Typography className={classes.title}>Shift</Typography>
-                  )}
-                </Grid>
-                <Grid item xs={9} md={7}>
-                  <Typography className={classes.item} variant="body1">
-                    {sh}{' '}
-                  </Typography>
-                </Grid>
+            <Grid
+              item
+              container
+              className={classes.wrapper}
+              justify="flex-start"
+            >
+              <Grid item xs={3} md={1}>
+                <Typography className={classes.title}>Shift</Typography>
               </Grid>
-            ))}
+              <Grid item xs={9} md={7}>
+                {shift.map((sh, i) => (
+                  <span className={classes.item}>
+                    {sh}
+                  </span>
+                ))}
+              </Grid>
+            </Grid>
           </Grid>
         )}
       </Grid>
       <hr style={{ width: "100%" }} />
       {/* wineKnowledge */}
       <Grid item container xs={12}>
-        <Grid item container xs={12} md={6}>
+        <Grid item container xs={12} sm={6}>
           {wineKnowledge && (
             <Grid item container className={classes.wrapper} justify="flex-start">
-              <Grid item xs={3} md={5}>
+              <Grid item xs={7} md={5}>
                 <Typography className={classes.title}>Wine Knowledge</Typography>
               </Grid>
-              <Grid item xs={9} md={7}>
+              <Grid item xs={5} md={7}>
                 <Typography className={classes.item} variant="body1">
                   {wineKnowledge}
                 </Typography>
@@ -166,17 +160,17 @@ const Profession = ({ profession }) => {
             </Grid>
           )}
         </Grid>
-        <hr style={{ width: "100%" }} />
+        {/* <hr style={{ width: "100%" }} /> */}
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} sm={6}>
           {cocktailKnowledge && (
             <Grid container className={classes.wrapper} justify="flex-start">
-              <Grid item xs={3} md={5}>
+              <Grid item xs={7} md={5}>
                 <Typography className={classes.title}>
                   Cocktail Knowldge
               </Typography>
               </Grid>
-              <Grid item xs={9} md={7}>
+              <Grid item xs={5} md={7}>
                 <Typography className={classes.item} variant="body1">
                   {cocktailKnowledge}
                 </Typography>
@@ -188,43 +182,41 @@ const Profession = ({ profession }) => {
 
       <hr style={{ width: "100%" }} />
       {/* systems */}
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
         {systems && systems.length !== 0 && (
           <Grid container className={classes.wrapper} justify="flex-start">
-            {systems.map((sy, i) => (
-              <Grid
-                item
-                container
-                className={classes.wrapper}
-                justify="flex-start"
-                key={`${sy}${i}`}
-              >
-                <Grid item xs={3} md={5}>
-                  {i === 0 && (
-                    <Typography className={classes.title}>
-                      POS &amp; Reservation
-                    </Typography>
-                  )}
-                </Grid>
-                <Grid item xs={9} md={7}>
+            <Grid
+              item
+              container
+              className={classes.wrapper}
+              justify="flex-start"
+            >
+              <Grid item xs={7} md={5}>
+                  <Typography className={classes.title}>
+                    POS &amp; Reservation
+                  </Typography>
+              </Grid>
+              <Grid item xs={5} md={7}>
+                {systems.map((sy, i) => (
                   <Typography className={classes.item} variant="body1">
                     {sy}{' '}
                   </Typography>
-                </Grid>
+                ))}
               </Grid>
-            ))}
+            </Grid>
+
           </Grid>
         )}
       </Grid>
       <hr style={{ width: "100%" }} />
       {/* milesToWork */}
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
         {milesToWork && (
           <Grid container className={classes.wrapper} justify="flex-start">
-            <Grid item xs={3} md={3}>
+            <Grid item xs={7} md={5}>
               <Typography className={classes.title}>Miles to Work</Typography>
             </Grid>
-            <Grid item xs={9} md={7}>
+            <Grid item xs={5} md={7}>
               <Typography className={classes.item} variant="body1">
                 {milesToWork} miles
               </Typography>

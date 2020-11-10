@@ -10,9 +10,9 @@ import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 import { getUser } from '@helpers/auth-helpers';
 import _ from 'lodash'
-import Alert from '@material-ui/lab/Alert';
 import EditEmployeeAccountForm from '../form/EditEmployeeAccountForm';
 import ChangePasswordForm from '../../Auth/Password/ChangePasswordForm';
+import { successMessage, errorMessage } from '@helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heading1: {
     fontSize: '2rem',
+    marginTop: '5rem',
     textTransform: 'uppercase',
     marginBottom: '1.5rem',
     [theme.breakpoints.down('xs')]: {
@@ -100,7 +101,7 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, change
   };
 
   useEffect(() => {
-    if(changepassword == "SUCCESS"){
+    if (changepassword == "SUCCESS") {
       setOpenPassword(false)
     }
   }, [changepassword])
@@ -123,20 +124,16 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, change
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      actions.initiateSuccess()
-    }, 3000);
+    if (updateSuccess == "SUCCESS") {
+      return successMessage("Profile update is successed!")
+    } else if (updateSuccess == "FAILURE") {
+      return errorMessage("Profile update is failed!")
+    }
   }, [updateSuccess])
 
   return (
     !_.isEmpty(employeeData) ?
       <Container className={classes.container}>
-        {
-          updateSuccess == "SUCCESS" && <Alert severity="success">Profile update is successed!</Alert>
-        }
-        {
-          updateSuccess == "FAILURE" && <Alert severity="warning">Profile update is failed!</Alert>
-        }
         <Grid container direction="column" alignItems="center">
           <Grid item>
             <Typography variant="h1" className={classes.heading1}>

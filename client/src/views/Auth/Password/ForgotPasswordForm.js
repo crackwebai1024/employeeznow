@@ -15,8 +15,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { actions as authActions } from '@store/auth';
-import Alert from '@material-ui/lab/Alert';
 import PasswordInput from '@components/PasswordInput'
+import { successMessage } from '@helpers/utils';
 import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,7 +88,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
 
   return (
     <Container>
-      {success && <Alert severity="success">We've sent the resetpassword url in this email. Please check this email.</Alert>}
+      {success && successMessage("Cool")}
       <Grid container direction="column" className={classes.container} alignItems="center">
         <Grid item>
           <Avatar className={classes.avatar}>

@@ -21,8 +21,7 @@ import { jobTypes, roles } from "../professionTypes";
 import { getUser } from "@helpers/auth-helpers";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import Alert from "@material-ui/lab/Alert";
+import { successMessage, errorMessage } from '@helpers/utils'
 
 // import {
 //   loadProfessionDetails,
@@ -32,13 +31,13 @@ import Alert from "@material-ui/lab/Alert";
 // set style
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    marginTop: "1.5rem",
+    marginTop: "5rem",
     marginBottom: "1.5rem",
     fontSize: "2rem",
     color: theme.palette.primary.main,
   },
   formContainer: {
-    marginTop: "3rem",
+    // marginTop: "1rem",
   },
   textContainer: {
     marginTop: "2rem",
@@ -178,8 +177,10 @@ const ExperienceForm = ({
   useEffect(() => {
     if (success) {
       setShowAlert(1);
+      successMessage("Successfully Saved!")
     } else if (success === false) {
       setShowAlert(2);
+      successMessage("Sorry! Saving is failed!")
     } else {
       setShowAlert(0);
     }
@@ -351,8 +352,6 @@ const ExperienceForm = ({
           </Typography>
         </Grid>
       </Grid>
-      {showAlert === 1 && <Alert severity="success">Successfully saved!</Alert>}
-      {showAlert === 2 && <Alert severity="error">Sorry! Saving failed!</Alert>}
       <form onSubmit={(e) => onSubmit(e)} className={classes.formContainer}>
         <Grid
           container
@@ -590,7 +589,6 @@ const ExperienceForm = ({
                   <Grid container>
                     <Grid item xs={12} sm={3}>
                       <TextField
-                        required
                         select
                         label="Job Title"
                         id="secondaryJob"

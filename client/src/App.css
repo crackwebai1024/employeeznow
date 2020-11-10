@@ -10,3 +10,25 @@
 .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
   border-color: "green" !important
 }
+
+.Toastify__toast-container--top-center {
+  top: 3rem;
+}
+
+.Toastify__toast {
+  border-radius: 5px;
+  min-height: 0px;
+  top: 50%;
+}
+.Toastify__toast-body {
+  margin : 5px;
+}
+
+.Toastify__toast--success {
+  background: #edf7ed;
+  color : #1e4620;
+}
+
+.Toastify__close-button {
+  display: none;
+}

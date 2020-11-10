@@ -11,11 +11,16 @@ import Footer from "@components/Footer";
 import theme from "@helpers/Theme";
 import AppRouter from "@router/AppRouter";
 import { getBoxSize } from "@helpers/utils";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
+
+toast.configure()
 
 function App(props) {
   const [value, setValue] = useState(1);
   const isAuthenticated = localStorage.getItem("USER") ? true : false;
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -26,8 +31,8 @@ function App(props) {
             slug=""
             value={value}
             setValue={setValue}
-            // selectedIndex={selectedIndex}
-            // setSelectedIndex={setSelectedIndex}
+          // selectedIndex={selectedIndex}
+          // setSelectedIndex={setSelectedIndex}
           />
           <Box minHeight={getBoxSize()} style={{ background: "#f3f2ef" }}>
             <AppRouter />
@@ -39,6 +44,17 @@ function App(props) {
           />
         </Router>
       </ThemeProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover>
+      </ToastContainer>
     </div>
   );
 }

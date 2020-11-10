@@ -115,7 +115,6 @@ const ProfilePhoto = ({ profile, actions, photo }) => {
           src={photo && `${photo.url}?${Date.now()}`}
           onClick={handleClickOpen}
           alt={photo && photo.fname}
-          onError={photo && true}
           className={classes.avatar}
         />
       </Grid>
