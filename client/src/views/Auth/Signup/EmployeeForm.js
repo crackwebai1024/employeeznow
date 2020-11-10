@@ -139,8 +139,11 @@ const EmployeeForm = ({
         ...veteran,
         status: !veteran.status
       })
-
-    }
+    return setVeteran({
+      ...veteran,
+      [e.target.name]: e.target.value
+    })
+  }
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
@@ -156,9 +159,9 @@ const EmployeeForm = ({
   }, [emailFailure]);
 
   useEffect(() => {
-    
-    window.scrollTo(0,0)
-    
+
+    window.scrollTo(0, 0)
+
     setValue("firstName", signupUser.firstName);
     setValue("lastName", signupUser.lastName);
     setValue("middleName", signupUser.middleName);
@@ -214,7 +217,7 @@ const EmployeeForm = ({
   }
 
   return (
-    <Container component="main" maxWidth="sm" style={{ paddingBottom: '10rem'}}>
+    <Container component="main" maxWidth="sm" style={{ paddingBottom: '10rem' }}>
       <Grid container direction="column" justify="center" alignItems="center" className={classes.wrapper}>
         <Grid item style={{ display: 'flex' }}>
           <Avatar className={classes.avatar}>
@@ -521,7 +524,7 @@ const EmployeeForm = ({
                     </Grid>
                     {/* formData.append("fname", e.target.files[0].name) */}
                     <TextField
-                      type="text"
+                      type="number"
                       name="veteranId"
                       helperText={veteranError ? veteranError : ""}
                       error={veteranError ? true : false}
@@ -536,8 +539,8 @@ const EmployeeForm = ({
                     />
                   </Grid>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </Grid>
             </Grid>
             {emailError && (
@@ -569,8 +572,8 @@ const EmployeeForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-              ""
-            )}
+                ""
+              )}
           </Grid>
         </form>
 

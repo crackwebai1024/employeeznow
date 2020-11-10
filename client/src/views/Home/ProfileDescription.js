@@ -58,19 +58,25 @@ const ProfileDescription = () => {
     </Grid>
     <Grid item xs={12} md={6}>
       <Grid className={classes.ContainerLeft}>
-        <img src={`${process.env.PUBLIC_URL}/img/img1.svg`} className={classes.image}/>
+      <div style={{padding:"75% 0 0 0", position:"relative"}}>
+        <iframe src="https://player.vimeo.com/video/7743003" 
+          style={{position:"absolute", top:"0", left:"0", width:"100%", height:"100%"}} 
+          frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+        </iframe>
+      </div>
+      <script src="https://player.vimeo.com/api/player.js"></script>
       </Grid>
     </Grid>
-    <Grid item xs={12} md={6}>
-      <Grid className={classes.ContainerRight} style={{ marginTop: '50px' }}>
+    <Grid item xs={12} md={6} className={classes.col_center}>
+      <Box style={{ margin: 'auto' }}>
         <Typography className={classes.profileSubtitle}>
           <b>AT-WORK VIDEO </b>that shows off your skills
-      </Typography>
+        </Typography>
         <Typography className={classes.profileSubdescription}>
           Don't let a resume be the only thing that tells your story. You can add videos of you at work,
           performing at your best and allowing hiring managers to see what you can do for them.
-      </Typography>
-      </Grid>
+        </Typography>
+      </Box>
     </Grid>
     <Grid item xs={12} md={6} className={classes.col_center}>
       <Box style={{ margin: 'auto' }}>
