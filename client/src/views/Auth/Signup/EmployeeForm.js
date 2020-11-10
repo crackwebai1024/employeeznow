@@ -137,19 +137,13 @@ const EmployeeForm = ({
     if (e.target.name == "status")
       return setVeteran({
         ...veteran,
-<<<<<<< HEAD
         status: !veteran.status,
       });
-  };
-=======
-        status: !veteran.status
-      })
     return setVeteran({
       ...veteran,
-      [e.target.name]: e.target.value
-    })
-  }
->>>>>>> 30ceb35f6b0a8e0772f3f663db660f343923548b
+      [e.target.name]: e.target.value,
+    });
+  };
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
@@ -165,12 +159,7 @@ const EmployeeForm = ({
   }, [emailFailure]);
 
   useEffect(() => {
-<<<<<<< HEAD
     window.scrollTo(0, 0);
-=======
-
-    window.scrollTo(0, 0)
->>>>>>> 30ceb35f6b0a8e0772f3f663db660f343923548b
 
     setValue("firstName", signupUser.firstName);
     setValue("lastName", signupUser.lastName);
@@ -227,7 +216,6 @@ const EmployeeForm = ({
   }
 
   return (
-<<<<<<< HEAD
     <Container
       component="main"
       maxWidth="sm"
@@ -241,11 +229,6 @@ const EmployeeForm = ({
         className={classes.wrapper}
       >
         <Grid item style={{ display: "flex" }}>
-=======
-    <Container component="main" maxWidth="sm" style={{ paddingBottom: '10rem' }}>
-      <Grid container direction="column" justify="center" alignItems="center" className={classes.wrapper}>
-        <Grid item style={{ display: 'flex' }}>
->>>>>>> 30ceb35f6b0a8e0772f3f663db660f343923548b
           <Avatar className={classes.avatar}>
             <VpnKeyOutlinedIcon />
           </Avatar>
@@ -565,8 +548,8 @@ const EmployeeForm = ({
                     />
                   </Grid>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </Grid>
             </Grid>
             {emailError && (
@@ -598,8 +581,8 @@ const EmployeeForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-                ""
-              )}
+              ""
+            )}
           </Grid>
         </form>
 
