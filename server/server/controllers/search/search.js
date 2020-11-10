@@ -16,7 +16,7 @@ const searchEmployee = async (filter) => {
   const employerID = filter.employer;
   let rate = 0;
   const { amount, unit } = filter.idealSalary;
-  if (idealSalary.amount !== undefined) {
+  if (amount !== undefined) {
     switch (unit) {
       case "hourly":
         rate = amount;
