@@ -2,22 +2,6 @@ import Employee from "../../models/employee/basic.model";
 import Employer from "../../models/employer/basic.model";
 
 const searchEmployee = async (filter) => {
-  // {
-  //   searchAddress: { street: 'WorldStreet', state: 'NewYork', zipcode: '92303' },
-  //   locations: { type: 'Point', coordinates: [ -99.066067, 39.390897 ] },
-  //   shift: [ 'Lunch', 'Dinner' ],
-  //   systems: [ 'Clover', 'Hostme' ],
-  //   _id: 5f95aeec6a169d513c59dff8,
-  //   primary: 'Director of Ops',
-  //   secondary: 'Executive Chef',
-  //   style: 'Fast Food',
-  //   cuisine: 'Seafood',
-  //   wineKnowledge: 'Barefoot',
-  //   cocktailKnowledge: 'White Claw',
-  //   employer: 5f91b625021e1f2644148505,
-  //   createdAt: 2020-10-25T16:59:24.845Z,
-  //   __v: 2
-  // }
   const lat = filter.locations.coordinates[0];
   const lng = filter.locations.coordinates[1];
   const primaryJob = filter.primary;
@@ -31,6 +15,7 @@ const searchEmployee = async (filter) => {
   const reservationsys = filter.systems[1];
   const employerID = filter.employer;
   console.log(lng, lat);
+  console.log("this is filter ==> ", filter);
   try {
     const employer = await Employer.findById(employerID);
     const professions = await Employee.aggregate([
@@ -87,10 +72,8 @@ const searchEmployee = async (filter) => {
       {
         $match: {
           "employeeskill.shift": { $all: shift },
-          "employeeskill.primaryJob": {
-            title: primaryJob,
-            years: { $gt: minimumExp },
-          },
+          "employeeskill.primaryJob.title": primaryJob,
+          "employeeskill.primaryJob.years": { $gte: minimumExp },
         },
       },
       {
