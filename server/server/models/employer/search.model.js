@@ -120,6 +120,13 @@ const SearchFilterSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  idealSalary: {
+    amount: Number,
+    unit: {
+      type: String,
+      enum: { values: ["hourly", "weekly", "annually"] },
+    },
+  },
   name: String, //serach query name
   employer: {
     type: mongoose.Schema.ObjectId,

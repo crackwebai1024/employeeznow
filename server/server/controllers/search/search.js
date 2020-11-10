@@ -14,8 +14,24 @@ const searchEmployee = async (filter) => {
   const operatingsys = filter.systems[0];
   const reservationsys = filter.systems[1];
   const employerID = filter.employer;
+  let rate = 0;
+  const { amount, unit } = filter.idealSalary;
+  if (idealSalary.amount !== undefined) {
+    switch (unit) {
+      case "hourly":
+        rate = amount;
+        break;
+      case "weekly":
+        rate = amount / 40;
+        break;
+      case "annually":
+        rate = amount / 1920;
+        break;
+    }
+  }
   console.log(lng, lat);
   console.log("this is filter ==> ", filter);
+  console.log(shift);
   try {
     const employer = await Employer.findById(employerID);
     const professions = await Employee.aggregate([
@@ -66,14 +82,77 @@ const searchEmployee = async (filter) => {
           diffdist: {
             $subtract: ["$distBetweenEmp", "$employeeskill.milesToWork"],
           },
+          // get the intersection of shifts between filter and employee
+          commonShift: { $setIntersection: ["$employeeskill.shift", shift] },
         },
       },
       { $match: { diffdist: { $lte: 0 } } },
       {
         $match: {
-          "employeeskill.shift": { $all: shift },
+          // check the intersection exists
+          commonShift: { $exists: true },
           "employeeskill.primaryJob.title": primaryJob,
           "employeeskill.primaryJob.years": { $gte: minimumExp },
+        },
+      },
+      {
+        $addFields: {
+          ratediff: {
+            $switch: {
+              branches: [
+                {
+                  case: {
+                    $eq: ["$employeepreference.idealSalary.unit", "hourly"],
+                  },
+                  then: {
+                    $abs: {
+                      $subtract: [
+                        "$employeepreference.idealSalary.amount",
+                        rate,
+                      ],
+                    },
+                  },
+                },
+                {
+                  case: {
+                    $eq: ["$employeepreference.idealSalary.unit", "weekly"],
+                  },
+                  then: {
+                    $abs: {
+                      $subtract: [
+                        {
+                          $divide: [
+                            "$employeepreference.idealSalary.amount",
+                            40,
+                          ],
+                        },
+                        rate,
+                      ],
+                    },
+                  },
+                },
+                {
+                  case: {
+                    $eq: ["$employeepreference.idealSalary.unit", "weekly"],
+                  },
+                  then: {
+                    $abs: {
+                      $subtract: [
+                        {
+                          $divide: [
+                            "$employeepreference.idealSalary.amount",
+                            1920,
+                          ],
+                        },
+                        rate,
+                      ],
+                    },
+                  },
+                },
+              ],
+              default: undefined,
+            },
+          },
         },
       },
       {
@@ -108,6 +187,38 @@ const searchEmployee = async (filter) => {
                     $add: [{ $multiply: ["$employeeskill.style.years", 1.5] }],
                   },
                   else: 0,
+                },
+              },
+              // add points if hourly rate fits
+              {
+                $switch: {
+                  branches: [
+                    {
+                      case: {
+                        $lte: ["$ratediff", rate * 0.05],
+                      },
+                      then: 6,
+                    },
+                    {
+                      case: {
+                        $and: [
+                          { $gt: ["$ratediff", rate * 0.05] },
+                          { $lte: ["$ratediff", rate * 0.1] },
+                        ],
+                      },
+                      then: 4,
+                    },
+                    {
+                      case: {
+                        $and: [
+                          { $gt: ["$ratediff", rate * 0.1] },
+                          { $lte: ["$ratediff", rate * 0.15] },
+                        ],
+                      },
+                      then: 2,
+                    },
+                  ],
+                  default: 0,
                 },
               },
               // Add points if cuisine matched(years x 1.0)
