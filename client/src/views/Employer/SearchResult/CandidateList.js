@@ -197,7 +197,7 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
             }}
             className={classes.button}
           >
-            MORE
+            VIEW THIS PROFILE
           </Link>
         </div>
       </CardActions>

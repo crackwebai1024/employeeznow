@@ -24,6 +24,25 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: theme.palette.primary.main,
   },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.common.blue,
+    margin: 'auto',
+    marginTop: '2rem',
+    marginBottom: '2rem',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
+  },
+  login_title: {
+    margin: 'auto',
+    marginTop: '2rem',
+    marginBottom: '2rem',
+    textDecoration: "none",
+    fontWeight: "300",
+    fontSize: '0.875rem',
+    color: theme.palette.common.blue
+  },
   signupCard: {
     textAlign: 'center',
     maxWidth: 400,
@@ -100,17 +119,23 @@ const Signup = () => {
 
               <p>Start your next chapter</p>
             </CardContent>
-              <Button
-                component={Link}
-                to="/signup/employee"
-                variant="outlined"
-                color="secondary"
-                className={classes.button}
-              >
-                Register as candidate
+            <Button
+              component={Link}
+              to="/signup/employee"
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+            >
+              Register as candidate
               </Button>
           </Card>
         </Grid>
+      </Grid>
+
+      <Grid container item xs={12}>
+        <Link to="/login" className={classes.link}>
+          Already on EmployeezNow? <b>Log In</b>
+        </Link>
       </Grid>
     </Container>
   );

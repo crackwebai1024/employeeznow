@@ -15,7 +15,7 @@ import CandidateDocuments from './CandidateDocuments'
 import ProfilePhoto from '../../Employee/Dashboard/ProfilePhoto';
 import BackgourndPhoto from '../../Employee/Dashboard/BackgroundPhoto';
 import CallToAction from '@components/CallToAction';
-import Alert from '@material-ui/lab/Alert';
+import { successMessage, errorMessage} from '@helpers/utils';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
@@ -127,7 +127,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [value, setValue] = React.useState(4.5);
+  const [value, setValue] = React.useState(0);
   const currentFilterID = getFilterID()
   /* eslint-disable react/jsx-one-expression-per-line */
 
@@ -140,11 +140,12 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
   }, [])
 
   useEffect(() => {
-    if (askInterestStatus) {
-      setTimeout(() => {
-        actions.askInterestStatusHidden()
-      }, 3000);
+    if(askInterestStatus == "SUCCESS") {
+      successMessage("Message is sent successfully!")
+    } else if(askInterestStatus == "FAILURE") {
+      errorMessage("Sending message is failed!")
     }
+    actions.askInterestStatusHidden()
   }, [askInterestStatus])
 
   // ask about interested request
@@ -173,12 +174,6 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
   return (
     <Container className={classes.container} maxWidth="md">
       {/* Dashboard whole page column root */}
-      {
-        askInterestStatus == "SUCCESS" && <Alert severity="success" className={classes.alert}>Success</Alert>
-      }
-      {
-        askInterestStatus === "FAILURE" && <Alert severity="error" className={classes.alert}>Failure</Alert>
-      }
 
       <Grid className={classes.header}>
         <BackgourndPhoto />
@@ -204,12 +199,15 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
             <Typography className={classes.basicTitle}>
               {purchased && `Email : ${basic.email}`}
             </Typography>
+            <Typography className={classes.basicTitle}>
+              {purchased && `Phone : ${basic.cell}`}
+            </Typography>
           </Grid>
-          {/* <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <Box component="fieldset" mb={3} borderColor="transparent">
               <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly size="large" />
             </Box>
-          </Grid> */}
+          </Grid>
         </Grid>
         {skill &&
           <Fragment>

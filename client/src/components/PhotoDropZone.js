@@ -94,7 +94,7 @@ const PhotoDropZone = ({
   const [titleError, setTitleError] = useState("");
 
   useEffect(() => {
-    if(image) {
+    if (image) {
       setTitle(image.description)
     }
   }, [image])
@@ -143,7 +143,7 @@ const PhotoDropZone = ({
 
   console.log("fileNames ==> ", fileNames, image);
   return (
-    <Dialog open={open} onClose={handleClose} aria-labelledby="dialog-title">
+    <Dialog open={open ? true : false} onClose={handleClose} aria-labelledby="dialog-title">
       <DialogTitle id="dialog-title">
         <Typography>{headerTitle}</Typography>
         {fileNames &&

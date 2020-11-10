@@ -18,11 +18,11 @@ import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
 import { FormControl } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
+import { successMessage, errorMessage } from '@helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    marginTop: "1.5rem",
+    marginTop: "5rem",
     marginBottom: "1.5rem",
     fontSize: "2rem",
     color: theme.palette.primary.main,
@@ -54,9 +54,6 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "underline",
     marginBottom: "1rem",
     cursor: "pointer",
-  },
-  formContainer: {
-    marginTop: "3rem",
   },
   textContainer: {
     marginTop: "2rem",
@@ -150,15 +147,13 @@ const ProfessionDetailsForm = ({
 
   useEffect(() => {
     if (success) {
-      setShowAlert(1);
+      successMessage("Successfully saved!")
     } else if (success === false) {
-      setShowAlert(2);
+      errorMessage("Sorry! Saving is failed!")
     } else {
       setShowAlert(0);
     }
-    setTimeout(() => {
-      actions.initiateSuccess();
-    }, 5000);
+    actions.initiateSuccess();
   }, [success]);
 
   const onChange = ({ target: { id, name, value, checked } }) => {
@@ -262,13 +257,7 @@ const ProfessionDetailsForm = ({
             </Typography>
           </Grid>
         </Grid>
-        {showAlert === 1 && (
-          <Alert severity="success">Successfully saved!</Alert>
-        )}
-        {showAlert === 2 && (
-          <Alert severity="error">Sorry! Saving failed!</Alert>
-        )}
-        <form onSubmit={onSubmit} className={classes.formContainer}>
+        <form onSubmit={onSubmit}>
           <Grid
             container
             direction="column"

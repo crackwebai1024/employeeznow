@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
   no_result: {
     fontSize: '20px',
-    textAlign:'center',
+    textAlign: 'center',
     paddingTop: '100px'
   },
   filterList: {
@@ -132,6 +132,12 @@ const useStyles = makeStyles((theme) => ({
   titleContainer: {
     marginLeft: '2%',
   },
+  total_count: {
+    marginLeft: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '0rem'
+    }
+  }
 }));
 
 const SearchResults = (props) => {
@@ -269,6 +275,15 @@ const SearchResults = (props) => {
         </SwipeableDrawer>
       </Box>
       <Container className={classes.container}>
+        <Grid container justify="center">
+          <Grid item sm={12} md={4}>
+          </Grid>
+          <Grid item sm={12} md={8}>
+            <Box className={classes.total_count}>
+              {filterResult.length}
+            </Box>
+          </Grid>
+        </Grid>
         <Grid container justify="center" >
           <Grid item sm={12} md={4}>
             <Box className={classes.rightSection}>

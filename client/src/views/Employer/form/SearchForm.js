@@ -17,7 +17,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
-import Alert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import _ from 'lodash';
 import { getUser } from '@helpers/auth-helpers';
@@ -147,8 +146,6 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
     }
     setCuisine(value)
   }
-
-  console.log(searchFormData, "searchFormData")
 
   return (
     <Fragment>
@@ -345,6 +342,26 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                 </Typography>
               </Grid>
 
+              <Grid container xs={12} item >
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    error={errors.minimumexp && errors.minimumexp ? true : false}
+                    helperText={errors.minimumexp && errors.minimumexp
+                      ? 'This filed is required' : ''
+                    }
+                    type="number"
+                    required fullWidth margin="none" name="idealSalary.amount" label=""
+                    id="minimumexp" inputRef={register({ required: true })}
+                    InputLabelProps={{ shrink: true }} size="small"
+                    SelectProps={{ native: true }} variant="outlined"
+                  >
+                  </TextField>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  a
+                </Grid>
+              </Grid>
+
               <Grid item xs={12}>
                 <Autocomplete
                   multiple fullWidth
@@ -439,7 +456,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                 <TextField
                   error={errors.pos && errors.pos ? true : false}
                   helperText={errors.pos && errors.pos ? 'This filed is required' : ''}
-                  select fullWidth margin="none" name="pos" label="POS"
+                  select fullWidth margin="none" name="pos" label="POS EXPERIENCE"
                   InputLabelProps={{ shrink: true }} variant='outlined'
                   SelectProps={{ native: true }} size="small" inputRef={register()}
                 >
@@ -459,7 +476,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                     ? 'This filed is required'
                     : ''
                   }
-                  select fullWidth margin="none" name="reservation" label="Reservation"
+                  select fullWidth margin="none" name="reservation" label="RESERVATION SYSTEM EXPERIENCE"
                   InputLabelProps={{ shrink: true }} variant="outlined"
                   SelectProps={{ native: true }} size="small" inputRef={register()}
                 >
@@ -486,7 +503,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
 
               <Grid item>
                 <Typography variant="caption">
-                  This filter name. You can use the same filter next time!
+                  Name this search filter to save it for later use.
               </Typography>
                 <TextField
                   error={errors.name && errors.name ? true : false}

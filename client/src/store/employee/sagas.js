@@ -24,6 +24,7 @@ function* getUserData({ payload }) {
     const res = yield call(EmployeeAPI.getUserData, queryString);
     if (res && res.data) {
       yield put(types.getUserDataSuccess(res.data));
+      yield put(types.initiateSuccess());
     }
   } catch {}
 }
@@ -162,7 +163,6 @@ function* onGetPortfolio({ payload }) {
   try {
     let queryString = `?id=${payload.id}`;
     const res = yield call(EmployeeAPI.getPortfolioImage, queryString);
-    debugger
     if (res && res.data) {
       let portfolios = res.data.portfolio.portfolios;
       yield put(types.success({ type: "portfolios", data: portfolios }));
@@ -212,7 +212,6 @@ function* onGetUserDocument({ payload }) {
   //     })
 
   // let document = {}
-  // debugger
   // document.append(response.map((res, i) => {
   //   return {
   //     [documentArray[i]]: _arrayBufferToBase64(res.content.Body.data),
@@ -220,7 +219,6 @@ function* onGetUserDocument({ payload }) {
   // }))
   yield put(types.getUserDocumentSuccess());
   // } catch {
-  // debugger
   // }
 }
 

@@ -16,9 +16,9 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { actions as authActions } from '@store/auth';
-import Alert from '@material-ui/lab/Alert';
 import PasswordInput from '@components/PasswordInput'
 import { bindActionCreators } from 'redux';
+import { successMessage, errorMessage } from '@helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -83,16 +83,15 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
 
   useEffect(() => {
     if (resetPassword == "SUCCESS") {
-      setSuccess(true)
+      successMessage("Successfully changed your password.")
     } else if (resetPassword == "FAILURE") {
       setError("Something Wrong!")
-      setSuccess(false)
+      // errorMessage("")
     }
   }, [resetPassword])
 
   return (
     <Container>
-      {success && <Alert severity="success">This is a success alert — check it out!</Alert>}
       <Grid container direction="column" className={classes.container} alignItems="center">
         <Grid item>
           <Avatar className={classes.avatar}>

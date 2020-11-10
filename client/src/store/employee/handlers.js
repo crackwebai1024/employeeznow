@@ -30,7 +30,7 @@ export const getUserDocumentSuccess = (state, { payload }) => ({
 export const getUserDataSuccess = (state, { payload }) => ({
   ...state,
   employeeData: payload,
-  success: true,
+  // success: true,
 });
 
 export const loadSkillData = (state, { payload }) => ({
