@@ -21,6 +21,7 @@ const initialState = {
   isEmailCodeError: "",
   changepassword: null,
   resetPassword: null,
+  sendMessage: "NONE"
 };
 
 export const signupRequest = (state, { payload }) => ({
@@ -225,6 +226,21 @@ export const changePasswordFailure = (state) => ({
 export const saveVeteranCard = (state, { payload }) => ({
   ...state,
   veteranCardData: payload,
+});
+
+export const sendContactMessage = (state, { payload }) => ({
+  ...state,
+  sendMessage: "NONE"
+});
+
+export const sendMessageSuccess = (state, { payload }) => ({
+  ...state,
+  sendMessage: "SUCCESS"
+});
+
+export const sendMessageFailure = (state, { payload }) => ({
+  ...state,
+  sendMessage: "FAILURE"
 });
 
 export default initialState;

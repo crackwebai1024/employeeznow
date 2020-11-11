@@ -12,9 +12,9 @@ import {
 import { actions, actions as types } from "./index";
 import * as AuthAPI from "@services/AuthAPI";
 
-function* onAuthenticate({ payload }) {}
+function* onAuthenticate({ payload }) { }
 
-function* onIsAuthenticated() {}
+function* onIsAuthenticated() { }
 
 function* onLogout() {
   yield put(types.logoutSuccess());
@@ -71,9 +71,8 @@ function* onSignupConfirm({ payload }) {
         const response = yield call(AuthAPI.onUploadVeteranCard, data);
       }
 
-      window.location.pathname = `employees/${
-        res.data[payload.confirmData.role].slug
-      }`;
+      window.location.pathname = `employees/${res.data[payload.confirmData.role].slug
+        }`;
       yield put(types.signupConfirmSuccess(res.data.employee));
     }
   } catch {
@@ -162,6 +161,17 @@ function* onChangePassword({ payload }) {
   }
 }
 
+function* onSendMessage({ payload }) {
+  try {
+    const res = yield call(AuthAPI.onSendMessage, payload);
+    if(res && res.data) {
+      yield put(types.sendMessageSuccess())
+    }
+  } catch {
+    yield put(types.sendMessageFailure())
+  }
+}
+
 const authSagas = [
   takeEvery(types.loginRequest, onLogin),
   takeEvery(types.signupRequest, onEmailVerify),
@@ -174,6 +184,7 @@ const authSagas = [
   takeEvery(types.forgotPasswordRequest, onForgotPassword),
   takeEvery(types.resetPasswordRequest, onResetPassword),
   takeEvery(types.changePasswordRequest, onChangePassword),
+  takeEvery(types.sendContactMessage, onSendMessage)
 ];
 
 export function* watchUnauthorized() {
