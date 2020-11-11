@@ -11,11 +11,11 @@ import Footer from "@components/Footer";
 import theme from "@helpers/Theme";
 import AppRouter from "@router/AppRouter";
 import { getBoxSize } from "@helpers/utils";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
-toast.configure()
+toast.configure();
 
 function App(props) {
   const [value, setValue] = useState(1);
@@ -31,8 +31,8 @@ function App(props) {
             slug=""
             value={value}
             setValue={setValue}
-          // selectedIndex={selectedIndex}
-          // setSelectedIndex={setSelectedIndex}
+            // selectedIndex={selectedIndex}
+            // setSelectedIndex={setSelectedIndex}
           />
           <Box minHeight={getBoxSize()} style={{ background: "#f3f2ef" }}>
             <AppRouter />
@@ -53,8 +53,8 @@ function App(props) {
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover>
-      </ToastContainer>
+        pauseOnHover
+      ></ToastContainer>
     </div>
   );
 }

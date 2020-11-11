@@ -1,5 +1,6 @@
 import Employer from "../../../models/employer/basic.model";
 import CRUD from "../../utils/general";
+import extend from "lodash/extend";
 
 const find_ByID = async (req, res) => {
   let role = "_id";
@@ -11,6 +12,7 @@ const find_ByID = async (req, res) => {
 
 const updateByID = async (req, res) => {
   try {
+    console.log(req.body.id);
     let employer = await Employer.findOne({ _id: req.body.id });
     employer = extend(employer, req.body);
     await employer.save();

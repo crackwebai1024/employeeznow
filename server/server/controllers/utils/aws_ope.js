@@ -78,8 +78,14 @@ const save = async (req, res, next) => {
 };
 
 const del = async (req, res, next) => {
-  let bucketName = "mytestbucket626";
-  let fileName = req.body.id + req.body.type;
+  let fileName = "";
+  if (req.body.type !== "portfolio") {
+    fileName = req.body.id + req.body.type;
+  } else {
+    fileName = req.body.id + req.body.folioID + req.body.type;
+  }
+
+  let bucketName = process.env.AWS_BUCKET_NAME;
   s3.deleteObject(
     {
       Bucket: bucketName,

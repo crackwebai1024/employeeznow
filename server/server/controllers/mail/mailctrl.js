@@ -215,7 +215,44 @@ const sendEmployerNoInterestEmail = async (req, res) => {
   await sendEmployerEmail(suffhtml, req, res);
 };
 
+const sendContactMSG = async (req, res) => {
+  let html =
+    "<html><head></head><body>email:" +
+    req.body.email +
+    "<br></br>firstName: " +
+    req.body.firstName +
+    "<br></br>lastName: " +
+    req.body.lastName +
+    "<br></br>" +
+    req.body.content +
+    "</body></html>";
+  console.log(html);
+  let message = undefined;
+  try {
+    let sendResult = await sendEmail({
+      email: "wxiao1214@gmail.com",
+      subject: "Someone wants to contact with you",
+      message,
+      html,
+    });
+
+    if (sendResult) {
+      return res.status(200).json({
+        status: "success",
+        message: "your contact message was sent to employeez",
+      });
+    } else {
+      return res.status(500).json({ error: "server error" });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: "There was an error sending to the email. Try again later",
+    });
+  }
+};
+
 export default {
+  sendContactMSG,
   sendEmployeeEmail,
   sendEmployerInterestEmail,
   sendEmployerNoInterestEmail,
