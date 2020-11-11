@@ -8,7 +8,7 @@ const router = express.Router();
 const { requireSignin, hasAuthorization } = authCtrl;
 const { find_ByID, updateByID } = EmpCtrl;
 // update employer basic data
-router.route("/update").get(requireSignin, hasAuthorization, updateByID);
+router.route("/update").post(requireSignin, hasAuthorization, updateByID);
 // update password
 router
   .route("/updatePWD")

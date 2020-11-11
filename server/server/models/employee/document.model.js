@@ -31,7 +31,6 @@ const DocumentSchema = new mongoose.Schema({
   },
   veteran: {
     fname: String,
-    veteranId: String,
     createdAt: {
       type: Date,
       default: Date.now(),

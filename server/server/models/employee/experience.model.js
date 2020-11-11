@@ -31,6 +31,7 @@ const ExperienceSchema = new mongoose.Schema({
       years: Number,
     },
   ],
+  exclude: [String],
   employee: {
     type: mongoose.Schema.ObjectId,
     ref: "Employee",
