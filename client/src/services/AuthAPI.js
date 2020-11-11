@@ -37,3 +37,7 @@ export async function onChangePassword(data) {
 export async function onUploadVeteranCard(data) {
   return await Axios.post("/crud/employee/document", data);
 }
+
+export async function onSendMessage(data) {
+  return await Axios.post("/mail/contact", data);
+}

@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '30px',
     marginTop: "30px",
     paddingTop: '20px',
-    marginRight: '50px',
-    float: 'right',
+    // float: 'right',
     paddingBottom: "50px",
     [theme.breakpoints.down('sm')]: {
       display: 'block',
@@ -52,12 +51,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    // width: '100%',
-    maxWidth: '600px',
-    maxHeight: '300px',
+    width: '100%',
+    maxWidth: '450px',
+    // maxHeight: '300px',
     cursor: 'pointer',
     transition: '0.2s',
-    // padding: "10px",
+    margin: 'auto',
     '&:hover': {
     },
   },

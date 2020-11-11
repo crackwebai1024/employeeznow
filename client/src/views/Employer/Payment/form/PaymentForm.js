@@ -91,6 +91,11 @@ const PaymentForm = (props) => {
         history.push(`/candidate/${slug}`)
     }
 
+    const gotoBackHandle = () => {
+        actions.initLimit()
+        return history.push(`/candidate/${slug}`)
+    }
+
     return <form onSubmit={handleSubmit}>
         <Box className={classes.mainBox}>
             <Grid
@@ -188,9 +193,9 @@ const PaymentForm = (props) => {
                 <Grid container item xs={12} spacing={3} className={classes.buttonWrapper}>
                     <Grid item xs={12} sm={6}>
                         <Button
-                            type="submit"
                             variant="outlined"
                             color="secondary"
+                            onClick={gotoBackHandle}
                             className={classes.button}
                         >
                             cancel

@@ -6,8 +6,7 @@ import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
+import { Grid, Box, TextField } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import PasswordInput from "@components/PasswordInput";
 import Button from "@material-ui/core/Button";
@@ -19,6 +18,7 @@ import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import PublishIcon from "@material-ui/icons/Publish";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { countryOptions } from "./AddressState";
 
 const invalidError = "This field is invalid!";
@@ -28,12 +28,24 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "2rem",
     background: theme.palette.common.blue,
   },
+  policy: {
+    display: 'flex',
+    marginTop: '2rem',
+    height: '28px',
+  },
+  link_terms: {
+    color: theme.palette.common.blue,
+    "&:hover": {
+      color: theme.palette.secondary.main,
+    },
+  },
   formControl: {
     marginTop: "1rem",
     backgroundColor: "transparent",
   },
   uploadButton: {
     marginTop: "1rem",
+    textAlign: 'center'
   },
   uploadImage: {
     width: "150px",
@@ -130,6 +142,9 @@ const EmployeeForm = ({
   const [veteran, setVeteran] = useState({ status: false, veteranId: "" });
   const [veteranError, setVeteranError] = useState("");
   const [veteranCard, setVeteranCard] = useState(null);
+
+  const [policy, confirmPolicy] = useState(false)
+  const [policyError, setPolicyError] = useState("")
   // material-ui
   const classes = useStyles();
 
@@ -185,19 +200,24 @@ const EmployeeForm = ({
   };
   // connected to action
   const onSubmit = async (formData) => {
-    if (veteran.status && veteran.veteranId == "") {
-      return setVeteranError("This field is required");
+
+    setPolicyError("")
+    if (!policy) {
+      return setPolicyError("Please check the Terms & Condition")
     }
+
+    // if (veteran.status) {
+    //   return setVeteranError("This field is required");
+    // }
     if (veteran.status && veteranCard == null) {
       return setVeteranError("please Upload Veteran Card Image!");
     }
     if (!formData.address.state) return setStateError(true);
 
-    if (veteran.veteranId) {
-      veteranCard.append("veteranId", veteran.veteranId);
-
-      actions.saveVeteranCard(veteranCard);
-    }
+    // if (veteran.veteranId) {
+    //   veteranCard.append("veteranId", veteran.veteranId);
+    actions.saveVeteranCard(veteranCard);
+    // }
 
     if (formData) {
       let data = {
@@ -214,6 +234,10 @@ const EmployeeForm = ({
   if (phoneVerifyNeed) {
     return <Redirect to="/signup/phoneverify" />;
   }
+
+  const handleCheck = (e) => {
+    confirmPolicy(e.target.checked)
+  }  
 
   return (
     <Container
@@ -520,19 +544,20 @@ const EmployeeForm = ({
                       />
                     </Grid>
                     <Grid>
-                      <label htmlFor="contained-button-license">
+                      <label for="contained-button-license">
                         <Button
                           color="primary"
                           component="span"
                           className={classes.uploadButton}
                         >
-                          <PublishIcon />
-                          Upload Image
+                          {/* <PublishIcon /> */}
+                          Upload Image<br/>
+                          (Military ID or DD214)
                         </Button>
                       </label>
                     </Grid>
                     {/* formData.append("fname", e.target.files[0].name) */}
-                    <TextField
+                    {/* <TextField
                       type="number"
                       name="veteranId"
                       helperText={veteranError ? veteranError : ""}
@@ -545,18 +570,38 @@ const EmployeeForm = ({
                       }}
                       value={veteran.veteranId}
                       onChange={(e) => onChange(e)}
-                    />
+                    /> */}
                   </Grid>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </Grid>
             </Grid>
+
             {emailError && (
               <Grid item className={classes.invalidMessage}>
                 {emailError}
               </Grid>
             )}
+
+            <Grid item xs={12} className={classes.policy}>
+              <FormControlLabel
+                control={<Checkbox id="check" size="small" />}
+                name="check"
+                required
+                onChange={(e) => handleCheck(e)}
+              />
+              <Box>I agree to the&nbsp;
+                <a className={classes.link_terms} target="_blank" href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6">
+                  Terms & Conditions
+                </a>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} style={{ color: 'red' }}>
+              {policyError}
+            </Grid>
+
             <Button
               disabled={signupLoading}
               type="submit"
@@ -581,8 +626,8 @@ const EmployeeForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-              ""
-            )}
+                ""
+              )}
           </Grid>
         </form>
 

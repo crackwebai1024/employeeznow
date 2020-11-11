@@ -170,7 +170,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
 
                 <Grid item>
                   <Typography variant="body2" className={classes.inputTitle}>
-                    ADDRESS OF EMPLOYMENT OPPORTUITY
+                    ADDRESS OF EMPLOYMENT OPPORTUNITY
                 </Typography>
                 </Grid>
               </Grid>
@@ -342,35 +342,33 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                 </Typography>
               </Grid>
 
-              <Grid container xs={12} item >
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    error={errors.minimumexp && errors.minimumexp ? true : false}
-                    helperText={errors.minimumexp && errors.minimumexp
-                      ? 'This filed is required' : ''
-                    }
-                    type="number"
-                    required fullWidth margin="none" name="idealSalary.amount" label="Salary"
-                    inputRef={register({ required: true })}
-                    InputLabelProps={{ shrink: true }} size="small"
-                    SelectProps={{ native: true }} variant="outlined"
-                  >
-                  </TextField>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    select fullWidth margin="none" name="idealSalary.unit" label="Unit"
-                    inputRef={register()}
-                    InputLabelProps={{ shrink: true }}
-                    SelectProps={{ native: true }}
-                    size="small" variant="outlined"
-                  >
-                    <option value=""></option>
-                    <option value="hourly">hourly</option>
-                    <option value="weekely">weekely</option>
-                    <option value="annualy">annualy</option>
-                  </TextField>
-                </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  error={errors.minimumexp && errors.minimumexp ? true : false}
+                  helperText={errors.minimumexp && errors.minimumexp
+                    ? 'This filed is required' : ''
+                  }
+                  type="number"
+                  fullWidth margin="none" name="idealSalary.amount" label="Pay Rate"
+                  inputRef={register()}
+                  InputLabelProps={{ shrink: true }} size="small"
+                  SelectProps={{ native: true }} variant="outlined"
+                >
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  select fullWidth margin="none" name="idealSalary.unit" label="Unit"
+                  inputRef={register()}
+                  InputLabelProps={{ shrink: true }}
+                  SelectProps={{ native: true }}
+                  size="small" variant="outlined"
+                >
+                  <option value=""></option>
+                  <option value="hourly">hourly</option>
+                  <option value="weekely">weekely</option>
+                  <option value="annualy">annualy</option>
+                </TextField>
               </Grid>
 
               <Grid item xs={12}>

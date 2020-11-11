@@ -55,6 +55,11 @@ export const actions = createActions({
   CHANGE_PASSWORD_FAILURE: undefined,
 
   SAVE_VETERAN_CARD: undefined,
+
+  SEND_CONTACT_MESSAGE: undefined,
+
+  SEND_MESSAGE_SUCCESS: undefined,
+  SEND_MESSAGE_FAILURE: undefined
 });
 
 const reducer = handleActions(
@@ -110,6 +115,11 @@ const reducer = handleActions(
     [actions.changePasswordFailure, handlers.changePasswordFailure],
 
     [actions.saveVeteranCard, handlers.saveVeteranCard],
+
+    [actions.sendContactMessage, handlers.sendContactMessage],
+    [actions.sendMessageSuccess, handlers.sendMessageSuccess],
+    [actions.sendMessageFailure, handlers.sendMessageFailure],
+
   ]),
   initialState
 );

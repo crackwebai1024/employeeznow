@@ -33,10 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
     },
   },
-  whyEmployeez: {
-    marginTop: '100px',
-    paddingBottom: '6rem'
-  },
   title: {
     fontSize: '30px',
     fontWeight: 600,
@@ -69,130 +65,20 @@ const useStyles = makeStyles((theme) => ({
   veteranImg: {
     maxWidth: '500px'
   },
-  heading1: {
-    maxWidth: "750px",
-    color: theme.palette.primary.main,
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '2.5rem',
-      letterSpacing: '0.08rem',
-    },
-  },
-  heading2: {
-    marginTop: '2rem',
-    marginBottom: '0.5rem',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '2rem',
-      letterSpacing: '0.05rem',
-    },
-  },
   logo: {
     width: '100%',
   },
-  ContainerLeft: {
-    maxWidth: '500px',
-    float: 'right',
-    [theme.breakpoints.down('sm')]: {
-      float: "none",
-      margin: 'auto',
-    },
-  },
   veteranSectionBottom: {
     fontSize: '16px'
-  },
-  containerRight: {
-    [theme.breakpoints.down('sm')]: {
-      textAlign: "center"
-    },
-  },
-  heading4: {
-    textAlign: 'center',
-    fontSize: '28px',
-    fontFamily: 'Calibri'
-  },
-  heading5: {
-    color: theme.palette.secondary.main,
-    fontWeight: 700,
-    fontFamily: 'Calibri',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.8rem',
-    },
-  },
-  headingBatang: {
-    fontFamily: 'Arno Pro Smbd Subhead',
-    textAlign: 'center',
-    fontSize: '30px',
-    fontWeight: 900
-  },
-  heading3: {
-    fontWeight: 700,
-    textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.8rem',
-    },
-  },
-  text: {
-    font: 'Calibri',
-    fontWeight: 800
-  },
-  paper1: {
-    padding: '10px',
-    borderRadius: '10px',
-    font: 'Calibri',
-    fontWeight: 800,
-    fontSize: '16px'
-  },
-  paper2: {
-    background: "#eaeff8",
-    display: 'flex',
-    borderRadius: '30px',
-    marginTop: "30px",
-    paddingBottom: "50px",
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
-      textAlign: 'center'
-    },
-  },
-  button1: {
-    borderRadius: '15px',
-    backgroundColor: '#C00000',
-    padding: '0.8rem 2rem',
-    marginTop: '-30px',
-    width: '300px',
-    fontSize: '20px',
-    margin: 'auto',
-    '&:hover': {
-      backgroundColor: '#A00000'
-    },
   },
   col_center: {
     display: 'flex',
     alignItems: 'center'
   },
-  button2: {
-    borderRadius: '15px',
-    backgroundColor: '#002060',
-    padding: '1.5rem 2rem',
-    width: '300px',
-    margin: 'auto',
-    color: 'white',
-    fontSize: '20px',
-    '&:hover': {
-      backgroundColor: '#003070',
-      margin: 'auto'
-    },
-  },
   description: {
     textAlign: 'center',
     fontSize: '14px',
     marginTop: '2rem'
-  },
-  button: {
-    borderRadius: '50px',
-    padding: '0.8rem 2rem',
-    marginTop: '1rem',
-    '&:hover': {
-      backgroundColor: theme.palette.secondary.light,
-    },
   },
   iconTitle: {
     fontSize: '16px',
@@ -201,10 +87,6 @@ const useStyles = makeStyles((theme) => ({
   },
   center: {
     margin: 'auto'
-  },
-  contestSection: {
-    background: '#FAFAFA',
-    width: '100vw'
   },
   bigTitle: {
     fontSize: '30px',

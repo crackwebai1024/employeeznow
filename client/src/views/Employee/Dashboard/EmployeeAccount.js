@@ -110,12 +110,14 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, change
     setOpenPassword(false);
   };
   const user = JSON.parse(getUser())
+
   useEffect(() => {
     if (_.isEmpty(employeeData)) {
       let data = {
         id: user._id
       }
       actions.getUserDataRequest(data)
+      actions.getUserDocumentRequest({...data, type: 'veteran'})
     }
   }, [])
 
@@ -125,6 +127,7 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, change
 
   useEffect(() => {
     if (updateSuccess == "SUCCESS") {
+      setOpenAccount(false);
       return successMessage("Profile update is successed!")
     } else if (updateSuccess == "FAILURE") {
       return errorMessage("Profile update is failed!")
@@ -281,13 +284,13 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, change
 
 const mapStateToProps = ({
   employee: {
-    employeeData, updateSuccess
+    employeeData, updateSuccess, veteranCard
   },
   auth: {
     changepassword
   }
 }) => ({
-  employeeData, updateSuccess, changepassword
+  employeeData, updateSuccess, changepassword, veteranCard
 });
 
 const mapDispatchToProps = (dispatch) => ({
