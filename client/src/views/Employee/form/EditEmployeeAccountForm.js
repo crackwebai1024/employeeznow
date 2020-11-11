@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '1.5rem',
   },
   uploadButton: {
-    marginTop: '1rem'
+    marginTop: '1rem',
+    textAlign: 'center'
   },
   input: {
     display: 'none',
@@ -89,19 +90,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditEmployeeAccountForm = ({
-  employee: {
-    _id,
-    firstName,
-    middleName,
-    lastName,
-    cell,
-    email,
-    address,
-    employeezNowId,
-  },
-  actions, errorMessage, updateLoading, setOpenAccount, updateSuccess
-}) => {
+const EditEmployeeAccountForm = (props) => {
+  const { employee: { _id, firstName, middleName, lastName, cell, email, address, employeezNowId },
+    actions, errorMessage, updateLoading, setOpenAccount, success, veteranLoading } = props
   // react-hook-form
   const { register, handleSubmit, errors } = useForm({
     // add current value in the input value value name matches with name in input field
@@ -118,13 +109,19 @@ const EditEmployeeAccountForm = ({
   const [stateError, setStateError] = useState('');
   const [updatedState, setUpdatedState] = useState(address.state); //default value - avoid submitting empty string
 
-  const [veteran, setVeteran] = useState({ status: false, veteranId: "" });
+  const [veteran, setVeteran] = useState({ status: false });
   const [veteranError, setVeteranError] = useState("")
   const [veteranCard, setVeteranCard] = useState(null)
 
   // material-ui
   const classes = useStyles();
   const user = JSON.parse(getUser())
+
+  useEffect(() => {
+    if (props.veteranCard) {
+      setVeteran({ status: true })
+    }
+  }, [props.veteranCard])
 
   // control address.state manually - check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
@@ -160,9 +157,9 @@ const EditEmployeeAccountForm = ({
   }
 
   const onSubmit = async (formData) => {
-    if (veteran.status && veteran.veteranId == "") {
-      return setVeteranError("This field is required")
-    }
+    // if (veteran.status && veteran.veteranId == "") {
+    //   return setVeteranError("This field is required")
+    // }
     if (veteran.status && veteranCard == null) {
       return setVeteranError("please Upload Veteran Card Image!")
     }
@@ -172,8 +169,11 @@ const EditEmployeeAccountForm = ({
       address: { ...formData.address, state: updatedState },
     };
     console.log(sendData);
+    veteranCard.append("id", user._id);
+    veteranCard.append("role", "employee")
+
+    await actions.uploadVeteranCard(veteranCard)
     await actions.updateBasicInfoRequest(sendData)
-    setOpenAccount(false);
   };
 
   return (
@@ -495,7 +495,12 @@ const EditEmployeeAccountForm = ({
                 <Grid item container direction="column" justify="center" alignItems="center">
                   <img
                     className={classes.uploadImage}
-                    src={veteranCard && URL.createObjectURL(veteranCard.getAll("content")[0])}>
+                    src={
+                      !veteranCard ? props.veteranCard &&
+                        `data:image/png;base64, ${props.veteranCard}` :
+                        URL.createObjectURL(veteranCard.getAll("content")[0])
+                    }
+                  >
                   </img>
                   <Grid>
                     <input
@@ -510,12 +515,14 @@ const EditEmployeeAccountForm = ({
                   <Grid>
                     <label htmlFor="contained-button-license">
                       <Button color="primary" component="span" className={classes.uploadButton}>
-                        <PublishIcon />Upload Image
+                        {/* <PublishIcon />Upload Image */}
+                          Upload Image<br />
+                          (Military ID or DD214)
                         </Button>
                     </label>
                   </Grid>
                   {/* formData.append("fname", e.target.files[0].name) */}
-                  <TextField
+                  {/* <TextField
                     type="text"
                     name="veteranId"
                     helperText={
@@ -530,11 +537,14 @@ const EditEmployeeAccountForm = ({
                     }}
                     value={veteran.veteranId}
                     onChange={(e) => onChange(e)}
-                  />
+                  /> */}
                 </Grid>
               ) : (
                   ''
                 )}
+            </Grid>
+            <Grid item className={classes.invalidMessage}>
+              {veteranError}
             </Grid>
           </DialogContent>
 
@@ -577,16 +587,16 @@ const EditEmployeeAccountForm = ({
 
 const mapStateToProps = ({
   employee: {
-    experience, loading, updateLoading, updateEmployee, updateSuccess
+    experience, loading, updateLoading, updateEmployee, updateSuccess, veteranCard, success, veteranCardLoading
   },
 }) => ({
-  experience, loading, updateLoading, updateEmployee, updateSuccess
+  experience, loading, updateLoading, updateEmployee, updateSuccess, veteranCard, success, veteranCardLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({
-    ...employeeActions,
-    ...authActions
+    ...authActions,
+    ...employeeActions
   }, dispatch),
 });
 

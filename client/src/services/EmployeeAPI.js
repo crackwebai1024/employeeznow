@@ -73,3 +73,7 @@ export async function uploadDocument(data) {
 export async function updateBasicInfo(data) {
   return await Axios.post("/crud/employee/basic", data);
 }
+
+export async function onGetUserDocument(data) {
+  return await Axios.get('/crud/employee/document' + data)
+}

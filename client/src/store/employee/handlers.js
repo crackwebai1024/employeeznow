@@ -24,6 +24,7 @@ export const getUserDocumentRequest = (state, { payload }) => ({
 
 export const getUserDocumentSuccess = (state, { payload }) => ({
   ...state,
+  [payload.type]: payload.result,
   success: true,
 });
 

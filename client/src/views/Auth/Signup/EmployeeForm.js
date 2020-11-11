@@ -18,6 +18,7 @@ import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import PublishIcon from "@material-ui/icons/Publish";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { countryOptions } from "./AddressState";
 
 const invalidError = "This field is invalid!";
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   uploadButton: {
     marginTop: "1rem",
+    textAlign: 'center'
   },
   uploadImage: {
     width: "150px",
@@ -204,18 +206,18 @@ const EmployeeForm = ({
       return setPolicyError("Please check the Terms & Condition")
     }
 
-    if (veteran.status && veteran.veteranId == "") {
-      return setVeteranError("This field is required");
-    }
+    // if (veteran.status) {
+    //   return setVeteranError("This field is required");
+    // }
     if (veteran.status && veteranCard == null) {
       return setVeteranError("please Upload Veteran Card Image!");
     }
     if (!formData.address.state) return setStateError(true);
 
-    if (veteran.veteranId) {
-      veteranCard.append("veteranId", veteran.veteranId);
-      actions.saveVeteranCard(veteranCard);
-    }
+    // if (veteran.veteranId) {
+    //   veteranCard.append("veteranId", veteran.veteranId);
+    actions.saveVeteranCard(veteranCard);
+    // }
 
     if (formData) {
       let data = {
@@ -542,19 +544,20 @@ const EmployeeForm = ({
                       />
                     </Grid>
                     <Grid>
-                      <label htmlFor="contained-button-license">
+                      <label for="contained-button-license">
                         <Button
                           color="primary"
                           component="span"
                           className={classes.uploadButton}
                         >
-                          <PublishIcon />
-                          Upload Image
+                          {/* <PublishIcon /> */}
+                          Upload Image<br/>
+                          (Military ID or DD214)
                         </Button>
                       </label>
                     </Grid>
                     {/* formData.append("fname", e.target.files[0].name) */}
-                    <TextField
+                    {/* <TextField
                       type="number"
                       name="veteranId"
                       helperText={veteranError ? veteranError : ""}
@@ -567,7 +570,7 @@ const EmployeeForm = ({
                       }}
                       value={veteran.veteranId}
                       onChange={(e) => onChange(e)}
-                    />
+                    /> */}
                   </Grid>
                 ) : (
                     ""
