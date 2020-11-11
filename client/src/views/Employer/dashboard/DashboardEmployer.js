@@ -213,9 +213,7 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
             <Button onClick={clickFormOpen} variant="outlined" color="secondary"
               className={classes.searchButton}
             >
-              {searchQueries.length === 0
-                ? 'Create search filter'
-                : 'New Filter'}
+                Create New Search
             </Button>
             {queryButton}
           </Box>

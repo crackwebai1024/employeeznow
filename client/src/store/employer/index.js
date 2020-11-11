@@ -10,6 +10,8 @@ export const actions = createActions({
   GET_EMPLOYER_SUCCESS: undefined,
   GET_EMPLOYER_FAILURE: undefined,
 
+  UPDATE_EMPLOYER_ACCOUNT: undefined,
+
   SAVE_FILTER_REQUEST: undefined,
   SAVE_FILTER_SUCCESS: undefined,
   SAVE_FILTER_FAILURE: undefined,
@@ -50,7 +52,9 @@ export const actions = createActions({
 
   PAY_REQUEST: undefined,
   PAY_SUCCESS: undefined,
-  PAY_FAILUED: undefined
+  PAY_FAILUED: undefined,
+
+  INIT_LIMIT: undefined
 });
 
 const reducer = handleActions(
@@ -58,6 +62,8 @@ const reducer = handleActions(
     [actions.getEmployerData, handlers.getEmployerData],
     [actions.getEmployerSuccess, handlers.getEmployerSuccess],
     [actions.getEmployerFailure, handlers.getEmployerFailure],
+
+    [actions.updateEmployerAccount, handlers.updateEmployerAccount],
     
     [actions.saveFilterRequest, handlers.saveFilterRequest],
     [actions.saveFilterSuccess, handlers.saveFilterSuccess],
@@ -100,6 +106,8 @@ const reducer = handleActions(
     [actions.payRequest, handlers.payRequest],
     [actions.paySuccess, handlers.paySuccess],
     [actions.payFailure, handlers.payFailure],
+
+    [actions.initLimit, handlers.initLimit],
     
   ]),
   initialState,

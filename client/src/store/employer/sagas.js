@@ -150,8 +150,20 @@ function* onPayRequest({ payload }) {
   }
 }
 
+function* onUpdateEmployer({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onUpdateEmployer, payload)
+    if(res && res.data) {
+      
+    }
+  } catch {
+
+  }
+}
+
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
+  takeEvery(types.updateEmployerAccount, onUpdateEmployer),
   takeEvery(types.saveFilterRequest, onSaveFilter),
   takeEvery(types.getFilterListRequest, onGetfilterList),
   takeEvery(types.searchEmployee, onSearchEmployee),

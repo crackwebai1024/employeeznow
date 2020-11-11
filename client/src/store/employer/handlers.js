@@ -28,8 +28,11 @@ export const getEmployerSuccess = (state, { payload }) => {
 
 export const getEmployerFailure = (state) => ({
   ...state,
-  // get employer data failed.
 });
+
+export const updateEmployerAccount = (state) => ({
+  ...state
+})
 
 export const saveFilterRequest = (state) => ({
   ...state,
@@ -180,6 +183,11 @@ export const purchaseLimited = (state) => ({
 export const payRequest = (state) => ({
   ...state,
   paid: false
+})
+
+export const initLimit = (state, { payload }) => ({
+  ...state,
+  isLimited: false
 })
 
 export const paySuccess = (state, { payload }) => ({

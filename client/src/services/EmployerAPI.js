@@ -39,3 +39,7 @@ export async function onPurhcaseEmployee(data) {
 export async function onPayRequest(data) {
   return await Axios.post('/payment/purchase', data)
 }
+
+export async function onUpdateEmployer(data) {
+  return await Axios.post('/crud/employer/update', data)
+}

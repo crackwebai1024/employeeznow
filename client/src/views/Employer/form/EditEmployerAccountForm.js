@@ -105,9 +105,11 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
     const sendData = {
       ...formData,
       address: { ...formData.address, state: updatedState },
+      role: 'employer',
+      id: user._id
     };
-    console.log(sendData);
-    // if (!stateError) return updateEmployer(sendData, history, employeezNowId);
+
+    actions.updateEmployerAccount(sendData);
   };
 
   useEffect(() => {
@@ -145,10 +147,10 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   margin="normal"
                   size="small"
                   fullWidth
-                  className={classes.root}
+                  // className={classes.root}
                   name="name"
                   label="Company Name"
-                  type="email"
+                  type="text"
                   id="name"
                   InputLabelProps={{
                     shrink: true,
@@ -410,7 +412,6 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                     shrink: true,
                   }}
                   inputRef={register({
-                    required: true,
                     pattern: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
                   })}
                 />
