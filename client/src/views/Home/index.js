@@ -267,7 +267,7 @@ const Home = () => {
         </Grid>
       </Container >
       <Grid container className={classes.contestContainer}>
-        <ContestSection />
+        {/* <ContestSection /> */}
       </Grid>
       <Container width="sm" className={classes.mainContainer}>
         <Grid container spacing={3} style={{ marginTop: '50px' }}>

@@ -171,7 +171,7 @@ const LearnMore = () => {
     </Container>
 
     <Grid container className={classes.contestContainer}>
-      <ContestSection />
+      {/* <ContestSection /> */}
     </Grid>
 
     <Container width="sm" className={classes.mainContainer}>

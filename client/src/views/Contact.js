@@ -58,12 +58,13 @@ const useStyles = makeStyles((theme) => ({
   contactInfo: {
     maxWidth: '600px',
     textAlign: 'center',
-    margin: 'auto'
+    margin: 'auto',
+    marginBottom: '4rem'
   },
   contactInfoTitle: {
     color: theme.palette.common.green,
     marginBottom: '1rem',
-    fontSize: '24px'
+    fontSize: '28px'
   },
   center: {
     margin: 'auto'
@@ -214,12 +215,12 @@ const Contact = ({ actions, sendMessage }) => {
           </Typography>
         </Grid>
         <Grid xs={12} sm={6}>
-          <Typography>
+          <Typography style={{fontWeight: '600'}}>
             PHONE: (888) 66 EZ-NOW
           </Typography>
         </Grid>
-        <Grid xs={12} sm={6}>
-          <Typography>
+        <Grid xs={12} sm={6} >
+          <Typography style={{fontWeight: '600'}}>
             EMAIL: QUESTIONS@EMPLOYEEZNOW
           </Typography>
         </Grid>
@@ -227,7 +228,7 @@ const Contact = ({ actions, sendMessage }) => {
     </Container>
 
     <Grid container className={classes.contestContainer}>
-      <ContestSection />
+      {/* <ContestSection /> */}
     </Grid>
   </Box>
   );
