@@ -6,8 +6,7 @@ import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
+import { Grid, Box, TextField } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import PasswordInput from "@components/PasswordInput";
 import Button from "@material-ui/core/Button";
@@ -27,6 +26,17 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     marginRight: "2rem",
     background: theme.palette.common.blue,
+  },
+  policy: {
+    display: 'flex',
+    marginTop: '2rem',
+    height: '28px',
+  },
+  link_terms: {
+    color: theme.palette.common.blue,
+    "&:hover": {
+      color: theme.palette.secondary.main,
+    },
   },
   formControl: {
     marginTop: "1rem",
@@ -130,6 +140,9 @@ const EmployeeForm = ({
   const [veteran, setVeteran] = useState({ status: false, veteranId: "" });
   const [veteranError, setVeteranError] = useState("");
   const [veteranCard, setVeteranCard] = useState(null);
+
+  const [policy, confirmPolicy] = useState(false)
+  const [policyError, setPolicyError] = useState("")
   // material-ui
   const classes = useStyles();
 
@@ -185,6 +198,12 @@ const EmployeeForm = ({
   };
   // connected to action
   const onSubmit = async (formData) => {
+
+    setPolicyError("")
+    if (!policy) {
+      return setPolicyError("Please check the Terms & Condition")
+    }
+
     if (veteran.status && veteran.veteranId == "") {
       return setVeteranError("This field is required");
     }
@@ -195,7 +214,6 @@ const EmployeeForm = ({
 
     if (veteran.veteranId) {
       veteranCard.append("veteranId", veteran.veteranId);
-
       actions.saveVeteranCard(veteranCard);
     }
 
@@ -214,6 +232,10 @@ const EmployeeForm = ({
   if (phoneVerifyNeed) {
     return <Redirect to="/signup/phoneverify" />;
   }
+
+  const handleCheck = (e) => {
+    confirmPolicy(e.target.checked)
+  }  
 
   return (
     <Container
@@ -548,15 +570,35 @@ const EmployeeForm = ({
                     />
                   </Grid>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </Grid>
             </Grid>
+
             {emailError && (
               <Grid item className={classes.invalidMessage}>
                 {emailError}
               </Grid>
             )}
+
+            <Grid item xs={12} className={classes.policy}>
+              <FormControlLabel
+                control={<Checkbox id="check" size="small" />}
+                name="check"
+                required
+                onChange={(e) => handleCheck(e)}
+              />
+              <Box>I agree to the&nbsp;
+                <a className={classes.link_terms} target="_blank" href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6">
+                  Terms & Conditions
+                </a>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} style={{ color: 'red' }}>
+              {policyError}
+            </Grid>
+
             <Button
               disabled={signupLoading}
               type="submit"
@@ -581,8 +623,8 @@ const EmployeeForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-              ""
-            )}
+                ""
+              )}
           </Grid>
         </form>
 

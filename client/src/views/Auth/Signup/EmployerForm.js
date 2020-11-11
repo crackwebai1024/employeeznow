@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Grid, Box, TextField, Avatar, Typography } from '@material-ui/core';
+import { Grid, Box, TextField, Avatar, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     marginRight: theme.spacing(2),
     background: theme.palette.common.blue,
+  },
+  policy: {
+    display: 'flex',
+    marginLeft: '1rem',
+    height: '28px'
+    // color: theme.palette.common.blue,
   },
   formControl: {
     marginTop: '1rem',
@@ -110,6 +116,8 @@ const EmployerForm = ({
   // address.state error customized check
   const [stateError, setStateError] = useState('');
 
+  const [policy, confirmPolicy] = useState(false)
+  const [policyError, setPolicyError] = useState("")
   // material-ui
   const classes = useStyles();
 
@@ -121,7 +129,11 @@ const EmployerForm = ({
 
   // connected to action
   const onSubmit = (formData) => {
+    setPolicyError("")
     if (!formData.address.state) return setStateError(true);
+    if (!policy) {
+      return setPolicyError("Please check the Terms & Condition")
+    }
     if (formData) {
       let data = {
         ...formData,
@@ -132,7 +144,7 @@ const EmployerForm = ({
   };
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   }, [])
 
   // Redirect to employer account page after sign up
@@ -142,6 +154,10 @@ const EmployerForm = ({
 
   if (!_.isEmpty(signupUser)) {
     return <Redirect to='/signup/emailverify' />
+  }
+
+  const handleCheck = (e) => {
+    confirmPolicy(e.target.checked)
   }
 
   return (
@@ -486,6 +502,25 @@ const EmployerForm = ({
                 })}
               />
             </Grid>
+
+            <Grid item xs={12} className={classes.policy}>
+              <FormControlLabel
+                control={<Checkbox id="check" size="small" />}
+                name="check"
+                required
+                onChange={(e) => handleCheck(e)}
+              />
+              <Box>I agree to the&nbsp;
+                <a className={classes.link} target="_blank" href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6">
+                  Terms & Conditions
+                </a>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} style={{color: 'red'}}>
+              {policyError}
+            </Grid>
+
             <Box className={classes.buttonWrapper}>
               <MainButton
                 width="100%"
