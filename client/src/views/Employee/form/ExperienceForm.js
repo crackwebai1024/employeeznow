@@ -4,10 +4,14 @@ import { connect } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Container from "@material-ui/core/Container";
+import { useForm } from 'react-hook-form';
+import MainButton from '@components/Element/Button/MainButton';
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Dialog from "@material-ui/core/Dialog";
+import Chip from '@material-ui/core/Chip';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -23,6 +27,7 @@ import { getUser } from "@helpers/auth-helpers";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import MenuItem from "@material-ui/core/MenuItem";
 import { successMessage, errorMessage } from '@helpers/utils'
+import { Box } from "@material-ui/core";
 
 // import {
 //   loadProfessionDetails,
@@ -31,11 +36,17 @@ import { successMessage, errorMessage } from '@helpers/utils'
 
 // set style
 const useStyles = makeStyles((theme) => ({
+  green: {
+    color: theme.palette.common.green
+  },
   heading1: {
     marginTop: "5rem",
     marginBottom: "1.5rem",
     fontSize: "2rem",
     color: theme.palette.primary.main,
+  },
+  center: {
+    textAlign: 'center'
   },
   formContainer: {
     // marginTop: "1rem",
@@ -45,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addOtherJob: {
     fontSize: "40px",
+    margin: '1rem 0 1rem 0',
     cursor: "pointer",
   },
   dialog: {
@@ -121,6 +133,7 @@ const ExperienceForm = ({
       years: 0,
     },
     employmentStatus: "",
+    exclude: []
   });
 
   const [showAlert, setShowAlert] = useState(0);
@@ -176,6 +189,7 @@ const ExperienceForm = ({
       setFormData(experience.experience);
       setOpen(false);
       setOtherJobs(experience.experience.otherJob);
+      setExclude(experience.experience.exclude)
     }
   }, [experience]);
 
@@ -197,6 +211,7 @@ const ExperienceForm = ({
   // destructure
   const { primaryJob, secondaryJob } = formData;
   const history = useHistory()
+  const { register, handleSubmit, errors, watch } = useForm({});
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
@@ -295,7 +310,6 @@ const ExperienceForm = ({
   };
 
   const onSubmit = (e) => {
-    e.preventDefault();
     if (error.primaryJob) {
       return;
     }
@@ -307,6 +321,7 @@ const ExperienceForm = ({
       secondaryJob: data.secondaryJob,
       otherJob: otherJobs,
       id: user._id,
+      exclude: exclude
     };
 
     actions.updateJobExperience(submitData);
@@ -348,6 +363,12 @@ const ExperienceForm = ({
     history.push(`/employees/${user.slug}`)
   }
 
+
+  const [exclude, setExclude] = useState([])
+  const handleBusiness = (event, value) => {
+    setExclude(value)
+  }
+
   console.log(primaryJob.title, "payload");
   return experience ? (
     <Container maxWidth="md">
@@ -362,7 +383,7 @@ const ExperienceForm = ({
           </Typography>
         </Grid>
       </Grid>
-      <form onSubmit={(e) => onSubmit(e)} className={classes.formContainer}>
+      <form onSubmit={(e) => e.preventDefault()} className={classes.formContainer}>
         <Grid
           container
           direction="column"
@@ -679,32 +700,83 @@ const ExperienceForm = ({
             );
           })}
           {!limit && (
-            <Grid>
-              <Button onClick={addOtherJobs}>
-                <AddBoxIcon className={classes.addOtherJob} />
-                Add Other Jobs
+            <Grid className={classes.addOtherJob}>
+              <Button onClick={addOtherJobs} >
+                <AddBoxIcon />
+                &nbsp;&nbsp;&nbsp;Add Other Jobs
               </Button>
             </Grid>
           )}
-          <Grid item container xs={12}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.button}
-              >
-                Save
-              </Button>
+
+          <Grid container item xs={12} spacing={1}>
+            <Grid item xs={12}>
+              <Typography className={`${classes.center} ${classes.green}`} variant="h6">
+                EXCLUDED BUSINESSES
+              </Typography>
             </Grid>
+            <Grid item xs={12} className={classes.center}>
+              Please enter business you <b>DO NOT</b> wish to show up on their searches
+            </Grid>
+            <Grid item xs={12}>
+              <Autocomplete
+                multiple
+                options={[]}
+                size="small"
+                freeSolo
+                value={exclude}
+                onChange={handleBusiness}
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField {...params}
+                    variant="standard"
+                    fullWidth
+                    // label="Excluded Businesses"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid item container xs={12}>
             <Grid item xs={12} sm={6}>
               <Button
                 variant="outlined"
                 onClick={goBackHandle}
-                className={classes.goback_button}
+                className={classes.button}
               >
                 Go Back
               </Button>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box className={classes.goback_button}>
+                <MainButton
+                  width="100%"
+                  label="Save"
+                  background="green"
+                  border="green"
+                  pd={60}
+                  hoverColor="white"
+                  hoverBack="#007000"
+                  color="white"
+                  fontSize={16}
+                  onClick={handleSubmit(onSubmit)}
+                >
+                </MainButton>
+              </Box>
+
+              {/* <MainButton
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.}
+              >
+                Save
+              </MainButton> */}
             </Grid>
           </Grid>
         </Grid>
