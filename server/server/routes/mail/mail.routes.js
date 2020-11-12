@@ -15,12 +15,8 @@ const {
 router
   .route("/employee/interest")
   .post(requireSignin, hasAuthorization, sendEmployeeEmail);
-router
-  .route("/employer/interest")
-  .post(requireSignin, hasAuthorization, sendEmployerInterestEmail);
-router
-  .route("/employer/nointerest")
-  .post(requireSignin, hasAuthorization, sendEmployerNoInterestEmail);
+router.route("/employer/interest").post(sendEmployerInterestEmail);
+router.route("/employer/nointerest").post(sendEmployerNoInterestEmail);
 router.route("/contact").post(sendContactMSG);
 
 export default router;
