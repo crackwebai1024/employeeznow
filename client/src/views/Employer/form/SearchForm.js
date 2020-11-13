@@ -207,6 +207,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                   autoComplete="state" InputLabelProps={{ shrink: true }}
                   inputRef={register({ required: true })}
                   SelectProps={{ native: true }}
+                  onChange={handleChange}
                 >
                   <option value=""></option>
                   {usaStates.map((usaState) => (
