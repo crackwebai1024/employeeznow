@@ -23,6 +23,7 @@ import Portfolio from "./Portfolio";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Profession from "./Profession";
+import LoadingCircular from "@components/LoadingCircular";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -130,11 +131,7 @@ function Dashboard(props) {
   const {
     actions,
     employeeData,
-    resumeLoading,
-    licenseLoading,
-    deplomaLoading,
-    refletterLoading,
-    referenceLetterLoading,
+    videoUpload
   } = props;
   const user = JSON.parse(getUser());
   const classes = useStyles();
@@ -509,19 +506,11 @@ function Dashboard(props) {
 const mapStateToProps = ({
   employee: {
     employeeData,
-    resumeLoading,
-    resume,
-    licenseLoading,
-    deplomaLoading,
-    refletterLoading,
+    videoUpload
   },
 }) => ({
   employeeData,
-  resumeLoading,
-  resume,
-  licenseLoading,
-  deplomaLoading,
-  refletterLoading,
+  videoUpload
 });
 
 const mapDispatchToProps = (dispatch) => ({

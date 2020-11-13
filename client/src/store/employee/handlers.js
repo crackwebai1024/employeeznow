@@ -76,6 +76,7 @@ export const failure = (state, { payload }) => ({
   ...state,
   loading: false,
   success: false,
+  videoUpload: 'FAILURE'
 });
 
 export const loadPreference = (state, { payload }) => ({
@@ -101,6 +102,12 @@ export const getBackgroundImage = (state, { payload }) => ({
 
 export const uploadPortfolioImage = (state, { payload }) => ({
   ...state,
+  videoUpload: 'REQUEST'
+});
+
+export const videoUploadSuccess = (state, { payload }) => ({
+  ...state,
+  videoUpload: 'SUCCESS'
 });
 
 export const getPortfolioImage = (state, { payload }) => ({

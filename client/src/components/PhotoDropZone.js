@@ -108,9 +108,12 @@ const PhotoDropZone = ({
 
   //sendPhoto is file data including buffer etc
   const [sendPhoto, setSendPhoto] = useState();
+  const [type, setType] = useState()
 
   const onDrop = (acceptedFiles) => {
     console.log(acceptedFiles[0], "acceptedfile");
+    let type = acceptedFiles[0].type.split("/")[0]
+    setType(type)
     //setFileNames(acceptedFiles.map((file) => file.name));  -- when there is multiple pictures
     const imgName = acceptedFiles.map((file) => file.name);
     console.log(imgName);
@@ -156,13 +159,18 @@ const PhotoDropZone = ({
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           {
-            fileNames || image && image.url ?
+            fileNames || image && image.url ? image && image.style=="image" ?
               <img src={
                 fileNames ? `${fileNames.file}` : `${image.url}?${Date.now()}`
               }
                 alt="profile"
                 className={classes.avatar}
-              /> :
+              /> : 
+              <video controls autoPlay style={{width: '100%', height: '100%'}}>
+                <source src={fileNames ? fileNames.file : image.url}>
+                </source>
+              </video>
+              :
               <div>
                 <BackupIcon className={classes.uploadIcon} />
               </div>
@@ -184,7 +192,7 @@ const PhotoDropZone = ({
         </div>
       )}
       {/* accept file max size 1MB (1048576 Bytes) */}
-      <Dropzone onDrop={onDrop} accept="image/*" minSize={0}>
+      <Dropzone onDrop={onDrop} accept="image/*, video/*" minSize={0}>
         {({ getRootProps, getInputProps }) => (
           <div
             {...getRootProps({ className: `dropzoneStyle` })}

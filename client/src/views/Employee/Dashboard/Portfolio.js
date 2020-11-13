@@ -92,6 +92,7 @@ function Portfolio({ actions, portfolios }) {
     formData.append("id", user._id);
     formData.append("fname", sendPhoto.name.split(".")[0]);
     formData.append("type", photoType);
+    formData.append("style", sendPhoto.type.split("/")[0])
     formData.append("content", sendPhoto);
     formData.append("note", title);
     formData.append("folioID", uuidv4());
@@ -100,7 +101,6 @@ function Portfolio({ actions, portfolios }) {
 
   const updatePhoto = (photoType, sendPhoto, fileNames, title) => {
     const formData = new FormData();
-    console.log("sendphoto ==> ", sendPhoto);
     formData.append("id", user._id);
     formData.append("fname", sendPhoto.name.split(".")[0]);
     formData.append("type", photoType);
@@ -114,12 +114,13 @@ function Portfolio({ actions, portfolios }) {
     setOpen(true);
   };
 
-  const handleUpdateOpen = (id, image, note) => {
+  const handleUpdateOpen = (id, image, note, style) => {
     setUpdateOpen(true);
 
-    setCurrentFolioImage({ 
+    setCurrentFolioImage({
       url: image,
-      description: note
+      description: note,
+      style: style
     });
     setFolioID(id);
   };
@@ -197,13 +198,20 @@ function Portfolio({ actions, portfolios }) {
                           <GridListTile cols={2} rows={2}>
                             {p && (
                               <Fragment>
-                                <img
-                                  src={
-                                    p.url &&
-                                    `${p.url}?${Date.now()}`
-                                  }
-                                  className={classes.image}
-                                />
+                                {
+                                  p.style == "video" ?
+                                    <video controls autoPlay style={{ width: '100%' }}>
+                                      <source src={p.url && `${p.url}?${Date.now()}`} type="video/mp4">
+                                      </source>
+                                    </video> :
+                                    <img
+                                      src={
+                                        p.url &&
+                                        `${p.url}?${Date.now()}`
+                                      }
+                                      className={classes.image}
+                                    />
+                                }
                                 <Box className={classes.imageBox}></Box>
                                 <Typography className={classes.note}>
                                   {p.note}
@@ -214,7 +222,7 @@ function Portfolio({ actions, portfolios }) {
                                   actionIcon={
                                     <IconButton
                                       onClick={(e) =>
-                                        handleUpdateOpen(p.index, p.url, p.note)
+                                        handleUpdateOpen(p.index, p.url, p.note, p.style)
                                       }
                                       aria-label={`star Morning`}
                                     >

@@ -8,6 +8,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import logo from '@assets/white-logo.svg';
 import { Container } from '@material-ui/core';
+import { getUser } from "@helpers/auth-helpers"
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
+    cursor: 'pointer',
     color: theme.palette.common.white,
     margin: '1rem',
   },
@@ -103,6 +105,7 @@ export default function Footer({ isAuthenticated, value, setValue }) {
   const theme = useTheme();
   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
+  const user = JSON.parse(getUser())
   /** value/setValue is connected with value of Nav(Header) If eigther Nav/Footer change the order, value has to be matched */
   return (
     <footer className={classes.footer}>
@@ -114,21 +117,38 @@ export default function Footer({ isAuthenticated, value, setValue }) {
           <Grid container item xs={12} md={6} >
             <Grid item xs={12} sm={6} className={classes.col_center}>
               <Box className={classes.marginCenter}>
+                
+                <Typography>
+                  <Typography component={'a'} target="_blank" href="https://www.freeprivacypolicy.com/live/81d3c0ae-c684-4e56-be84-bc57cada9962" className={classes.link}>
+                    Privacy policy
+                  </Typography>
+                </Typography>
+
+                <Typography>
+                  <Typography component={Link} to="/" className={classes.link}>
+                    Home
+                  </Typography>
+                </Typography>
+
                 <Typography>
                   <Typography component={Link} to="/about" className={classes.link}>
                     Learn More
                   </Typography>
                 </Typography>
-                <Typography>
-                  <Typography component={Link} to="/login" className={classes.link}>
-                    Log In
+                {
+                  !user && <Typography>
+                    <Typography component={Link} to="/login" className={classes.link}>
+                      Log In
                   </Typography>
-                </Typography>
-                <Typography>
-                  <Typography component={Link} to="/signup" className={classes.link}>
-                    Sign Up
                   </Typography>
-                </Typography>
+                }
+                {
+                  !user && <Typography>
+                    <Typography component={Link} to="/signup" className={classes.link}>
+                      Sign Up
+                  </Typography>
+                  </Typography>
+                }
                 <Typography>
                   <Typography component={Link} to="/contactus" className={classes.link}>
                     Contact Us

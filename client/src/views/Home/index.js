@@ -187,7 +187,7 @@ const Home = () => {
             </Typography>
               <Paper elevation={0} className={classes.paper1}>
                 <Typography className={classes.text}>
-                  You have never profile like this.<br />
+                  You've never had a profile like this.<br />
                 Register your FREE employment profile and when you want, we will show it to dozens of employers that are hiring in your area.
               </Typography>
                 <Typography className={`${classes.text} ${classes.p1}`}>

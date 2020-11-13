@@ -150,8 +150,8 @@ function* onGetBackground({ payload }) {
 function* onUploadPortfolio({ payload }) {
   try {
     const res = yield call(EmployeeAPI.uploadPortfolioImage, payload.formData);
-    console.log("uploadportfolio result ==> ", res);
     if (res && res.data) {
+      yield put(types.videoUploadSuccess())
       yield put(types.getPortfolioImage(payload));
     }
   } catch {
