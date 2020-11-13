@@ -1,5 +1,6 @@
 import Employee from "../../models/employee/basic.model";
 import Employer from "../../models/employer/basic.model";
+import Filter from "../../models/employer/search.model";
 import { sendEmail } from "../utils/sendgridemail";
 import jwt from "jsonwebtoken";
 import config from "../../../config/config";
@@ -11,6 +12,16 @@ const createToken = (id) => {
 
 // send employee the interest email from employer
 const sendEmployeeEmail = async (req, res) => {
+  let employer = {};
+  let employerfilter = {};
+  let erInt_url = `http://localhost:3000/sendmail/employerint/${req.body.id}_${req.body.filterID}_${req.body.employeeID}`;
+  let erNoInt_url = `http://localhost:3000/sendmail/employernoint/${req.body.id}_${req.body.filterID}_${req.body.employeeID}`;
+  try {
+    employer = await Employer.findById(req.body.id);
+    employerfilter = await Filter.findById(req.body.filterID);
+  } catch (err) {
+    return res.status(500).json({ error: "server error" });
+  }
   let html =
     "<html>" +
     "<head><style>" +
@@ -24,14 +35,14 @@ const sendEmployeeEmail = async (req, res) => {
     "html{font-family: Arial, Helvetica, sans-serif;}" +
     "p{margin-top: 20px;}" +
     "p.comment{margin-top: 70px;letter-spacing: 1px;line-height: 35px;}" +
-    ".btn{width: 60%;min-height: 50px;text-align: center;margin: auto;color: white;border: solid 1px;border-radius: 5px;margin-left: 10%;}" +
+    ".btn{padding-top: 8px;width: 60%;min-height: 50px;text-align: center;margin: auto;color: white;border: solid 1px;border-radius: 5px;margin-left: 10%;}" +
     ".interest{background-color: rgb(0, 32, 96);}" +
     ".nointerest{background-color: rgb(148, 0, 0);}" +
     "</style></head>" +
     "<body>" +
     "<div class='container'>" +
     "<div style='width: 100%; text-align: center;'>" +
-    "<img src='https://image.prntscr.com/image/lsYCEcRTTQG5tUAl25LQcg.png' class='brand' alt='mybrand' />" +
+    "<img src='https://image.prntscr.com/image/F8HNqMo3SsObTVZINzAShQ.png' class='brand' alt='mybrand' />" +
     "</div>" +
     "<h1 style='text-align:center'>" +
     "<i>" +
@@ -49,35 +60,52 @@ const sendEmployeeEmail = async (req, res) => {
     "<p>STYLE OF SERVICE:</p>" +
     "<p>TIME OF DAY:</p>" +
     "</div>" +
-    "<div class='col-6'>" +
-    "<p>Perkins</p>" +
-    "<p>1313 Buffalo Road Minepolis</p>" +
-    "<p>Line cook</p>" +
-    "<p>7 years</p>" +
-    "<p>Casual</p>" +
-    "<p>Dinner</p>" +
-    "</div></div>" +
+    "<div class='col-6'><p>" +
+    employer.name +
+    "</p><p>" +
+    employer.address.street1 +
+    " " +
+    employer.address.state +
+    "</p><p>" +
+    employerfilter.primary +
+    "</p><p>" +
+    employerfilter.minimunexp +
+    " years</p><p>" +
+    employerfilter.style[0] +
+    "</p><p>" +
+    (employerfilter.shift[0] ? employerfilter.shift[0] + ", " : "") +
+    (employerfilter.shift[1] ? employerfilter.shift[1] + ", " : "") +
+    (employerfilter.shift[2] ? employerfilter.shift[2] + ", " : "") +
+    "</p></div></div>" +
     "<p class='comment'>PLEASE LET US KNOW IF YOU WOULD LIKE TO BE CONDUCTED ABOUT THIS OPPORTUNITY</p>" +
     "<div>" +
     "<div class='col-6'>" +
-    "<form action='http://localhost:8000/api/mail/employer/interest' method='post'>" +
-    "<input name='employerID' style='display: none' value='" +
-    req.body.id +
-    "'/><input name='filterID' style='display: none' value='" +
-    req.body.filterID +
-    "'/>" +
-    "<button type='submit' class='interest btn'>YES! CONTACT ME ABOUT THIS OPPORTUNITY</button>" +
-    "</form></div>" +
+    "<div class='interest btn'><a href=" +
+    erInt_url +
+    ">YES! CONTACT ME ABOUT THIS OPPORTUNITY</a></div>" +
+    // "<form action='http://localhost:8000/api/mail/employer/interest' method='post'>" +
+    // "<input name='employerID' style='display: none' value='" +
+    // req.body.id +
+    // "'/><input name='filterID' style='display: none' value='" +
+    // req.body.filterID +
+    // "'/>" +
+    // "<button type='submit' class='interest btn'>YES! CONTACT ME ABOUT THIS OPPORTUNITY</button>" +
+    // "</form>
+    "</div>" +
     "<div class='col-6'>" +
-    "<form action='http://localhost:8000/api/mail/employer/nointerest' method='post'>" +
-    "<input name='employerID' style='display: none' value='" +
-    req.body.id +
-    "'/>" +
-    "<input name='filterID' style='display: none' value='" +
-    req.body.filterID +
-    "'/>" +
-    "<button type='submit' class='nointerest btn'>NO! I PASS ON THIS OPPORTUNITY</button>" +
-    "</form></div></div></div></body></html>";
+    "<div class='nointerest btn'><a href=" +
+    erNoInt_url +
+    ">NO! I PASS ON THIS OPPORTUNITY</a></div>" +
+    // "<form action='http://localhost:8000/api/mail/employer/nointerest' method='post'>" +
+    // "<input name='employerID' style='display: none' value='" +
+    // req.body.id +
+    // "'/>" +
+    // "<input name='filterID' style='display: none' value='" +
+    // req.body.filterID +
+    // "'/>" +
+    // "<button type='submit' class='nointerest btn'>NO! I PASS ON THIS OPPORTUNITY</button>" +
+    // "</form>" +
+    "</div></div></div></body></html>";
   let message = "none";
   let id = req.body.employeeID;
   try {
@@ -132,7 +160,7 @@ const commonhtml =
   "<div class='container'>" +
   "<div style='width: 100%; text-align: center; margin-top: 80px'>" +
   "<h1 style='text-align:center' class='userblue'><i>Your</i></h1>" +
-  "<img src='https://image.prntscr.com/image/lsYCEcRTTQG5tUAl25LQcg.png' class='brand' alt='mybrand' />" +
+  "<img src='https://image.prntscr.com/image/F8HNqMo3SsObTVZINzAShQ.png' class='brand' alt='mybrand' />" +
   "</div>" +
   "<h1 style='text-align:center'><i><span class='userdarkblue'>Candidate C for:</span></i></h1>" +
   "<div style='width: 100%; min-height:200px'>" +
@@ -157,7 +185,7 @@ const commonhtml =
 const sendEmployerEmail = async (suffhtml, req, res) => {
   let html = commonhtml + suffhtml;
   let message = "none";
-  let id = req.body.id;
+  let id = req.body.employerID;
   console.log(req.body);
   try {
     let user = await Employer.findOne({ _id: id });
