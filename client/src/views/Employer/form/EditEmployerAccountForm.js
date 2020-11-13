@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
+import { usaStates } from '../../Employee/professionTypes';
 import { getUser } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,12 +23,15 @@ const useStyles = makeStyles((theme) => ({
     ...theme.root
   },
   formControl: {
-    marginTop: '1.3rem',
+    marginTop: '0.7rem',
     backgroundColor: 'transparent',
   },
   heading1: {
     ...theme.typography.h1,
     marginBottom: '1.5rem',
+  },
+  stateSelect: {
+    marginTop: '1rem'
   },
   button: {
     marginTop: 30,
@@ -85,26 +89,16 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
     defaultValues: employerData
   });
   const user = JSON.parse(getUser())
-  // address.state error customized check
-  const [stateError, setStateError] = useState('');
-  const [updatedState, setUpdatedState] = useState({}); //default value - avoid submitting empty string
 
   // material-ui
   const classes = useStyles();
 
   // control address.state manually - check if address.state has value. It it has value, errror => false
-  const handleChange = (e) => {
-    if (!e.target.value) setStateError(true);
-    if (e.target.value) {
-      setStateError(false);
-      setUpdatedState(e.target.value);
-    }
-  };
 
   const onSubmit = (formData) => {
     const sendData = {
       ...formData,
-      address: { ...formData.address, state: updatedState },
+      address: { ...formData.address },
       role: 'employer',
       id: user._id
     };
@@ -126,7 +120,7 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
   }, [employerData])
 
   return (
-    !_.isEmpty(formData) &&
+    !_.isEmpty(employerData) &&
     <div>
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item>
@@ -236,103 +230,27 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
               </Grid>
 
               <Grid item sm={4} xs={6}>
-                <FormControl
-                  required
-                  size="small"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  error={stateError ? true : false}
-                  // helpertext={stateError ? 'Please select state' : ''}
-                  className={classes.formControl}
+              <TextField
+                  error={errors.address && errors.address.state
+                    ? true : false
+                  }
+                  helperText={errors.address && errors.address.state
+                    ? 'This filed is required' : ''
+                  }
+                  variant="outlined" size="small"
+                  required fullWidth select margin="none" name="address.state" label="State" id="address.state"
+                  autoComplete="state" InputLabelProps={{ shrink: true }}
+                  inputRef={register({ required: true })}
+                  SelectProps={{ native: true }}
+                  className={classes.stateSelect}
                 >
-                  {/* {address.state === '' && (
-                    <InputLabel htmlFor="address.state">State</InputLabel>
-                  )} */}
-
-                  <Select
-                    native
-                    labelId="address.state"
-                    id="address.state"
-                    key="address.state"
-                    onChange={(e) => handleChange(e)}
-                    className={classes.stateInput}
-                    defaultValue={employerData.address && employerData.address.state}
-                    inputProps={{
-                      name: 'address.state',
-                      id: 'address.state',
-                      inputRef: (ref) => {
-                        if (!ref) return;
-                        console.log(ref.value);
-                        register(
-                          //{ required: !ref.value, minLength: 2 }, // *does not work,
-                          { name: 'address.state', value: ref.value }
-                        );
-                      },
-                    }}
-                  >
-                    <option aria-label="None" value="" />
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District Of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                  </Select>
-                </FormControl>
-                {/* If address.state value was empty - the value was check onSubmit so added error message at the bottom */}
-                {stateError ? (
-                  <Grid item className={classes.invalidMessage}>
-                    <Typography variant="caption">State is requreid</Typography>
-                  </Grid>
-                ) : (
-                    ''
-                  )}
+                  <option value=""></option>
+                  {usaStates.map((usaState) => (
+                    <option value={usaState.value} key={usaState.value}>
+                      {usaState.label}
+                    </option>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item sm={4} xs={6}>
