@@ -7,6 +7,7 @@ const PortfolioSchema = new mongoose.Schema({
       fileName: String,
       url: String,
       note: String,
+      style: String,
     },
   ],
   employee: {
