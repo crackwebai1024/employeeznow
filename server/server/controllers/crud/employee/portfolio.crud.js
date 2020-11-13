@@ -34,7 +34,7 @@ const find_ByID = async (req, res) => {
 
 const updateByID = async (req, res) => {
   let role = "employee";
-  const { id, folioID, fname, type, note } = req.body;
+  const { id, folioID, fname, type, note, style } = req.body;
   let portfolioByID = await CRUD.find_ByID(
     EmployeePortfolio,
     role,
@@ -53,6 +53,7 @@ const updateByID = async (req, res) => {
           index: folioID,
           fileName: fname,
           note: note,
+          style: style,
           url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
         },
       ],
@@ -76,6 +77,7 @@ const updateByID = async (req, res) => {
             index: folioID,
             fileName: fname,
             note: note,
+            style: style,
             url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
           },
         ];
@@ -84,6 +86,7 @@ const updateByID = async (req, res) => {
           index: folioID,
           fileName: fname,
           note: note,
+          style: style,
           url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
         };
       }
