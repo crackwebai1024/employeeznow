@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import CardActions from "@material-ui/core/CardActions";
+import { Dialog, DialogContentText, DialogContent, Checkbox } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: 230,
   },
+  sequence: {
+    maxWidth: "1000px",
+    padding: '2rem 4rem',
+  },
   gridList: {
     height: 300,
     overflow: "hidden",
@@ -79,6 +83,22 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     borderRadius: "0px"
+  },
+  confirmButton: {
+    float: 'right'
+  },
+  sequenceTitle: {
+    fontSize: '20px'
+  },
+  sequenceDescription: {
+    fontSize: '12px',
+    display: 'flex'
+  },
+  sequence: {
+    padding: '2rem 4rem'
+  },
+  checkbox: {
+    marginRight: '0.5rem'
   }
 }));
 
@@ -90,6 +110,8 @@ function Portfolio({ actions, portfolios }) {
   const [updateOpen, setUpdateOpen] = useState();
   const [folioId, setFolioID] = useState();
   const [currentFolioImage, setCurrentFolioImage] = useState();
+  const [sequence, setSequence] = useState(false)
+  const [confirm, setConfirm] = useState(false);
 
   const uploadPhoto = (photoType, sendPhoto, fileNames, title) => {
     const formData = new FormData();
@@ -115,6 +137,9 @@ function Portfolio({ actions, portfolios }) {
   };
 
   const handleClickOpen = () => {
+    if (portfolios.length == 0) {
+      return setSequence(true)
+    }
     setOpen(true);
   };
 
@@ -146,6 +171,21 @@ function Portfolio({ actions, portfolios }) {
     actions.deletePortfolio(data);
   };
 
+  const handleClose = () => {
+    setSequence(false)
+  }
+
+  const onConfirm = () => {
+    if(confirm) {
+      setOpen(true);
+      setSequence(false)
+    }
+  }
+
+  const handleChange = () => {
+    setConfirm(!confirm);
+  }
+
   return (
     <Fragment>
       {localStorage.role === "employee" && (
@@ -169,6 +209,41 @@ function Portfolio({ actions, portfolios }) {
             headerTitle="Upload Portfolio"
             photoType="portfolio"
           />
+          <Dialog
+            open={sequence}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            className={classes.sequence}
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description" className={classes.sequenceTitle}>
+                Remember to not include your name or any contact
+                information in any video or picture you upload.
+              </DialogContentText>
+              <DialogContentText className={classes.sequenceDescription}>
+                <div>
+                  <Checkbox
+                    checked={confirm}
+                    onChange={handleChange}
+                    color="secondary"
+                    className={classes.checkbox}
+                  />
+                </div>
+                <div>
+                  I understand that any attempt or include any private/personal
+                  contact information through video, pictures of other uploads
+                  will result in my profile being cancelled.
+                </div>
+              </DialogContentText>
+              <Button
+                onClick={onConfirm}
+                className={classes.confirmButton}
+              >
+                OK
+              </Button>
+            </DialogContent>
+          </Dialog>
         </Fragment>
       )}
       <Card className={classes.section}>
@@ -184,7 +259,7 @@ function Portfolio({ actions, portfolios }) {
             </Button>
           }
           title="Portfolio"
-          subheader=""
+          subheader="for videos and photos : please remember to not say or show your name or any contact incormation"
         />
         <CardContent>
           {portfolios && (

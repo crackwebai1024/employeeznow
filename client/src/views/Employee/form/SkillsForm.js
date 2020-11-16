@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
   goback_button: {
     float: 'right',
     marginTop: "1rem",
-    marginBottom: "5rem",    
+    marginBottom: "5rem",
   }
 }));
 
@@ -141,7 +141,7 @@ const SkillsForm = ({
   const [shift, setShift] = useState([]);
   const [systems, setSystems] = useState([]);
   const [style, setStyle] = useState([]);
-  const [styleCurrent, setStyleCurrent] = useState("");
+  const [styleCurrent, setStyleCurrent] = useState([]);
   const [cuisine, setCuisine] = useState([]);
   const [wineKnowledge, setWineKnowledge] = useState("");
   const [cocktailKnowledge, setCocktailKnowledge] = useState("");
@@ -333,18 +333,27 @@ const SkillsForm = ({
         return setSystems(newArray);
       }
       case "style": {
+        debugger
         if (value < 0) {
           return setStyleYearsError("Invalid input. Years must be above 0");
         }
-
-        setStyleYearsError("");
-
-        // change years = 0 to '' - it is easier to remove data later
-        const noZeroValue = value === "0" ? (value = "") : value;
-        const newArray = { type: id, years: noZeroValue };
-        // update years if type exisits - Also if year is '', obj removed
-        setStyleCurrent(id);
-        return setStyle(newArray);
+        if (style.length > 4)
+          return
+        let newArray = [];
+        let idx = style.findIndex((item) => item.type === id);
+        if (value === "") {
+          style.splice(idx, 1);
+          newArray = [...style];
+        } else {
+          if (idx > -1) {
+            style[idx].years = value;
+            newArray = [...style];
+          } else {
+            if (style.length > 3) return;
+            style.push({ type: id, years: value });
+            newArray = [...style];
+          }
+        }
       }
       case "cuisine": {
         console.log(cuisine.length);
@@ -424,6 +433,7 @@ const SkillsForm = ({
     }
 
     const formData = createFormData();
+    debugger
     actions.updateSkillRequest(formData);
     _loadData();
   };
@@ -631,10 +641,7 @@ const SkillsForm = ({
           <Grid item className={classes.titleContainer}>
             <Typography className={classes.title}>
               Please enter your years of experience for each style of service
-              </Typography>
-            <Typography className={classes.styleSubtitle}>
-              &#42; Please select your current style of service
-              </Typography>
+            </Typography>
           </Grid>
 
           <FormControl component="fieldset">
@@ -642,24 +649,16 @@ const SkillsForm = ({
               <Grid item container direction="row">
                 {styles.map((st, i) => (
                   <Grid item key={`${st}${i}`} sm={6}>
-                    <FormControlLabel
-                      control={
-                        <Radio
-                          size="small"
-                          id={st}
-                          checked={styleCurrent === st}
-                          onChange={(e) => handleChange(e)}
-                          className={classes.styleRadio}
-                        />
-                      }
-                      name="styleCurrent"
-                    />
                     <TextField
                       id={st}
                       type="number"
                       name="style"
                       label={st}
-                      value={st === styleCurrent ? style.years : ""}
+                      value={
+                        style.filter((style) => style.type === st)[0]
+                          ? style.filter((style) => style.type === st)[0].years
+                          : ""
+                      }
                       onChange={(e) => handleChange(e)}
                       min="0"
                       className={classes.styleandcuisineInput}
@@ -899,7 +898,7 @@ const SkillsForm = ({
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-            <Button
+              <Button
                 variant="outlined"
                 onClick={onCancleHandle}
                 className={classes.goback_button}

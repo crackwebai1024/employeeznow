@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   return_button: {
     float: 'right',
     marginTop: "2rem",
-    marginBottom: "5rem",    
+    marginBottom: "5rem",
   },
   invalidMessage: {
     textAlign: "center",
@@ -109,7 +109,7 @@ const ProfessionDetailsForm = ({
     planningToMove: { planning: false, location: "", dateToMove: "" },
     randomShift: false,
     randomShiftRole: [],
-    newOpportunity: { availability: false, title: "" },
+    newOpportunity: [],
     veteran: { status: false, veteranId: "" },
   });
   const [showAlert, setShowAlert] = useState(0);
@@ -168,34 +168,21 @@ const ProfessionDetailsForm = ({
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
 
     switch (name) {
-      case "dateOfBirth":
       case "employmentStatus": {
         return setFormData({ ...formData, [name]: value });
       }
-      case "company":
-      case "startDate":
-      case "endDate":
       case "amount":
       case "unit":
-      case "location":
-      case "dateToMove":
-      case "title":
-      case "veteranId": {
-        return setFormData({
-          ...formData,
-          [id]: { ...formData[id], [name]: value },
-        });
-      }
-      case "current": {
-        setFormData((prevState) => ({
-          ...prevState,
-          [id]: { ...prevState[id], [name]: checked },
-        }));
-        setToDisabled(!toDisabled);
-        break;
-      }
       case "planning":
       case "availability":
+      case "newOpportunity": {
+        let newValue = [...formData[name]]
+        newValue.push(id)
+        return setFormData({
+          ...formData,
+          newOpportunity: newValue
+        })
+      }
       case "status": {
         setFormData((prevState) => ({
           ...prevState,
@@ -204,25 +191,6 @@ const ProfessionDetailsForm = ({
         setToggleBox(!toggleBox);
         break;
       }
-      case "randomShiftRole": {
-        const newArray = [...formData[name]];
-        // uncheck - if the same shift already exists in state, the shift is removed from state
-        if (newArray.includes(id)) {
-          const idx = newArray.indexOf(id);
-          newArray.splice(idx, 1);
-
-          return setFormData({
-            ...formData,
-            [name]: newArray,
-          });
-        }
-
-        newArray.push(id); // Set the new value
-        return setFormData({
-          ...formData,
-          [name]: newArray,
-        });
-      }
 
       case "randomShift": {
         return setFormData({
@@ -230,7 +198,6 @@ const ProfessionDetailsForm = ({
           randomShift: !randomShift,
         });
       }
-
       default:
         return formData;
     }
@@ -278,10 +245,10 @@ const ProfessionDetailsForm = ({
             {/* employemnt status job */}
             <Grid item className={classes.textContainer}>
               <Typography gutterBottom variant="h6">
-                Employment Status 
-                <span className={classes.textDetail}>
+                Employment Status
+                <Typography className={classes.textDetail}>
                   &nbsp;(Your profile will not appear in employer searches by selecting 'Employed and not looking')
-                </span>
+                </Typography>
               </Typography>
             </Grid>
 
@@ -355,6 +322,53 @@ const ProfessionDetailsForm = ({
               <FormControlLabel
                 control={
                   <Checkbox
+                    name="randomShift"
+                    id="randomShift"
+                    checked={randomShift}
+                    value={randomShift}
+                    onChange={(e) => onChange(e)}
+                  />
+                }
+                label="Open to new opportunity ?"
+                className={classes.checkboxText}
+              />
+
+              {newOpportunity ? (
+                <Grid item>
+                  <Grid container>
+                    {jobTypes.map((type) => (
+                      <Grid item key={type} sm={4} xs={12}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              name="newOpportunity"
+                              id={type}
+                              checked={
+                                newOpportunity.filter((r) => r == type)
+                                  .length > 0
+                                  ? true
+                                  : false
+                              }
+                              value={newOpportunity}
+                              onChange={(e) => onChange(e)}
+                            />
+                          }
+                          label={type}
+                          className={classes.item}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+              ) : (
+                  ""
+                )}
+            </Grid>
+
+            {/* <Grid item>
+              <FormControlLabel
+                control={
+                  <Checkbox
                     name="planning"
                     checked={planningToMove.planning}
                     value={planningToMove.planning}
@@ -402,10 +416,10 @@ const ProfessionDetailsForm = ({
               ) : (
                   ""
                 )}
-            </Grid>
+            </Grid> */}
 
             {/* random shift */}
-            <Grid item>
+            {/* <Grid item>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -452,10 +466,10 @@ const ProfessionDetailsForm = ({
               ) : (
                   ""
                 )}
-            </Grid>
+            </Grid> */}
 
             {/* new opportunity */}
-            <Grid item>
+            {/* <Grid item>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -479,8 +493,8 @@ const ProfessionDetailsForm = ({
                       <Grid item key={type} sm={4} xs={12}>
                         <FormControlLabel
                           control={
-                            <Radio
-                              name="title"
+                            <Checkbox
+                              name="newOpportunity"
                               id="newOpportunity"
                               value={type}
                               checked={
@@ -490,7 +504,7 @@ const ProfessionDetailsForm = ({
                             />
                           }
                           label={type}
-                          name="title"
+                          name="newOpportunity"
                           className={classes.item}
                         />
                       </Grid>
@@ -500,7 +514,7 @@ const ProfessionDetailsForm = ({
               ) : (
                   ""
                 )}
-            </Grid>
+            </Grid> */}
 
             <Grid container item xs={12}>
               <Grid item xs={12} sm={6}>
