@@ -60,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     background: theme.palette.common.blue,
   },
+  deploma: {
+    textAlign: 'center',
+    padding: '1rem'
+  },
   profilePhoto: {
     width: 100,
     textAlign: "center",
@@ -393,109 +397,11 @@ function Dashboard(props) {
         <Grid className={classes.section}>
           <Portfolio />
         </Grid>
-
-        {/* <Grid className={classes.section}>
-            <Card className={classes.section}>
-              <CardHeader
-                title="DOCUMENTS"
-                subheader=""
-              />
-              <CardContent>
-                <Grid className={classes.section}> */}
-        {/* <Card className={classes.section}>
-                    <CardHeader
-                      title="resume"
-                      subheader=""
-                    />
-                    <CardContent>
-                      <input
-                        accept="*"
-                        className={classes.input}
-                        id="contained-button-resume"
-                        multiple
-                        onChange={e => uploadDocument(e, "resume")}
-                        type="file"
-                      />
-                      <label htmlFor="contained-button-resume">
-                        <Button variant="contained" color="primary" component="span">
-                          Resume Upload
-                        </Button>
-                      </label>
-                      {resumeLoading ? "loading..." : document.resume && document.resume}
-                    </CardContent>
-                  </Card> */}
-
-        {/* <Card className={classes.section}>
-                    <CardHeader
-                      title="licence"
-                      subheader=""
-                    />
-                    <CardContent>
-                      <input
-                        accept="*"
-                        className={classes.input}
-                        id="contained-button-license"
-                        multiple
-                        onChange={e => uploadDocument(e, "license")}
-                        type="file"
-                      />
-                      <label htmlFor="contained-button-license">
-                        <Button variant="contained" color="primary" component="span">
-                          License Upload
-                        </Button>
-                      </label>
-                      {licenseLoading ? "loading..." : document.license && document.license}
-                    </CardContent>
-                  </Card> */}
-
-        {/* <Card className={classes.section}>
-                    <CardHeader
-                      title="deploma"
-                      subheader=""
-                    />
-                    <CardContent>
-                      <input
-                        accept="*"
-                        className={classes.input}
-                        id="contained-button-deploma"
-                        multiple
-                        onChange={e => uploadDocument(e, "deploma")}
-                        type="file"
-                      />
-                      <label htmlFor="contained-button-deploma">
-                        <Button variant="contained" color="primary" component="span">
-                          Deploma Upload
-                        </Button>
-                      </label>
-                      {deplomaLoading ? "loading..." : document.deploma && document.deploma}
-                    </CardContent>
-                  </Card> */}
-        {/* <Card className={classes.section}>
-                    <CardHeader
-                      title="refletter"
-                      subheader=""
-                    />
-                    <CardContent>
-                      <input
-                        accept="*"
-                        className={classes.input}
-                        id="contained-button-refletter"
-                        multiple
-                        onChange={e => uploadDocument(e, "refletter")}
-                        type="file"
-                      />
-                      <label htmlFor="contained-button-refletter">
-                        <Button variant="contained" color="primary" component="span">
-                          Refletter Upload
-                        </Button>
-                      </label>
-                      {refletterLoading ? "loading..." : document.refletter && document.refletter}
-                    </CardContent>
-                  </Card> */}
-        {/* </Grid>
-              </CardContent>
-            </Card>
-          </Grid> */}
+        <Grid className={classes.deploma}>
+          <Typography className={classes.center}>
+            To upload any documents (diplomas, letter of recommentation, etc) please email to: Register@EmployeezNow.com
+          </Typography>
+        </Grid>
       </Container>
     </Fragment>
   ) : (

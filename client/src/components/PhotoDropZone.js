@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     height: 'fit-content',
     maxHeight: 300,
     zIndex: 1,
+    margin: 'auto',
     overflow: "hidden",
   },
   userdialog: {
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto 1rem auto",
   },
   video: {
-    width: '100%', 
+    width: '100%',
     maxHeight: "300px"
   }
 }));
@@ -92,9 +93,7 @@ const PhotoDropZone = ({
   // setAlert,
 }) => {
   // style material-ui
-  const classes = useStyles();
-  console.log(image, "image---")
-  // title for Photo
+  const classes = useStyles();  // title for Photo
   const [title, setTitle] = useState("");
   const [titleError, setTitleError] = useState("");
 
@@ -123,7 +122,7 @@ const PhotoDropZone = ({
     const imgName = acceptedFiles.map((file) => file.name);
     console.log(imgName);
     // setPhoto({ photo: imgName[0] });
-    console.log("file upload object ==> ", acceptedFiles[0].name);
+    console.log("file upload object ==> ", acceptedFiles[0]);
     setFileNames({ file: URL.createObjectURL(acceptedFiles[0]) });
     // setFileNames(acceptedFiles[0].name);
     //setDropzoneStyle('dropped');
@@ -149,7 +148,8 @@ const PhotoDropZone = ({
     handleClose();
   };
 
-  console.log("fileNames ==> ", fileNames, image);
+  console.log(fileNames, "filenames")
+
   return (
     <Dialog open={open ? true : false} onClose={handleClose} aria-labelledby="dialog-title">
       <DialogTitle id="dialog-title">
@@ -164,17 +164,30 @@ const PhotoDropZone = ({
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           {
-            fileNames || image && image.url ? image && (image.style=="image" || image.style == undefined) ?
-              <img src={
-                fileNames ? `${fileNames.file}` : `${image.url}?${Date.now()}`
-              }
-                alt="profile"
-                className={classes.avatar}
-              /> :
-              <video controls className={classes.video}>
-                <source src={fileNames ? fileNames.file : image.url}>
-                </source>
-              </video>
+            (fileNames || (image && image.url)) ? (
+              fileNames ? (type == "image" ?
+                <img src={fileNames.file}
+                  alt="profile"
+                  className={classes.avatar}
+                />
+                :
+                <video controls className={classes.video}>
+                  <source src={fileNames.file}>
+                  </source>
+                </video>
+              )
+                :
+                ((image.style == "image" || image.style == undefined) ?
+                  <img src={`${image.url}?${Date.now()}`}
+                    alt="profile"
+                    className={classes.avatar}
+                  /> :
+                  <video controls className={classes.video}>
+                    <source src={image.url}>
+                    </source>
+                  </video>
+                )
+            )
               :
               <div>
                 <BackupIcon className={classes.uploadIcon} />

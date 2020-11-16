@@ -217,7 +217,7 @@ const Home = () => {
               <DirectionsCarOutlinedIcon className={classes.sectionIcon} />
             </Typography>
             <Typography className={classes.font14}>
-              Select the miles you're willing to travel from home for work
+              Select the miles you're willing to travel from home to work
             </Typography>
           </Grid>
           <Grid item xs={12} md={4} className={classes.p3}>
