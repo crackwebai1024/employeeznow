@@ -366,6 +366,9 @@ const ExperienceForm = ({
 
   const [exclude, setExclude] = useState([])
   const handleBusiness = (event, value) => {
+    if (value.length > 4) {
+      return
+    }
     setExclude(value)
   }
 

@@ -62,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
   checkboxText: {
     marginTop: "1.5rem",
   },
+  textDetail: {
+    fontSize: '16px',
+    fontWeight: 400
+  },
   item: {
     marginLeft: "2rem",
     "& .MuiInput-input": {
@@ -274,7 +278,10 @@ const ProfessionDetailsForm = ({
             {/* employemnt status job */}
             <Grid item className={classes.textContainer}>
               <Typography gutterBottom variant="h6">
-                Employment Status
+                Employment Status 
+                <span className={classes.textDetail}>
+                  &nbsp;(Your profile will not appear in employer searches by selecting 'Employed and not looking')
+                </span>
               </Typography>
             </Grid>
 

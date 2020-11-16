@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarContainer: {
     width: 300,
-    height: 300,
+    height: 'fit-content',
+    maxHeight: 300,
     zIndex: 1,
     overflow: "hidden",
   },
@@ -51,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100%"
   },
   avatar: {
-    width: 300,
-    marginLeft: "20px",
+    width: '100%',
+    maxHeight: "300px"
   },
   dropzoneText: {
     color: theme.palette.common.white,
@@ -68,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
   inputContainer: {
     margin: "0 auto 1rem auto",
   },
+  video: {
+    width: '100%', 
+    maxHeight: "300px"
+  }
 }));
 
 // props are through parents
@@ -159,14 +164,14 @@ const PhotoDropZone = ({
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           {
-            fileNames || image && image.url ? image && image.style=="image" ?
+            fileNames || image && image.url ? image && (image.style=="image" || image.style == undefined) ?
               <img src={
                 fileNames ? `${fileNames.file}` : `${image.url}?${Date.now()}`
               }
                 alt="profile"
                 className={classes.avatar}
-              /> : 
-              <video controls autoPlay style={{width: '100%', height: '100%'}}>
+              /> :
+              <video controls className={classes.video}>
                 <source src={fileNames ? fileNames.file : image.url}>
                 </source>
               </video>

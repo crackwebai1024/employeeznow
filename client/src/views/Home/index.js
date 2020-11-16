@@ -184,7 +184,7 @@ const Home = () => {
             <Grid>
               <Typography variant="h4" className={classes.headingBatang}>
                 HOSPITALITY EMPLOYEES
-            </Typography>
+              </Typography>
               <Paper elevation={0} className={classes.paper1}>
                 <Typography className={classes.text}>
                   You've never had a profile like this.<br />
@@ -192,7 +192,7 @@ const Home = () => {
               </Typography>
                 <Typography className={`${classes.text} ${classes.p1}`}>
                   YOUR PROFILE CAN BE SO MUCH MORE THAN JUST A RESUME
-              </Typography>
+                </Typography>
               </Paper>
             </Grid>
           </Grid>
@@ -202,31 +202,31 @@ const Home = () => {
             </Typography>
             <Typography className={classes.font14}>
               Upload <b>"At-Work" videos</b> showing off your skills
-          </Typography>
-          </Grid>
-          <Grid item xs={12} md={4} className={classes.p3}>
-            <Typography className={classes.center}>
-              <MonetizationOnOutlinedIcon className={classes.sectionIcon} />
             </Typography>
-            <Typography className={classes.font14}>
-              Create a <b>Self-Interview</b> to explain who you are
-          </Typography>
           </Grid>
           <Grid item xs={12} md={4} className={classes.p3}>
             <Typography className={classes.center}>
               <MovieFilterOutlinedIcon className={classes.sectionIcon} />
             </Typography>
             <Typography className={classes.font14}>
-              Select the miles you're willing to travel from home for work
-          </Typography>
+              Create a <b>Self-Interview</b> to explain who you are
+            </Typography>
           </Grid>
           <Grid item xs={12} md={4} className={classes.p3}>
             <Typography className={classes.center}>
               <DirectionsCarOutlinedIcon className={classes.sectionIcon} />
             </Typography>
             <Typography className={classes.font14}>
+              Select the miles you're willing to travel from home for work
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={4} className={classes.p3}>
+            <Typography className={classes.center}>
+              <MonetizationOnOutlinedIcon className={classes.sectionIcon} />
+            </Typography>
+            <Typography className={classes.font14}>
               Include your salary expectations
-          </Typography>
+            </Typography>
           </Grid>
           <Grid item xs={12} md={4} className={classes.p3}>
             <Typography className={classes.center}>
@@ -234,7 +234,7 @@ const Home = () => {
             </Typography>
             <Typography className={classes.font14}>
               List yourself eligible for multiple job titles
-          </Typography>
+            </Typography>
           </Grid>
           <Grid item xs={12} md={4} className={classes.p3}>
             <Typography className={classes.center}>
@@ -242,7 +242,7 @@ const Home = () => {
             </Typography>
             <Typography className={classes.font14}>
               Our automation will help you keep it up to date
-          </Typography>
+            </Typography>
           </Grid>
         </Grid>
 

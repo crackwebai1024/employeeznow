@@ -35,6 +35,7 @@ const useStlyes = makeStyles((theme) => ({
     padding: '30px'
   },
   image: {
+    maxWidth: '372px',
     boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)"
   },
   listDescription: {
@@ -61,6 +62,10 @@ const useStlyes = makeStyles((theme) => ({
   },
   center: {
     textAlign: 'center'
+  },
+  col_center: {
+    display: 'flex',
+    alignIems: "center",
   }
 }))
 
@@ -73,18 +78,20 @@ const Hospitality = () => {
     </Typography>
     </Grid>
     <Grid container xs={12}>
-      <Grid xs={12} sm={6}>
-        <Typography className={classes.profileSubtitle}>
-          THE FASTEST WAY TO HIRE
-        </Typography>
-        <Typography className={classes.profileSubdescription}>
-          The next time you have a job opening, don't spend days with multiple
-          sites just to get a list of qualified candidates. Register your company profile &
-          get your candidates in just a few minutes!
-        </Typography>
+      <Grid xs={12} sm={6} className={classes.col_center}>
+        <Box style={{ margin: 'auto' }}>
+          <Typography className={classes.profileSubtitle}>
+            THE FASTEST WAY TO HIRE
+          </Typography>
+          <Typography className={classes.profileSubdescription}>
+            The next time you have a job opening, don't spend days with multiple
+            sites just to get a list of qualified candidates. Register your company profile &
+            get your candidates in just a few minutes!
+          </Typography>
+        </Box>
       </Grid>
       <Grid xs={12} sm={6} className={classes.center}>
-        <img src={`${process.env.PUBLIC_URL}/img/img4.svg`} className={classes.image}/>
+        <img src={`${process.env.PUBLIC_URL}/img/img4.png`} className={classes.image} />
       </Grid>
     </Grid>
     <Grid xs={12}>

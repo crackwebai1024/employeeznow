@@ -11,16 +11,22 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '350px',
     margin: 'auto',
     fontSize: '20px',
-    textAlign: 'center',
-    fontWeight : 900,
-    fontFamily : 'calibri'
+    // textAlign: 'center',
+    fontWeight: 900,
+    fontFamily: 'calibri'
   },
   listText: {
-    fontSize : '20px',
-    marginTop: '80px',
-    fontWeight: 600,
+    fontSize: '18px',
+    fontWeight: 300,
+    lineHeight: 2,
     margin: 'auto',
     width: 'fit-content'
+  },
+  title: {
+    fontSize: '32px',
+    textAlign: 'center',
+    marginTop: '4rem',
+    marginBottom: '1.5rem'
   }
 }));
 
@@ -28,23 +34,30 @@ export default function SelfInterviewSection() {
   const classes = useStyles()
   return (
     <Fragment>
-      <Grid item xs={12} md={6}>
-      <div style={{padding:"50.65% 0 0 0", position:"relative"}}>
-        <iframe src="https://player.vimeo.com/video/414927401" style={{position:"absolute", top:0, left:0, width: "100%", height:"100%"}} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
-        </iframe>
-      </div>
-      <script src="https://player.vimeo.com/api/player.js"></script>
+      <Grid item xs={12} md={12}>
+        <Typography className={classes.title}>
+          Sample topics for a Self-Interview
+        </Typography>
       </Grid>
+      {/* <Grid item xs={12} md={6}>
+        <div style={{ padding: "50.65% 0 0 0", position: "relative" }}>
+          <iframe src="https://player.vimeo.com/video/414927401?title=0?byline=0?portrait=0" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+          </iframe>
+        </div>
+        <script src="https://player.vimeo.com/api/player.js"></script>
+      </Grid>
+
       <Grid item xs={12} md={6}>
         <Typography className={classes.interviewText}>
           Your EmployeezNow profile allows you to create and build a portfolio to show what
           you can do.  Upload pictures of your accomplishment,
           videos of your ‘at work’ skills and even your Self-Interview.
           Now you get to control the narrative and talk about the topics
-          and questions that best suit you.<br/> <br/> <br/>
+          and questions that best suit you.<br /> <br /> <br />
           Here are some suggestions that you can use on your video.
         </Typography>
-      </Grid>
+      </Grid> */}
+
       <Grid item xs={12} md={12}>
         <Typography className={classes.listText}>
           <ul>

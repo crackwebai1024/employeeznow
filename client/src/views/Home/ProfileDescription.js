@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "550",
     fontSize: "16px"
   },
+  profiledDetails: {
+    marginTop: '2rem',
+    color: theme.palette.common.gray
+  },
   ContainerRight: {
     [theme.breakpoints.down('sm')]: {
       textAlign: "center"
@@ -58,13 +62,15 @@ const ProfileDescription = () => {
     </Grid>
     <Grid item xs={12} md={6}>
       <Grid className={classes.ContainerLeft}>
-      <div style={{padding:"75% 0 0 0", position:"relative"}}>
-        <iframe src="https://player.vimeo.com/video/7743003" 
-          style={{position:"absolute", top:"0", left:"0", width:"100%", height:"100%"}} 
-          frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
-        </iframe>
-      </div>
-      <script src="https://player.vimeo.com/api/player.js"></script>
+        <Box style={{ margin: 'auto' , maxWidth: '472px'}}>
+          <div style={{ padding: "75% 0 0 0", position: "relative" }}>
+            <iframe src="https://player.vimeo.com/video/7743003?title=0&byline=0&portrait=0"
+              style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+            </iframe>
+          </div>
+          <script src="https://player.vimeo.com/api/player.js"></script>
+        </Box>
       </Grid>
     </Grid>
     <Grid item xs={12} md={6} className={classes.col_center}>
@@ -88,19 +94,22 @@ const ProfileDescription = () => {
           Upload pictures of your accompishment and even your self-interview.
           Now you get to control the narrative and talk about the topics and questions that best suit you.
         </Typography>
+        <Typography className={classes.profiledDetails}>
+          (View our Self-Interview questions on the Learn More page)
+        </Typography>
       </Box>
     </Grid>
     <Grid item xs={12} md={6} className={classes.center}>
       <div className={classes.video}>
-        <iframe src="https://player.vimeo.com/video/472816351" 
-          style={{position:"absolute", top:"0", left:"0", width:"100%", height:"100%" }} 
+        <iframe src="https://player.vimeo.com/video/472816351?title=0&byline=0&portrait=0"
+          style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}
           allow="autoplay; fullscreen" frameborder="0" allowfullscreen>
         </iframe>
-        </div>
-          <script src="https://player.vimeo.com/api/player.js"></script>
+      </div>
+      <script src="https://player.vimeo.com/api/player.js"></script>
     </Grid>
     <Grid item xs={12} md={6} className={classes.center}>
-      <img src={`${process.env.PUBLIC_URL}/img/img3.svg`} className={classes.image}/>
+      <img src={`${process.env.PUBLIC_URL}/img/img3.svg`} className={classes.image} />
     </Grid>
     <Grid item xs={12} md={6} className={classes.col_center}>
       <Box style={{ margin: 'auto' }}>

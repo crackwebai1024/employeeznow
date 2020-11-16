@@ -70,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
   image: {
     margin: 'auto',
     width: "100%",
-    maxWidth: '300px'
+    maxWidth: '300px',
+    marginBottom: '2rem'
   },
   iconBack: {
     background: 'white'
@@ -89,6 +90,12 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     width: 'fit-content',
     display: 'flex'
+  },
+  footerLogo: {
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+      marginBottom: '2rem'
+    }
   },
   socialIcon: {
     width: '4.5rem',
@@ -111,13 +118,15 @@ export default function Footer({ isAuthenticated, value, setValue }) {
     <footer className={classes.footer}>
       <Container>
         <Grid container item xs={12}>
-          <Grid item xs={12} md={6} className={classes.col_center}>
+          <Grid item xs={12} md={6} className={classes.footerLogo}>
             <img src={logo} className={classes.image} />
+            <Typography>
+              2020 EmployeezNow LLC
+            </Typography>
           </Grid>
           <Grid container item xs={12} md={6} >
             <Grid item xs={12} sm={6} className={classes.col_center}>
               <Box className={classes.marginCenter}>
-                
                 <Typography>
                   <Typography component={'a'} target="_blank" href="https://www.freeprivacypolicy.com/live/81d3c0ae-c684-4e56-be84-bc57cada9962" className={classes.link}>
                     Privacy policy

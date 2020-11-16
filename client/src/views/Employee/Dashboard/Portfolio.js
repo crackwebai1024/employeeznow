@@ -67,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
       background: "rgba(0, 0, 0, 0.5)",
     },
   },
+  video: {
+    width: '100%',
+    maxHeight: '230px'
+  },
   icon: {
     color: "white",
     "&:hover": {
@@ -200,7 +204,7 @@ function Portfolio({ actions, portfolios }) {
                               <Fragment>
                                 {
                                   p.style == "video" ?
-                                    <video controls autoPlay style={{ width: '100%' }}>
+                                    <video controls className={classes.video}>
                                       <source src={p.url && `${p.url}?${Date.now()}`} type="video/mp4">
                                       </source>
                                     </video> :

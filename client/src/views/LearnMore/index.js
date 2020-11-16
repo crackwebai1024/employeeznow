@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contestContainer: {
     background: "#FAFAFA",
-    textAlign: 'center',
+    // textAlign: 'center',
     width: '100%'
   },
   veteranSectionTitle: {
@@ -167,11 +167,10 @@ const LearnMore = () => {
           })
         }
       </Grid>
-
     </Container>
 
     <Grid container className={classes.contestContainer}>
-      {/* <ContestSection /> */}
+      <SelfInterviewSection />
     </Grid>
 
     <Container width="sm" className={classes.mainContainer}>
@@ -222,7 +221,7 @@ const LearnMore = () => {
         </Grid>
         <Grid item xs={12} md={5} style={{ marginTop: '2rem' }}>
           <div style={{ padding: "100% 0 0 0", position: "relative" }}>
-            <iframe src="https://player.vimeo.com/video/455932248" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+            <iframe src="https://player.vimeo.com/video/455932248?title=0?byline=0?portrait=0" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
             </iframe>
           </div>
           <script src="https://player.vimeo.com/api/player.js"></script>
