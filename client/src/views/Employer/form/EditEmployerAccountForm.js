@@ -462,6 +462,19 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
             <Grid item container xs={12} spacing={2}>
               <Grid item xs={6}>
                 <Button
+                  fullWidth
+                  variant="outlined"
+                  color="primary"
+                  onClick={e => {
+                    history.push(`/employers/${user.slug}`)
+                  }}
+                  className={classes.button}
+                >
+                  Go Back
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -470,19 +483,6 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
                   className={classes.button}
                 >
                   Update
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={e => {
-                    history.push('/')
-                  }}
-                  className={classes.button}
-                >
-                  Go Back
                 </Button>
               </Grid>
             </Grid>
