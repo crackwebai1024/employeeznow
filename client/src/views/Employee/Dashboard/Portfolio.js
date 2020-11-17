@@ -137,7 +137,8 @@ function Portfolio({ actions, portfolios }) {
   };
 
   const handleClickOpen = () => {
-    if (portfolios.length == 0) {
+    setConfirm(false)
+    if (portfolios && portfolios.length == 0) {
       return setSequence(true)
     }
     setOpen(true);

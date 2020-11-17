@@ -333,7 +333,6 @@ const SkillsForm = ({
         return setSystems(newArray);
       }
       case "style": {
-        debugger
         if (value < 0) {
           return setStyleYearsError("Invalid input. Years must be above 0");
         }
@@ -433,7 +432,6 @@ const SkillsForm = ({
     }
 
     const formData = createFormData();
-    debugger
     actions.updateSkillRequest(formData);
     _loadData();
   };
