@@ -141,7 +141,7 @@ const SkillsForm = ({
   const [shift, setShift] = useState([]);
   const [systems, setSystems] = useState([]);
   const [style, setStyle] = useState([]);
-  const [styleCurrent, setStyleCurrent] = useState([]);
+  const [styleCurrent, setStyleCurrent] = useState("");
   const [cuisine, setCuisine] = useState([]);
   const [wineKnowledge, setWineKnowledge] = useState("");
   const [cocktailKnowledge, setCocktailKnowledge] = useState("");
@@ -353,6 +353,7 @@ const SkillsForm = ({
             newArray = [...style];
           }
         }
+        return setStyle(newArray)
       }
       case "cuisine": {
         console.log(cuisine.length);
@@ -363,7 +364,6 @@ const SkillsForm = ({
         let idx = cuisine.findIndex((item) => item.type === id);
         if (value === "") {
           cuisine.splice(idx, 1);
-          console.log("findindex ==> ", idx);
           newArray = [...cuisine];
         } else {
           if (idx > -1) {
