@@ -174,6 +174,7 @@ const ProfessionDetailsForm = ({
       case "newOpportunity": {
         let newValue = [...formData[name]]
         if (checked) {
+          if(newValue.length > 2) return
           newValue.push(id)
         } else {
           newValue = _.remove(formData[name], function (array) {

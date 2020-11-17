@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
     maxWidth: '500px',
-    position: "relative",
+    // position: "relative",
     background: theme.palette.common.white,
     top: '5rem',
     padding: '2rem',

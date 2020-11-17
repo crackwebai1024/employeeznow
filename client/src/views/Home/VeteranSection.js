@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: "26px"
   },
+  image: {
+    maxWidth: "372px",
+    width: "100%",
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)"
+  },
   titleDetail: {
     padding: '9px 0 9px 0',
     fontSize: '16px'
@@ -61,7 +66,7 @@ const VeteranSection = () => {
             </Typography>
           </Grid>
           <Grid xs={12} sm={6} className={classes.center}>
-            <img src={`${process.env.PUBLIC_URL}/img/img5.svg`} style={{padding: '2rem 0 2rem 0'}}/>
+            <img src={`${process.env.PUBLIC_URL}/img/img5.svg`} className={classes.image}/>
           </Grid>
           <Grid xs={12} sm={6} className={classes.col_center}>
             <Box>

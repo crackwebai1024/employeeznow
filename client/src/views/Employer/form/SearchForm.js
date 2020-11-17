@@ -359,7 +359,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  select fullWidth margin="none" name="idealSalary.unit" label="Pay Rate Unit"
+                  select fullWidth margin="none" name="idealSalary.unit" label="Pay Rate Type"
                   inputRef={register()}
                   InputLabelProps={{ shrink: true }}
                   SelectProps={{ native: true }}
