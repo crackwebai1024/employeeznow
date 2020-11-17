@@ -37,6 +37,8 @@ export const AppRouterData = [
   { "path": "/login", component: Login },
   { 'path': `/forgotPassword`, component: ForgotPassword },
   { 'path': `/contactus`, component: Contact },
+  { 'path': `/test`, component: PhoneVerification },
+  
 ]
 
 export const AppPrivateRouterEmployerData = [

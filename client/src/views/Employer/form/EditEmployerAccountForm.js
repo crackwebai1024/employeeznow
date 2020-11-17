@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -89,6 +90,7 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
     defaultValues: employerData
   });
   const user = JSON.parse(getUser())
+  const history = useHistory()
 
   // material-ui
   const classes = useStyles();
@@ -230,7 +232,7 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
               </Grid>
 
               <Grid item sm={4} xs={6}>
-              <TextField
+                <TextField
                   error={errors.address && errors.address.state
                     ? true : false
                   }
@@ -457,16 +459,33 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
           </DialogContent>
 
           <DialogActions>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit(onSubmit)}
-              className={classes.button}
-            >
-              Update
-            </Button>
+            <Grid item container xs={12} spacing={2}>
+              <Grid item xs={6}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit(onSubmit)}
+                  className={classes.button}
+                >
+                  Update
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={e => {
+                    history.push('/')
+                  }}
+                  className={classes.button}
+                >
+                  Go Back
+                </Button>
+              </Grid>
+            </Grid>
           </DialogActions>
 
           {/* If authorization was failed */}
