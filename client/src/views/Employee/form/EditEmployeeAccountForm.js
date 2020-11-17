@@ -169,10 +169,11 @@ const EditEmployeeAccountForm = (props) => {
       address: { ...formData.address, state: updatedState },
     };
     console.log(sendData);
-    veteranCard.append("id", user._id);
-    veteranCard.append("role", "employee")
-
-    await actions.uploadVeteranCard(veteranCard)
+    if(veteran.status) {
+      veteranCard.append("id", user._id);
+      veteranCard.append("role", "employee")
+      await actions.uploadVeteranCard(veteranCard)
+    }
     await actions.updateBasicInfoRequest(sendData)
   };
 

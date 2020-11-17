@@ -186,6 +186,8 @@ const SearchResults = (props) => {
 
   useEffect(() => {
     actions.initialLoading()
+    console.log(filterResult)
+    debugger
   }, [filterResult])
 
   useEffect(() => {

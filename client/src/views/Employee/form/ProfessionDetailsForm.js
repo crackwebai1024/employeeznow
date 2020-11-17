@@ -10,7 +10,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Radio from "@material-ui/core/Radio";
+import _ from 'lodash';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -18,7 +18,7 @@ import { jobTypes, roles } from "../professionTypes";
 import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
-import { FormControl } from "@material-ui/core";
+import { FormControl, MenuItem } from "@material-ui/core";
 import { successMessage, errorMessage } from '@helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
@@ -171,25 +171,19 @@ const ProfessionDetailsForm = ({
       case "employmentStatus": {
         return setFormData({ ...formData, [name]: value });
       }
-      case "amount":
-      case "unit":
-      case "planning":
-      case "availability":
       case "newOpportunity": {
         let newValue = [...formData[name]]
-        newValue.push(id)
+        if (checked) {
+          newValue.push(id)
+        } else {
+          newValue = _.remove(formData[name], function (array) {
+            return array !== id;
+          });
+        }
         return setFormData({
           ...formData,
           newOpportunity: newValue
         })
-      }
-      case "status": {
-        setFormData((prevState) => ({
-          ...prevState,
-          [id]: { ...prevState[id], [name]: checked },
-        }));
-        setToggleBox(!toggleBox);
-        break;
       }
 
       case "randomShift": {
@@ -198,6 +192,18 @@ const ProfessionDetailsForm = ({
           randomShift: !randomShift,
         });
       }
+      case "amount":
+        return setFormData((prevState) => ({
+          ...prevState,
+          [id]: { ...prevState[id], [name]: value },
+        }));
+      case "unit":
+        return setFormData((prevState) => ({
+          ...prevState,
+          [id]: { ...prevState[id], [name]: value },
+        }));
+      case "planning":
+      case "availability":
       default:
         return formData;
     }
@@ -236,6 +242,7 @@ const ProfessionDetailsForm = ({
             </Typography>
           </Grid>
         </Grid>
+
         <form onSubmit={onSubmit}>
           <Grid
             container
@@ -329,11 +336,11 @@ const ProfessionDetailsForm = ({
                     onChange={(e) => onChange(e)}
                   />
                 }
-                label="Open to new opportunity ?"
+                label="Select up to 3 secondary job titles you would like to be considered for "
                 className={classes.checkboxText}
               />
 
-              {newOpportunity ? (
+              {randomShift ? (
                 <Grid item>
                   <Grid container>
                     {jobTypes.map((type) => (
@@ -349,7 +356,7 @@ const ProfessionDetailsForm = ({
                                   ? true
                                   : false
                               }
-                              value={newOpportunity}
+                              // value={newOpportunity}
                               onChange={(e) => onChange(e)}
                             />
                           }
@@ -365,175 +372,24 @@ const ProfessionDetailsForm = ({
                 )}
             </Grid>
 
-            {/* <Grid item>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="planning"
-                    checked={planningToMove.planning}
-                    value={planningToMove.planning}
-                    id="planningToMove"
-                    onChange={(e) => onChange(e)}
-                  />
-                }
-                label="Planning to move ?"
-                className={classes.checkboxText}
-              />
-
-              {planningToMove.planning ? (
-                <Grid container>
-                  <Grid item xs={6}>
-                    <TextField
-                      type="text"
-                      name="location"
-                      id="planningToMove"
-                      label="Location"
-                      required
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      value={planningToMove.location}
-                      onChange={(e) => onChange(e)}
-                    />
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <TextField
-                      type="date"
-                      name="dateToMove"
-                      id="planningToMove"
-                      label="Date to Move"
-                      required
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      value={planningToMove.dateToMove}
-                      onChange={(e) => onChange(e)}
-                      className={classes.item}
-                    />
-                  </Grid>
-                </Grid>
-              ) : (
-                  ""
-                )}
-            </Grid> */}
-
-            {/* random shift */}
-            {/* <Grid item>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="randomShift"
-                    id="randomShift"
-                    checked={randomShift}
-                    value={randomShift}
-                    onChange={(e) => onChange(e)}
-                  />
-                }
-                label="Open to random shifts ?"
-                className={classes.checkboxText}
-              />
-
-              {randomShift ? (
-                <Grid item>
-                  <Typography>Select which role you can work for</Typography>
-
-                  <Grid container>
-                    {roles.map((role) => (
-                      <Grid item key={role} sm={4} xs={12}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              name="randomShiftRole"
-                              id={role}
-                              checked={
-                                randomShiftRole.filter((r) => r == role)
-                                  .length > 0
-                                  ? true
-                                  : false
-                              }
-                              value={randomShiftRole}
-                              onChange={(e) => onChange(e)}
-                            />
-                          }
-                          label={role}
-                          className={classes.item}
-                        />
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Grid>
-              ) : (
-                  ""
-                )}
-            </Grid> */}
-
-            {/* new opportunity */}
-            {/* <Grid item>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="availability"
-                    id="newOpportunity"
-                    checked={newOpportunity.availability}
-                    value={newOpportunity.availability}
-                    onChange={(e) => onChange(e)}
-                  />
-                }
-                label="Open to new opportunity ?"
-                className={classes.checkboxText}
-              />
-
-              {newOpportunity.availability ? (
-                <Grid item>
-                  <Typography>Select a title</Typography>
-
-                  <Grid container>
-                    {jobTypes.map((type) => (
-                      <Grid item key={type} sm={4} xs={12}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              name="newOpportunity"
-                              id="newOpportunity"
-                              value={type}
-                              checked={
-                                newOpportunity.title === type ? true : false
-                              }
-                              onChange={(e) => onChange(e)}
-                            />
-                          }
-                          label={type}
-                          name="newOpportunity"
-                          className={classes.item}
-                        />
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Grid>
-              ) : (
-                  ""
-                )}
-            </Grid> */}
-
             <Grid container item xs={12}>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="outlined"
+                  onClick={goBackHandle}
+                  className={classes.button}
+                >
+                  Go Back
+                </Button>
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
-                  className={classes.button}
-                >
-                  Save
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button
-                  variant="outlined"
-                  onClick={goBackHandle}
                   className={classes.return_button}
                 >
-                  Go Back
+                  Save
                 </Button>
               </Grid>
             </Grid>

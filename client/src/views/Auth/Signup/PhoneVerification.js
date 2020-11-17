@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
   },
   heading1: {
     ...theme.typography.h1,
+    [theme.breakpoints.down("xs")]: {
+      ...theme.typography.h2,
+      textAlign: "center",
+    },
     marginBottom: "1.5rem",
   },
   button: {
@@ -38,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: "80%",
+    marginBottom: '1.5rem'
   },
   link: {
     textDecoration: "none",
@@ -166,19 +171,6 @@ const PhoneVerification = ({
 
   const props = {
     className: "reactCodeInput",
-    inputStyle: {
-      fontFamily: "monospace",
-      margin: "14px",
-      MozAppearance: "textfield",
-      width: "50px",
-      borderRadius: "3px",
-      fontSize: "34px",
-      height: "65px",
-      paddingLeft: "17px",
-      // backgroundColor: 'black',
-      color: "black",
-      border: "1px solid black",
-    },
     inputStyleInvalid: {
       fontFamily: "monospace",
       margin: "4px",
