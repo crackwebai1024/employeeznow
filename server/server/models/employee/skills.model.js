@@ -18,21 +18,23 @@ const EmployeeSkillSchema = new mongoose.Schema(
       },
       years: Number,
     },
-    style: {
-      type: {
-        type: String,
-        enum: [
-          "Fast Food",
-          "Banquet",
-          "Counter Service",
-          "Full-Service Casual",
-          "Upscale Casual",
-          "Fine Dining",
-          "",
-        ],
+    style: [
+      {
+        type: {
+          type: String,
+          enum: [
+            "Fast Food",
+            "Banquet",
+            "Counter Service",
+            "Full-Service Casual",
+            "Upscale Casual",
+            "Fine Dining",
+            "",
+          ],
+        },
+        years: Number,
       },
-      years: Number,
-    },
+    ],
     styleCurrent: String,
     cuisine: [
       //*** should valid max 4 array */
