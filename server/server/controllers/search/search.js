@@ -14,6 +14,7 @@ const searchEmployee = async (filter) => {
   const operatingsys = filter.systems[0];
   const reservationsys = filter.systems[1];
   const employerID = filter.employer;
+  const employableStatus = ["Employed and looking", "Unemployed and looking"];
   let rate = 0;
   const { amount, unit } = filter.idealSalary;
   if (amount !== undefined) {
@@ -30,11 +31,13 @@ const searchEmployee = async (filter) => {
     }
   }
   console.log(lng, lat);
+  console.log(employerID);
   console.log("this is filter ==> ", filter);
   console.log(shift);
   try {
     const employer = await Employer.findById(employerID);
     const name = employer.name;
+    console.log(employer, name);
     const professions = await Employee.aggregate([
       {
         $geoNear: {
@@ -101,8 +104,21 @@ const searchEmployee = async (filter) => {
         $match: {
           // check the intersection exists
           commonShift: { $exists: true },
-          "employeeskill.primaryJob.title": primaryJob,
-          "employeeskill.primaryJob.years": { $gte: minimumExp },
+          "employeepreference.employmentStatus": { $in: employableStatus },
+          $or: [
+            {
+              $and: [
+                { "employeeskill.primaryJob.title": { $eq: primaryJob } },
+                { "employeeskill.primaryJob.years": { $gte: minimumExp } },
+              ],
+            },
+            {
+              $and: [
+                { "employeeskill.secondaryJob.title": { $eq: primaryJob } },
+                { "employeeskill.secondaryJob.years": { $gte: minimumExp } },
+              ],
+            },
+          ],
           "employeeexperience.exclude": { $nin: [name] },
         },
       },
@@ -171,9 +187,16 @@ const searchEmployee = async (filter) => {
           totalpoints: {
             $add: [
               // Add points if primary job matched (years x 2.5)
-              { $multiply: ["$employeeskill.primaryJob.years", 2.5] },
               // Add points if secondary job matched (years x 2.0)
-              { $multiply: ["$employeeskill.secondaryJob.years", 2.0] },
+              {
+                $cond: {
+                  if: { $eq: ["$employeeskill.primaryJob.title", primaryJob] },
+                  then: { $multiply: ["$employeeskill.primaryJob.years", 2.5] },
+                  else: {
+                    $multiply: ["$employeeskill.secondaryJob.years", 2.0],
+                  },
+                },
+              },
               // Add points if wineKnowledge matched (+5)
               {
                 $cond: {
