@@ -95,7 +95,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '30px'
   },
   Wrapper: {
-    background: 'white'
+    background: 'white',
+    marginTop: "-3rem",
+    marginBottom: '-3rem'
   }
 }));
 
@@ -220,11 +222,16 @@ const LearnMore = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} md={5} style={{ marginTop: '2rem' }}>
-          <div style={{ padding: "100% 0 0 0", position: "relative" }}>
-            <iframe src="https://player.vimeo.com/video/455932248?title=0?byline=0?portrait=0" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
-            </iframe>
+          <div style={{width: '400px', margin: 'auto', padding: '1rem'}}>
+            <div style={{ padding: "100% 0 0 0", position: "relative" }}>
+              <iframe src="https://player.vimeo.com/video/455932248?title=0&byline=0&portrait=0"
+                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                frameborder="0" allow="autoplay; fullscreen" allowfullscreen
+              >
+              </iframe>
+            </div>
+            <script src="https://player.vimeo.com/api/player.js"></script>
           </div>
-          <script src="https://player.vimeo.com/api/player.js"></script>
         </Grid>
         <Grid item xs={12} md={7} className={classes.col_center}>
           <Box className={classes.center}>

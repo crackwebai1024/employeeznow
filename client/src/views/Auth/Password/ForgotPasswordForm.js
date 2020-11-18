@@ -104,7 +104,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
         <form onSubmit={(e) => e.preventDefault()} className={classes.form}>
           <RadioGroup aria-label="role">
             <Grid item container direction="row" justify="center">
-              <Grid item>
+              <Grid>
                 <FormControlLabel
                   control={<Radio value="employer" />}
                   label="EMPLOYER"
@@ -113,7 +113,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
                   inputRef={register({ required: true })}
                 />
               </Grid>
-              <Grid item>
+              <Grid>
                 <FormControlLabel
                   control={<Radio value="employee" />}
                   label="EMPLOYEE"
@@ -123,12 +123,14 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
                 />
               </Grid>
             </Grid>
+
             <FormHelperText
               error={errors.role ? true : false}
               style={{ textAlign: 'center' }}
             >
               {errors.role ? 'Please select your role' : ''}
             </FormHelperText>
+            
           </RadioGroup>
 
           <TextField
