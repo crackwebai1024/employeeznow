@@ -17,8 +17,9 @@ const Button = styled.div`
   background: ${props => props.background};
   border: 2px solid ${props => props.border};
   width: ${props => props.width};
+  border-radius: ${props => props.bd}px;
   text-align: center;
-  border-radius: 3px;
+  /* border-radius: 3px; */
   transition: 0.3s;
   margin: auto;
   font-family: Roboto;
@@ -54,6 +55,7 @@ export default function MainButton(props) {
       fontSize={props.fontSize}
       onClick={onClick}
       border={props.border}
+      bd = {props.bd}
       color={props.color}
       hoverColor={props.hoverColor}
       hoverBack={props.hoverBack}

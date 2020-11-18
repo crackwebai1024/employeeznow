@@ -1,42 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import { Grid, TextField, Box } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Typography from '@material-ui/core/Typography';
 import { actions as authActions } from '@store/auth';
+import MainButton from '@components/Element/Button/MainButton';
 import PasswordInput from '@components/PasswordInput'
 import { successMessage } from '@helpers/utils';
 import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    margin: theme.spacing(1),
+    marginRight: theme.spacing(2),
     background: theme.palette.common.blue,
+    alignItems: 'center'
   },
   eye: {
     cursor: 'pointer',
   },
   form: {
-    width: '30rem'
+    maxWidth: '30rem',
+    width: "100%",
   },
   heading1: {
-    ...theme.typography.h1,
     marginBottom: '1.5rem',
+    marginTop: '0.5rem',
+    fontSize: '24px',
+    textAlign: 'center'
   },
   button: {
     marginTop: 30,
+    height: '42px',
     marginBottom: 25,
+  },
+  container: {
+    background: 'white',
+    padding: '2rem',
+    maxWidth: "600px",
+    margin: "auto",
+    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
+    [theme.breakpoints.down('xs')]: {
+      padding: '1rem'
+    }
   },
   linkContainer: {
     marginBottom: '8rem',
@@ -60,6 +76,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const classes = useStyles();
+  const history = useHistory();
 
   const onSubmit = (formData) => {
     actions.forgotPasswordRequest(formData)
@@ -70,7 +87,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
   }
 
   useEffect(() => {
-    if(success){
+    if (success) {
       setTimeout(() => {
         setSuccess(false)
       }, [8000])
@@ -78,9 +95,9 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
   }, [success])
 
   useEffect(() => {
-    if(changepassword == "SUCCESS") {
+    if (changepassword == "SUCCESS") {
       setSuccess(true)
-    } else if(changepassword == "FAILURE") {
+    } else if (changepassword == "FAILURE") {
       setError("Email is Invalid.")
       setSuccess(false)
     }
@@ -88,96 +105,116 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
 
   return (
     <Container>
-      {success && successMessage("Cool")}
+      {success && successMessage("Sent the Forgot Password link to you email.")}
       <Grid container direction="column" className={classes.container} alignItems="center">
-        <Grid item>
+        <Grid item style={{ display: 'flex' }}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <MailOutlineIcon />
           </Avatar>
         </Grid>
         <Grid item>
           <Typography variant="h1" className={classes.heading1}>
-            Please Input Your Verify Email.
+            Please Input Your Verify Email
           </Typography>
         </Grid>
 
         <form onSubmit={(e) => e.preventDefault()} className={classes.form}>
-          <RadioGroup aria-label="role">
-            <Grid item container direction="row" justify="center">
-              <Grid>
-                <FormControlLabel
-                  control={<Radio value="employer" />}
-                  label="EMPLOYER"
-                  name="role"
-                  id="employer"
-                  inputRef={register({ required: true })}
-                />
-              </Grid>
-              <Grid>
-                <FormControlLabel
-                  control={<Radio value="employee" />}
-                  label="EMPLOYEE"
-                  name="role"
-                  id="employee"
-                  inputRef={register({ required: true })}
-                />
-              </Grid>
-            </Grid>
+          <Grid container item xs={12} width="sm">
 
-            <FormHelperText
-              error={errors.role ? true : false}
-              style={{ textAlign: 'center' }}
-            >
-              {errors.role ? 'Please select your role' : ''}
-            </FormHelperText>
-            
-          </RadioGroup>
+          </Grid>
+          <Grid item xs={12}>
+            <RadioGroup aria-label="role">
+              <Grid item container direction="row" justify="center">
+                <Grid>
+                  <FormControlLabel
+                    control={<Radio value="employer" />}
+                    label="EMPLOYER"
+                    name="role"
+                    id="employer"
+                    inputRef={register({ required: true })}
+                  />
+                </Grid>
+                <Grid>
+                  <FormControlLabel
+                    control={<Radio value="employee" />}
+                    label="EMPLOYEE"
+                    name="role"
+                    id="employee"
+                    inputRef={register({ required: true })}
+                  />
+                </Grid>
+              </Grid>
 
-          <TextField
-            error={errors.email ? true : false}
-            helperText={errors.email ? 'Invalid Email' : ''}
-            variant="outlined"
-            margin="normal"
-            onChange={handleInputChange}
-            required
-            fullWidth
-            name="email"
-            label="Email"
-            type="email"
-            id="email"
-            autoComplete="email"
-            autoFocus
-            inputRef={register({
-              required: true,
-              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            })}
-          />
-          <Grid item container>
-            <Grid xs={5}>
+              <FormHelperText
+                error={errors.role ? true : false}
+                style={{ textAlign: 'center' }}
+              >
+                {errors.role ? 'Please select your role' : ''}
+              </FormHelperText>
+            </RadioGroup>
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              error={errors.email ? true : false}
+              helperText={errors.email ? 'Invalid Email' : ''}
+              variant="outlined"
+              margin="normal"
+              onChange={handleInputChange}
+              required
+              size="small"
+              fullWidth
+              name="email"
+              label="Email"
+              type="email"
+              id="email"
+              autoComplete="email"
+              autoFocus
+              inputRef={register({
+                required: true,
+                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              })}
+            />
+          </Grid>
+
+          <Grid item container spacing={2}>
+            <Grid item xs={6}>
               <Button
-                type="submit"
                 fullWidth
                 variant="outlined"
                 color="primary"
-                onClick={handleSubmit(onSubmit)}
+                onClick={e => history.push("/login")}
                 className={classes.button}
               >
                 Back
               </Button>
             </Grid>
-            <Grid xs={2}></Grid>
-            <Grid xs={5}>
-              <Button
-                type="submit"
+            <Grid item xs={6}>
+              <Box className={classes.button}>
+                <MainButton
+                  background="green"
+                  pd={20} fontSize={20}
+                  bd={3}
+                  label="Confirm"
+                  width="100%"
+                  hoverBack="#007000"
+                  onClick={handleSubmit(onSubmit)}
+                  border="green"
+                  color="white"
+                  hoverColor="white"
+                >
+                </MainButton>
+              </Box>
+              {/* <Button
                 fullWidth
                 variant="contained"
-                disabled = {loading}
+                disabled={loading}
                 color="primary"
-                onClick={handleSubmit(onSubmit)}
+                
                 className={classes.button}
               >
                 Confirm
-              </Button>
+              </Button> */}
             </Grid>
           </Grid>
           {/* errorMassge when authentication is failed */}
