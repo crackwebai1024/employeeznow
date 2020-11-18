@@ -103,7 +103,8 @@ const forgotPassword = async (req, res) => {
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
   // Send it to user's email;
-  const resetUrl = `${req.protocol}://${req.headers.origin}/resetPassword/${resetToken}`;
+  const resetUrl = `${req.headers.origin}/resetPassword/${resetToken}`;
+  console.log("reseturl ==> ", resetUrl);
   const message = `Someone has requested a link to change your password. 
         You can do this through the button below: ${resetUrl}\n
         If you didn't request this, please ignore this email. `;
