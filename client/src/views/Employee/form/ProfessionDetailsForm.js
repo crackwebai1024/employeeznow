@@ -156,6 +156,7 @@ const ProfessionDetailsForm = ({
   useEffect(() => {
     if (success) {
       successMessage("Successfully saved!")
+      history.push(`/employees/${user.slug}`)
     } else if (success === false) {
       errorMessage("Sorry! Saving is failed!")
     } else {

@@ -439,6 +439,7 @@ const SkillsForm = ({
   useEffect(() => {
     if (success === true) {
       successMessage("Successfully saved!")
+      history.push(`/employees/${user.slug}`)
     } else if (success === false) {
       errorMessage("Sorry! Saving is failed")
     } else {

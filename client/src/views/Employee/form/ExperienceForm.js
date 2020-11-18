@@ -197,6 +197,7 @@ const ExperienceForm = ({
     if (success) {
       setShowAlert(1);
       successMessage("Successfully Saved!")
+      history.push(`/employees/${user.slug}`)
     } else if (success === false) {
       setShowAlert(2);
       successMessage("Sorry! Saving is failed!")
