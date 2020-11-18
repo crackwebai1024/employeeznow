@@ -221,7 +221,7 @@ const sendEmployerInterestEmail = async (req, res) => {
     "<h1 style='text-align:center'>" +
     "<i><span class='userdarkblue'>is interested in your opportunity!!!</span></i>" +
     "</h1>" +
-    "<div><a href='http://localhost:3000/search/" +
+    "<div><a href='http://localhost:3000/candidate/" +
     req.body.filterID +
     "'>" +
     "<button class='interest btn' style='background-color:rgb(35, 107, 13)'>PURCHASE THERE PROFILE</button>" +
