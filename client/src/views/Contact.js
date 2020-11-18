@@ -70,7 +70,9 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto'
   },
   Wrapper: {
-    background: 'white'
+    background: 'white',
+    marginTop: '-3rem',
+    marginBottom: '-3rem'
   }
 }));
 
@@ -127,6 +129,7 @@ const Contact = ({ actions, sendMessage }) => {
                     fullWidth
                     label="Fist Name"
                     name="firstName"
+                    size="small"
                     required
                     inputRef={register({ required: true })}
                     variant="outlined"
@@ -140,6 +143,7 @@ const Contact = ({ actions, sendMessage }) => {
                     helperText={errors.lastName ? invalidError : ""}
                     label="Last Name"
                     required
+                    size="small"
                     inputRef={register({ required: true })}
                     name="lastName"
                     variant="outlined"
@@ -149,6 +153,7 @@ const Contact = ({ actions, sendMessage }) => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
+                    size="small"
                     error={errors.email ? true : false}
                     helperText={errors.email ? invalidError : ""}
                     type="email"
@@ -173,6 +178,7 @@ const Contact = ({ actions, sendMessage }) => {
                     label="Comment or Message"
                     variant="outlined"
                     multiline
+                    size="small"
                     name="content"
                     rows={5}
                     InputLabelProps={{ shrink: true }}
@@ -201,7 +207,8 @@ const Contact = ({ actions, sendMessage }) => {
 
         <Grid item xs={12} md={5} style={{ marginTop: '2rem' }}>
           <div style={{ padding: "75% 0 0 0", position: "relative" }}>
-            <iframe src="https://player.vimeo.com/video/455932248" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+          {/* title=0&byline=0&portrait=0 */}
+            <iframe src="https://player.vimeo.com/video/455932248?title=0&byline=0&portrait=0" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
             </iframe>
           </div>
           <script src="https://player.vimeo.com/api/player.js"></script>

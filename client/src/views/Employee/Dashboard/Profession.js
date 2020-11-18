@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 //import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -51,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'right',
     },
   },
+  hr: {
+    width: '100%',
+    border: 'none',
+    borderTop: "1px dashed #dddddd"
+  },
   docContainer: {
     marginTop: '1.5rem',
     [theme.breakpoints.down('sm')]: {
@@ -86,42 +91,51 @@ const Profession = ({ profession }) => {
     >
       <Grid container item xs={12}>
         <Grid container>
-          <Grid item xs={3} md={1}>
-            <Typography className={classes.title}>Style</Typography>
-          </Grid>
-          <Grid container item xs={9} md={11}>
-            {style && style.length !== 0 ?
-              style.map((st, i) => (
-                <Grid item key={i} container xs={12} md={6}>
-                  <Grid item xs={8}>{st.type}</Grid>
-                  <Grid item xs={4}>{st.years} years</Grid>
-                </Grid>
-              ))
-              : ""}
-          </Grid>
+          {style && style.length !== 0 ?
+            <Fragment>
+              <Grid item xs={3} md={1}>
+                <Typography className={classes.title}>Style</Typography>
+              </Grid>
+              <Grid container item xs={9} md={11}>
+                {
+                  style.map((st, i) => (
+                    <Grid item key={i} container xs={12} md={6}>
+                      <Grid item xs={8}>{st.type}</Grid>
+                      <Grid item xs={4}>{st.years} years</Grid>
+                    </Grid>
+                  ))
+                }
+              </Grid>
+              <hr className={classes.hr} />
+            </Fragment>
+            : ""}
         </Grid>
       </Grid>
 
-      <hr style={{ width: "100%" }} />
       {/* cuisine */}
       <Grid item xs={12}>
         <Grid container>
-          <Grid item xs={3} md={1}>
-            <Typography className={classes.title}>Cuisine</Typography>
-          </Grid>
-          <Grid container item xs={9} md={11}>
-            {cuisine && cuisine.length !== 0 ?
-              cuisine.map((cu, i) => (
-                <Grid item key={i} container xs={12} md={6}>
-                  <Grid item xs={8}>{cu.type}</Grid>
-                  <Grid item xs={4}>{cu.years} years</Grid>
-                </Grid>
-              ))
-              : ""}
-          </Grid>
+          {cuisine && cuisine.length !== 0 ?
+            <Fragment>
+              <Grid item xs={3} md={1}>
+                <Typography className={classes.title}>Cuisine</Typography>
+              </Grid>
+              <Grid container item xs={9} md={11}>
+                {
+                  cuisine.map((cu, i) => (
+                    <Grid item key={i} container xs={12} md={6}>
+                      <Grid item xs={8}>{cu.type}</Grid>
+                      <Grid item xs={4}>{cu.years} years</Grid>
+                    </Grid>
+                  ))
+                }
+              </Grid>
+              <hr className={classes.hr} />
+            </Fragment>
+            : ""}
         </Grid>
       </Grid>
-      <hr style={{ width: "100%" }} />
+
       {/* shift */}
       <Grid item xs={12}>
         {shift && shift.length !== 0 && (
@@ -143,10 +157,11 @@ const Profession = ({ profession }) => {
                 ))}
               </Grid>
             </Grid>
+            <hr className={classes.hr} />
           </Grid>
         )}
       </Grid>
-      <hr style={{ width: "100%" }} />
+
       {/* wineKnowledge */}
       <Grid item container xs={12}>
         <Grid item container xs={12} sm={6}>
@@ -181,9 +196,12 @@ const Profession = ({ profession }) => {
             </Grid>
           )}
         </Grid>
+
+        <Grid item xs= {12}>
+          <hr className={classes.hr} />
+        </Grid>
       </Grid>
 
-      <hr style={{ width: "100%" }} />
       {/* systems */}
       <Grid item xs={12} sm={6}>
         {systems && systems.length !== 0 && (
@@ -207,11 +225,9 @@ const Profession = ({ profession }) => {
                 ))}
               </Grid>
             </Grid>
-
           </Grid>
         )}
       </Grid>
-      <hr style={{ width: "100%" }} />
       {/* milesToWork */}
       <Grid item xs={12} sm={6}>
         {milesToWork && (
@@ -226,6 +242,9 @@ const Profession = ({ profession }) => {
             </Grid>
           </Grid>
         )}
+      </Grid>
+      <Grid item xs={12}>
+      <hr className={classes.hr} />
       </Grid>
     </Grid>
   );

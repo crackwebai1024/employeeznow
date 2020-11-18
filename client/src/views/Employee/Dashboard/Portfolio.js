@@ -19,6 +19,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
+import LoadingCircular from '@components/LoadingCircular';
 import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +83,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   section: {
-    borderRadius: "0px"
+    borderRadius: "0px",
+    position: "relative"
   },
   confirmButton: {
     float: 'right'
@@ -102,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Portfolio({ actions, portfolios }) {
+function Portfolio({ actions, portfolios, videoUpload }) {
   const user = JSON.parse(getUser());
   const classes = useStyles();
   const [fileNames, setFileNames] = useState();
@@ -177,7 +179,7 @@ function Portfolio({ actions, portfolios }) {
   }
 
   const onConfirm = () => {
-    if(confirm) {
+    if (confirm) {
       setOpen(true);
       setSequence(false)
     }
@@ -248,6 +250,9 @@ function Portfolio({ actions, portfolios }) {
         </Fragment>
       )}
       <Card className={classes.section}>
+        {
+          videoUpload === "REQUEST" && <LoadingCircular />
+        }
         <CardHeader
           action={
             <Button
@@ -276,7 +281,7 @@ function Portfolio({ actions, portfolios }) {
                           className={classes.gridList}
                         >
                           <GridListTile cols={2} rows={2}>
-                          <Box className={classes.imageBox}></Box>
+                            <Box className={classes.imageBox}></Box>
                             {p && (
                               <Fragment>
                                 {
@@ -293,7 +298,7 @@ function Portfolio({ actions, portfolios }) {
                                       className={classes.image}
                                     />
                                 }
-                                
+
                                 <Typography className={classes.note}>
                                   {p.note}
                                 </Typography>
@@ -330,9 +335,10 @@ function Portfolio({ actions, portfolios }) {
   );
 }
 
-const mapStateToProps = ({ employee: { portfolios, reload } }) => ({
+const mapStateToProps = ({ employee: { portfolios, reload, videoUpload } }) => ({
   portfolios,
   reload,
+  videoUpload
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,6 +11,7 @@ import Footer from "@components/Footer";
 import theme from "@helpers/Theme";
 import AppRouter from "@router/AppRouter";
 import { getBoxSize } from "@helpers/utils";
+import EmptyPage from "@components/EmptyPage"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -40,11 +41,13 @@ function App(props) {
             slug=""
             value={value}
             setValue={setValue}
-            // selectedIndex={selectedIndex}
-            // setSelectedIndex={setSelectedIndex}
+          // selectedIndex={selectedIndex}
+          // setSelectedIndex={setSelectedIndex}
           />
           <Box minHeight={getBoxSize()} className={classes.content}>
-            <AppRouter />
+            <Switch>
+              <AppRouter />
+            </Switch>
           </Box>
           <Footer
             isAuthenticated={isAuthenticated}

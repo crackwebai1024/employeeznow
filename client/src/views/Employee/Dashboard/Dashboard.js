@@ -34,12 +34,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
   },
   container: {
-    paddingTop: '2rem'
   },
   header: {
     background: "white",
     paddingBottom: "1rem",
-    marginBottom: "1rem",
+    marginBottom: "10px",
     boxShadow:
       "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
   },
@@ -81,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     color: "RGB(23,41, 64)",
-    marginBottom: 20,
+    marginBottom: 10,
     paddingBottom: 0,
     borderRadius: "0px",
   },
@@ -95,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.common.blue,
   },
   moreSkills: {
-    background: "RGB(250, 250, 250)",
+    fontSize: '16px'
   },
   card: {
     boxShadow:
@@ -291,20 +290,6 @@ function Dashboard(props) {
                     <Profession profession={employeeData.skill} />
                   </CardContent>
                 </Collapse>
-                <Grid item xs={12}>
-                  <CardActions>
-                    <IconButton
-                      className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                      })}
-                      onClick={handleExpandClick}
-                      aria-expanded={expanded}
-                      aria-label="show more"
-                    >
-                      <ExpandMoreIcon />
-                    </IconButton>
-                  </CardActions>
-                </Grid>
               </Fragment>
             )}
           </Card>

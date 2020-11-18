@@ -84,7 +84,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
   },
   HomeWrapper: {
-    background: "white"
+    background: "white",
+    marginTop: '-3rem',
+    marginBottom: '-3rem'
   },
   paper1: {
     padding: '10px',

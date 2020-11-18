@@ -5,7 +5,8 @@ const initialState = {
   reload: false,
   background: undefined,
   success: "",
-  updateSuccess: "NONE"
+  updateSuccess: "NONE",
+  videoUpload: 'NONE'
 };
 
 export const initiateSuccess = (state) => ({
@@ -116,11 +117,13 @@ export const getPortfolioImage = (state, { payload }) => ({
 
 export const deletePortfolio = (state, { payload }) => ({
   ...state,
+  videoUpload: 'REQUEST'
 });
 
 export const deleteFolioSuccess = (state, { payload }) => ({
   ...state,
   portfolios: state.portfolios.filter((folio) => folio.index !== payload),
+  videoUpload: 'SUCCESS'
 });
 
 export const uploadDocumentRequest = (state, { payload }) => {
