@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     display: 'flex'
   },
+  list: {
+    paddingLeft: '0px'
+  },
   tab: {
     minWidth: 10,
     listStyleType: 'none',
@@ -89,8 +92,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerIcon: {
     color: theme.palette.grey[900],
-    height: '45px',
-    width: '45px',
+    height: '35px',
+    width: '35px',
   },
   drawer: {
     width: '15rem',
@@ -202,7 +205,7 @@ const Header = ({
         {/* add sae margin as navigation bar so that drawer is pushed down under the logo */}
         <div className={classes.toolbarMargin} />
         {/* disablePadding - there is a tiny padding and remove that */}
-        <ul disablePadding>
+        <ul disablePadding className={classes.list}>
           {routes.map((route) => (
             <ListItem
               key={`${route}${route.activeIndex}`}

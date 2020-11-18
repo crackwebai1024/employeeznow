@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '0px',
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
     marginTop: '5%',
-    padding: '1.2rem 2.5rem',
+    padding: '1.2rem 1.2rem',
     [theme.breakpoints.down('sm')]: {
       paddingRight: "1rem",
       paddingLeft: "1rem",
@@ -87,7 +87,7 @@ const Signup = () => {
         </Typography>
       </Grid>
 
-      <Grid item container xs={12} spacing={3}>
+      <Grid container xs={12} spacing={3}>
         <Grid item xs={12} sm={6}>
           <Card className={`${classes.signupCard}`} >
             <CardContent className={classes.cardContent}>

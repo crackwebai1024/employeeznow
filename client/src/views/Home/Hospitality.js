@@ -35,9 +35,13 @@ const useStlyes = makeStyles((theme) => ({
     padding: '30px'
   },
   image: {
+    marginLeft: '0.5rem',
     maxWidth: '372px',
     width: '100%',
-    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)"
+    boxShadow: "0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)",
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '3rem'
+    },
   },
   listDescription: {
     width: 'fit-content',

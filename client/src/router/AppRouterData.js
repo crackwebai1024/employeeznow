@@ -18,6 +18,8 @@ import ExperienceForm from '@views/Employee/form/ExperienceForm';
 import ForgotPassword from '@views/Auth/Password/ForgotPasswordForm';
 import ResetPasswordForm from '@views/Auth/Password/ResetPasswordForm';
 import SearchResults from '@views/Employer/SearchResult/SearchResults';
+import Interest from '@views/Pages/Interest';
+import NoInterest from '@views/Pages/NoInterest';
 import Payment from '@views/Employer/Payment/Payment'
 import { getUser } from '@helpers/auth-helpers';
 import Contact from '@views/Contact';
@@ -38,7 +40,8 @@ export const AppRouterData = [
   { 'path': `/forgotPassword`, component: ForgotPassword },
   { 'path': `/contactus`, component: Contact },
   { 'path': `/test`, component: PhoneVerification },
-  
+  { "path": `/sendmail/employerint/:slug`, component: Interest },
+  { "path": `/sendmail/employernoint/:slug`, component: NoInterest },
 ]
 
 export const AppPrivateRouterEmployerData = [
@@ -61,6 +64,8 @@ export const AppPrivateRouteeEmployeeData = [
   { 'path': `/${user && user.slug}/professiondetails-form`, component: ProfessionDetailsForm },
   { 'path': `/${user && user.slug}/work-experience`, component: ExperienceForm },
   { 'path': `/contactus`, component: Contact },
+  { "path": `/sendmail/employerint/:slug`, component: Interest },
+  { "path": `/sendmail/employernoint/:slug`, component: NoInterest },
 ]
 
 
