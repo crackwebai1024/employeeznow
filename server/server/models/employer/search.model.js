@@ -124,7 +124,7 @@ const SearchFilterSchema = new mongoose.Schema({
     amount: Number,
     unit: {
       type: String,
-      enum: { values: ["hourly", "weekly", "annually"] },
+      enum: ["hourly", "weekly", "annually", ""],
     },
   },
   name: String, //serach query name
