@@ -231,7 +231,7 @@ function Dashboard(props) {
                     </Typography>
                   )}
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                {/* <Grid item xs={12} sm={6} md={4}>
                   {preference && (
                     <Typography>
                       <b className={classes.title}>Planing to Move : </b>
@@ -239,8 +239,8 @@ function Dashboard(props) {
                       {preference.planningToMove.dateToMove}
                     </Typography>
                   )}
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
+                </Grid> */}
+                {/* <Grid item xs={12} sm={12} md={12}>
                   {preference && (
                     <Box className={classes.randomrole}>
                       <span>
@@ -258,7 +258,7 @@ function Dashboard(props) {
                       </div>
                     </Box>
                   )}
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} sm={6} md={4}>
                   <Typography></Typography>
                 </Grid>

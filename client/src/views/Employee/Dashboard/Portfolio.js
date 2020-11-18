@@ -276,6 +276,7 @@ function Portfolio({ actions, portfolios }) {
                           className={classes.gridList}
                         >
                           <GridListTile cols={2} rows={2}>
+                          <Box className={classes.imageBox}></Box>
                             {p && (
                               <Fragment>
                                 {
@@ -292,7 +293,7 @@ function Portfolio({ actions, portfolios }) {
                                       className={classes.image}
                                     />
                                 }
-                                <Box className={classes.imageBox}></Box>
+                                
                                 <Typography className={classes.note}>
                                   {p.note}
                                 </Typography>

@@ -77,6 +77,8 @@ const Profession = ({ profession }) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
+
+  console.log(style, "style")
   const renderProfession = (
     <Grid
       container
@@ -89,12 +91,13 @@ const Profession = ({ profession }) => {
           </Grid>
           <Grid container item xs={9} md={11}>
             {style && style.length !== 0 ?
-              <Grid item container xs={12} md={6}>
-                <Grid item xs={8}>{style.type}</Grid>
-                <Grid item xs={4}>{style.years} years</Grid>
-              </Grid>
-              : ""
-            }
+              style.map((st, i) => (
+                <Grid item key={i} container xs={12} md={6}>
+                  <Grid item xs={8}>{st.type}</Grid>
+                  <Grid item xs={4}>{st.years} years</Grid>
+                </Grid>
+              ))
+              : ""}
           </Grid>
         </Grid>
       </Grid>
@@ -192,8 +195,8 @@ const Profession = ({ profession }) => {
               justify="flex-start"
             >
               <Grid item xs={7} md={5}>
-                  <Typography className={classes.title}>
-                    POS &amp; Reservation
+                <Typography className={classes.title}>
+                  POS &amp; Reservation
                   </Typography>
               </Grid>
               <Grid item xs={5} md={7}>
