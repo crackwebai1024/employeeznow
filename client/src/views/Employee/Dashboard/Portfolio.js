@@ -1,12 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import { Dialog, DialogContentText, DialogContent, Checkbox } from "@material-ui/core";
+import { Dialog, DialogContentText, DialogContent, Checkbox, Icon } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import PhotoDropZone from "@components/PhotoDropZone";
 import { getUser } from "@helpers/auth-helpers";
 import { actions as employeeActions } from "@store/employee";
@@ -16,9 +17,9 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
+import ModalImage from "react-modal-image";
 import LoadingCircular from '@components/LoadingCircular';
 import { v4 as uuidv4 } from "uuid";
 
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   imageBox: {
     position: "absolute",
     top: "0px",
+    cursor: 'pointer',
     boxShadow: "inset 0 0 15px",
     width: "100%",
     height: 230,
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: "100%",
-    height: 230,
+    // height: 230,
   },
   sequence: {
     maxWidth: "1000px",
@@ -74,7 +76,15 @@ const useStyles = makeStyles((theme) => ({
   },
   video: {
     width: '100%',
-    maxHeight: '230px'
+    maxHeight: '230px',
+    cursor: 'pointer'
+  },
+  imagewrapper: {
+    height: 230,
+    overflow: 'hidden',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center'
   },
   icon: {
     color: "white",
@@ -85,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
   section: {
     borderRadius: "0px",
     position: "relative"
+  },
+  modalImage: {
+    width: '100%'
   },
   confirmButton: {
     float: 'right'
@@ -101,6 +114,14 @@ const useStyles = makeStyles((theme) => ({
   },
   checkbox: {
     marginRight: '0.5rem'
+  },
+  closeIcon: {
+    width: '40px',
+    height: '40px',
+    position: 'absolute',
+    right: '10px',
+    top: '10px',
+    background: "white"
   }
 }));
 
@@ -189,8 +210,26 @@ function Portfolio({ actions, portfolios, videoUpload }) {
     setConfirm(!confirm);
   }
 
+  const [modalImageUrl, setModalImage] = useState();
+  const [imageModal, openImageModal] = useState(false);
+
+  const onImageClick = (image) => {
+    setModalImage(image)
+    openImageModal(true)
+  }
+
   return (
     <Fragment>
+      <Dialog
+        open={imageModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <img src={modalImageUrl} className={classes.modalImage}/>
+        <IconButton className={classes.closeIcon} onClick={e => openImageModal(false)}>
+          <HighlightOffIcon />
+        </IconButton>
+      </Dialog>
       {localStorage.role === "employee" && (
         <Fragment>
           <PhotoDropZone
@@ -281,23 +320,25 @@ function Portfolio({ actions, portfolios, videoUpload }) {
                           className={classes.gridList}
                         >
                           <GridListTile cols={2} rows={2}>
-                            <Box className={classes.imageBox}></Box>
                             {p && (
                               <Fragment>
-                                {
-                                  p.style == "video" ?
-                                    <video controls className={classes.video}>
-                                      <source src={p.url && `${p.url}?${Date.now()}`} type="video/mp4">
-                                      </source>
-                                    </video> :
-                                    <img
-                                      src={
-                                        p.url &&
-                                        `${p.url}?${Date.now()}`
-                                      }
-                                      className={classes.image}
-                                    />
-                                }
+                                <Box className={classes.imageBox} onClick={e => onImageClick(p.url)}></Box>
+                                <Box className={classes.imagewrapper}>
+                                  {
+                                    p.style == "video" ?
+                                      <video controls className={classes.video}>
+                                        <source src={p.url && `${p.url}?${Date.now()}`} type="video/mp4">
+                                        </source>
+                                      </video> :
+                                      <img
+                                        src={
+                                          p.url &&
+                                          `${p.url}?${Date.now()}`
+                                        }
+                                        className={classes.image}
+                                      />
+                                  }
+                                </Box>
 
                                 <Typography className={classes.note}>
                                   {p.note}
