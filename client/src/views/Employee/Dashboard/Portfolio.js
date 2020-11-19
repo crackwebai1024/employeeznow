@@ -33,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     fontWeight: 500,
   },
+  videoBox: {
+    cursor: 'pointer',
+    boxShadow: "inset 0 0 15px",
+    width: "100%",
+    height: 230,
+  },
   imageBox: {
     position: "absolute",
     top: "0px",
@@ -76,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
   video: {
     width: '100%',
     maxHeight: '230px',
+    position: 'absolute',
+    top: '0px',
     cursor: 'pointer'
   },
   imagewrapper: {
@@ -225,7 +233,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <img src={modalImageUrl} className={classes.modalImage}/>
+        <img src={modalImageUrl} className={classes.modalImage} />
         <IconButton className={classes.closeIcon} onClick={e => openImageModal(false)}>
           <HighlightOffIcon />
         </IconButton>
@@ -322,21 +330,29 @@ function Portfolio({ actions, portfolios, videoUpload }) {
                           <GridListTile cols={2} rows={2}>
                             {p && (
                               <Fragment>
-                                <Box className={classes.imageBox} onClick={e => onImageClick(p.url)}></Box>
+
                                 <Box className={classes.imagewrapper}>
                                   {
                                     p.style == "video" ?
-                                      <video controls className={classes.video}>
-                                        <source src={p.url && `${p.url}?${Date.now()}`} type="video/mp4">
-                                        </source>
-                                      </video> :
-                                      <img
-                                        src={
-                                          p.url &&
-                                          `${p.url}?${Date.now()}`
-                                        }
-                                        className={classes.image}
-                                      />
+                                      <Fragment>
+                                        <Box className={classes.videoBox}></Box>
+                                        <video controls className={classes.video}>
+                                          <source src={p.url && `${p.url}?${Date.now()}`} type="video/mp4">
+                                          </source>
+                                        </video>
+                                      </Fragment>
+                                      :
+                                      <Fragment>
+                                        <Box className={classes.imageBox} onClick={e => onImageClick(p.url)}></Box>
+                                        <img
+                                          src={
+                                            p.url &&
+                                            `${p.url}?${Date.now()}`
+                                          }
+                                          className={classes.image}
+                                        />
+                                      </Fragment>
+
                                   }
                                 </Box>
 
