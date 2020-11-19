@@ -191,7 +191,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
               }
             </Typography>
             <Typography className={classes.basicTitle}>
-              {basic && `${basic.address.city} ${basic.address.state} ${basic.address.street1}`}
+              {purchased && basic && `${basic.address.city} ${basic.address.state} ${basic.address.street1}`}
             </Typography>
             <Typography className={classes.basicTitle}>
               {preference && preference.employmentStatus}

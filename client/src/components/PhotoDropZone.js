@@ -101,6 +101,8 @@ const PhotoDropZone = ({
     if (image) {
       setTitle(image.description)
     }
+    setTitle("")
+    debugger
   }, [image])
 
   const handleClose = () => {

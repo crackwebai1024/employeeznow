@@ -19,7 +19,6 @@ import GridListTile from "@material-ui/core/GridListTile";
 import IconButton from "@material-ui/core/IconButton";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
-import ModalImage from "react-modal-image";
 import LoadingCircular from '@components/LoadingCircular';
 import { v4 as uuidv4 } from "uuid";
 
