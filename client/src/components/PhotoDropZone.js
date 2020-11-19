@@ -93,17 +93,16 @@ const PhotoDropZone = ({
   // setAlert,
 }) => {
   // style material-ui
-  const classes = useStyles();  // title for Photo
-  const [title, setTitle] = useState("");
+  const classes = useStyles("");  // title for Photo
+  const [title, setTitle] = useState();
   const [titleError, setTitleError] = useState("");
 
   useEffect(() => {
     if (image) {
-      setTitle(image.description)
+      return setTitle(image.description)
     }
     setTitle("")
-    debugger
-  }, [image])
+  }, [image, open])
 
   const handleClose = () => {
     setFileNames("");

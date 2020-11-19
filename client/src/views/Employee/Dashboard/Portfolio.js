@@ -160,6 +160,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
 
   const handleClickOpen = () => {
     setConfirm(false)
+
     if (!portfolios || portfolios.length == 0) {
       return setSequence(true)
     }
