@@ -32,12 +32,17 @@ const useStyles = makeStyles((theme) => ({
     width: '30rem'
   },
   heading1: {
-    ...theme.typography.h1,
+    ...theme.typography.h4,
     marginBottom: '1.5rem',
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
+  },
+  container: {
+    maxWidth: '600px',
+    margin: 'auto',
+    background: 'white'
   },
   linkContainer: {
     marginBottom: '8rem',
@@ -92,7 +97,7 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
 
   return (
     <Container>
-      <Grid container direction="column" className={classes.container} alignItems="center">
+      <Grid container direction="column" width="sm" className={classes.container} alignItems="center">
         <Grid item>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
