@@ -59,15 +59,16 @@ const PaymentForm = (props) => {
     const user = JSON.parse(getUser());
     const { slug } = match.params
 
-    const inputHandle = (e) => {
-        let key = e.target.name;
-        let value = e.target.value
-        let newFormValues = {
-            ...formValues,
-            [key]: value
-        }
-        actions.setFormValues(newFormValues)
-    }
+    // const inputHandle = (e) => {
+    //     let key = e.target.name;
+    //     let value = e.target.value
+    //     let newFormValues = {
+    //         ...formValues,
+    //         [key]: value
+    //     }
+    //     actions.setFormValues(newFormValues)
+    // }
+
     const handleSubmit = (e) => {
         setError("")
         e.preventDefault()
@@ -80,6 +81,7 @@ const PaymentForm = (props) => {
                         employeeID: slug,
                         email: email
                     }
+                    debugger
                     actions.payRequest(data)
                 } else {
                     setError(result.error.message)
@@ -156,7 +158,7 @@ const PaymentForm = (props) => {
                             variant="outlined"
                             size="small"
                             required
-                            onChange={inputHandle}
+                            // onChange={inputHandle}
                             InputProps={{
                                 inputComponent: StripeInput,
                                 inputProps: {
@@ -180,7 +182,7 @@ const PaymentForm = (props) => {
                                     component: CardCvcElement
                                 }
                             }}
-                            onChange={inputHandle}
+                            // onChange={inputHandle}
                             fullWidth
                             InputLabelProps={{ shrink: true }}
                         />
