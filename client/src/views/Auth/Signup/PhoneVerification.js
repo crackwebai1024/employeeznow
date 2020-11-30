@@ -227,7 +227,7 @@ const PhoneVerification = ({
               We sent 6 digit code to your phone. Please Input the digit code.
             </Typography>
             <ReactCodeInput
-              type="text"
+              type="number"
               fields={6}
               {...props}
               error={error}

@@ -28,6 +28,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import MenuItem from "@material-ui/core/MenuItem";
 import { successMessage, errorMessage } from '@helpers/utils'
 import { Box } from "@material-ui/core";
+import { usaStates } from '../professionTypes';
 
 // import {
 //   loadProfessionDetails,
@@ -322,9 +323,12 @@ const ExperienceForm = ({
       secondaryJob: data.secondaryJob,
       otherJob: otherJobs,
       id: user._id,
-      exclude: exclude
+      exclude: {
+        ...exclude,
+        address: exclude.address
+      }
     };
-
+    debugger
     actions.updateJobExperience(submitData);
   };
 
@@ -365,12 +369,28 @@ const ExperienceForm = ({
   }
 
 
-  const [exclude, setExclude] = useState([])
-  const handleBusiness = (event, value) => {
+  const [exclude, setExclude] = useState({
+    name: [],
+    address: []
+  })
+  const handleBusiness = (event, value, type) => {
     if (value.length > 4) {
       return
     }
-    setExclude(value)
+    if (type === "name")
+      return setExclude({
+        ...exclude,
+        [type]: value
+      })
+      debugger
+    if (type === "address") {
+      setExclude({
+        ...exclude,
+        [type]: value.map(address => address.value)
+        // [type]: value
+      })
+      debugger
+    }
   }
 
   console.log(primaryJob.title, "payload");
@@ -722,13 +742,14 @@ const ExperienceForm = ({
               Please enter business you <b>DO NOT</b> wish to show up on their searches
             </Grid>
             <Grid item xs={12}>
+
               <Autocomplete
                 multiple
                 options={[]}
                 size="small"
                 freeSolo
-                value={exclude}
-                onChange={handleBusiness}
+                value={exclude.name}
+                onChange={(e, value) => handleBusiness(e, value, 'name')}
                 renderTags={(value, getTagProps) =>
                   value.map((option, index) => (
                     <Chip variant="outlined" label={option} {...getTagProps({ index })} />
@@ -740,6 +761,24 @@ const ExperienceForm = ({
                     fullWidth
                     // label="Excluded Businesses"
                     InputLabelProps={{ shrink: true }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Autocomplete
+                multiple
+                id="tags-standard"
+                options={usaStates.map(state => state)}
+                value={ exclude.address.map(address => {
+                  return usaStates.filter(state => state.value === address)[0]
+                })}
+                onChange={(e, value) => handleBusiness(e, value, 'address')}
+                getOptionLabel={(option) => option.label}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
                   />
                 )}
               />

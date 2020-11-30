@@ -277,10 +277,10 @@ function Dashboard(props) {
                   size="small"
                   className={classes.button}
                 >
-                  {skill ? "Update Skills" : "Add Skills"}
+                  {skill ? "Update Experience" : "Add Experience"}
                 </Button>
               }
-              title="Skills"
+              title="Experience"
               subheader=""
             />
             {skill && (
@@ -307,11 +307,11 @@ function Dashboard(props) {
                   className={classes.button}
                 >
                   {experience
-                    ? "Update My Work Experience"
-                    : "Add My Work Experience"}
+                    ? "Update My Work History"
+                    : "Add My Work History"}
                 </Button>
               }
-              title="Work Experience"
+              title="Work History"
               subheader=""
             />
             <CardContent>
