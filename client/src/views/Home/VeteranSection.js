@@ -68,14 +68,14 @@ const VeteranSection = () => {
             </Typography>
           </Grid>
           <Grid xs={12} sm={6} className={classes.center}>
-            <img src={`${process.env.PUBLIC_URL}/img/img5.svg`} className={classes.image}/>
+            <img src={`${process.env.PUBLIC_URL}/img/test/img5.svg`} className={classes.image}/>
           </Grid>
           <Grid xs={12} sm={6} className={classes.col_center}>
             <Box>
               {
                 listData.map(list => {
                   return <Box style={{ display: 'flex' }}>
-                    <img src={`${process.env.PUBLIC_URL}/img/arrow.svg`} alt="arrow" className={classes.arrowIcon} />
+                    <img src={`${process.env.PUBLIC_URL}/img/test/arrow.svg`} alt="arrow" className={classes.arrowIcon} />
                     <div dangerouslySetInnerHTML={{ __html: list }} className={classes.font14}>
                     </div>
                   </Box>

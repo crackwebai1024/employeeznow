@@ -20,7 +20,7 @@ const listData = [
 ]
 
 const listData1 = [
-  { img: 'question', title: "INVEST REQUEST", description: "Employers can send a request through EmployeezNow to inquire if the candidate would be interested in their specific job opportunity" },
+  { img: 'question', title: "INTEREST REQUEST", description: "Employers can send a request through EmployeezNow to inquire if the candidate would be interested in their specific job opportunity" },
   { img: 'podium', title: "COMPLETE PROFILE", description: "Profiles that contain all of the candidate's contact information can be purchased by the employer to continue with the hiring process." },
   { img: 'finger', title: "ONE TIME FEE", description: "Complete profiles are just $8.99 and that employer will have access to their purchased profiles indefinitely." },
   { img: 'calendar', title: "AUTOMATION", description: "<b>EmployeezNow</b> will keep all profiles current so employers know the information is accurate. Because <b>EmployeezNow</b> does the work for you the candidates, registering once until you are ready to retire!" },
@@ -125,7 +125,7 @@ const LearnMore = () => {
             return <Grid key={i} item xs={12} sm={6} md={3} style={{ textAlign: 'center' }}>
               <img
                 className={classes.partImg}
-                src={`${process.env.PUBLIC_URL}/img/${list.img}.svg`}
+                src={`${process.env.PUBLIC_URL}/img/test/${list.img}.svg`}
                 alt="chef"
                 style={{
                   width: '90%',
@@ -153,7 +153,7 @@ const LearnMore = () => {
             return <Grid key={i} item xs={12} sm={6} md={3} style={{ textAlign: 'center' }}>
               <img
                 className={classes.partImg}
-                src={`${process.env.PUBLIC_URL}/img/${list.img}.svg`}
+                src={`${process.env.PUBLIC_URL}/img/test/${list.img}.svg`}
                 alt="chef"
                 style={{
                   width: '90%',
@@ -190,7 +190,7 @@ const LearnMore = () => {
         <Grid item xs={12}>
           <img
             className={classes.veteranImg}
-            src={`${process.env.PUBLIC_URL}/img/veteran.jpg`}
+            src={`${process.env.PUBLIC_URL}/img/test/veteran.jpg`}
             alt="chef"
             style={{
               width: '90%',

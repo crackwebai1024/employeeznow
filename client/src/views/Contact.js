@@ -100,7 +100,7 @@ const Contact = ({ actions, sendMessage }) => {
         <Grid xs={12} className={classes.servingImage}>
           <img
             style={{ width: '100%' }}
-            src={`${process.env.PUBLIC_URL}/img/serving.svg`}
+            src={`${process.env.PUBLIC_URL}/img/test/serving.svg`}
           />
         </Grid>
         <Grid xs={12}>
@@ -208,7 +208,7 @@ const Contact = ({ actions, sendMessage }) => {
         <Grid item xs={12} md={5} style={{ marginTop: '2rem' }}>
           <div style={{ padding: "75% 0 0 0", position: "relative" }}>
           {/* title=0&byline=0&portrait=0 */}
-            <iframe src="https://player.vimeo.com/video/455932248?title=0&byline=0&portrait=0" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+            <iframe src="https://player.vimeo.com/video/484177026?title=0&byline=0&portrait=0" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
             </iframe>
           </div>
           <script src="https://player.vimeo.com/api/player.js"></script>

@@ -75,7 +75,7 @@ export const cuisines = [
   'Middle Eastern',
   'Vegan/Vegetarian',
   'Sushi',
-  'Deli',
+  'Mexican',
   'Fastfood',
   'Bagels',
   'Buffet',

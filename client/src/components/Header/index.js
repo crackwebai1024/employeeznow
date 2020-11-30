@@ -223,7 +223,7 @@ const Header = ({
               <ListItemIcon>{route.icon}</ListItemIcon>
               <ListItemText
                 className={classes.drawerItem}
-                onClick={route.onClick}
+                onClick={route.onClick && handleLogout}
               >
                 <Typography>{route.name}</Typography>
               </ListItemText>

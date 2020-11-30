@@ -154,7 +154,7 @@ const Home = () => {
                       A HOSPITALITY EMPLOYMENT PLATFORM
                     </Typography>
                     <Typography variant="h2" className={classes.heading2}>
-                      Get EmpoyeezNow in Just a few minutes!
+                      Get EmployeezNow in just a few minutes!
                     </Typography>
                         <Box className={classes.getStartedButton}>
                           <MainButton

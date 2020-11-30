@@ -3,6 +3,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  interview_desktop: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none !important'
+    },
+  },
+  interview_mobile: {
+    display: 'none !important',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex !important'
+    },
+  },
   profileSubtitle: {
     textAlign: 'center',
     fontSize: '20px',
@@ -12,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '400px',
     margin: 'auto',
     fontWeight: "550",
-    fontSize: "16px"
+    fontSize: "16px",
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: '5rem'
+    },
   },
   profiledDetails: {
     marginTop: '2rem',
@@ -64,7 +78,7 @@ const ProfileDescription = () => {
     </Grid>
     <Grid item xs={12} md={6}>
       <Grid className={classes.ContainerLeft}>
-        <Box style={{ margin: 'auto' , maxWidth: '472px'}}>
+        <Box style={{ margin: 'auto', maxWidth: '472px' }}>
           <div style={{ padding: "75% 0 0 0", position: "relative" }}>
             <iframe src="https://player.vimeo.com/video/7743003?title=0&byline=0&portrait=0"
               style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}
@@ -86,13 +100,14 @@ const ProfileDescription = () => {
         </Typography>
       </Box>
     </Grid>
-    <Grid item xs={12} md={6} className={classes.col_center}>
+    
+    <Grid item xs={12} md={6} className={`${classes.col_center} ${classes.interview_desktop}`}>
       <Box style={{ margin: 'auto' }}>
         <Typography className={classes.profileSubtitle}>
           <b>A SELF-INTERVIEW</b> to let them know who you are
         </Typography>
         <Typography className={classes.profileSubdescription}>
-          Your EmoloyeezNow profile allows you to create and build a portfolio to show what you can do.
+          Your EmployeezNow profile allows you to create and build a portfolio to show what you can do.
           Upload pictures of your accompishment and even your self-interview.
           Now you get to control the narrative and talk about the topics and questions that best suit you.
         </Typography>
@@ -101,6 +116,7 @@ const ProfileDescription = () => {
         </Typography>
       </Box>
     </Grid>
+
     <Grid item xs={12} md={6} className={classes.center}>
       <div className={classes.video}>
         <iframe src="https://player.vimeo.com/video/472816351?title=0&byline=0&portrait=0"
@@ -110,8 +126,25 @@ const ProfileDescription = () => {
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
     </Grid>
+
+    <Grid item xs={12} md={6} className={`${classes.interview_mobile} ${classes.col_center}`}>
+      <Box style={{ margin: 'auto' }}>
+        <Typography className={classes.profileSubtitle}>
+          <b>A SELF-INTERVIEW</b> to let them know who you are
+        </Typography>
+        <Typography className={classes.profileSubdescription}>
+          Your EmployeezNow profile allows you to create and build a portfolio to show what you can do.
+          Upload pictures of your accompishment and even your self-interview.
+          Now you get to control the narrative and talk about the topics and questions that best suit you.
+        </Typography>
+        <Typography className={classes.profiledDetails}>
+          (View our Self-Interview questions on the Learn More page)
+        </Typography>
+      </Box>
+    </Grid>
+
     <Grid item xs={12} md={6} className={classes.center}>
-      <img src={`${process.env.PUBLIC_URL}/img/img3.svg`} className={classes.image} />
+      <img src={`${process.env.PUBLIC_URL}/img/test/img3.svg`} className={classes.image} />
     </Grid>
     <Grid item xs={12} md={6} className={classes.col_center}>
       <Box style={{ margin: 'auto' }}>

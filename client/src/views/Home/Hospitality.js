@@ -11,7 +11,7 @@ const listData = [
   "Review their detailed work history",
   "Identify your final candidates in just minutes",
   "We will make sure they are interested in your opening",
-  "Choose your finalist and purchas their contact information for just $8.99 each",
+  "Choose your finalist and purchase their contact information for just $8.99 each",
   "There are no other hidden fees",
 ]
 
@@ -96,7 +96,7 @@ const Hospitality = () => {
         </Box>
       </Grid>
       <Grid xs={12} sm={6} className={classes.center}>
-        <img src={`${process.env.PUBLIC_URL}/img/img4.png`} className={classes.image} />
+        <img src={`${process.env.PUBLIC_URL}/img/test/img4.png`} className={classes.image} />
       </Grid>
     </Grid>
     <Grid xs={12}>
@@ -104,7 +104,7 @@ const Hospitality = () => {
         {
           listData.map(list => {
             return <Box style={{ display: 'flex' }}>
-              <img src={`${process.env.PUBLIC_URL}/img/arrow.svg`} alt="arrow" className={classes.arrowIcon} />
+              <img src={`${process.env.PUBLIC_URL}/img/test/arrow.svg`} alt="arrow" className={classes.arrowIcon} />
               <div dangerouslySetInnerHTML={{ __html: list }} className={classes.font14}>
               </div>
             </Box>
