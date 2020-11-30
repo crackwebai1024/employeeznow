@@ -1,110 +1,105 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
-const EmployeeSkillSchema = new mongoose.Schema(
-  {
+const EmployeeSkillSchema = new mongoose.Schema({
     shift: {
-      type: [String],
-      enum: ["Breakfast", "Lunch", "Dinner"],
+        type: [String],
+        enum: ['Breakfast', 'Lunch', 'Dinner'],
     },
     primaryJob: {
-      title: {
-        type: String,
-      },
-      years: Number,
+        title: {
+            type: String,
+        },
+        years: Number,
     },
     secondaryJob: {
-      title: {
-        type: String,
-      },
-      years: Number,
-    },
-    style: [
-      {
-        type: {
-          type: String,
-          enum: [
-            "Fast Food",
-            "Banquet",
-            "Counter Service",
-            "Full-Service Casual",
-            "Upscale Casual",
-            "Fine Dining",
-            "",
-          ],
+        title: {
+            type: String,
         },
         years: Number,
-      },
-    ],
+    },
+    style: [{
+        type: {
+            type: String,
+            enum: [
+                'Fast Food',
+                'Banquet',
+                'Counter Service',
+                'Full-Service Casual',
+                'Upscale Casual',
+                'Fine Dining',
+                '',
+            ],
+        },
+        years: Number,
+    }, ],
     styleCurrent: String,
     cuisine: [
-      //*** should valid max 4 array */
-      {
-        type: {
-          type: String,
-          enum: [
-            "Seafood",
-            "Steakhouse",
-            "Pizza",
-            "American",
-            "Chinese",
-            "Thai",
-            "Japanese",
-            "Kosher",
-            "BBQ",
-            "Sandwiches",
-            "Coffee Shop",
-            "Cuban",
-            "Caribbean",
-            "Greek",
-            "Brazilian",
-            "French",
-            "Italian",
-            "Fondue",
-            "Middle Eastern",
-            "Vegan/Vegetarian",
-            "Sushi",
-            "Deli",
-            "Fastfood",
-            "Bagels",
-            "Buffet",
-            "Brunch/Breakfast",
-            "Fastfood Burgers",
-            "Cafe",
-            "",
-          ],
+        //*** should valid max 4 array */
+        {
+            type: {
+                type: String,
+                enum: [
+                    'Seafood',
+                    'Steakhouse',
+                    'Pizza',
+                    'American',
+                    'Chinese',
+                    'Thai',
+                    'Japanese',
+                    'Kosher',
+                    'BBQ',
+                    'Sandwiches',
+                    'Coffee Shop',
+                    'Cuban',
+                    'Caribbean',
+                    'Greek',
+                    'Brazilian',
+                    'French',
+                    'Italian',
+                    'Fondue',
+                    'Middle Eastern',
+                    'Vegan/Vegetarian',
+                    'Sushi',
+                    'Mexican',
+                    'Fastfood',
+                    'Bagels',
+                    'Buffet',
+                    'Brunch/Breakfast',
+                    'Fastfood Burgers',
+                    'Cafe',
+                    '',
+                ],
+            },
+            years: Number,
         },
-        years: Number,
-      },
     ],
     wineKnowledge: {
-      type: String,
-      enum: ["Barefoot", "Sutterhome", "Silver Oak", "Chat.Margaux", ""],
+        type: String,
+        enum: ['Barefoot', 'Sutterhome', 'Silver Oak', 'Chat.Margaux', ''],
     },
     cocktailKnowledge: {
-      type: String,
-      enum: ["White Claw", "Jack & Coke", "Old Fashioned", "Sazerac", ""],
+        type: String,
+        enum: ['White Claw', 'Jack & Coke', 'Old Fashioned', 'Sazerac', ''],
     },
     // POS and Reservation systems
     systems: [String],
     createdAt: {
-      type: Date,
-      default: Date.now,
+        type: Date,
+        default: Date.now,
     },
     milesToWork: Number,
     updatedAt: {
-      type: Date,
+        type: Date,
     },
     employee: {
-      type: mongoose.Schema.ObjectId,
-      ref: "Employee",
-      required: true,
+        type: mongoose.Schema.ObjectId,
+        ref: 'Employee',
+        required: true,
     },
-  },
-  {
+}, {
     // set virtuals - employee
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
-);
+}, )
 
-export default mongoose.model("EmployeeSkill", EmployeeSkillSchema);
+export default mongoose.model('EmployeeSkill', EmployeeSkillSchema)
