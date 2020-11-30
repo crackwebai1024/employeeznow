@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-const geocoder = require("../utils/geocoder");
+import mongoose from 'mongoose'
+const geocoder = require('../utils/geocoder')
 
 const SearchFilterSchema = new mongoose.Schema({
   searchAddress: {
@@ -8,53 +8,53 @@ const SearchFilterSchema = new mongoose.Schema({
     city: String,
     zipcode: {
       type: String,
-      required: [true, "Please provide zipcode"],
+      required: [true, 'Please provide zipcode'],
     },
   },
   locations: {
     type: {
       type: String,
-      default: "Point",
-      enum: ["Point"],
+      default: 'Point',
+      enum: ['Point'],
     },
     coordinates: [Number],
   },
   shift: {
     type: [String],
-    enum: ["Breakfast", "Lunch", "Dinner", ""],
+    enum: ['Breakfast', 'Lunch', 'Dinner', ''],
     required: true,
   },
   primary: {
     type: String,
     enum: [
-      "Director of Ops",
-      "General Manager",
-      "Executive Chef",
-      "Sous Chef",
-      "Pastry Chef",
-      "Banquet Chef",
-      "Manager",
-      "Supervisor",
-      "Banquet Captain",
-      "Line Cook",
-      "Pastry Cook",
-      "Expediter",
-      "Food Runner",
-      "Bartender",
-      "Barback",
-      "Food Server",
-      "Counter Server",
-      "Server Assitant",
-      "Banquet Server",
-      "Banquet Bartender",
-      "Hostess",
-      "Dishwasher",
-      "Barista",
-      "Fastfood Cook",
-      "Fastfood Server",
-      "Velet",
-      "Casher",
-      "",
+      'Director of Ops',
+      'General Manager',
+      'Executive Chef',
+      'Sous Chef',
+      'Pastry Chef',
+      'Banquet Chef',
+      'Manager',
+      'Supervisor',
+      'Banquet Captain',
+      'Line Cook',
+      'Pastry Cook',
+      'Expediter',
+      'Food Runner',
+      'Bartender',
+      'Barback',
+      'Food Server',
+      'Counter Server',
+      'Server Assitant',
+      'Banquet Server',
+      'Banquet Bartender',
+      'Hostess',
+      'Dishwasher',
+      'Barista',
+      'Fastfood Cook',
+      'Fastfood Server',
+      'Velet',
+      'Casher',
+      '',
     ],
   },
   minimumexp: {
@@ -64,56 +64,56 @@ const SearchFilterSchema = new mongoose.Schema({
   style: {
     type: [String],
     enum: [
-      "Fast Food",
-      "Banquet",
-      "Counter Service",
-      "Full-Service Casual",
-      "Upscale Casual",
-      "Fine Dining",
-      "",
+      'Fast Food',
+      'Banquet',
+      'Counter Service',
+      'Full-Service Casual',
+      'Upscale Casual',
+      'Fine Dining',
+      '',
     ],
   },
   cuisine: {
     type: [String],
     enum: [
-      "Seafood",
-      "Steakhouse",
-      "Pizza",
-      "American",
-      "Chinese",
-      "Thai",
-      "Japanese",
-      "Kosher",
-      "BBQ",
-      "Sandwiches",
-      "Coffee Shop",
-      "Cuban",
-      "Caribbean",
-      "Greek",
-      "Brazilian",
-      "French",
-      "Italian",
-      "Fondue",
-      "Middle Eastern",
-      "Vegan/Vegetarian",
-      "Sushi",
-      "Deli",
-      "Fastfood",
-      "Bagels",
-      "Buffet",
-      "Brunch/Breakfast",
-      "Fastfood Burgers",
-      "Cafe",
-      "",
+      'Seafood',
+      'Steakhouse',
+      'Pizza',
+      'American',
+      'Chinese',
+      'Thai',
+      'Japanese',
+      'Kosher',
+      'BBQ',
+      'Sandwiches',
+      'Coffee Shop',
+      'Cuban',
+      'Caribbean',
+      'Greek',
+      'Brazilian',
+      'French',
+      'Italian',
+      'Fondue',
+      'Middle Eastern',
+      'Vegan/Vegetarian',
+      'Sushi',
+      'Mexican',
+      'Fastfood',
+      'Bagels',
+      'Buffet',
+      'Brunch/Breakfast',
+      'Fastfood Burgers',
+      'Cafe',
+      '',
     ],
   },
   wineKnowledge: {
     type: String,
-    enum: ["Barefoot", "Sutterhome", "Silver Oak", "Chat.Margaux", ""],
+    enum: ['Barefoot', 'Sutterhome', 'Silver Oak', 'Chat.Margaux', ''],
   },
   cocktailKnowledge: {
     type: String,
-    enum: ["White Claw", "Jack & Coke", "Old Fashioned", "Sazerac", ""],
+    enum: ['White Claw', 'Jack & Coke', 'Old Fashioned', 'Sazerac', ''],
   },
   systems: [String],
   createdAt: {
@@ -124,27 +124,27 @@ const SearchFilterSchema = new mongoose.Schema({
     amount: Number,
     unit: {
       type: String,
-      enum: ["hourly", "weekly", "annually", ""],
+      enum: ['hourly', 'weekly', 'annually', ''],
     },
   },
   name: String, //serach query name
   employer: {
     type: mongoose.Schema.ObjectId,
-    ref: "Employer",
+    ref: 'Employer',
     required: true,
   },
-});
+})
 
 // Geocoder - Get longtitude and latitude from address
-SearchFilterSchema.pre("save", async function (next) {
-  const loc = await geocoder.geocode(this.searchAddress);
+SearchFilterSchema.pre('save', async function (next) {
+  const loc = await geocoder.geocode(this.searchAddress)
 
   this.locations = {
-    type: "Point",
+    type: 'Point',
     coordinates: [loc[0].longitude, loc[0].latitude],
-  };
+  }
 
-  next();
-});
+  next()
+})
 
-export default mongoose.model("SearchFilter", SearchFilterSchema);
+export default mongoose.model('SearchFilter', SearchFilterSchema)

@@ -7,6 +7,8 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import multer from 'multer'
+import mongoSanitize from 'express-mongo-sanitize'
+import xss from 'xss-clean'
 // route files
 import authEmployeeRoutes from './routes/auth/employee.routes'
 import authEmployerRoutes from './routes/auth/employer.routes'
@@ -25,6 +27,10 @@ const upload = multer()
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
+// data sanitization against NoSQL query injection
+app.use(mongoSanitize())
+// data sanitization against xss
+app.use(xss())
 // parse body params and attach them to req.body
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
