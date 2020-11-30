@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Container, Paper, Box, } from "@material-ui/core";
+import { Container, Paper, Box, requirePropFactory, } from "@material-ui/core";
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import { makeStyles } from '@material-ui/core/styles';
 import PaymentForm from './form/PaymentForm';
+import * as dotenv from 'dotenv'; 
 import Stepper from './Stepper'
-
 const useStyles = makeStyles(() => ({
   boxWrapper: {
     marginBottom: "55px",
@@ -24,6 +24,7 @@ const Payment = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
+    console.log(process.env, "process.env.REACT")
     if (window.Stripe) {
       setStripe(window.Stripe("publish_key"))
     } else {

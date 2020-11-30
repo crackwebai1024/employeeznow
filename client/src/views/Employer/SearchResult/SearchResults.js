@@ -121,6 +121,7 @@ const useStyles = makeStyles((theme) => ({
   },
   leftSection: {
     alignItems: 'center',
+    height: 'fit-content',
     background: theme.palette.common.white,
     width: '100%',
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
@@ -227,6 +228,7 @@ const SearchResults = (props) => {
     setOpenDelete(true)
   }
   // Render search query button
+  console.log(filterResult, "filterResult")
   const FilterLists = filter && filter.filters.length !== 0 && (
     <Box className={classes.filterTitleContainer}>
       <Grid item >
@@ -257,7 +259,6 @@ const SearchResults = (props) => {
       </Grid>
     </Box>
   );
-
 
   return (
     <Box>
