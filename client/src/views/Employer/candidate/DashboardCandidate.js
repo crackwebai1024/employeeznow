@@ -8,15 +8,15 @@ import Grid from '@material-ui/core/Grid';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { getUser, getFilterID } from '@helpers/auth-helpers';
-import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import CandidateDocuments from './CandidateDocuments'
 import ProfilePhoto from '../../Employee/Dashboard/ProfilePhoto';
-import BackgourndPhoto from '../../Employee/Dashboard/BackgroundPhoto';
+import { Card, CardContent } from '@material-ui/core';
+import { successMessage, errorMessage } from '@helpers/utils';
+import Profession from "../../Employee/Dashboard/Profession";
+import BackgroundPhoto from "../../Employee/Dashboard/BackgroundPhoto";
+import Portfolio from './Portfolio';
+import _ from 'lodash';
 import CallToAction from '@components/CallToAction';
-import { successMessage, errorMessage} from '@helpers/utils';
-
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
   },
   bgContainer: {
     maxHeight: 300,
-    //border: '5px solid green', //just for debug
   },
   underPhotoContainer: {
     marginTop: '0.8rem',
@@ -108,17 +107,94 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: '0rem'
     }
   },
-  contentItem: {
-    padding: '0 1rem 0 1rem'
-  },
   alert: {
     marginBottom: '1rem'
-  }
+  },
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: "white",
+  },
+  header: {
+    background: "white",
+    paddingBottom: "1rem",
+    marginBottom: "10px",
+    boxShadow:
+      "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: "rotate(180deg)",
+  },
+  right: {
+    float: "right",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    background: theme.palette.common.blue,
+  },
+  deploma: {
+    textAlign: 'center',
+    padding: '1rem'
+  },
+  profilePhoto: {
+    width: 100,
+    textAlign: "center",
+    marginLeft: "3rem",
+    marginTop: -100,
+    padding: 0,
+    cursor: "pointer",
+  },
+  name: {
+    marginLeft: "1rem",
+    width: "100%",
+    color: "RGB(23,41, 64)",
+    fontSize: "2rem",
+    fontWeight: 600,
+  },
+  section: {
+    color: "RGB(23,41, 64)",
+    marginBottom: 10,
+    paddingBottom: 0,
+    borderRadius: "0px",
+  },
+  moreSkills: {
+    fontSize: '16px'
+  },
+  jobtitle: {
+    fontSize: 20,
+    fontWeight: 600,
+    color: "RGB(23,41, 64)",
+  },
+  company: {
+    fontWeight: 450,
+  },
+  jobPeriod: {
+    color: "gray",
+    fontWeight: 300,
+    marginBottom: 40,
+  },
+  title: {
+    color: theme.palette.common.darkBlue,
+    fontWeight: 400,
+    fontSize: "0.9rem",
+  },
+  randomrole: {
+    display: "flex",
+  },
 }));
 
 const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isLimited, background, match, employeeData }) => {
 
-  const { basic, document, experience, portfolio, preference, skill, purchased } = employeeData
+  const { basic, experience, portfolio, preference, skill, purchased } = employeeData
   const classes = useStyles();
   const history = useHistory()
   const theme = useTheme();
@@ -140,9 +216,9 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
   }, [])
 
   useEffect(() => {
-    if(askInterestStatus == "SUCCESS") {
+    if (askInterestStatus == "SUCCESS") {
       successMessage("Message is sent successfully!")
-    } else if(askInterestStatus == "FAILURE") {
+    } else if (askInterestStatus == "FAILURE") {
       errorMessage("Sending message is failed!")
     }
     actions.askInterestStatusHidden()
@@ -171,103 +247,156 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
   }
 
   console.log(employeeData, "employeeData")
-  return (
-    <Container className={classes.container} maxWidth="md">
-      {/* Dashboard whole page column root */}
 
-      <Grid className={classes.header}>
-        <BackgourndPhoto />
-        <Grid className={classes.profilePhoto}>
-          <Grid>
+  return !_.isEmpty(employeeData) ? (
+    <Fragment>
+      <Container className={classes.container} maxWidth="md">
+        <Grid className={classes.header}>
+          <BackgroundPhoto />
+          <Grid className={classes.profilePhoto}>
             <ProfilePhoto />
           </Grid>
-        </Grid>
-        <Grid item container className={classes.basicInfo}>
-          <Grid item xs={12} md={6}>
-            <Typography className={classes.basicTitle}>
-              {
-                purchased ? `Name : ${basic.firstName} ${basic.lastName}` :
-                  `CandidateID : ${basic && basic.employeezNowId}`
+          <Grid className={classes.section}>
+            <Grid className={classes.name}>
+              {purchased && basic ?
+                employeeData.basic.firstName +
+                " " +
+                employeeData.basic.lastName :
+                basic && basic.employeezNowId
               }
-            </Typography>
-            <Typography className={classes.basicTitle}>
-              {purchased && basic && `${basic.address.city} ${basic.address.state} ${basic.address.street1}`}
-            </Typography>
-            <Typography className={classes.basicTitle}>
-              {preference && preference.employmentStatus}
-            </Typography>
-            <Typography className={classes.basicTitle}>
-              {purchased && `Email : ${basic.email}`}
-            </Typography>
-            <Typography className={classes.basicTitle}>
-              {purchased && `Phone : ${basic.cell}`}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box component="fieldset" mb={3} borderColor="transparent">
-              <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly size="large" />
-            </Box>
+            </Grid>
           </Grid>
         </Grid>
-        {skill &&
-          <Fragment>
-            <Grid container item sm={12} className={classes.content}>
-              <Grid container item xs={12} sm={6} className={classes.contentItem}>
-                <Grid item xs={6}>
-                  <Typography> {skill.primaryJob.title} </Typography>
-                </Grid>
-                <Grid item xs={6} style={{ textAlign: 'right' }}>
-                  <Typography>{skill.primaryJob.years} years</Typography>
-                </Grid>
-              </Grid>
-              <Grid container item xs={12} sm={6} className={classes.contentItem}>
-                <Grid item xs={6}>
-                  <Typography> {skill.secondaryJob.title} </Typography>
-                </Grid>
-                <Grid item xs={6} style={{ textAlign: 'right' }}>
-                  <Typography>{skill.secondaryJob.years} {skill.secondaryJob ? "years" : ""}</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid container item sm={12} className={classes.content}>
-              {skill.cuisine.map((cu, i) => {
-                return <Grid container key={i} item xs={12} sm={6} className={classes.contentItem}>
-                  <Grid item xs={6}>
-                    <Typography> {cu.type} </Typography>
-                  </Grid>
-                  <Grid item xs={6} style={{ textAlign: 'right' }}>
-                    <Typography>{cu.years} years</Typography>
-                  </Grid>
-                </Grid>
-              })}
-            </Grid>
-            <Grid container item sm={12} className={classes.content}>
-              <Grid container item xs={12} sm={6} className={classes.contentItem}>
 
-              </Grid>
-              <Grid container item xs={12} sm={6} className={classes.contentItem}>
-                <Typography>Desired Salary : {`${preference.idealSalary.amount} / ${preference.idealSalary.unit}`}</Typography>
+        <Grid className={classes.section}>
+          <Card className={classes.section}>
+            <Grid item container className={classes.callToAction}>
+              <Grid item xs={12}>
+                <CallToAction onAskInterest={onAskInterest} purchased={purchased} purchaseProfile={purchaseProfile} />
               </Grid>
             </Grid>
-          </Fragment>
-        }
-        <hr />
-        <CandidateDocuments />
-        <Grid item container className={classes.callToAction}>
-          <Grid item xs={12}>
-            <CallToAction onAskInterest={onAskInterest} purchased={purchased} purchaseProfile={purchaseProfile} />
-          </Grid>
+          </Card>
         </Grid>
+
         <Grid className={classes.section}>
-          <Grid className={classes.name}>
-            {/* {basic &&
-              employeeData.basic.lastName + " " + employeeData.basic.firstName
-            } */}
-          </Grid>
+          <Card className={classes.section}>
+            <CardContent>
+              <Grid container item xs={12}>
+                <Grid item xs={12} sm={6} md={4}>
+                  {preference && (
+                    <Typography>{"" + preference.employmentStatus}</Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  {preference && (
+                    <Typography>
+                      <b className={classes.title}>Expected : </b> US${" "}
+                      {preference.idealSalary.amount +
+                        "/" +
+                        preference.idealSalary.unit}
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Typography></Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         </Grid>
-      </Grid>
-    </Container>
-  );
+
+        <Grid className={classes.section}>
+          <Card className={classes.section}>
+            {skill && (
+              <Fragment>
+                <CardContent className={classes.moreSkills}>
+                  <Profession profession={employeeData.skill} />
+                </CardContent>
+              </Fragment>
+            )}
+          </Card>
+        </Grid>
+
+        <Grid className={classes.section}>
+          <Card className={classes.section}>
+            <CardContent>
+              <Grid item container xs={12}>
+                <Grid item xs={12} md={6}>
+                  <Typography className={classes.jobtitle}>
+                    {experience && experience.primaryJob.title}
+                  </Typography>
+                  {experience && experience.primaryJob && (
+                    <Fragment>
+                      <Typography className={classes.company}>
+                        {experience.primaryJob.company}
+                      </Typography>
+                      <Typography className={classes.jobPeriod}>
+                        {experience.primaryJob.startDate}&nbsp;~ &nbsp;
+                        {experience.primaryJob.current
+                          ? "Present"
+                          : experience.primaryJob.endDate}
+                      </Typography>
+                    </Fragment>
+                  )}
+                </Grid>
+                {experience && experience.secondaryJob.title &&
+                  <Grid item xs={12} md={6}>
+                    <Typography className={classes.jobtitle}>
+                      {experience && experience.secondaryJob.title}
+                    </Typography>
+                    {experience && experience.secondaryJob && (
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {experience.secondaryJob.company}
+                        </Typography>
+                        <Typography className={classes.jobPeriod}>
+                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
+                                      {experience.secondaryJob.current
+                            ? "Present"
+                            : experience.secondaryJob.endDate}
+                        </Typography>
+                      </Fragment>
+                    )}
+                  </Grid>
+                }
+                {experience &&
+                  experience.otherJob.map((job, i) => (
+                    job.title &&
+                    <Grid item xs={12} md={6} key={i}>
+                      <Typography className={classes.jobtitle}>
+                        {job.title}
+                      </Typography>
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {job.company}
+                        </Typography>
+                        <Typography className={classes.jobPeriod}>
+                          {job.startDate}&nbsp;~ &nbsp;
+                          {job.endDate}
+                        </Typography>
+                      </Fragment>
+                    </Grid>
+                  ))}
+              </Grid>
+
+              {/* {employeeData.experience && employeeData.experience.employee} */}
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid className={classes.section}>
+          <Portfolio portfolios={portfolio && portfolio.portfolios}/>
+        </Grid>
+        <Grid className={classes.deploma}>
+          <Typography className={classes.center}>
+            To upload any documents (diplomas, letter of recommentation, etc) please email to: Register@EmployeezNow.com
+          </Typography>
+        </Grid>
+      </Container>
+    </Fragment>
+  ) : (
+      <Fragment></Fragment>
+    );
 };
 
 const mapStateToProps = ({

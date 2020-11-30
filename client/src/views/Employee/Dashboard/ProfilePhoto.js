@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfilePhoto = ({ profile, actions, photo }) => {
+const ProfilePhoto = ({ profile, actions, photo, employer }) => {
   const user = JSON.parse(getUser());
   const classes = useStyles();
   const theme = useTheme();
