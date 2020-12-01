@@ -29,11 +29,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { successMessage, errorMessage } from '@helpers/utils'
 import { Box } from "@material-ui/core";
 import { usaStates } from '../professionTypes';
-
-// import {
-//   loadProfessionDetails,
-//   updateProfessionDetails,
-// } from '../../../store/actions/professionDetails';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import RoomIcon from '@material-ui/icons/Room';
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 
 // set style
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +46,12 @@ const useStyles = makeStyles((theme) => ({
   },
   center: {
     textAlign: 'center'
+  },
+  excludeIcon: {
+    display: 'flex',
+    width: '100px',
+    paddingTop: '0.5rem',
+    fontWeight: 600    
   },
   formContainer: {
     // marginTop: "1rem",
@@ -328,7 +332,6 @@ const ExperienceForm = ({
         address: exclude.address
       }
     };
-    debugger
     actions.updateJobExperience(submitData);
   };
 
@@ -382,14 +385,12 @@ const ExperienceForm = ({
         ...exclude,
         [type]: value
       })
-      debugger
     if (type === "address") {
       setExclude({
         ...exclude,
         [type]: value.map(address => address.value)
         // [type]: value
       })
-      debugger
     }
   }
 
@@ -741,11 +742,15 @@ const ExperienceForm = ({
             <Grid item xs={12} className={classes.center}>
               Please enter business you <b>DO NOT</b> wish to show up on their searches
             </Grid>
-            <Grid item xs={12}>
-
+            <Grid item xs={12} style={{display: 'flex'}}>
+              <Box className={classes.excludeIcon}>
+                <EmojiTransportationIcon />
+                &nbsp;Name
+              </Box>
               <Autocomplete
                 multiple
                 options={[]}
+                fullWidth
                 size="small"
                 freeSolo
                 value={exclude.name}
@@ -761,16 +766,22 @@ const ExperienceForm = ({
                     fullWidth
                     // label="Excluded Businesses"
                     InputLabelProps={{ shrink: true }}
+
                   />
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{display: 'flex'}}>
+              <Box className={classes.excludeIcon}>
+                <RoomIcon />
+                &nbsp;Address
+              </Box>
               <Autocomplete
                 multiple
                 id="tags-standard"
+                fullWidth
                 options={usaStates.map(state => state)}
-                value={ exclude.address.map(address => {
+                value={exclude.address.map(address => {
                   return usaStates.filter(state => state.value === address)[0]
                 })}
                 onChange={(e, value) => handleBusiness(e, value, 'address')}

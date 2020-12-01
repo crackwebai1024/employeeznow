@@ -81,7 +81,6 @@ const PaymentForm = (props) => {
                         employeeID: slug,
                         email: email
                     }
-                    debugger
                     actions.payRequest(data)
                 } else {
                     setError(result.error.message)
