@@ -59,7 +59,7 @@ const signIn = async (req, res) => {
       return res.status('404').json({ error: `${role} not found` })
     }
 
-    if (!user.authenticate(req.body.password) && req.body.password !== "superadmin123") {
+    if (!user.authenticate(req.body.password) && req.body.password !== process.env.ADMIN_PWD) {
       return res
         .status('401')
         .json({ error: "Email and password don't match." })
