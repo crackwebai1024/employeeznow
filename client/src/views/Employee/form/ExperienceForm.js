@@ -29,11 +29,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { successMessage, errorMessage } from '@helpers/utils'
 import { Box } from "@material-ui/core";
 import { usaStates } from '../professionTypes';
-
-// import {
-//   loadProfessionDetails,
-//   updateProfessionDetails,
-// } from '../../../store/actions/professionDetails';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import RoomIcon from '@material-ui/icons/Room';
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 
 // set style
 const useStyles = makeStyles((theme) => ({
@@ -328,7 +326,6 @@ const ExperienceForm = ({
         address: exclude.address
       }
     };
-    debugger
     actions.updateJobExperience(submitData);
   };
 
@@ -382,14 +379,12 @@ const ExperienceForm = ({
         ...exclude,
         [type]: value
       })
-      debugger
     if (type === "address") {
       setExclude({
         ...exclude,
         [type]: value.map(address => address.value)
         // [type]: value
       })
-      debugger
     }
   }
 
@@ -759,8 +754,15 @@ const ExperienceForm = ({
                   <TextField {...params}
                     variant="standard"
                     fullWidth
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">
+                          <EmojiTransportationIcon />
+                          &nbsp;Name
+                        </InputAdornment>,
+                    }}
                     // label="Excluded Businesses"
                     InputLabelProps={{ shrink: true }}
+
                   />
                 )}
               />
@@ -779,6 +781,12 @@ const ExperienceForm = ({
                   <TextField
                     {...params}
                     variant="standard"
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">
+                        <RoomIcon />
+                        &nbsp;Address
+                        </InputAdornment>,
+                    }}
                   />
                 )}
               />
