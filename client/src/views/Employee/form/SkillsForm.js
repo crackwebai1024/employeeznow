@@ -432,6 +432,7 @@ const SkillsForm = ({
     }
 
     const formData = createFormData();
+    window.scrollTo(0, 0)
     actions.updateSkillRequest(formData);
     _loadData();
   };
@@ -455,460 +456,462 @@ const SkillsForm = ({
   }
 
   return (
-    <Container maxWidth="sm" id="#">
-      <Grid container direction="column" alignItems="center">
-        <Grid item>
-          <Typography variant="h1" className={classes.heading1}>
-            UPDATE SKILLS
+    <>
+      <Container maxWidth="sm" id="#">
+        <Grid container direction="column" alignItems="center">
+          <Grid item>
+            <Typography variant="h1" className={classes.heading1}>
+              UPDATE SKILLS
             </Typography>
-        </Grid>
-        <form onSubmit={handleSubmit}>
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Please select your primary job title (1 max)
-              </Typography>
           </Grid>
-          {/* primary job */}
-          <FormControl component="fieldset" focused>
-            <RadioGroup aria-label="primaryJob.title" name="primaryJob.title">
-              <Grid item container direction="row">
-                {jobTypes.map((jobType, i) => (
-                  <Grid item key={`${jobType}${i}`} sm={4} xs={6}>
-                    <FormControlLabel
-                      control={
-                        <Radio
-                          value={jobType}
-                          id="primaryJob"
-                          checked={jobType === primaryJob.title}
-                          onChange={(e) => handleChange(e)}
-                        />
-                      }
-                      label={jobType}
-                      className={classes.item}
+          <form onSubmit={handleSubmit}>
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Please select your primary job title (1 max)
+              </Typography>
+            </Grid>
+            {/* primary job */}
+            <FormControl component="fieldset" focused>
+              <RadioGroup aria-label="primaryJob.title" name="primaryJob.title">
+                <Grid item container direction="row">
+                  {jobTypes.map((jobType, i) => (
+                    <Grid item key={`${jobType}${i}`} sm={4} xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Radio
+                            value={jobType}
+                            id="primaryJob"
+                            checked={jobType === primaryJob.title}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        }
+                        label={jobType}
+                        className={classes.item}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </RadioGroup>
+            </FormControl>
+
+            <Grid item container direction="row">
+              <Grid item>
+                <Typography className={classes.yearsText}>
+                  &#42; How many years of experience for your primary job
+                </Typography>
+              </Grid>
+              <Grid item>
+                <TextField
+                  error={primaryYearsError.length !== 0}
+                  helperText={primaryYearsError}
+                  type="number"
+                  name="primaryJob.years"
+                  id="primaryJob"
+                  value={primaryJob && primaryJob.years}
+                  onChange={(e) => handleChange(e)}
+                  className={classes.yearsInput}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment
+                        position="end"
+                        className={classes.adornment}
+                      >
+                        years
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+            </Grid>
+            {/* secondary job */}
+            {/* open and close secondary job container */}
+            <Grid
+              item
+              container
+              alignItems="center"
+              spacing={1}
+              className={classes.openContainer}
+            >
+              <Grid item>
+                <Avatar
+                  onClick={(e) => openSecodaryJob(e)}
+                  className={classes.avatar}
+                >
+                  {openJob ? <RemoveIcon /> : <AddIcon />}
+                </Avatar>
+              </Grid>
+              <Grid item>
+                <Typography className={classes.openText}>
+                  Add Secondary Job
+                </Typography>
+              </Grid>
+            </Grid>
+
+            {openJob && (
+              <Grid item>
+                <Grid item className={classes.titleContainer}>
+                  <Typography className={classes.title}>
+                    Please select your Secondary job title (1 max)
+                  </Typography>
+                </Grid>
+
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    aria-label="secondaryJob.title"
+                    name="secondaryJob.title"
+                  >
+                    <Grid item container direction="row">
+                      {jobTypes.map((jobType, i) => (
+                        <Grid item key={`${jobType}${i}`} sm={4} xs={6}>
+                          <FormControlLabel
+                            control={
+                              <Radio
+                                value={jobType}
+                                checked={jobType === secondaryJob.title}
+                                id="secondaryJob"
+                                onChange={(e) => handleChange(e)}
+                              />
+                            }
+                            label={jobType}
+                            className={classes.item}
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </RadioGroup>
+                </FormControl>
+
+                <Grid item container direction="row">
+                  <Typography className={classes.yearsText}>
+                    &#42; How many years of experience for your secondary job
+                  </Typography>
+
+                  <Grid item>
+                    <TextField
+                      error={secondaryYearsError.length !== 0}
+                      helperText={secondaryYearsError}
+                      type="number"
+                      name="secondaryJob.years"
+                      id="secondaryJob.years"
+                      value={secondaryJob.years}
+                      onChange={(e) => handleChange(e)}
+                      className={classes.yearsInput}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment
+                            position="end"
+                            className={classes.adornment}
+                          >
+                            years
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                   </Grid>
-                ))}
-              </Grid>
-            </RadioGroup>
-          </FormControl>
-
-          <Grid item container direction="row">
-            <Grid item>
-              <Typography className={classes.yearsText}>
-                &#42; How many years of experience for your primary job
-                </Typography>
-            </Grid>
-            <Grid item>
-              <TextField
-                error={primaryYearsError.length !== 0}
-                helperText={primaryYearsError}
-                type="number"
-                name="primaryJob.years"
-                id="primaryJob"
-                value={primaryJob && primaryJob.years}
-                onChange={(e) => handleChange(e)}
-                className={classes.yearsInput}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position="end"
-                      className={classes.adornment}
-                    >
-                      years
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-          </Grid>
-          {/* secondary job */}
-          {/* open and close secondary job container */}
-          <Grid
-            item
-            container
-            alignItems="center"
-            spacing={1}
-            className={classes.openContainer}
-          >
-            <Grid item>
-              <Avatar
-                onClick={(e) => openSecodaryJob(e)}
-                className={classes.avatar}
-              >
-                {openJob ? <RemoveIcon /> : <AddIcon />}
-              </Avatar>
-            </Grid>
-            <Grid item>
-              <Typography className={classes.openText}>
-                Add Secondary Job
-                </Typography>
-            </Grid>
-          </Grid>
-
-          {openJob && (
-            <Grid item>
-              <Grid item className={classes.titleContainer}>
-                <Typography className={classes.title}>
-                  Please select your Secondary job title (1 max)
-                  </Typography>
-              </Grid>
-
-              <FormControl component="fieldset">
-                <RadioGroup
-                  aria-label="secondaryJob.title"
-                  name="secondaryJob.title"
-                >
-                  <Grid item container direction="row">
-                    {jobTypes.map((jobType, i) => (
-                      <Grid item key={`${jobType}${i}`} sm={4} xs={6}>
-                        <FormControlLabel
-                          control={
-                            <Radio
-                              value={jobType}
-                              checked={jobType === secondaryJob.title}
-                              id="secondaryJob"
-                              onChange={(e) => handleChange(e)}
-                            />
-                          }
-                          label={jobType}
-                          className={classes.item}
-                        />
-                      </Grid>
-                    ))}
-                  </Grid>
-                </RadioGroup>
-              </FormControl>
-
-              <Grid item container direction="row">
-                <Typography className={classes.yearsText}>
-                  &#42; How many years of experience for your secondary job
-                  </Typography>
-
-                <Grid item>
-                  <TextField
-                    error={secondaryYearsError.length !== 0}
-                    helperText={secondaryYearsError}
-                    type="number"
-                    name="secondaryJob.years"
-                    id="secondaryJob.years"
-                    value={secondaryJob.years}
-                    onChange={(e) => handleChange(e)}
-                    className={classes.yearsInput}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          className={classes.adornment}
-                        >
-                          years
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
                 </Grid>
               </Grid>
-            </Grid>
-          )}
+            )}
 
-          {/*  Shift */}
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Please indicate which shift(s) you are willing to work
+            {/*  Shift */}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Please indicate which shift(s) you are willing to work
               </Typography>
-          </Grid>
-
-          <FormControl component="fieldset">
-            <Grid item>
-              {shifts.map((sh, i) => (
-                <FormControlLabel
-                  control={<Checkbox id={sh} />}
-                  key={`${sh}${i}`}
-                  name="shift"
-                  value={sh}
-                  checked={
-                    shift.filter((shift) => shift === sh)[0] ? true : false
-                  }
-                  label={sh}
-                  onChange={(e) => handleChange(e)}
-                  className={classes.item}
-                />
-              ))}
             </Grid>
-          </FormControl>
-
-          {/* Stytle */}
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Please enter your years of experience for each style of service
-            </Typography>
-          </Grid>
-
-          <FormControl component="fieldset">
-            <RadioGroup aria-label="styleCurrent" name="styleCurrent">
-              <Grid item container direction="row">
-                {styles.map((st, i) => (
-                  <Grid item key={`${st}${i}`} sm={6}>
-                    <TextField
-                      id={st}
-                      type="number"
-                      name="style"
-                      label={st}
-                      value={
-                        style.filter((style) => style.type === st)[0]
-                          ? style.filter((style) => style.type === st)[0].years
-                          : ""
-                      }
-                      onChange={(e) => handleChange(e)}
-                      min="0"
-                      className={classes.styleandcuisineInput}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment
-                            position="end"
-                            className={classes.adornment}
-                          >
-                            years
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                ))}
-                <FormHelperText
-                  error={styleYearsError.length !== 0}
-                  className={classes.helperText}
-                >
-                  {styleYearsError}
-                </FormHelperText>
-              </Grid>
-            </RadioGroup>
-          </FormControl>
-
-          {/* cuisine */}
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Please enter your years of experience for each cuisine (max 4
-              selections)
-              </Typography>
 
             <FormControl component="fieldset">
-              <FormHelperText
-                error={cuisineYearsError.length !== 0}
-                className={classes.helperText}
-              >
-                {cuisineYearsError}
-              </FormHelperText>
-              <Grid item container direction="row">
-                {cuisines.map((cu, i) => (
-                  <Grid item key={`${cu}${i}`} xs={12} sm={6}>
-                    <TextField
-                      type="number"
-                      name="cuisine"
-                      label={cu}
-                      id={cu}
-                      value={
-                        cuisine.filter((cui) => cui.type === cu)[0]
-                          ? cuisine.filter((cui) => cui.type === cu)[0].years
-                          : ""
-                      }
-                      onChange={(e) => handleChange(e)}
-                      min="0"
-                      className={classes.styleandcuisineInput}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment
-                            position="end"
-                            className={classes.adornment}
-                          >
-                            years
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
+              <Grid item>
+                {shifts.map((sh, i) => (
+                  <FormControlLabel
+                    control={<Checkbox id={sh} />}
+                    key={`${sh}${i}`}
+                    name="shift"
+                    value={sh}
+                    checked={
+                      shift.filter((shift) => shift === sh)[0] ? true : false
+                    }
+                    label={sh}
+                    onChange={(e) => handleChange(e)}
+                    className={classes.item}
+                  />
                 ))}
               </Grid>
             </FormControl>
-          </Grid>
 
-          {/* wineKnowledge */}
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Please choose your level of wine knowledge:
-              </Typography>
-            <RadioGroup aria-label="wineKnowledge" name="wineKnowledge">
-              <Grid container direction="row">
-                {wineKnowledges.map((wine) => (
-                  <Grid item key={wine}>
-                    <FormControlLabel
-                      control={
-                        <Radio
-                          id={wine}
-                          value={wine}
-                          checked={wineKnowledge === wine}
-                          onChange={(e) => handleChange(e)}
-                        />
-                      }
-                      label={wine}
-                      name="wineKnowledge"
-                      className={classes.item}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </RadioGroup>
-          </Grid>
+            {/* Stytle */}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Please enter your years of experience for each style of service
+            </Typography>
+            </Grid>
 
-          {/* cocktailKnowledge */}
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Please choose your level of cocktail knowledge:
-              </Typography>
-            <RadioGroup
-              aria-label="cocktailKnowledge"
-              name="cocktailKnowledge"
-            >
-              <Grid container direction="row">
-                {cocktailKnowledges.map((cocktail) => (
-                  <Grid item key={cocktail}>
-                    <FormControlLabel
-                      control={
-                        <Radio
-                          id={cocktail}
-                          value={cocktail}
-                          checked={cocktailKnowledge === cocktail}
-                          onChange={(e) => handleChange(e)}
-                        />
-                      }
-                      label={cocktail}
-                      name="cocktailKnowledge"
-                      className={classes.item}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </RadioGroup>
-          </Grid>
-
-          {/* POS */}
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Please select all POS that you have at least one year of
-              experience working with (max 5 items):
-              </Typography>
-
-            <Grid item container direction="row">
-              {poss.map((pos) => (
-                <Grid item key={pos} sm={4} xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        id={pos}
-                        value={pos}
-                        checked={
-                          systems.filter((sys) => sys === pos)[0]
-                            ? true
-                            : false
+            <FormControl component="fieldset">
+              <RadioGroup aria-label="styleCurrent" name="styleCurrent">
+                <Grid item container direction="row">
+                  {styles.map((st, i) => (
+                    <Grid item key={`${st}${i}`} sm={6}>
+                      <TextField
+                        id={st}
+                        type="number"
+                        name="style"
+                        label={st}
+                        value={
+                          style.filter((style) => style.type === st)[0]
+                            ? style.filter((style) => style.type === st)[0].years
+                            : ""
                         }
                         onChange={(e) => handleChange(e)}
+                        min="0"
+                        className={classes.styleandcuisineInput}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              position="end"
+                              className={classes.adornment}
+                            >
+                              years
+                            </InputAdornment>
+                          ),
+                        }}
                       />
-                    }
-                    name="pos"
-                    label={pos}
-                    className={classes.item}
-                  />
+                    </Grid>
+                  ))}
+                  <FormHelperText
+                    error={styleYearsError.length !== 0}
+                    className={classes.helperText}
+                  >
+                    {styleYearsError}
+                  </FormHelperText>
                 </Grid>
-              ))}
-            </Grid>
-          </Grid>
+              </RadioGroup>
+            </FormControl>
 
-          {/* Reservation */}
-          <Grid item className={classes.titleContainer}>
-            <Typography className={classes.title}>
-              Select all reservation systems that you have at least one year
-              of experience working with (max 5 items):
+            {/* cuisine */}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Please enter your years of experience for each cuisine (max 4
+                selections)
               </Typography>
 
-            <Grid item container direction="row">
-              {reservations.map((res) => (
-                <Grid item key={res} sm={4} xs={6}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        id={res}
-                        checked={
-                          systems.filter((sys) => sys === res)[0]
-                            ? true
-                            : false
+              <FormControl component="fieldset">
+                <FormHelperText
+                  error={cuisineYearsError.length !== 0}
+                  className={classes.helperText}
+                >
+                  {cuisineYearsError}
+                </FormHelperText>
+                <Grid item container direction="row">
+                  {cuisines.map((cu, i) => (
+                    <Grid item key={`${cu}${i}`} xs={12} sm={6}>
+                      <TextField
+                        type="number"
+                        name="cuisine"
+                        label={cu}
+                        id={cu}
+                        value={
+                          cuisine.filter((cui) => cui.type === cu)[0]
+                            ? cuisine.filter((cui) => cui.type === cu)[0].years
+                            : ""
                         }
-                        value={res}
                         onChange={(e) => handleChange(e)}
+                        min="0"
+                        className={classes.styleandcuisineInput}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              position="end"
+                              className={classes.adornment}
+                            >
+                              years
+                            </InputAdornment>
+                          ),
+                        }}
                       />
-                    }
-                    name="reservations"
-                    label={res}
-                    className={classes.item}
-                  />
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
+              </FormControl>
             </Grid>
-          </Grid>
 
-          {/* miles to work */}
-          <Grid item className={classes.titleContainer}>
-            <Typography gutterBottom variant="h6">
-              Miles to Work
+            {/* wineKnowledge */}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Please choose your level of wine knowledge:
               </Typography>
-            <Typography variant="caption">
-              &#42; Please input distance you can commute.
+              <RadioGroup aria-label="wineKnowledge" name="wineKnowledge">
+                <Grid container direction="row">
+                  {wineKnowledges.map((wine) => (
+                    <Grid item key={wine}>
+                      <FormControlLabel
+                        control={
+                          <Radio
+                            id={wine}
+                            value={wine}
+                            checked={wineKnowledge === wine}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        }
+                        label={wine}
+                        name="wineKnowledge"
+                        className={classes.item}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </RadioGroup>
+            </Grid>
+
+            {/* cocktailKnowledge */}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Please choose your level of cocktail knowledge:
               </Typography>
-          </Grid>
-
-          <Grid item>
-            <TextField
-              select
-              label="Miles To Work"
-              id="milesToWork"
-              name="milesToWork"
-              value={milesToWork}
-              onChange={(e) => handleChange(e)}
-              helperText="Please select the miles"
-              variant="outlined"
-            >
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={7}>7</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={15}>15</MenuItem>
-              <MenuItem value={25}>25</MenuItem>
-            </TextField>
-          </Grid>
-
-          <Grid container item xs={12}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                onClick={(e) => handleSubmit(e)}
-                className={classes.button}
+              <RadioGroup
+                aria-label="cocktailKnowledge"
+                name="cocktailKnowledge"
               >
-                {!_.isEmpty(skill) ? "update" : "Add"}
-              </Button>
+                <Grid container direction="row">
+                  {cocktailKnowledges.map((cocktail) => (
+                    <Grid item key={cocktail}>
+                      <FormControlLabel
+                        control={
+                          <Radio
+                            id={cocktail}
+                            value={cocktail}
+                            checked={cocktailKnowledge === cocktail}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        }
+                        label={cocktail}
+                        name="cocktailKnowledge"
+                        className={classes.item}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </RadioGroup>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <Button
+
+            {/* POS */}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Please select all POS that you have at least one year of
+                experience working with (max 5 items):
+              </Typography>
+
+              <Grid item container direction="row">
+                {poss.map((pos) => (
+                  <Grid item key={pos} sm={4} xs={6}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          id={pos}
+                          value={pos}
+                          checked={
+                            systems.filter((sys) => sys === pos)[0]
+                              ? true
+                              : false
+                          }
+                          onChange={(e) => handleChange(e)}
+                        />
+                      }
+                      name="pos"
+                      label={pos}
+                      className={classes.item}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+
+            {/* Reservation */}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title}>
+                Select all reservation systems that you have at least one year
+                of experience working with (max 5 items):
+              </Typography>
+
+              <Grid item container direction="row">
+                {reservations.map((res) => (
+                  <Grid item key={res} sm={4} xs={6}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          id={res}
+                          checked={
+                            systems.filter((sys) => sys === res)[0]
+                              ? true
+                              : false
+                          }
+                          value={res}
+                          onChange={(e) => handleChange(e)}
+                        />
+                      }
+                      name="reservations"
+                      label={res}
+                      className={classes.item}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+
+            {/* miles to work */}
+            <Grid item className={classes.titleContainer}>
+              <Typography gutterBottom variant="h6">
+                Miles to Work
+              </Typography>
+              <Typography variant="caption">
+                &#42; Please input distance you can commute.
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <TextField
+                select
+                label="Miles To Work"
+                id="milesToWork"
+                name="milesToWork"
+                value={milesToWork}
+                onChange={(e) => handleChange(e)}
+                helperText="Please select the miles"
                 variant="outlined"
-                onClick={onCancleHandle}
-                className={classes.goback_button}
               >
-                Go Back
-              </Button>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={15}>15</MenuItem>
+                <MenuItem value={25}>25</MenuItem>
+              </TextField>
             </Grid>
-          </Grid>
-        </form>
-      </Grid>
-    </Container>
+
+            <Grid container item xs={12}>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={(e) => handleSubmit(e)}
+                  className={classes.button}
+                >
+                  {!_.isEmpty(skill) ? "update" : "Add"}
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="outlined"
+                  onClick={onCancleHandle}
+                  className={classes.goback_button}
+                >
+                  Go Back
+              </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Grid>
+      </Container>
+    </>
   )
   // );
 };

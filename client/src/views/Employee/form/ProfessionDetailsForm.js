@@ -217,6 +217,7 @@ const ProfessionDetailsForm = ({
       ...formData,
       id: user._id,
     };
+    window.scrollTo(0, 0)
     actions.updatePreference(data);
   };
 

@@ -14,6 +14,7 @@ import { getBoxSize } from "@helpers/utils";
 import EmptyPage from "@components/EmptyPage"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingCircular from '@components/LoadingCircular'
 import "./App.css";
 
 toast.configure();
@@ -28,9 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
   const [value, setValue] = useState(1);
+  const { loading } = props;
   const isAuthenticated = localStorage.getItem("USER") ? true : false;
   const classes = useStyles()
 
+  if(loading) {
+    document.body.style.overflowY = 'hidden'
+  } else {
+    document.body.style.overflowY = 'scroll'
+  }
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -44,6 +51,9 @@ function App(props) {
           // selectedIndex={selectedIndex}
           // setSelectedIndex={setSelectedIndex}
           />
+          {loading &&
+            <LoadingCircular />
+          }
           <Box minHeight={getBoxSize()} className={classes.content}>
             <Switch>
               <AppRouter />
@@ -73,11 +83,13 @@ function App(props) {
 
 const mapStateToProps = ({
   auth: { signupUser, isSentPhoneNumber, isAuthenticated, user },
+  employee: { loading }
 }) => ({
   signupUser,
   isSentPhoneNumber,
   isAuthenticated,
   user,
+  loading
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -5,12 +5,13 @@ import styled from 'styled-components';
 
 const LoadingWrapper = styled.div`
   position: absolute;
+  top: 0;
   width: 100%;
   font-size: 30px;
   display: flex;
   margin: auto;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   background: RGB(255,255,255, 0.8);
   padding-left: 45%;
   z-index: 10000;

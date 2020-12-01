@@ -332,6 +332,7 @@ const ExperienceForm = ({
         address: exclude.address
       }
     };
+    window.scrollTo(0, 0)
     actions.updateJobExperience(submitData);
   };
 

@@ -16,7 +16,6 @@ function* onSendInterest({ payload }) {
 function* onSendNoInterest({ payload }) {
   try {
     const res = yield call(EmailAPI.onSendNoInterest, payload)
-    debugger
     if(res && res.data) {
       yield put(types.sendNoInterestSuccess())
     }
