@@ -20,7 +20,7 @@ export default function LoadingCircular({ text }) {
   return (
     <LoadingWrapper>
       <div disableShrink size={100}>
-        <img src={`${process.env.PUBLIC_URL}/img/loading.jpg`} style={{ width: '50px' }} />
+        <img src={`${process.env.PUBLIC_URL}/img/test/loading.jpg`} style={{ width: '50px' }} />
       </div>
     </LoadingWrapper>
   )

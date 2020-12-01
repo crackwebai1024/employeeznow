@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     fontWeight: "550",
     fontSize: "16px",
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: '5rem'
-    },
   },
   profiledDetails: {
     marginTop: '2rem',
@@ -76,6 +73,13 @@ const ProfileDescription = () => {
         Your Profile can include
       </Typography>
     </Grid>
+    <Grid item xs={12} md={6} className={`${classes.col_center} ${classes.interview_mobile}`}>
+      <Box style={{ margin: 'auto', marginTop: '4rem' }}>
+        <Typography className={classes.profileSubtitle}>
+          <b>AT-WORK VIDEO </b>that shows off your skills
+        </Typography>
+      </Box>
+    </Grid>
     <Grid item xs={12} md={6}>
       <Grid className={classes.ContainerLeft}>
         <Box style={{ margin: 'auto', maxWidth: '472px' }}>
@@ -91,29 +95,33 @@ const ProfileDescription = () => {
     </Grid>
     <Grid item xs={12} md={6} className={classes.col_center}>
       <Box style={{ margin: 'auto' }}>
-        <Typography className={classes.profileSubtitle}>
-          <b>AT-WORK VIDEO </b>that shows off your skills
-        </Typography>
+        <Box className={classes.interview_desktop}>
+          <Typography className={classes.profileSubtitle}>
+            <b>AT-WORK VIDEO </b>that shows off your skills
+          </Typography>
+        </Box>
         <Typography className={classes.profileSubdescription}>
           Don't let a resume be the only thing that tells your story. You can add videos of you at work,
           performing at your best and allowing hiring managers to see what you can do for them.
         </Typography>
       </Box>
     </Grid>
-    
-    <Grid item xs={12} md={6} className={`${classes.col_center} ${classes.interview_desktop}`}>
-      <Box style={{ margin: 'auto' }}>
+
+    <Grid item xs={12} md={6} className={`${classes.col_center}`}>
+      <Box style={{ margin: 'auto', marginTop: '4rem' }}>
         <Typography className={classes.profileSubtitle}>
           <b>A SELF-INTERVIEW</b> to let them know who you are
+          </Typography>
+        <Box className={classes.interview_desktop}>
+          <Typography className={classes.profileSubdescription}>
+            Your EmployeezNow profile allows you to create and build a portfolio to show what you can do.
+            Upload pictures of your accompishment and even your self-interview.
+            Now you get to control the narrative and talk about the topics and questions that best suit you.
         </Typography>
-        <Typography className={classes.profileSubdescription}>
-          Your EmployeezNow profile allows you to create and build a portfolio to show what you can do.
-          Upload pictures of your accompishment and even your self-interview.
-          Now you get to control the narrative and talk about the topics and questions that best suit you.
+          <Typography className={classes.profiledDetails}>
+            (View our Self-Interview questions on the Learn More page)
         </Typography>
-        <Typography className={classes.profiledDetails}>
-          (View our Self-Interview questions on the Learn More page)
-        </Typography>
+        </Box>
       </Box>
     </Grid>
 
@@ -129,17 +137,24 @@ const ProfileDescription = () => {
 
     <Grid item xs={12} md={6} className={`${classes.interview_mobile} ${classes.col_center}`}>
       <Box style={{ margin: 'auto' }}>
-        <Typography className={classes.profileSubtitle}>
-          <b>A SELF-INTERVIEW</b> to let them know who you are
-        </Typography>
         <Typography className={classes.profileSubdescription}>
           Your EmployeezNow profile allows you to create and build a portfolio to show what you can do.
           Upload pictures of your accompishment and even your self-interview.
           Now you get to control the narrative and talk about the topics and questions that best suit you.
-        </Typography>
+          </Typography>
         <Typography className={classes.profiledDetails}>
           (View our Self-Interview questions on the Learn More page)
         </Typography>
+      </Box>
+    </Grid>
+
+    <Grid item xs={12} md={6} className={`${classes.col_center} ${classes.interview_mobile}`}>
+      <Box style={{ margin: 'auto', marginTop: '4rem' }}>
+        <Grid xs={12}>
+          <Typography className={classes.profileSubtitle}>
+            PHOTOS of your CREATIONS
+          </Typography>
+        </Grid>
       </Box>
     </Grid>
 
@@ -149,9 +164,11 @@ const ProfileDescription = () => {
     <Grid item xs={12} md={6} className={classes.col_center}>
       <Box style={{ margin: 'auto' }}>
         <Grid xs={12}>
-          <Typography className={classes.profileSubtitle}>
-            PHOTOS of your CREATIONS
-          </Typography>
+          <Box className={classes.interview_desktop}>
+            <Typography className={classes.profileSubtitle}>
+              PHOTOS of your CREATIONS
+            </Typography>
+          </Box>
           <Typography className={classes.profileSubdescription}>
             Add multiple pictures to show your different areas of knowledge
           </Typography>

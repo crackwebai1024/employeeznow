@@ -16,6 +16,7 @@ import DirectionsCarOutlinedIcon from '@material-ui/icons/DirectionsCarOutlined'
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import AutorenewOutlinedIcon from '@material-ui/icons/AutorenewOutlined';
 import { getUser, getRole } from '@helpers/auth-helpers';
+import ExampleProfile from './ExampleProfile';
 
 const useStyles = makeStyles((theme) => ({
   contestContainer: {
@@ -304,6 +305,9 @@ const Home = () => {
           </Container>
         </Grid>
       }
+      <Container width="sm" className={classes.mainContainer}>
+        <ExampleProfile />
+      </Container>
       <Container width="sm" className={classes.mainContainer} style={{ marginTop: '4rem' }}>
         <Hospitality />
       </Container >
