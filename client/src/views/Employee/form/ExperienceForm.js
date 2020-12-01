@@ -47,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
   center: {
     textAlign: 'center'
   },
+  excludeIcon: {
+    display: 'flex',
+    width: '100px',
+    paddingTop: '0.5rem',
+    fontWeight: 600    
+  },
   formContainer: {
     // marginTop: "1rem",
   },
@@ -736,11 +742,15 @@ const ExperienceForm = ({
             <Grid item xs={12} className={classes.center}>
               Please enter business you <b>DO NOT</b> wish to show up on their searches
             </Grid>
-            <Grid item xs={12}>
-
+            <Grid item xs={12} style={{display: 'flex'}}>
+              <Box className={classes.excludeIcon}>
+                <EmojiTransportationIcon />
+                &nbsp;Name
+              </Box>
               <Autocomplete
                 multiple
                 options={[]}
+                fullWidth
                 size="small"
                 freeSolo
                 value={exclude.name}
@@ -754,12 +764,6 @@ const ExperienceForm = ({
                   <TextField {...params}
                     variant="standard"
                     fullWidth
-                    InputProps={{
-                      startAdornment: <InputAdornment position="start">
-                          <EmojiTransportationIcon />
-                          &nbsp;Name
-                        </InputAdornment>,
-                    }}
                     // label="Excluded Businesses"
                     InputLabelProps={{ shrink: true }}
 
@@ -767,12 +771,17 @@ const ExperienceForm = ({
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{display: 'flex'}}>
+              <Box className={classes.excludeIcon}>
+                <RoomIcon />
+                &nbsp;Address
+              </Box>
               <Autocomplete
                 multiple
                 id="tags-standard"
+                fullWidth
                 options={usaStates.map(state => state)}
-                value={ exclude.address.map(address => {
+                value={exclude.address.map(address => {
                   return usaStates.filter(state => state.value === address)[0]
                 })}
                 onChange={(e, value) => handleBusiness(e, value, 'address')}
@@ -781,12 +790,6 @@ const ExperienceForm = ({
                   <TextField
                     {...params}
                     variant="standard"
-                    InputProps={{
-                      startAdornment: <InputAdornment position="start">
-                        <RoomIcon />
-                        &nbsp;Address
-                        </InputAdornment>,
-                    }}
                   />
                 )}
               />
