@@ -13,6 +13,7 @@ import xss from 'xss-clean'
 import authEmployeeRoutes from './routes/auth/employee.routes'
 import authEmployerRoutes from './routes/auth/employer.routes'
 import authCommonRoutes from './routes/auth/common.routes'
+import cartRoutes from './routes/cart/cart.routes'
 import crudEmployeeRoutes from './routes/crud/employee.routes'
 import crudEmployerRoutes from './routes/crud/employer.routes'
 import mailSendRoutes from './routes/mail/mail.routes'
@@ -62,6 +63,9 @@ app.use('/api/mail', mailSendRoutes)
 
 //employer pay for interest employee routes
 app.use('/api/payment', paymentRoutes)
+
+//employer add employee to his cart
+app.use('/api/cart', cartRoutes)
 
 // Catch unauthorised errors
 app.use((err, req, res, next) => {
