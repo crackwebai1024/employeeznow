@@ -4,8 +4,8 @@ const ExperienceSchema = new mongoose.Schema({
   primaryJob: {
     company: String,
     title: String,
-    startDate: String,
-    endDate: String,
+    startDate: Date,
+    endDate: Date,
     description: String,
     years: Number,
     current: {
@@ -16,8 +16,8 @@ const ExperienceSchema = new mongoose.Schema({
   secondaryJob: {
     company: String,
     title: String,
-    startDate: String,
-    endDate: String,
+    startDate: Date,
+    endDate: Date,
     description: String,
     years: Number,
   },
