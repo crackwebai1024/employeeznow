@@ -239,7 +239,7 @@ const ExperienceForm = ({
         });
       }
       case "endDate":
-        if (formData[id].startDate > value) {
+        if (new Date(formData[id].startDate) > value) {
           setError({
             ...error,
             [id]: "Your end date can’t be earlier than your start date.",
@@ -352,6 +352,7 @@ const ExperienceForm = ({
       let end = new Date(data[key].endDate);
       let years = Number((end - start) / 86400000 / 365);
       data[key].years = years;
+      debugger
     }
 
     setOtherJobs(data);
