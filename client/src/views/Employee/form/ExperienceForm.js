@@ -155,10 +155,11 @@ const ExperienceForm = ({
   });
 
   const [showAlert, setShowAlert] = useState(0);
-
+  const [isopen, setIsOpen] = useState("")
   const [error, setError] = useState({
     primaryJob: "",
   });
+  const [otherOpen, setOtherOpen] = ([])
 
   const user = JSON.parse(getUser());
   // material-ui
@@ -231,9 +232,15 @@ const ExperienceForm = ({
   const { primaryJob, secondaryJob } = formData;
   const history = useHistory()
   const { register, handleSubmit, errors, watch } = useForm({});
+  const [datepickerOpen, setDatepickerOpen] = useState({
+    primary: [false, false],
+    secondary: [false, false],
+    other: otherJobs.map(job => [false, false])
+  })
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
+    setIsOpen("")
     switch (name) {
       case "employmentStatus": {
         return setFormData({ ...formData, [name]: value });
@@ -348,11 +355,11 @@ const ExperienceForm = ({
     // if(!data.primaryJob.title)
     //   return error.primaryJob
     window.scrollTo(0, 0)
-    debugger
     actions.updateJobExperience(submitData);
   };
 
   const handleInput = (name, value, key) => {
+      setIsOpen("")
     let data = otherJobs;
     data[key][name] = value;
     if (data[key].startDate && data[key].endDate) {
@@ -360,7 +367,6 @@ const ExperienceForm = ({
       let end = new Date(data[key].endDate);
       let years = Number((end - start) / 86400000 / 365);
       data[key].years = years;
-      debugger
     }
 
     setOtherJobs(data);
@@ -410,6 +416,15 @@ const ExperienceForm = ({
         // [type]: value
       })
     }
+  }
+
+  const otherJobChange = (key) => {
+    let newArray = otherJobs.map(job => [false, false])
+    newArray[key][1] = true
+    setDatepickerOpen({
+      ...datepickerOpen,
+      other: newArray
+    })
   }
 
   console.log(primaryJob.title, "payload");
@@ -494,6 +509,8 @@ const ExperienceForm = ({
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     disableToolbar
+                    open={isopen === "2"?true:false}
+                    onClick={e => setIsOpen("2")}
                     format="MM/dd/yyyy"
                     onChange={e => onChange({
                       target: {
@@ -517,6 +534,8 @@ const ExperienceForm = ({
                       disableToolbar
                       label="End Date"
                       variant="inline"
+                      open={isopen === "1"?true:false}
+                    onClick={e => setIsOpen("1")}
                       format="MM/dd/yyyy"
                       onChange={e => onChange({
                         target: {
@@ -642,6 +661,8 @@ const ExperienceForm = ({
                     format="MM/dd/yyyy"
                     InputLabelProps={{ shrink: true }}
                     label="Start Date"
+                    open={isopen === "3"?true:false}
+                    onClick={e => setIsOpen("3")}
                   />
                 </Grid>
 
@@ -649,6 +670,8 @@ const ExperienceForm = ({
                   <KeyboardDatePicker
                     disableToolbar
                     format="MM/dd/yyyy"
+                    open={isopen === "4"?true:false}
+                    onClick={e => setIsOpen("4")}
                     onChange={e => onChange({
                       target: {
                         id: 'secondaryJob',
@@ -720,7 +743,6 @@ const ExperienceForm = ({
                       </Grid>
 
                       <Grid item xs={12} sm={3}>
-
                         <TextField
                           type="text"
                           name="company"
@@ -736,6 +758,8 @@ const ExperienceForm = ({
                         <KeyboardDatePicker
                           disableToolbar
                           format="MM/dd/yyyy"
+                          open={isopen === (2*key+4)?true:false}
+                    onClick={e => setIsOpen(2*key+4)}
                           onChange={e => handleInput('startDate', e, key)}
                           value={otherJobs[key].startDate ? otherJobs[key].startDate : null}
                           variant="inline"
@@ -752,9 +776,10 @@ const ExperienceForm = ({
                           onChange={e => handleInput('endDate', e, key)}
                           value={otherJobs[key].endDate ? otherJobs[key].endDate : null}
                           variant="inline"
-                          name="startDate"
+                          open={isopen === (2*key+5)?true:false}
+                    onClick={e => setIsOpen(2*key+5)}
                           InputLabelProps={{ shrink: true }}
-                          label="Start Date"
+                          label="End Date"
                           initialFocusedDate={''}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -814,6 +839,7 @@ const ExperienceForm = ({
                   fullWidth
                   size="small"
                   freeSolo
+                  autoSelect
                   value={exclude.name}
                   onChange={(e, value) => handleBusiness(e, value, 'name')}
                   renderTags={(value, getTagProps) =>
