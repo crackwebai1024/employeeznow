@@ -95,6 +95,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: "2rem",
+    float: 'right',
+    [theme.breakpoints.down("xs")]: {
+      width: '100%'
+    }
   },
   invalidMessage: {
     textAlign: "center",
@@ -109,8 +113,10 @@ const useStyles = makeStyles((theme) => ({
   },
   goback_button: {
     marginTop: "2rem",
-    float: 'right',
-    marginBottom: '5rem'
+    float: 'left',
+    [theme.breakpoints.down("xs")]: {
+      float: 'none'
+    }
   },
   menuItem: {
     maxHeight: "500px",
@@ -440,8 +446,8 @@ const ExperienceForm = ({
               direction={matchesXS ? "column" : "row"}
               alignItems="center"
             >
-              <Grid container>
-                <Grid item sm={3}>
+              <Grid container item spacing={1}>
+                <Grid item sm={3} xs={12}>
                   {primaryJob && (
                     <TextField
                       required
@@ -451,7 +457,7 @@ const ExperienceForm = ({
                       fullWidth
                       name="title"
                       value={primaryJob.title}
-                      error = {error.primaryJob}
+                      error={error.primaryJob}
                       InputLabelProps={{ shrink: true }}
                       onChange={(e) => onJobTitleChange(e, "primaryJob")}
                       PaperProps={{
@@ -471,12 +477,13 @@ const ExperienceForm = ({
                     </TextField>
                   )}
                 </Grid>
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={12}>
                   <TextField
                     type="text"
                     name="company"
                     id="primaryJob"
                     required
+                    fullWidth
                     label="Company Name"
                     InputLabelProps={{ shrink: true }}
                     value={primaryJob.company}
@@ -484,7 +491,7 @@ const ExperienceForm = ({
                   />
                 </Grid>
 
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     disableToolbar
                     format="MM/dd/yyyy"
@@ -504,7 +511,7 @@ const ExperienceForm = ({
                   />
                 </Grid>
 
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={6}>
                   {!toDisabled &&
                     <KeyboardDatePicker
                       disableToolbar
@@ -580,8 +587,8 @@ const ExperienceForm = ({
               direction={matchesXS ? "column" : "row"}
               alignItems="center"
             >
-              <Grid container>
-                <Grid item sm={3}>
+              <Grid container item spacing={1}>
+                <Grid item sm={3} xs={12}>
                   <TextField
                     select
                     label="Previous Job"
@@ -605,11 +612,12 @@ const ExperienceForm = ({
                     })}
                   </TextField>
                 </Grid>
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={12}>
                   <TextField
                     type="text"
                     name="company"
                     id="secondaryJob"
+                    fullWidth
                     label="Company Name"
                     InputLabelProps={{ shrink: true }}
                     value={secondaryJob.company}
@@ -617,7 +625,7 @@ const ExperienceForm = ({
                   />
                 </Grid>
 
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     disableToolbar
                     onChange={e => onChange({
@@ -637,7 +645,7 @@ const ExperienceForm = ({
                   />
                 </Grid>
 
-                <Grid item sm={3}>
+                <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     disableToolbar
                     format="MM/dd/yyyy"
@@ -689,7 +697,7 @@ const ExperienceForm = ({
                   </Typography>
                   </Grid>
                   <Grid container justify="flex-start" alignItems="center">
-                    <Grid container>
+                    <Grid container item spacing={1}>
                       <Grid item xs={12} sm={3}>
                         <TextField
                           select
@@ -717,18 +725,19 @@ const ExperienceForm = ({
                           type="text"
                           name="company"
                           label="Company Name"
+                          fullWidth
                           InputLabelProps={{ shrink: true }}
                           value={otherJobs[key].company}
                           onChange={(e) => handleInput('company', e.target.value, key)}
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={3}>
+                      <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
                           disableToolbar
                           format="MM/dd/yyyy"
                           onChange={e => handleInput('startDate', e, key)}
-                          value={otherJobs[key].startDate ? otherJobs[key].startDate : null }
+                          value={otherJobs[key].startDate ? otherJobs[key].startDate : null}
                           variant="inline"
                           name="startDate"
                           InputLabelProps={{ shrink: true }}
@@ -736,12 +745,12 @@ const ExperienceForm = ({
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm={3}>
+                      <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
                           disableToolbar
                           format="MM/dd/yyyy"
                           onChange={e => handleInput('endDate', e, key)}
-                          value={ otherJobs[key].endDate ? otherJobs[key].endDate : null}
+                          value={otherJobs[key].endDate ? otherJobs[key].endDate : null}
                           variant="inline"
                           name="startDate"
                           InputLabelProps={{ shrink: true }}
@@ -850,15 +859,6 @@ const ExperienceForm = ({
 
             <Grid item container xs={12}>
               <Grid item xs={12} sm={6}>
-                <Button
-                  variant="outlined"
-                  onClick={goBackHandle}
-                  className={classes.button}
-                >
-                  Go Back
-              </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
                 <Box className={classes.goback_button}>
                   <MainButton
                     width="100%"
@@ -874,15 +874,15 @@ const ExperienceForm = ({
                   >
                   </MainButton>
                 </Box>
-
-                {/* <MainButton
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.}
-              >
-                Save
-              </MainButton> */}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="outlined"
+                  onClick={goBackHandle}
+                  className={classes.button}
+                >
+                  Go Back
+                </Button>
               </Grid>
             </Grid>
           </Grid>
