@@ -339,6 +339,8 @@ const ExperienceForm = ({
         address: exclude.address
       }
     };
+    // if(!data.primaryJob.title)
+    //   return error.primaryJob
     window.scrollTo(0, 0)
     debugger
     actions.updateJobExperience(submitData);
@@ -446,11 +448,12 @@ const ExperienceForm = ({
                       select
                       label="Primary Job"
                       id="primaryJob"
+                      fullWidth
                       name="title"
                       value={primaryJob.title}
+                      error = {error.primaryJob}
                       InputLabelProps={{ shrink: true }}
                       onChange={(e) => onJobTitleChange(e, "primaryJob")}
-                      helperText="Please select your currency"
                       PaperProps={{
                         style: {
                           maxHeight: 500,
@@ -516,9 +519,8 @@ const ExperienceForm = ({
                           checked: false
                         }
                       })}
-                      error={error.primaryJob ? true : false}
                       InputLabelProps={{ shrink: true }}
-                      value={toDisabled ? "" : primaryJob.endDate}
+                      value={primaryJob.endDate}
                       className={classes.item}
                     />
                   }
@@ -586,9 +588,9 @@ const ExperienceForm = ({
                     id="secondaryJob"
                     name="title"
                     value={secondaryJob.title}
+                    fullWidth
                     InputLabelProps={{ shrink: true }}
                     onChange={(e) => onJobTitleChange(e, "secondaryJob")}
-                    helperText="Please select your currency"
                   >
                     {jobTypes.map((job) => {
                       return (
@@ -694,10 +696,10 @@ const ExperienceForm = ({
                           label="Job Title"
                           id="secondaryJob"
                           name="title"
+                          fullWidth
                           value={otherJobs[key].title}
                           InputLabelProps={{ shrink: true }}
                           onChange={(e) => handleInput('title', e.target.value, key)}
-                          helperText="Please select your currency"
                         >
                           {jobTypes.map((job) => {
                             return (
@@ -726,7 +728,7 @@ const ExperienceForm = ({
                           disableToolbar
                           format="MM/dd/yyyy"
                           onChange={e => handleInput('startDate', e, key)}
-                          value={otherJobs[key].startDate}
+                          value={otherJobs[key].startDate ? otherJobs[key].startDate : null }
                           variant="inline"
                           name="startDate"
                           InputLabelProps={{ shrink: true }}
@@ -739,7 +741,7 @@ const ExperienceForm = ({
                           disableToolbar
                           format="MM/dd/yyyy"
                           onChange={e => handleInput('endDate', e, key)}
-                          value={otherJobs[key].endDate}
+                          value={ otherJobs[key].endDate ? otherJobs[key].endDate : null}
                           variant="inline"
                           name="startDate"
                           InputLabelProps={{ shrink: true }}
