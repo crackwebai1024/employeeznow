@@ -839,6 +839,7 @@ const ExperienceForm = ({
                   fullWidth
                   size="small"
                   freeSolo
+                  autoSelect
                   value={exclude.name}
                   onChange={(e, value) => handleBusiness(e, value, 'name')}
                   renderTags={(value, getTagProps) =>
