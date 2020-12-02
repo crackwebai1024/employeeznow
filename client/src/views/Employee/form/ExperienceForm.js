@@ -32,7 +32,14 @@ import { usaStates } from '../professionTypes';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import RoomIcon from '@material-ui/icons/Room';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
-
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  KeyboardDatePicker,
+  TimePicker,
+  DKeyboardatePicker,
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 // set style
 const useStyles = makeStyles((theme) => ({
   green: {
@@ -51,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100px',
     paddingTop: '0.5rem',
-    fontWeight: 600    
+    fontWeight: 600
   },
   formContainer: {
     // marginTop: "1rem",
@@ -88,6 +95,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: "2rem",
+    float: 'right',
+    [theme.breakpoints.down("xs")]: {
+      width: '100%'
+    }
   },
   invalidMessage: {
     textAlign: "center",
@@ -102,8 +113,10 @@ const useStyles = makeStyles((theme) => ({
   },
   goback_button: {
     marginTop: "2rem",
-    float: 'right',
-    marginBottom: '5rem'
+    float: 'left',
+    [theme.breakpoints.down("xs")]: {
+      float: 'none'
+    }
   },
   menuItem: {
     maxHeight: "500px",
@@ -232,7 +245,7 @@ const ExperienceForm = ({
         });
       }
       case "endDate":
-        if (formData[id].startDate > value) {
+        if (new Date(formData[id].startDate) > value) {
           setError({
             ...error,
             [id]: "Your end date can’t be earlier than your start date.",
@@ -332,18 +345,22 @@ const ExperienceForm = ({
         address: exclude.address
       }
     };
+    // if(!data.primaryJob.title)
+    //   return error.primaryJob
     window.scrollTo(0, 0)
+    debugger
     actions.updateJobExperience(submitData);
   };
 
-  const handleInput = (e, key) => {
+  const handleInput = (name, value, key) => {
     let data = otherJobs;
-    data[key][e.target.name] = e.target.value;
+    data[key][name] = value;
     if (data[key].startDate && data[key].endDate) {
       let start = new Date(data[key].startDate);
       let end = new Date(data[key].endDate);
       let years = Number((end - start) / 86400000 / 365);
       data[key].years = years;
+      debugger
     }
 
     setOtherJobs(data);
@@ -397,479 +414,514 @@ const ExperienceForm = ({
 
   console.log(primaryJob.title, "payload");
   return experience ? (
-    <Container maxWidth="md">
-      <Grid
-        container
-        direction="column"
-        alignItems={matchesXS ? "center" : "flex-start"}
-      >
-        <Grid item>
-          <Typography variant="h1" className={classes.heading1}>
-            WORK EXPERIENCE
-          </Typography>
-        </Grid>
-      </Grid>
-      <form onSubmit={(e) => e.preventDefault()} className={classes.formContainer}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Container maxWidth="md">
         <Grid
           container
           direction="column"
           alignItems={matchesXS ? "center" : "flex-start"}
         >
-          {/* primary job */}
           <Grid item>
-            <Typography gutterBottom variant="h6">
-              Current/Last Job
-            </Typography>
+            <Typography variant="h1" className={classes.heading1}>
+              WORK EXPERIENCE
+          </Typography>
           </Grid>
-
+        </Grid>
+        <form onSubmit={(e) => e.preventDefault()} className={classes.formContainer}>
           <Grid
             container
-            justify="flex-start"
-            direction={matchesXS ? "column" : "row"}
-            alignItems="center"
+            direction="column"
+            alignItems={matchesXS ? "center" : "flex-start"}
           >
-            <Grid container>
-              <Grid item sm={3}>
-                {primaryJob && (
+            {/* primary job */}
+            <Grid item>
+              <Typography gutterBottom variant="h6">
+                Current/Last Job
+            </Typography>
+            </Grid>
+
+            <Grid
+              container
+              justify="flex-start"
+              direction={matchesXS ? "column" : "row"}
+              alignItems="center"
+            >
+              <Grid container item spacing={1}>
+                <Grid item sm={3} xs={12}>
+                  {primaryJob && (
+                    <TextField
+                      required
+                      select
+                      label="Primary Job"
+                      id="primaryJob"
+                      fullWidth
+                      name="title"
+                      value={primaryJob.title}
+                      error={error.primaryJob}
+                      InputLabelProps={{ shrink: true }}
+                      onChange={(e) => onJobTitleChange(e, "primaryJob")}
+                      PaperProps={{
+                        style: {
+                          maxHeight: 500,
+                          width: "20ch",
+                        },
+                      }}
+                    >
+                      {jobTypes.map((job) => {
+                        return (
+                          <MenuItem key={job} value={job} id="primaryJob">
+                            {job}
+                          </MenuItem>
+                        );
+                      })}
+                    </TextField>
+                  )}
+                </Grid>
+                <Grid item sm={3} xs={12}>
                   <TextField
-                    required
-                    select
-                    label="Primary Job"
+                    type="text"
+                    name="company"
                     id="primaryJob"
-                    name="title"
-                    value={primaryJob.title}
+                    required
+                    fullWidth
+                    label="Company Name"
                     InputLabelProps={{ shrink: true }}
-                    onChange={(e) => onJobTitleChange(e, "primaryJob")}
-                    helperText="Please select your currency"
-                    PaperProps={{
-                      style: {
-                        maxHeight: 500,
-                        width: "20ch",
-                      },
-                    }}
+                    value={primaryJob.company}
+                    onChange={(e) => onChange(e)}
+                  />
+                </Grid>
+
+                <Grid item sm={3} xs={6}>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    format="MM/dd/yyyy"
+                    onChange={e => onChange({
+                      target: {
+                        id: 'primaryJob',
+                        name: "startDate",
+                        value: e,
+                        checked: false
+                      }
+                    })}
+                    value={primaryJob.startDate}
+                    variant="inline"
+                    name="startDate"
+                    InputLabelProps={{ shrink: true }}
+                    label="Start Date"
+                  />
+                </Grid>
+
+                <Grid item sm={3} xs={6}>
+                  {!toDisabled &&
+                    <KeyboardDatePicker
+                      disableToolbar
+                      label="End Date"
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      onChange={e => onChange({
+                        target: {
+                          id: 'primaryJob',
+                          name: 'endDate',
+                          value: e,
+                          checked: false
+                        }
+                      })}
+                      InputLabelProps={{ shrink: true }}
+                      value={primaryJob.endDate}
+                      className={classes.item}
+                    />
+                  }
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Typography>
+                  {primaryJob.error}
+                </Typography>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    id="primaryJob"
+                    name="description"
+                    label="Description"
+                    multiline
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    value={primaryJob.description}
+                    onChange={(e) => onChange(e)}
+                    rows={4}
+                    className={classes.description}
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item className={classes.error}>
+              {error.primaryJob && error.primaryJob}
+            </Grid>
+
+            <Grid item>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="current"
+                    id="primaryJob"
+                    checked={primaryJob.current}
+                    value={primaryJob.current}
+                    onChange={(e) => onChange(e)}
+                  />
+                }
+                label="Current"
+              />
+            </Grid>
+
+            <Grid item>
+              <Typography gutterBottom variant="h6">
+                Previous Job
+            </Typography>
+            </Grid>
+
+            <Grid
+              container
+              justify="flex-start"
+              direction={matchesXS ? "column" : "row"}
+              alignItems="center"
+            >
+              <Grid container item spacing={1}>
+                <Grid item sm={3} xs={12}>
+                  <TextField
+                    select
+                    label="Previous Job"
+                    id="secondaryJob"
+                    name="title"
+                    value={secondaryJob.title}
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={(e) => onJobTitleChange(e, "secondaryJob")}
                   >
                     {jobTypes.map((job) => {
                       return (
-                        <MenuItem key={job} value={job} id="primaryJob">
+                        <MenuItem
+                          key={`secondary_${job}`}
+                          value={job}
+                          id="secondaryJob"
+                        >
                           {job}
                         </MenuItem>
                       );
                     })}
                   </TextField>
-                )}
-              </Grid>
-              <Grid item sm={3}>
-                <TextField
-                  type="text"
-                  name="company"
-                  id="primaryJob"
-                  required
-                  label="Company Name"
-                  InputLabelProps={{ shrink: true }}
-                  value={primaryJob.company}
-                  onChange={(e) => onChange(e)}
-                />
-              </Grid>
+                </Grid>
+                <Grid item sm={3} xs={12}>
+                  <TextField
+                    type="text"
+                    name="company"
+                    id="secondaryJob"
+                    fullWidth
+                    label="Company Name"
+                    InputLabelProps={{ shrink: true }}
+                    value={secondaryJob.company}
+                    onChange={(e) => onChange(e)}
+                  />
+                </Grid>
 
-              <Grid item sm={3}>
-                <TextField
-                  type="date"
-                  name="startDate"
-                  id="primaryJob"
-                  label="Start Date"
-                  InputLabelProps={{ shrink: true }}
-                  value={primaryJob.startDate}
-                  onChange={(e) => onChange(e)}
-                  className={classes.item}
-                />
-              </Grid>
+                <Grid item sm={3} xs={6}>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    onChange={e => onChange({
+                      target: {
+                        id: 'secondaryJob',
+                        name: "startDate",
+                        value: e,
+                        checked: false
+                      }
+                    })}
+                    value={secondaryJob.startDate}
+                    variant="inline"
+                    name="startDate"
+                    format="MM/dd/yyyy"
+                    InputLabelProps={{ shrink: true }}
+                    label="Start Date"
+                  />
+                </Grid>
 
-              <Grid item sm={3}>
-                <TextField
-                  type="date"
-                  name="endDate"
-                  id="primaryJob"
-                  label="End Date"
-                  error={error.primaryJob ? true : false}
-                  InputLabelProps={{ shrink: true }}
-                  value={toDisabled ? "" : primaryJob.endDate}
-                  disabled={toDisabled ? true : false}
-                  onChange={(e) => onChange(e)}
-                  className={classes.item}
-                />
+                <Grid item sm={3} xs={6}>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    format="MM/dd/yyyy"
+                    onChange={e => onChange({
+                      target: {
+                        id: 'secondaryJob',
+                        name: "endDate",
+                        value: e,
+                        checked: false
+                      }
+                    })}
+                    value={secondaryJob.endDate}
+                    variant="inline"
+                    name="endDate"
+                    InputLabelProps={{ shrink: true }}
+                    label="End Date"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    id="secondaryJob"
+                    name="description"
+                    label="Description"
+                    multiline
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    value={secondaryJob.description}
+                    onChange={(e) => onChange(e)}
+                    rows={4}
+                    className={classes.description}
+                    variant="outlined"
+                  />
+                </Grid>
               </Grid>
             </Grid>
-            <Grid container>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  id="primaryJob"
-                  name="description"
-                  label="Description"
-                  multiline
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  value={primaryJob.description}
-                  onChange={(e) => onChange(e)}
-                  rows={4}
-                  className={classes.description}
-                  variant="outlined"
-                />
-              </Grid>
+            <Grid item className={classes.error}>
+              {error.secondaryJob && error.secondaryJob}
             </Grid>
-          </Grid>
-          <Grid item className={classes.error}>
-            {error.primaryJob && error.primaryJob}
-          </Grid>
 
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="current"
-                  id="primaryJob"
-                  checked={primaryJob.current}
-                  value={primaryJob.current}
-                  onChange={(e) => onChange(e)}
-                />
-              }
-              label="Current"
-            />
-          </Grid>
-
-          <Grid item>
-            <Typography gutterBottom variant="h6">
-              Previous Job
-            </Typography>
-          </Grid>
-
-          <Grid
-            container
-            justify="flex-start"
-            direction={matchesXS ? "column" : "row"}
-            alignItems="center"
-          >
-            <Grid container>
-              <Grid item sm={3}>
-                <TextField
-                  select
-                  label="Previous Job"
-                  id="secondaryJob"
-                  name="title"
-                  value={secondaryJob.title}
-                  InputLabelProps={{ shrink: true }}
-                  onChange={(e) => onJobTitleChange(e, "secondaryJob")}
-                  helperText="Please select your currency"
-                >
-                  {jobTypes.map((job) => {
-                    return (
-                      <MenuItem
-                        key={`secondary_${job}`}
-                        value={job}
-                        id="secondaryJob"
-                      >
-                        {job}
-                      </MenuItem>
-                    );
-                  })}
-                </TextField>
-              </Grid>
-              <Grid item sm={3}>
-                <TextField
-                  type="text"
-                  name="company"
-                  id="secondaryJob"
-                  label="Company Name"
-                  InputLabelProps={{ shrink: true }}
-                  value={secondaryJob.company}
-                  onChange={(e) => onChange(e)}
-                />
-              </Grid>
-
-              <Grid item sm={3}>
-                <TextField
-                  type="date"
-                  name="startDate"
-                  id="secondaryJob"
-                  label="Start Date"
-                  InputLabelProps={{ shrink: true }}
-                  value={secondaryJob.startDate}
-                  onChange={(e) => onChange(e)}
-                  className={classes.item}
-                />
-              </Grid>
-
-              <Grid item sm={3}>
-                <TextField
-                  type="date"
-                  name="endDate"
-                  id="secondaryJob"
-                  label="End Date"
-                  error={error.secondaryJob ? true : false}
-                  InputLabelProps={{ shrink: true }}
-                  onChange={(e) => onChange(e)}
-                  className={classes.item}
-                />
-              </Grid>
-            </Grid>
-            <Grid container>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  id="secondaryJob"
-                  name="description"
-                  label="Description"
-                  multiline
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  value={secondaryJob.description}
-                  onChange={(e) => onChange(e)}
-                  rows={4}
-                  className={classes.description}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item className={classes.error}>
-            {error.secondaryJob && error.secondaryJob}
-          </Grid>
-
-          {/* other job */}
-          {otherJobs.map((otherjob, key) => {
-            return (
-              <Fragment key={key}>
-                <Grid item className={classes.textContainer}>
-                  <Typography gutterBottom variant="h6">
-                    Previous Job
+            {/* other job */}
+            {otherJobs.map((otherjob, key) => {
+              return (
+                <Fragment key={key}>
+                  <Grid item className={classes.textContainer}>
+                    <Typography gutterBottom variant="h6">
+                      Previous Job
                   </Typography>
-                </Grid>
-                <Grid container justify="flex-start" alignItems="center">
-                  <Grid container>
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        select
-                        label="Job Title"
-                        id="secondaryJob"
-                        name="title"
-                        value={otherJobs[key].title}
-                        InputLabelProps={{ shrink: true }}
-                        onChange={(e) => handleInput(e, key)}
-                        helperText="Please select your currency"
-                      >
-                        {jobTypes.map((job) => {
-                          return (
-                            <MenuItem key={job} value={job}>
-                              {job}
-                            </MenuItem>
-                          );
-                        })}
-                      </TextField>
-                    </Grid>
+                  </Grid>
+                  <Grid container justify="flex-start" alignItems="center">
+                    <Grid container item spacing={1}>
+                      <Grid item xs={12} sm={3}>
+                        <TextField
+                          select
+                          label="Job Title"
+                          id="secondaryJob"
+                          name="title"
+                          fullWidth
+                          value={otherJobs[key].title}
+                          InputLabelProps={{ shrink: true }}
+                          onChange={(e) => handleInput('title', e.target.value, key)}
+                        >
+                          {jobTypes.map((job) => {
+                            return (
+                              <MenuItem key={job} value={job}>
+                                {job}
+                              </MenuItem>
+                            );
+                          })}
+                        </TextField>
+                      </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        type="text"
-                        name="company"
-                        label="Company Name"
-                        InputLabelProps={{ shrink: true }}
-                        value={otherJobs[key].company}
-                        onChange={(e) => handleInput(e, key)}
-                      />
-                    </Grid>
+                      <Grid item xs={12} sm={3}>
 
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        type="date"
-                        name="startDate"
-                        label="Start Date"
-                        InputLabelProps={{ shrink: true }}
-                        value={otherJobs[key].startDate}
-                        onChange={(e) => handleInput(e, key)}
-                        className={classes.item}
-                      />
-                    </Grid>
+                        <TextField
+                          type="text"
+                          name="company"
+                          label="Company Name"
+                          fullWidth
+                          InputLabelProps={{ shrink: true }}
+                          value={otherJobs[key].company}
+                          onChange={(e) => handleInput('company', e.target.value, key)}
+                        />
+                      </Grid>
 
-                    <Grid item xs={12} sm={3}>
-                      <TextField
-                        type="date"
-                        name="endDate"
-                        id=""
-                        label="End Date"
-                        // error={error.otherJobs[key] ? true : false}
-                        InputLabelProps={{ shrink: true }}
-                        className={classes.item}
-                        value={otherJobs[key].endDate}
-                        onChange={(e) => handleInput(e, key)}
-                      />
+                      <Grid item xs={6} sm={3}>
+                        <KeyboardDatePicker
+                          disableToolbar
+                          format="MM/dd/yyyy"
+                          onChange={e => handleInput('startDate', e, key)}
+                          value={otherJobs[key].startDate ? otherJobs[key].startDate : null}
+                          variant="inline"
+                          name="startDate"
+                          InputLabelProps={{ shrink: true }}
+                          label="Start Date"
+                        />
+                      </Grid>
+
+                      <Grid item xs={6} sm={3}>
+                        <KeyboardDatePicker
+                          disableToolbar
+                          format="MM/dd/yyyy"
+                          onChange={e => handleInput('endDate', e, key)}
+                          value={otherJobs[key].endDate ? otherJobs[key].endDate : null}
+                          variant="inline"
+                          name="startDate"
+                          InputLabelProps={{ shrink: true }}
+                          label="Start Date"
+                          initialFocusedDate={''}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid container>
+                      <Grid item xs={12} sm={12}>
+                        <TextField
+                          name="description"
+                          label="Description"
+                          multiline
+                          fullWidth
+                          InputLabelProps={{ shrink: true }}
+                          value={otherJobs[key].description}
+                          className={classes.description}
+                          variant="outlined"
+                          onChange={(e) => handleInput('description', e.target.value, key)}
+                          rows={4}
+                        />
+                      </Grid>
                     </Grid>
                   </Grid>
-                  <Grid container>
-                    <Grid item xs={12} sm={12}>
-                      <TextField
-                        name="description"
-                        label="Description"
-                        multiline
-                        fullWidth
-                        InputLabelProps={{ shrink: true }}
-                        value={otherJobs[key].description}
-                        className={classes.description}
-                        variant="outlined"
-                        onChange={(e) => handleInput(e, key)}
-                        rows={4}
-                      />
-                    </Grid>
+                  <Grid item className={classes.error}>
+                    {/* {error.otherJobs[key] && error.otherJobs[key]} */}
                   </Grid>
-                </Grid>
-                <Grid item className={classes.error}>
-                  {/* {error.otherJobs[key] && error.otherJobs[key]} */}
-                </Grid>
-              </Fragment>
-            );
-          })}
-          {!limit && (
-            <Grid className={classes.addOtherJob}>
-              <Button onClick={addOtherJobs} >
-                <AddBoxIcon />
+                </Fragment>
+              );
+            })}
+            {!limit && (
+              <Grid className={classes.addOtherJob}>
+                <Button onClick={addOtherJobs} >
+                  <AddBoxIcon />
                 &nbsp;&nbsp;&nbsp;Add Other Jobs
               </Button>
-            </Grid>
-          )}
+              </Grid>
+            )}
 
-          <Grid container item xs={12} spacing={1}>
-            <Grid item xs={12}>
-              <Typography className={`${classes.center} ${classes.green}`} variant="h6">
-                EXCLUDED BUSINESSES
+            <Grid container item xs={12} spacing={1}>
+              <Grid item xs={12}>
+                <Typography className={`${classes.center} ${classes.green}`} variant="h6">
+                  EXCLUDED BUSINESSES
               </Typography>
+              </Grid>
+              <Grid item xs={12} className={classes.center}>
+                Please enter business you <b>DO NOT</b> wish to show up on their searches
             </Grid>
-            <Grid item xs={12} className={classes.center}>
-              Please enter business you <b>DO NOT</b> wish to show up on their searches
-            </Grid>
-            <Grid item xs={12} style={{display: 'flex'}}>
-              <Box className={classes.excludeIcon}>
-                <EmojiTransportationIcon />
+              <Grid item xs={12} style={{ display: 'flex' }}>
+                <Box className={classes.excludeIcon}>
+                  <EmojiTransportationIcon />
                 &nbsp;Name
               </Box>
-              <Autocomplete
-                multiple
-                options={[]}
-                fullWidth
-                size="small"
-                freeSolo
-                value={exclude.name}
-                onChange={(e, value) => handleBusiness(e, value, 'name')}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-                  ))
-                }
-                renderInput={(params) => (
-                  <TextField {...params}
-                    variant="standard"
-                    fullWidth
-                    // label="Excluded Businesses"
-                    InputLabelProps={{ shrink: true }}
+                <Autocomplete
+                  multiple
+                  options={[]}
+                  fullWidth
+                  size="small"
+                  freeSolo
+                  value={exclude.name}
+                  onChange={(e, value) => handleBusiness(e, value, 'name')}
+                  renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                      <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                    ))
+                  }
+                  renderInput={(params) => (
+                    <TextField {...params}
+                      variant="standard"
+                      fullWidth
+                      // label="Excluded Businesses"
+                      InputLabelProps={{ shrink: true }}
 
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} style={{display: 'flex'}}>
-              <Box className={classes.excludeIcon}>
-                <RoomIcon />
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} style={{ display: 'flex' }}>
+                <Box className={classes.excludeIcon}>
+                  <RoomIcon />
                 &nbsp;Address
               </Box>
-              <Autocomplete
-                multiple
-                id="tags-standard"
-                fullWidth
-                options={usaStates.map(state => state)}
-                value={exclude.address.map(address => {
-                  return usaStates.filter(state => state.value === address)[0]
-                })}
-                onChange={(e, value) => handleBusiness(e, value, 'address')}
-                getOptionLabel={(option) => option.label}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="standard"
-                  />
-                )}
-              />
+                <Autocomplete
+                  multiple
+                  id="tags-standard"
+                  fullWidth
+                  options={usaStates.map(state => state)}
+                  value={exclude.address.map(address => {
+                    return usaStates.filter(state => state.value === address)[0]
+                  })}
+                  onChange={(e, value) => handleBusiness(e, value, 'address')}
+                  getOptionLabel={(option) => option.label}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Grid item container xs={12}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                variant="outlined"
-                onClick={goBackHandle}
-                className={classes.button}
-              >
-                Go Back
-              </Button>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Box className={classes.goback_button}>
-                <MainButton
-                  width="100%"
-                  label="Save"
-                  background="green"
-                  border="green"
-                  pd={60}
-                  hoverColor="white"
-                  hoverBack="#007000"
-                  color="white"
-                  fontSize={16}
-                  onClick={handleSubmit(onSubmit)}
+            <Grid item container xs={12}>
+              <Grid item xs={12} sm={6}>
+                <Box className={classes.goback_button}>
+                  <MainButton
+                    width="100%"
+                    label="Save"
+                    background="green"
+                    border="green"
+                    pd={60}
+                    hoverColor="white"
+                    hoverBack="#007000"
+                    color="white"
+                    fontSize={16}
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                  </MainButton>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  variant="outlined"
+                  onClick={goBackHandle}
+                  className={classes.button}
                 >
-                </MainButton>
-              </Box>
-
-              {/* <MainButton
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.}
-              >
-                Save
-              </MainButton> */}
+                  Go Back
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        {/* If authorization was failed */}
-        {errorMessage && (
-          <Grid item className={classes.invalidMessage}>
-            {errorMessage}
-          </Grid>
-        )}
-      </form>
-      {!experience.experience && (
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className={classes.dialog}
-        >
-          <DialogActions>
-            <CloseIcon className={classes.close} onClick={handleClose} />
-          </DialogActions>
-          <DialogContent>
-            <DialogContentText>
-              <Typography>
-                <i>
-                  You can manually enter your work experience or email your
-                  resume and it will be uploaded in approximately 48 hours
+          {/* If authorization was failed */}
+          {errorMessage && (
+            <Grid item className={classes.invalidMessage}>
+              {errorMessage}
+            </Grid>
+          )}
+        </form>
+        {!experience.experience && (
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            className={classes.dialog}
+          >
+            <DialogActions>
+              <CloseIcon className={classes.close} onClick={handleClose} />
+            </DialogActions>
+            <DialogContent>
+              <DialogContentText>
+                <Typography>
+                  <i>
+                    You can manually enter your work experience or email your
+                    resume and it will be uploaded in approximately 48 hours
                 </i>
+                </Typography>
+                <Typography className={classes.contactEmail}>
+                  Register@EmployeezNow.com
               </Typography>
-              <Typography className={classes.contactEmail}>
-                Register@EmployeezNow.com
-              </Typography>
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
-      )}
-    </Container>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
+        )}
+      </Container>
+    </MuiPickersUtilsProvider>
   ) : (
       ""
     );

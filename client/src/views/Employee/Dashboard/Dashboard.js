@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Container, Box } from "@material-ui/core";
-
+import moment from 'moment';
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import { getUser } from "@helpers/auth-helpers";
@@ -323,13 +323,14 @@ function Dashboard(props) {
                   {experience && experience.primaryJob && (
                     <Fragment>
                       <Typography className={classes.company}>
-                        {experience.primaryJob.company}
+                      {experience.primaryJob.company}
+                        {}
                       </Typography>
                       <Typography className={classes.jobPeriod}>
-                        {experience.primaryJob.startDate}&nbsp;~ &nbsp;
+                        {moment(new Date(experience.primaryJob.startDate)).format('DD/MM/YYYY')}&nbsp;~ &nbsp;
                         {experience.primaryJob.current
                           ? "Present"
-                          : experience.primaryJob.endDate}
+                          : moment(new Date(experience.primaryJob.endDate)).format('DD/MM/YYYY')}
                       </Typography>
                     </Fragment>
                   )}
@@ -345,10 +346,10 @@ function Dashboard(props) {
                           {experience.secondaryJob.company}
                         </Typography>
                         <Typography className={classes.jobPeriod}>
-                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
+                          {moment(new Date(experience.secondaryJob.startDate)).format('DD/MM/YYYY')}&nbsp;~ &nbsp;
                                       {experience.secondaryJob.current
                             ? "Present"
-                            : experience.secondaryJob.endDate}
+                            : moment(new Date(experience.secondaryJob.endDate)).format('DD/MM/YYYY')}
                         </Typography>
                       </Fragment>
                     )}
@@ -366,8 +367,8 @@ function Dashboard(props) {
                           {job.company}
                         </Typography>
                         <Typography className={classes.jobPeriod}>
-                          {job.startDate}&nbsp;~ &nbsp;
-                          {job.endDate}
+                          {moment(new Date(job.startDate)).format('DD/MM/YYYY')}&nbsp;~ &nbsp;
+                          {moment(new Date(job.endDate)).format('DD/MM/YYYY')}
                         </Typography>
                       </Fragment>
                     </Grid>
