@@ -730,6 +730,7 @@ const ExperienceForm = ({
                           fullWidth
                           value={otherJobs[key].title}
                           InputLabelProps={{ shrink: true }}
+                          open={}
                           onChange={(e) => handleInput('title', e.target.value, key)}
                         >
                           {jobTypes.map((job) => {

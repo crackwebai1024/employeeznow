@@ -6,6 +6,7 @@ import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import BusinessOutlinedIcon from '@material-ui/icons/BusinessOutlined';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const slug = JSON.parse(getUser()) && JSON.parse(getUser()).slug
 
@@ -24,6 +25,7 @@ export const employerRoutes = [
   { name: 'Dashboard', link: `/employers/${slug}`, activeIndex: 2, icon: <LineStyleOutlinedIcon /> },
   { name: 'Log Out', link: '/', onClick: "handleLogout", activeIndex: 3, icon: <LockOutlinedIcon /> },
   { name: 'Contact Us', link: '/contactus', activeIndex: 4, icon: <LockOutlinedIcon /> },
+  { name: 'My Cart', link: './cart', activeIndex: 5, icon: <ShoppingCartIcon />}
 ];
 
 // 3) No auth (public)
