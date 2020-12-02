@@ -13,8 +13,8 @@ import AppRouter from "@router/AppRouter";
 import { getBoxSize } from "@helpers/utils";
 import EmptyPage from "@components/EmptyPage"
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import LoadingCircular from '@components/LoadingCircular'
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 toast.configure();
