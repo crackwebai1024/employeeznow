@@ -17,7 +17,7 @@ import { getUser, setFilterID } from '@helpers/auth-helpers';
 import professions from './data';
 import SearchForm from '../form/SearchForm';
 import CandidateList from './CandidateList';
-
+import { successMessage, errorMessage } from '@helpers/utils'
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: '5rem',
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     padding: '1rem',
     cursor: 'pointer',
+    marginTop: '-2.5rem',
     display: 'none',
     transition: '0.3s',
     '&:hover': {
@@ -142,7 +143,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SearchResults = (props) => {
-  const { actions, filter, match, filterResult, filterID, result } = props
+  const { actions, filter, match, filterResult, filterID, result, addCartSuccess } = props
   const classes = useStyles();
   const theme = useTheme();
   const { slug } = match.params
@@ -195,6 +196,15 @@ const SearchResults = (props) => {
       history.push(`/search/${filterID}`)
     setFilterID(filterID)
   }, [filterID])
+
+  useEffect(() => {
+    if(addCartSuccess === "SUCCESS"){
+      successMessage('Add to cart')
+      actions.initCartSuccess()
+    } else if(addCartSuccess === "FAILURE") {
+      errorMessage('Add to cart failed!')
+    }
+  }, [addCartSuccess])
 
   const setFilterUpdate = (data) => {
     setOpenSearchForm(true)
@@ -298,6 +308,7 @@ const SearchResults = (props) => {
                 filterResult.length > 0
                   ? filterResult.map((result) => (
                     <CandidateList
+                      actions={actions}
                       key={result._id}
                       id={result._id} // This _id is professionId
                       purchased={result.purchased}
@@ -313,6 +324,7 @@ const SearchResults = (props) => {
                       wineKnowledge={result.employeeskill.wineKnowledge}
                       cocktailKnowledge={result.employeeskill.cocktailKnowledge}
                       systems={result.employeeskill.systems}
+                      addCartSuccess={addCartSuccess}
                     />
                   ))
                   :
@@ -357,10 +369,10 @@ const SearchResults = (props) => {
 
 const mapStateToProps = ({
   employer: {
-    employerData, filter, searchLoading, filterResult, filterID, result
+    employerData, filter, searchLoading, filterResult, filterID, result, addCartSuccess
   },
 }) => ({
-  employerData, filter, searchLoading, filterResult, filterID, result
+  employerData, filter, searchLoading, filterResult, filterID, result, addCartSuccess
 });
 
 const mapDispatchToProps = (dispatch) => ({

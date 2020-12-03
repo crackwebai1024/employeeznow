@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Grid, Box } from '@material-ui/core';
+import { Grid, Box, Button } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { getUser, getFilterID } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
   itemsContainer: {
@@ -54,12 +56,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, primaryYears, secondaryTitle,
-  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased
+  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased, actions
 }) => {
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const user = JSON.parse(getUser());
+  const filterID = getFilterID()
+
+  const addToCart = () => {
+    let data = {
+      id: user._id,
+      filterID : filterID,
+      employeeID: id
+    }
+    actions.addToCartRequest(data)
+  }
 
   return (
     <Card key={id} className={classes.wrapper}>
@@ -71,7 +84,7 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6" color="secondary" style={{textAlign: "right"}}>
+            <Typography variant="h6" color="secondary" style={{ textAlign: "right" }}>
               {purchased && "purchased"}
             </Typography>
           </Grid>
@@ -199,6 +212,14 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
           >
             VIEW THIS PROFILE
           </Link>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={addToCart}
+          >
+            <ShoppingCartIcon />
+            Add To Cart
+          </Button>
         </div>
       </CardActions>
     </Card>

@@ -161,6 +161,17 @@ function* onUpdateEmployer({ payload }) {
   }
 }
 
+function* onAddToCart({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onAddToCart, payload)
+    if(res && res.data) {
+      yield put(types.addToCartSuccess())
+    }
+  } catch {
+    yield put(types.addToCartFailure())
+  }
+}
+
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
   takeEvery(types.updateEmployerAccount, onUpdateEmployer),
@@ -172,7 +183,8 @@ const employerSagas = [
   takeEvery(types.askInterestRequest, onAskInterest),
   takeEvery(types.getSearchEmployee, onGetSearchEmployee),
   takeEvery(types.purchaseRequest, onPurhcaseEmployee),
-  takeEvery(types.payRequest, onPayRequest)
+  takeEvery(types.payRequest, onPayRequest),
+  takeEvery(types.addToCartRequest, onAddToCart)
 ];
 
 export default employerSagas;

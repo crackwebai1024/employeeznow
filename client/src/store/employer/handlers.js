@@ -203,4 +203,25 @@ export const payFailure = (state) => ({
   isLimited: false
 })
 
+export const addToCartRequest = (state) => ({
+  ...state,
+  addCartSuccess: 'REQUEST'
+})
+
+export const addToCartSuccess = (state) => ({
+  ...state,
+  addCartSuccess: 'SUCCESS'
+})
+
+export const addToCartFailure = (state) => ({
+  ...state,
+  addCartSuccess: "FAILURE"
+})
+
+export const initCartSuccess = (state) => ({
+  ...state,
+  addCartSuccess: 'NONE'
+})
+
+
 export default initialState;

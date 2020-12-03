@@ -129,8 +129,8 @@ const Header = ({
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
   //Swipeable drawer
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent) || window.innerWidth < 1024;
+  console.log(iOS, "iOS")
   // Click and Logout handler
   const handleLogout = (e) => {
     e.preventDefault();
