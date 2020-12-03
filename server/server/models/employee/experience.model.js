@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const ExperienceSchema = new mongoose.Schema({
   primaryJob: {
@@ -37,13 +37,13 @@ const ExperienceSchema = new mongoose.Schema({
   },
   employee: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Employee',
+    ref: "Employee",
     required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-})
+});
 
-export default mongoose.model('EmployeeExperience', ExperienceSchema)
+export default mongoose.model("EmployeeExperience", ExperienceSchema);
