@@ -43,3 +43,7 @@ export async function onPayRequest(data) {
 export async function onUpdateEmployer(data) {
   return await Axios.post('/crud/employer/update', data)
 }
+
+export async function onAddToCart(data) {
+  return await Axios.post('/cart/addtocart', data)
+}

@@ -54,7 +54,12 @@ export const actions = createActions({
   PAY_SUCCESS: undefined,
   PAY_FAILUED: undefined,
 
-  INIT_LIMIT: undefined
+  INIT_LIMIT: undefined,
+  INIT_CART_SUCCESS: undefined,
+
+  ADD_TO_CART_REQUEST: undefined,
+  ADD_TO_CART_SUCCESS: undefined,
+  ADD_TO_CART_FAILURE: undefined
 });
 
 const reducer = handleActions(
@@ -108,6 +113,11 @@ const reducer = handleActions(
     [actions.payFailure, handlers.payFailure],
 
     [actions.initLimit, handlers.initLimit],
+    [actions.initCartSuccess, handlers.initCartSuccess],
+
+    [actions.addToCartRequest, handlers.addToCartRequest],
+    [actions.addToCartSuccess, handlers.addToCartSuccess],
+    [actions.addToCartFailure, handlers.addToCartFailure],
     
   ]),
   initialState,
