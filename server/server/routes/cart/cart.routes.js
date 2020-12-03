@@ -5,6 +5,6 @@ import cartCtrl from "../../controllers/cart/cart";
 const router = express.Router();
 const { requireSignin, hasAuthorization } = authCtrl;
 const { addToCart } = cartCtrl;
-router.route("/addtocart").get(requireSignin, hasAuthorization, addToCart);
+router.route("/addtocart").post(requireSignin, hasAuthorization, addToCart);
 
 export default router;
