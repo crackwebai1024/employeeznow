@@ -59,7 +59,10 @@ export const actions = createActions({
 
   ADD_TO_CART_REQUEST: undefined,
   ADD_TO_CART_SUCCESS: undefined,
-  ADD_TO_CART_FAILURE: undefined
+  ADD_TO_CART_FAILURE: undefined,
+
+  LOAD_CART_LIST: undefined,
+  LOAD_CART_LIST_SUCCESS: undefined
 });
 
 const reducer = handleActions(
@@ -118,6 +121,10 @@ const reducer = handleActions(
     [actions.addToCartRequest, handlers.addToCartRequest],
     [actions.addToCartSuccess, handlers.addToCartSuccess],
     [actions.addToCartFailure, handlers.addToCartFailure],
+
+    [actions.loadCartList, handlers.loadCartList],
+    [actions.loadCartListSuccess, handlers.loadCartListSuccess]
+    
     
   ]),
   initialState,

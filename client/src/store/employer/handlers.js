@@ -12,7 +12,8 @@ const initialState = {
     currency: null, amount: "",
   },
   employeeData: {},
-  isLimited: false
+  isLimited: false,
+  cartItems: []
 };
 
 export const getEmployerData = (state) => ({
@@ -223,5 +224,13 @@ export const initCartSuccess = (state) => ({
   addCartSuccess: 'NONE'
 })
 
+export const loadCartList = (state) => ({
+  ...state
+})
+
+export const loadCartListSuccess = (state, { payload }) => ({
+  ...state,
+  cartItems: [...payload]
+})
 
 export default initialState;

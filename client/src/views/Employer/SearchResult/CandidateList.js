@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, primaryYears, secondaryTitle,
-  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased, actions
+  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased, actions, iscart
 }) => {
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
@@ -68,7 +68,7 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
   const addToCart = () => {
     let data = {
       id: user._id,
-      filterID : filterID,
+      filterID: filterID,
       employeeID: id
     }
     actions.addToCartRequest(data)
@@ -212,14 +212,17 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
           >
             VIEW THIS PROFILE
           </Link>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={addToCart}
-          >
-            <ShoppingCartIcon />
+          {
+            !iscart && <Button
+              variant="outlined"
+              color="secondary"
+              onClick={addToCart}
+            >
+              <ShoppingCartIcon />
             Add To Cart
           </Button>
+          }
+
         </div>
       </CardActions>
     </Card>

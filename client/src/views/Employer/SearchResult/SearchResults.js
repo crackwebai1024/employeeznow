@@ -312,6 +312,7 @@ const SearchResults = (props) => {
                       key={result._id}
                       id={result._id} // This _id is professionId
                       purchased={result.purchased}
+                      iscart={result.iscart}
                       employeezNowId={result.employeezNowId}
                       employeeId={result.employeeId}
                       primaryTitle={result.employeeskill.primaryJob.title}
