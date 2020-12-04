@@ -1,5 +1,6 @@
 import Employee from "../../models/employee/basic.model";
 import Employer from "../../models/employer/basic.model";
+import Cart from "../../models/employer/cart.model";
 
 const searchEmployee = async (filter) => {
   const lat = filter.locations.coordinates[0];
@@ -38,7 +39,13 @@ const searchEmployee = async (filter) => {
     const employer = await Employer.findById(employerID);
     const name = employer.name;
     const states = employer.address.state;
-    console.log(employer, name);
+    const employeesInCart = await Cart.findOne({ employerID });
+    const inCartIds = [];
+    if (employeesInCart) {
+      employeesInCart.cartItems.forEach((item) => {
+        inCartIds.push(item._id);
+      });
+    }
     const professions = await Employee.aggregate([
       {
         $geoNear: {
@@ -58,6 +65,13 @@ const searchEmployee = async (filter) => {
           purchased: {
             $cond: {
               if: { $in: ["$_id", employer.interestedEmployees] },
+              then: true,
+              else: false,
+            },
+          },
+          incart: {
+            $cond: {
+              if: { $in: ["$_id", inCartIds] },
               then: true,
               else: false,
             },

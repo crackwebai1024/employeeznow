@@ -1,6 +1,7 @@
 import Employer from "../../models/employer/basic.model";
 import Cart from "../../models/employer/cart.model";
 import SearchResult from "../../models/employer/searchresult.model";
+import CRUD from "../utils/general";
 
 const addToCart = async (req, res) => {
   const employerID = req.body.id;
@@ -10,9 +11,13 @@ const addToCart = async (req, res) => {
     const searchRes = await SearchResult.findOne({ filterID });
     console.log("after filterID", searchRes);
     const addCartItem = searchRes.searchresult.filter((item) => {
-      return item._id == employeeID;
+      if (item._id == employeeID) {
+        console.log("before set false", item);
+        item.incart = true;
+        return item;
+      }
     });
-    console.log("add cart item", addCartItem);
+    await searchRes.save();
     let employerCart = await Cart.findOne({ employerID });
     if (!employerCart) {
       employerCart = new Cart({
@@ -20,8 +25,7 @@ const addToCart = async (req, res) => {
         employerID,
       });
     }
-    console.log("after employerID");
-    employerCart.cartItems.push(addCartItem);
+    employerCart.cartItems.push(addCartItem[0]);
     await employerCart.save();
     return res.status(200).json({
       cartItems: employerCart.cartItems,
@@ -34,4 +38,34 @@ const addToCart = async (req, res) => {
   }
 };
 
-export default { addToCart };
+const readFromCart = async (req, res) => {
+  const role = "employerID";
+  const result = await CRUD.find_ByID(Cart, role, req.query.id, res);
+  if (result) {
+    return res.status(200).json({ cartItems: result.cartItems });
+  } else {
+    return res.status(200).json({ cartItems: result });
+  }
+};
+
+const deleteByID = async (req, res) => {
+  const employeeID = req.body.employeeID;
+  const employerID = req.body.id;
+  try {
+    const cartByID = await Cart.findOne({ employerID });
+    const newCartItems = cartByID.cartItems.filter((item) => {
+      return item._id != employeeID;
+    });
+    cartByID.cartItems = newCartItems;
+    await cartByID.save();
+    return res.status(200).json({
+      cartItems: newCartItems,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: "internal server error",
+    });
+  }
+};
+
+export default { addToCart, readFromCart, deleteByID };

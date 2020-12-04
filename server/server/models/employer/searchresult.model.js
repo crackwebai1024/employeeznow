@@ -2,7 +2,27 @@ import mongoose from "mongoose";
 
 const SearchResultSchema = new mongoose.Schema(
   {
-    searchresult: [Object],
+    searchresult: [
+      {
+        _id: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Employee",
+        },
+        locations: Object,
+        employeezNowId: String,
+        slug: String,
+        distBetweenEmp: Number,
+        purchased: Boolean,
+        incart: Boolean,
+        employeeskill: Object,
+        employeepreference: Object,
+        employeeexperience: Object,
+        diffdist: Number,
+        commonShift: [String],
+        ratediff: Number,
+        totalpoints: Number,
+      },
+    ],
     filterID: {
       type: mongoose.Schema.ObjectId,
       ref: "SearchFilter",
