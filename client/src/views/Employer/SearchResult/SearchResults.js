@@ -17,6 +17,7 @@ import { getUser, setFilterID } from '@helpers/auth-helpers';
 import professions from './data';
 import SearchForm from '../form/SearchForm';
 import CandidateList from './CandidateList';
+import ProfileShimmer from '@components/Element/Loading/ProfileShimmer';
 import { successMessage, errorMessage } from '@helpers/utils'
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -143,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SearchResults = (props) => {
-  const { actions, filter, match, filterResult, filterID, result, addCartSuccess } = props
+  const { actions, filter, match, filterResult, filterID, result, addCartSuccess, searchLoading } = props
   const classes = useStyles();
   const theme = useTheme();
   const { slug } = match.params
@@ -198,10 +199,10 @@ const SearchResults = (props) => {
   }, [filterID])
 
   useEffect(() => {
-    if(addCartSuccess === "SUCCESS"){
+    if (addCartSuccess === "SUCCESS") {
       successMessage('Add to cart')
       actions.initCartSuccess()
-    } else if(addCartSuccess === "FAILURE") {
+    } else if (addCartSuccess === "FAILURE") {
       errorMessage('Add to cart failed!')
     }
   }, [addCartSuccess])
@@ -238,7 +239,7 @@ const SearchResults = (props) => {
     setOpenDelete(true)
   }
   // Render search query button
-  console.log(filterResult, "filterResult")
+  console.log(searchLoading, "filterResult")
   const FilterLists = filter && filter.filters.length !== 0 && (
     <Box className={classes.filterTitleContainer}>
       <Grid item >
@@ -305,14 +306,20 @@ const SearchResults = (props) => {
           <Grid container item sm={12} md={8}>
             <Box className={classes.leftSection}>
               {
-                filterResult.length > 0
+                searchLoading === "REQUEST" ? <>
+                  <Box>
+                    <ProfileShimmer/>
+                    <ProfileShimmer/>
+                  </Box>
+                </>:
+                  filterResult.length > 0
                   ? filterResult.map((result) => (
                     <CandidateList
                       actions={actions}
                       key={result._id}
                       id={result._id} // This _id is professionId
                       purchased={result.purchased}
-                      iscart={result.iscart}
+                      incart={result.incart}
                       employeezNowId={result.employeezNowId}
                       employeeId={result.employeeId}
                       primaryTitle={result.employeeskill.primaryJob.title}

@@ -57,7 +57,7 @@ export const saveFilterFailure = (state) => ({
 
 export const getFilterListRequest = (state, { payload }) => ({
   ...state,
-  searchLoading: 'NONE',
+  searchLoading: 'REQUEST',
   saveFilter: 'NONE',
 });
 
@@ -95,6 +95,7 @@ export const initialLoading = (state, { payload }) => ({
 
 export const getSearchResult = (state, { payload }) => ({
   ...state,
+  searchLoading: "REQUEST"
 })
 
 export const getSearchResultSuccess = (state, { payload }) => {
@@ -151,6 +152,7 @@ export const setFormValues = (state, { payload }) => ({
 
 export const getSearchEmployee = (state, { payload }) => ({
   ...state,
+  searchLoading: "REQUEST"
 })
 
 export const getSearchEmployeeSuccess = (state, { payload }) => ({
@@ -232,5 +234,18 @@ export const loadCartListSuccess = (state, { payload }) => ({
   ...state,
   cartItems: [...payload]
 })
+
+export const updateCartItems = (state, { payload }) => {
+  return {
+    ...state,
+    filterResult: [...state.filterResult.map(filter => {
+      if(filter._id === payload)
+        return {
+          ...filter,
+          incart: true
+        }
+      return filter
+    })]
+}}
 
 export default initialState;

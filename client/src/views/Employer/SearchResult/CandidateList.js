@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Grid, Box, Button } from '@material-ui/core';
@@ -54,9 +54,17 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.common.blue,
     },
   },
+  purchased: {
+    background: theme.palette.common.green,
+    width: 'fit-content',
+    float: 'right',
+    color: 'white',
+    padding: '0 20px',
+    borderRadius: '15px'
+  }
 }));
 const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, primaryYears, secondaryTitle,
-  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased, actions, iscart
+  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased, actions, incart
 }) => {
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
@@ -64,6 +72,7 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const user = JSON.parse(getUser());
   const filterID = getFilterID()
+  const history = useHistory()
 
   const addToCart = () => {
     let data = {
@@ -84,7 +93,7 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6" color="secondary" style={{ textAlign: "right" }}>
+            <Typography variant="h6" color="secondary" className={classes.purchased}>
               {purchased && "purchased"}
             </Typography>
           </Grid>
@@ -213,14 +222,22 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
             VIEW THIS PROFILE
           </Link>
           {
-            !iscart && <Button
+            !purchased ? !incart ? <Button
               variant="outlined"
               color="secondary"
               onClick={addToCart}
             >
               <ShoppingCartIcon />
             Add To Cart
-          </Button>
+          </Button> :
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={e=> history.push('/carts')}
+              >
+                In Cart
+              </Button> :
+              <></>
           }
 
         </div>
