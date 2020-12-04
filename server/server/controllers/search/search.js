@@ -35,6 +35,7 @@ const searchEmployee = async (filter) => {
   console.log(employerID);
   console.log("this is filter ==> ", filter);
   console.log(shift);
+  console.log(minimumExp, primaryJob);
   try {
     const employer = await Employer.findById(employerID);
     const name = employer.name;
