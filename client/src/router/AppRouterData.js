@@ -23,7 +23,7 @@ import NoInterest from '@views/Pages/NoInterest';
 import Payment from '@views/Employer/Payment/Payment'
 import { getUser } from '@helpers/auth-helpers';
 import Contact from '@views/Contact';
-
+import CartList from '@views/Employer/cart/CartList';
 
 const user = JSON.parse(getUser())
 
@@ -53,6 +53,7 @@ export const AppPrivateRouterEmployerData = [
   { 'path': `/candidate/:slug`, component: DashboardCandidate },
   { 'path': `/payment/:slug`, component: Payment },
   { 'path': `/contactus`, component: Contact },
+  { 'path': '/carts', component: CartList}
 ]
 
 export const AppPrivateRouteeEmployeeData = [

@@ -153,8 +153,8 @@ function* onPayRequest({ payload }) {
 function* onUpdateEmployer({ payload }) {
   try {
     const res = yield call(EmployerAPI.onUpdateEmployer, payload)
-    if(res && res.data) {
-      
+    if (res && res.data) {
+
     }
   } catch {
 
@@ -164,11 +164,23 @@ function* onUpdateEmployer({ payload }) {
 function* onAddToCart({ payload }) {
   try {
     const res = yield call(EmployerAPI.onAddToCart, payload)
-    if(res && res.data) {
+    if (res && res.data) {
       yield put(types.addToCartSuccess())
     }
   } catch {
     yield put(types.addToCartFailure())
+  }
+}
+
+function* onLoadCartList({ payload }) {
+  try {
+    const queryString = `?id=${payload.id}`
+    const res = yield call(EmployerAPI.onLoadCartList, queryString)
+    if(res && res.data) {
+      yield put(types.loadCartListSuccess(res.data.cartItems))
+    }
+  } catch {
+
   }
 }
 
@@ -184,7 +196,8 @@ const employerSagas = [
   takeEvery(types.getSearchEmployee, onGetSearchEmployee),
   takeEvery(types.purchaseRequest, onPurhcaseEmployee),
   takeEvery(types.payRequest, onPayRequest),
-  takeEvery(types.addToCartRequest, onAddToCart)
+  takeEvery(types.addToCartRequest, onAddToCart),
+  takeEvery(types.loadCartList, onLoadCartList)
 ];
 
 export default employerSagas;

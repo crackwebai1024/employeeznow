@@ -47,3 +47,7 @@ export async function onUpdateEmployer(data) {
 export async function onAddToCart(data) {
   return await Axios.post('/cart/addtocart', data)
 }
+
+export async function onLoadCartList(data) {
+  return await Axios.get('/cart/read' + data)
+}

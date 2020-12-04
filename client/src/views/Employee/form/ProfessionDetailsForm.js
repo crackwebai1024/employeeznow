@@ -100,7 +100,6 @@ const ProfessionDetailsForm = ({
   actions,
   preference,
   loading,
-  errorMessage,
   success,
 }) => {
   const [formData, setFormData] = useState({
@@ -397,13 +396,6 @@ const ProfessionDetailsForm = ({
               </Grid>
             </Grid>
           </Grid>
-
-          {/* If authorization was failed */}
-          {errorMessage && (
-            <Grid item className={classes.invalidMessage}>
-              {errorMessage}
-            </Grid>
-          )}
         </form>
       </Container>
     )
