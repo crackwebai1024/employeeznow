@@ -44,7 +44,7 @@ const updateByID = async (Model, role, id, req, res) => {
     } else {
       user = extend(user, req.body);
     }
-    console.log(" user ==> ", user);
+    // console.log(" user ==> ", user);
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
