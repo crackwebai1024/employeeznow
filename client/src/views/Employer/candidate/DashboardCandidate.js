@@ -16,6 +16,7 @@ import Profession from "../../Employee/Dashboard/Profession";
 import BackgroundPhoto from "../../Employee/Dashboard/BackgroundPhoto";
 import Portfolio from './Portfolio';
 import _ from 'lodash';
+import moment from 'moment';
 import CallToAction from '@components/CallToAction';
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
@@ -331,10 +332,10 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
                         {experience.primaryJob.company}
                       </Typography>
                       <Typography className={classes.jobPeriod}>
-                        {experience.primaryJob.startDate}&nbsp;~ &nbsp;
+                        {moment(new Date(experience.primaryJob.startDate)).format('MM/DD/YYYY')}&nbsp;~ &nbsp;
                         {experience.primaryJob.current
                           ? "Present"
-                          : experience.primaryJob.endDate}
+                          : moment(new Date(experience.primaryJob.endDate)).format('MM/DD/YYYY')}
                       </Typography>
                     </Fragment>
                   )}
@@ -350,10 +351,10 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
                           {experience.secondaryJob.company}
                         </Typography>
                         <Typography className={classes.jobPeriod}>
-                          {experience.secondaryJob.startDate}&nbsp;~ &nbsp;
+                          {moment(new Date(experience.secondaryJob.startDate)).format('MM/DD/YYYY')}&nbsp;~ &nbsp;
                                       {experience.secondaryJob.current
                             ? "Present"
-                            : experience.secondaryJob.endDate}
+                            : moment(new Date(experience.secondaryJob.endDate)).format('MM/DD/YYYY')}
                         </Typography>
                       </Fragment>
                     )}
@@ -371,8 +372,8 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
                           {job.company}
                         </Typography>
                         <Typography className={classes.jobPeriod}>
-                          {job.startDate}&nbsp;~ &nbsp;
-                          {job.endDate}
+                          {moment(new Date(job.startDate)).format('MM/DD/YYYY')}&nbsp;~ &nbsp;
+                          {moment(new Date(job.endDate)).format('MM/DD/YYYY')}
                         </Typography>
                       </Fragment>
                     </Grid>
@@ -385,7 +386,7 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
         </Grid>
 
         <Grid className={classes.section}>
-          <Portfolio portfolios={portfolio && portfolio.portfolios}/>
+          <Portfolio portfolios={portfolio && portfolio.portfolios} />
         </Grid>
         <Grid className={classes.deploma}>
           <Typography className={classes.center}>

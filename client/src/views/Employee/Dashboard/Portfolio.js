@@ -319,7 +319,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
             </Button>
           }
           title="Portfolio"
-          subheader="for videos and photos : please remember to not say or show your name or any contact incormation"
+          subheader="for videos and photos : please remember to not say or show your name or any contact information"
         />
         <CardContent>
           {portfolios && (
