@@ -19,6 +19,7 @@ import SearchForm from '../form/SearchForm';
 import CandidateList from './CandidateList';
 import ProfileShimmer from '@components/Element/Loading/ProfileShimmer';
 import { successMessage, errorMessage } from '@helpers/utils'
+
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: '5rem',
@@ -188,11 +189,6 @@ const SearchResults = (props) => {
   }, [filter])
 
   useEffect(() => {
-    actions.initialLoading()
-    console.log(filterResult)
-  }, [filterResult])
-
-  useEffect(() => {
     if (filterID)
       history.push(`/search/${filterID}`)
     setFilterID(filterID)
@@ -201,7 +197,7 @@ const SearchResults = (props) => {
   useEffect(() => {
     if (addCartSuccess === "SUCCESS") {
       successMessage('Add to cart')
-      actions.initCartSuccess()
+      // actions.initCartSuccess()
     } else if (addCartSuccess === "FAILURE") {
       errorMessage('Add to cart failed!')
     }
@@ -239,7 +235,6 @@ const SearchResults = (props) => {
     setOpenDelete(true)
   }
   // Render search query button
-  console.log(searchLoading, "filterResult")
   const FilterLists = filter && filter.filters.length !== 0 && (
     <Box className={classes.filterTitleContainer}>
       <Grid item >
@@ -306,33 +301,17 @@ const SearchResults = (props) => {
           <Grid container item sm={12} md={8}>
             <Box className={classes.leftSection}>
               {
-                searchLoading === "REQUEST" ? <>
+                searchLoading === "REQUEST" ?
                   <Box>
                     <ProfileShimmer/>
                     <ProfileShimmer/>
                   </Box>
-                </>:
+                :
                   filterResult.length > 0
                   ? filterResult.map((result) => (
                     <CandidateList
                       actions={actions}
-                      key={result._id}
-                      id={result._id} // This _id is professionId
-                      purchased={result.purchased}
-                      incart={result.incart}
-                      employeezNowId={result.employeezNowId}
-                      employeeId={result.employeeId}
-                      primaryTitle={result.employeeskill.primaryJob.title}
-                      primaryYears={result.employeeskill.primaryJob.years}
-                      secondaryTitle={result.employeeskill.secondaryJob.title}
-                      secondaryYears={result.employeeskill.secondaryJob.years}
-                      shift={result.employeeskill.shift}
-                      style={result.employeeskill.style}
-                      cuisine={result.employeeskill.cuisine}
-                      wineKnowledge={result.employeeskill.wineKnowledge}
-                      cocktailKnowledge={result.employeeskill.cocktailKnowledge}
-                      systems={result.employeeskill.systems}
-                      addCartSuccess={addCartSuccess}
+                      result={result}
                     />
                   ))
                   :

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -63,9 +63,15 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '15px'
   }
 }));
-const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, primaryYears, secondaryTitle,
-  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased, actions, incart
-}) => {
+const CandidateList = (props) => {
+  const {
+    primaryTitle, primaryYears, secondaryTitle, secondaryYears, shift,
+    style, cuisine, wineKnowledge, cocktailKnowledge, systems
+  } = props.result.employeeskill
+  const key = props.result._id;
+  const id = props.result._id;
+  const { purchased, incart, employeezNowId, employeeId } = props.result;
+  const { actions } = props
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
   const theme = useTheme();
@@ -221,29 +227,30 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
           >
             VIEW THIS PROFILE
           </Link>
-          {
-            !purchased ? !incart ? <Button
+          {incart &&
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={e => history.push('/carts')}
+            >
+              In Cart
+              </Button>
+          }
+          {!incart &&
+            <Button
               variant="outlined"
               color="secondary"
               onClick={addToCart}
             >
               <ShoppingCartIcon />
             Add To Cart
-          </Button> :
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={e=> history.push('/carts')}
-              >
-                In Cart
-              </Button> :
-              <></>
+          </Button>
           }
-
         </div>
       </CardActions>
+
     </Card>
   );
 };
 
-export default CandidateOverview;
+export default CandidateList;
