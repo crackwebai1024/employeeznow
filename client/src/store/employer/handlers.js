@@ -13,7 +13,8 @@ const initialState = {
   },
   employeeData: {},
   isLimited: false,
-  cartItems: []
+  cartItems: [],
+  addCartSuccess: "NONE"
 };
 
 export const getEmployerData = (state) => ({
@@ -57,7 +58,7 @@ export const saveFilterFailure = (state) => ({
 
 export const getFilterListRequest = (state, { payload }) => ({
   ...state,
-  searchLoading: 'NONE',
+  searchLoading: 'REQUEST',
   saveFilter: 'NONE',
 });
 
@@ -90,11 +91,11 @@ export const searchEmployeeSuccess = (state, { payload }) => ({
 export const initialLoading = (state, { payload }) => ({
   ...state,
   searchLoading: "NONE",
-
 })
 
 export const getSearchResult = (state, { payload }) => ({
   ...state,
+  searchLoading: "REQUEST"
 })
 
 export const getSearchResultSuccess = (state, { payload }) => {
@@ -151,6 +152,7 @@ export const setFormValues = (state, { payload }) => ({
 
 export const getSearchEmployee = (state, { payload }) => ({
   ...state,
+  searchLoading: "REQUEST"
 })
 
 export const getSearchEmployeeSuccess = (state, { payload }) => ({
@@ -209,10 +211,19 @@ export const addToCartRequest = (state) => ({
   addCartSuccess: 'REQUEST'
 })
 
-export const addToCartSuccess = (state) => ({
+export const addToCartSuccess = (state, { payload }) => {
+  return {
   ...state,
-  addCartSuccess: 'SUCCESS'
-})
+  addCartSuccess: 'SUCCESS',
+  filterResult: [...state.filterResult.map(filter => {
+    if (filter._id === payload)
+      return {
+        ...filter,
+        incart: true
+      }
+    return filter
+  })]
+}}
 
 export const addToCartFailure = (state) => ({
   ...state,
@@ -232,5 +243,19 @@ export const loadCartListSuccess = (state, { payload }) => ({
   ...state,
   cartItems: [...payload]
 })
+
+export const updateCartItems = (state, { payload }) => {
+  return {
+    ...state,
+    // filterResult: [...state.filterResult.map(filter => {
+    //   if(filter._id === payload)
+    //     return {
+    //       ...filter,
+    //       incart: true
+    //     }
+    //   return filter
+    // })]
+  }
+}
 
 export default initialState;

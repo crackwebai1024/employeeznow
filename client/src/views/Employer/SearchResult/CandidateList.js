@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Grid, Box, Button } from '@material-ui/core';
@@ -54,16 +54,31 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.common.blue,
     },
   },
+  purchased: {
+    background: theme.palette.common.green,
+    width: 'fit-content',
+    float: 'right',
+    color: 'white',
+    padding: '0 20px',
+    borderRadius: '15px'
+  }
 }));
-const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, primaryYears, secondaryTitle,
-  secondaryYears, shift, style, cuisine, wineKnowledge, cocktailKnowledge, systems, purchased, actions, iscart
-}) => {
+const CandidateList = (props) => {
+  const {
+    primaryTitle, primaryYears, secondaryTitle, secondaryYears, shift,
+    style, cuisine, wineKnowledge, cocktailKnowledge, systems
+  } = props.result.employeeskill
+  const key = props.result._id;
+  const id = props.result._id;
+  const { purchased, incart, employeezNowId, employeeId } = props.result;
+  const { actions } = props
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const user = JSON.parse(getUser());
   const filterID = getFilterID()
+  const history = useHistory()
 
   const addToCart = () => {
     let data = {
@@ -84,7 +99,7 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6" color="secondary" style={{ textAlign: "right" }}>
+            <Typography variant="h6" color="secondary" className={classes.purchased}>
               {purchased && "purchased"}
             </Typography>
           </Grid>
@@ -212,8 +227,17 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
           >
             VIEW THIS PROFILE
           </Link>
-          {
-            !iscart && <Button
+          {incart &&
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={e => history.push('/carts')}
+            >
+              In Cart
+              </Button>
+          }
+          {!incart &&
+            <Button
               variant="outlined"
               color="secondary"
               onClick={addToCart}
@@ -222,11 +246,11 @@ const CandidateOverview = ({ id, employeezNowId, employeeId, primaryTitle, prima
             Add To Cart
           </Button>
           }
-
         </div>
       </CardActions>
+
     </Card>
   );
 };
 
-export default CandidateOverview;
+export default CandidateList;

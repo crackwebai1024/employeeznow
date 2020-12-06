@@ -165,7 +165,8 @@ function* onAddToCart({ payload }) {
   try {
     const res = yield call(EmployerAPI.onAddToCart, payload)
     if (res && res.data) {
-      yield put(types.addToCartSuccess())
+      yield put(types.addToCartSuccess(payload.employeeID))
+      // yield put(types.updateCartItems(payload.employeeID))
     }
   } catch {
     yield put(types.addToCartFailure())
