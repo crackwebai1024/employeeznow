@@ -24,7 +24,6 @@ const find_ByID = async (Model, role, id, res) => {
   console.log(role, id);
   try {
     let user = await Model.findOne({ [role]: id });
-    console.log(user);
     return user;
   } catch (err) {
     return res.status(400).json({
@@ -38,13 +37,20 @@ const updateByID = async (Model, role, id, req, res) => {
     let user = await find_ByID(Model, role, id, res);
     delete req.body.id;
     req.body[role] = id;
+
+    // // incase if Model is Employer and req.body.addnum exists
+    // if (req.body.addnum) {
+    //   req.body.canPurchaseFreeNum = user.canPurchaseFreeNum + req.body.addnum;
+    //   delete req.body.addnum;
+    // }
+
     // check create or update
     if (user === null) {
       user = new Model(req.body);
     } else {
       user = extend(user, req.body);
     }
-    // console.log(" user ==> ", user);
+
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;

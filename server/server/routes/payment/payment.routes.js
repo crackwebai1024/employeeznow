@@ -5,7 +5,7 @@ import authCtrl from "../../controllers/auth/common.auth";
 import StripeCtrl from "../../controllers/payment/stripe";
 
 const { requireSignin, hasAuthorization } = authCtrl;
-const { stripePay } = StripeCtrl;
+const { stripePay, charge } = StripeCtrl;
 const router = express.Router();
 const { getPurchaseRequest } = PurchaseCtrl;
 
@@ -16,6 +16,11 @@ router
 
 // if not buy the employee profile
 router.route("/purchase").post(requireSignin, hasAuthorization, stripePay);
+
+//charge 14 purchasable number by paying prices of 10 profiles
+//charge 28 purchasable number by paying prices of 20 profiles
+//charge 75 purchasable number by paying prices of 50 profiles
+router.route("/charge").post(requireSignin, hasAuthorization, charge);
 
 /* purchase employee by paypal 
 // paypal payment request

@@ -1,6 +1,5 @@
 import Employee from "../../../models/employee/basic.model";
 import CRUD from "../../utils/general";
-import extend from "lodash/extend";
 
 const create = async (req, res, next) => {
   await CRUD.create(Employee, req, res, next);

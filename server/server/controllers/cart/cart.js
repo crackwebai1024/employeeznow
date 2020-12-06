@@ -68,4 +68,34 @@ const deleteByID = async (req, res) => {
   }
 };
 
-export default { addToCart, readFromCart, deleteByID };
+const addToInterest = async (req, res) => {
+  const employees = req.body.employees;
+  try {
+    const [employer, cartItem] = [
+      await Employer.findById(req.body.id),
+      await Cart.findOne({ employerID: req.body.id }),
+    ];
+    console.log(employer);
+    employer.interestedEmployees = [
+      ...employer.interestedEmployees,
+      ...employees,
+    ];
+    employer.canPurchaseFreeNum -= employees.length;
+    let removedItems = cartItem.cartItems.filter(
+      (employee) => !employees.includes(employee._id.toString())
+    );
+    console.log(removedItems.length);
+    cartItem.cartItems = removedItems;
+    console.log("here");
+    [(await employer.save(), await cartItem.save())];
+    return res.status(200).json({
+      freeNum: employer.canPurchaseFreeNum,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export default { addToCart, readFromCart, deleteByID, addToInterest };
