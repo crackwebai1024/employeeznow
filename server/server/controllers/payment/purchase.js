@@ -9,7 +9,7 @@ const getPurchaseRequest = async (req, res) => {
     //find the employer by id from database
     let employer = await Employer.findById(employerID);
     // check if the number of employee that employer bought is more than 4
-    if (employer.interestedEmployees.length < 3) {
+    if (employer.interestedEmployees.length < employer.canPurchaseFreeNum) {
       let idx = employer.interestedEmployees.indexOf(employeeID);
       if (idx === -1) {
         employer.interestedEmployees.push(employeeID);

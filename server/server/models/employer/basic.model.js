@@ -97,6 +97,10 @@ const EmployeeSchema = new mongoose.Schema(
       ref: "Employee",
       required: true,
     },
+    canPurchaseFreeNum: {
+      type: Number,
+      default: 3,
+    },
     salt: String,
     createdAt: {
       type: Date,

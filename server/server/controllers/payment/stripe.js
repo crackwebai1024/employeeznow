@@ -14,7 +14,7 @@ const stripePay = async (req, res) => {
       email: token.email,
       source: token.id,
     });
-    console.log("-------after creation stripe-----", customer);
+
     await _stripe.charges.create(
       {
         amount: 8 * 100,
@@ -25,13 +25,9 @@ const stripePay = async (req, res) => {
       },
       { idempotencyKey }
     );
-    console.log("-------after charge stripe-----");
     let employer = await Employer.findById(id);
-    console.log("-------after find employer stripe-----");
     employer.interestedEmployees.push(employeeID);
-    console.log("-------after push-----");
     await employer.save();
-    console.log("-------after save-----");
     let purchased = true;
     return await getPurchasedEmployee(req, res, employeeID, purchased);
   } catch (err) {
@@ -42,4 +38,53 @@ const stripePay = async (req, res) => {
   }
 };
 
-export default { stripePay };
+const charge = async (req, res) => {
+  const { product, token, id, purchasenum } = req.body;
+  console.log("data from frontend", token, product);
+  const idempotencyKey = uuid();
+  console.log("uuid generated key ==> ", idempotencyKey);
+  let addnum = 0;
+  switch (purchasenum) {
+    case 10:
+      addnum = 14;
+      break;
+    case 20:
+      addnum = 28;
+      break;
+    case 50:
+      addnum = 75;
+      break;
+    default:
+      break;
+  }
+
+  try {
+    let customer = await _stripe.customers.create({
+      email: token.email,
+      source: token.id,
+    });
+
+    await _stripe.charges.create(
+      {
+        amount: 8 * 100 * purchasenum,
+        currency: "usd",
+        customer: customer.id,
+        receipt_email: token.email,
+        description: "Buy Employee Profile",
+      },
+      { idempotencyKey }
+    );
+    let employer = await Employer.findById(id);
+    employer.canPurchaseFreeNum += addnum;
+    await employer.save();
+    return res.status(200).json({
+      canPurchaseFreeNum: employer.canPurchaseFreeNum,
+    });
+  } catch (err) {
+    return res.status(403).json({
+      error: "there happens error for dealing",
+    });
+  }
+};
+
+export default { stripePay, charge };
