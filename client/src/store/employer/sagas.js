@@ -178,7 +178,7 @@ function* onLoadCartList({ payload }) {
     const queryString = `?id=${payload.id}`
     const res = yield call(EmployerAPI.onLoadCartList, queryString)
     if(res && res.data) {
-      yield put(types.loadCartListSuccess(res.data.cartItems))
+      yield put(types.loadCartListSuccess(res.data))
     }
   } catch {
 

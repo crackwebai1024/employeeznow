@@ -241,7 +241,8 @@ export const loadCartList = (state) => ({
 
 export const loadCartListSuccess = (state, { payload }) => ({
   ...state,
-  cartItems: [...payload]
+  cartItems: [...payload.cartItems],
+  freeNum: payload.freeNum
 })
 
 export const updateCartItems = (state, { payload }) => {

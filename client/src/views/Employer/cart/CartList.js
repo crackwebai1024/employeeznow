@@ -6,7 +6,7 @@ import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getUser, getFilterID } from '@helpers/auth-helpers';
-import Payment from './Payment'
+import Payment from './Payment';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -14,13 +14,14 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '2rem'
   },
   cartContainer: {
-    borderRadius: '0px'
+    borderRadius: '0px',
   },
   isSelected: {
     background: theme.palette.common.hover_white,
-    borderLeft: '2px solid green'
+    borderLeft: '4px solid green'
   },
   cartContent: {
+    height: 75,
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.common.hover_white,
@@ -29,14 +30,31 @@ const useStyles = makeStyles(theme => ({
       background: theme.palette.common.hover_white
     }
   },
+  flexR: {
+    width: '100%',
+    textAlign: 'right',
+    marginRight: '30px'
+  },
+  headerTitle: {
+    height: 70,
+    width: '100%',
+    background: 'white',
+    fontWeight: 600,
+    fontSize: 20,
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '2rem',
+    marginBottom: '1rem'
+  }
 }))
 
 const CartList = (props) => {
   const classes = useStyles();
-  const { actions, cartItems } = props;
+  const { actions, cartItems, freeNum } = props;
   const user = JSON.parse(getUser());
   const filterID = getFilterID();
   const [isSelected, setIsSelected] = useState([]);
+  const [selCount, setSelCount] = useState(0);
 
   useEffect(() => {
     const data = {
@@ -52,16 +70,27 @@ const CartList = (props) => {
   const onItemClick = (key) => {
     isSelected[key] = isSelected[key] ? false : true;
     setIsSelected([...isSelected]);
+    let selCount = 0
+    isSelected.forEach(item => {
+      if (item)
+        selCount++;
+    })
+    setSelCount(selCount)
   }
 
-  console.log(cartItems, "isSelected")
   return (
     <Container width="sm" className={classes.container}>
-      <Grid item container xs={12} md={12} spacing={2}>
+      <Grid item container xs={12} md={12}>
+        <Grid item xs={12}>
+          <Box className={classes.headerTitle}>
+            <Box>
+              EMPLOYEE PROFILES: {selCount}
+            </Box>
+          </Box>
+        </Grid>
         <Grid item xs={12} md={8}>
           {
             cartItems.map((cart, key) => (
-              // !cart.purchased ?
               <Card key={`cart_${key}`}
                 className={classes.cartContainer}
                 onClick={e => onItemClick(key)}
@@ -75,7 +104,7 @@ const CartList = (props) => {
                           cart.employeeskill.shift.length > 0 &&
                           <Box style={{ display: 'flex' }}>
                             shift
-                            {cart.employeeskill.shift.map((sh,key) =>
+                            {cart.employeeskill.shift.map((sh, key) =>
                             <Box key={key}>&nbsp;&nbsp;{sh}</Box>
                           )}
                           </Box>
@@ -91,7 +120,6 @@ const CartList = (props) => {
                   </CardContent>
                 </Box>
               </Card>
-              // : <>There is</>
             ))
           }
           {
@@ -109,8 +137,8 @@ const CartList = (props) => {
   );
 }
 
-const mapStateToProps = ({ employer: { cartItems } }) => ({
-  cartItems
+const mapStateToProps = ({ employer: { cartItems, freeNum } }) => ({
+  cartItems, freeNum
 });
 
 const mapDispatchToProps = (dispatch) => ({
