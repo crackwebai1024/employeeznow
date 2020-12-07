@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Grid, Box, Typography } from '@material-ui/core';
-import Hidden from '@material-ui/core/Hidden';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import logo from '@assets/white-logo.svg';
@@ -110,7 +109,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Footer({ isAuthenticated, value, setValue }) {
   const classes = useStyles();
   const theme = useTheme();
-  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   const user = JSON.parse(getUser())
   /** value/setValue is connected with value of Nav(Header) If eigther Nav/Footer change the order, value has to be matched */
@@ -119,7 +117,7 @@ export default function Footer({ isAuthenticated, value, setValue }) {
       <Container>
         <Grid container item xs={12}>
           <Grid item xs={12} md={6} className={classes.footerLogo}>
-            <img src={logo} className={classes.image} />
+            <img alt="logo" src={logo} className={classes.image} />
             <Typography>
               2020 EmployeezNow LLC
             </Typography>

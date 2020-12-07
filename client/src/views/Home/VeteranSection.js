@@ -68,7 +68,7 @@ const VeteranSection = () => {
             </Typography>
           </Grid>
           <Grid xs={12} sm={6} className={classes.center}>
-            <img src={`${process.env.PUBLIC_URL}/img/test/img5.svg`} className={classes.image}/>
+            <img src={`${process.env.PUBLIC_URL}/img/test/img5.svg`} alt="img5" className={classes.image}/>
           </Grid>
           <Grid xs={12} sm={6} className={classes.col_center}>
             <Box>

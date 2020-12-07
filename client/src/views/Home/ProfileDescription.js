@@ -84,9 +84,9 @@ const ProfileDescription = () => {
       <Grid className={classes.ContainerLeft}>
         <Box style={{ margin: 'auto', maxWidth: '472px' }}>
           <div style={{ padding: "75% 0 0 0", position: "relative" }}>
-            <iframe src="https://player.vimeo.com/video/7743003?title=0&byline=0&portrait=0"
+            <iframe title="iframe_1" src="https://player.vimeo.com/video/7743003?title=0&byline=0&portrait=0"
               style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}
-              frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+              frameBorder="0" allow="autoplay; fullscreen" allowFullScreen>
             </iframe>
           </div>
           <script src="https://player.vimeo.com/api/player.js"></script>
@@ -127,9 +127,9 @@ const ProfileDescription = () => {
 
     <Grid item xs={12} md={6} className={classes.center}>
       <div className={classes.video}>
-        <iframe src="https://player.vimeo.com/video/472816351?title=0&byline=0&portrait=0"
+        <iframe title="iframe_2" src="https://player.vimeo.com/video/472816351?title=0&byline=0&portrait=0"
           style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}
-          allow="autoplay; fullscreen" frameborder="0" allowfullscreen>
+          allow="autoplay; fullscreen" frameBorder="0" allowFullScreen>
         </iframe>
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
@@ -150,7 +150,7 @@ const ProfileDescription = () => {
 
     <Grid item xs={12} md={6} className={`${classes.col_center} ${classes.interview_mobile}`}>
       <Box style={{ margin: 'auto', marginTop: '4rem' }}>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <Typography className={classes.profileSubtitle}>
             PHOTOS of your CREATIONS
           </Typography>
@@ -163,7 +163,7 @@ const ProfileDescription = () => {
     </Grid>
     <Grid item xs={12} md={6} className={classes.col_center}>
       <Box style={{ margin: 'auto' }}>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <Box className={classes.interview_desktop}>
             <Typography className={classes.profileSubtitle}>
               PHOTOS of your CREATIONS

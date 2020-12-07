@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import ReplayIcon from '@material-ui/icons/Replay';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getFilterID } from '@helpers/auth-helpers';
 import { Typography } from '@material-ui/core';

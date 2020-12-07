@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { getUser } from '@helpers/auth-helpers';
-import StripeInput from '../components/StripeInput';
+import StripeInput from '@components/StripeInput';
 import { makeStyles } from '@material-ui/core/styles'
 import { CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe } from 'react-stripe-elements';
 
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PaymentForm = (props) => {
-    const { actions, formValues, stripe, match, paid } = props
+    const { actions, stripe, match, paid } = props
     const [error, setError] = useState("")
     const [email, setEmail] = useState("")
     const history = useHistory()
@@ -57,17 +57,7 @@ const PaymentForm = (props) => {
     ];
 
     const user = JSON.parse(getUser());
-    const { slug } = match.params
-
-    // const inputHandle = (e) => {
-    //     let key = e.target.name;
-    //     let value = e.target.value
-    //     let newFormValues = {
-    //         ...formValues,
-    //         [key]: value
-    //     }
-    //     actions.setFormValues(newFormValues)
-    // }
+    const slug = match.params
 
     const handleSubmit = (e) => {
         setError("")

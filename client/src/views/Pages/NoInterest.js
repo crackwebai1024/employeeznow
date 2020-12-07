@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from "react-redux";
 import { actions as emailActions } from "@store/email";
 import { Box, Typography } from '@material-ui/core'

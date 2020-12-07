@@ -227,7 +227,7 @@ const CandidateList = (props) => {
           >
             VIEW THIS PROFILE
           </Link>
-          {incart &&
+          {!purchased && incart &&
             <Button
               variant="outlined"
               color="secondary"
@@ -236,7 +236,7 @@ const CandidateList = (props) => {
               In Cart
               </Button>
           }
-          {!incart &&
+          {!purchased && !incart &&
             <Button
               variant="outlined"
               color="secondary"

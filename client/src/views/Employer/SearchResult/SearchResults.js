@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import {
   Grid, Box, Dialog, DialogActions, DialogContent, Button,
@@ -22,11 +21,17 @@ import { successMessage, errorMessage } from '@helpers/utils'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: '5rem',
     paddingBottom: '5rem',
   },
   title: {
     fontSize: 20,
+  },
+  filterInfo: {
+    height: 75,
+    background: 'white',
+    float: 'right',
+    marginBottom: '1rem',
+    width: 'calc(100%)'
   },
   swipeableButton: {
     width: '100%',
@@ -197,7 +202,7 @@ const SearchResults = (props) => {
   useEffect(() => {
     if (addCartSuccess === "SUCCESS") {
       successMessage('Add to cart')
-      // actions.initCartSuccess()
+      actions.initCartSuccess()
     } else if (addCartSuccess === "FAILURE") {
       errorMessage('Add to cart failed!')
     }
@@ -283,13 +288,12 @@ const SearchResults = (props) => {
         </SwipeableDrawer>
       </Box>
       <Container className={classes.container}>
-        <Grid container justify="center">
-          <Grid item sm={12} md={4}>
-          </Grid>
-          <Grid item sm={12} md={8}>
-            <Box className={classes.total_count}>
-              {filterResult.length}
-            </Box>
+        <Grid item container justify="center">
+          {/* <Grid item xs ={4}></Grid> */}
+          <Grid item xs ={12}>
+            {/* <Box className={classes.filterInfo}>
+
+            </Box> */}
           </Grid>
         </Grid>
         <Grid container justify="center" >
@@ -349,7 +353,6 @@ const SearchResults = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-
     </Box>
   );
 };

@@ -4,12 +4,9 @@ import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
-import { Grid, Box } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { spawn } from 'redux-saga/effects';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEdit } from '@fortawesome/free-regular-svg-icons';
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
@@ -66,8 +63,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Profession = ({ profession }) => {
   const {
-    primaryJob,
-    secondaryJob,
     shift,
     style,
     cuisine,

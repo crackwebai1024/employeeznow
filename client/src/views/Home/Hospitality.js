@@ -77,13 +77,13 @@ const useStlyes = makeStyles((theme) => ({
 const Hospitality = () => {
   const classes = useStlyes()
   return (<Fragment>
-    <Grid xs={12}>
+    <Grid item xs={12}>
       <Typography className={classes.title}>
         EMPLOYERS OF HOSPITALITY
     </Typography>
     </Grid>
     <Grid container xs={12}>
-      <Grid xs={12} sm={6} className={classes.col_center}>
+      <Grid item xs={12} sm={6} className={classes.col_center}>
         <Box style={{ margin: 'auto' }}>
           <Typography className={classes.profileSubtitle}>
             THE FASTEST WAY TO HIRE

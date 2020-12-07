@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { makeStyles, useTheme } from '@material-ui/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
@@ -58,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 
 const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, slug }) => {
   const classes = useStyles();
-  const theme = useTheme();
   const user = JSON.parse(getUser())
 
   const [shift, setShift] = useState(searchFormData ? searchFormData.shift : [])
@@ -70,12 +67,12 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
   const [cuisineError, setCuisineError] = useState("")
   const [styleError, setStyleError] = useState("")
 
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     defaultValues: searchFormData
   });
 
   const onSubmit = (formData) => {
-    if (shift.length == 0) {
+    if (shift.length === 0) {
       return setError("Please Check the avaliable shift.")
     }
     const systems = [];
@@ -96,7 +93,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
   };
 
   useEffect(() => {
-    if (saveFilter == "SUCCESS") {
+    if (saveFilter === "SUCCESS") {
       const data = {
         id: user._id
       }
@@ -104,7 +101,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
       setOpenSearchForm(false)
       actions.initialLoading()
       setLoading(false)
-    } else if (saveFilter == "REQUEST") {
+    } else if (saveFilter === "REQUEST") {
       setLoading(true)
     }
   }, [saveFilter])
@@ -116,7 +113,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
       setReload(!reload)
     } else {
       _.remove(shift, function (val) {
-        return val == value
+        return val === value
       })
       setShift(shift)
       setReload(!reload)
