@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getUser, getFilterID } from '@helpers/auth-helpers';
 import Payment from './Payment';
-
+import ChargeBalance from './ChargeBalance';
 const useStyles = makeStyles(theme => ({
   container: {
     maxWidth: 1200,
@@ -128,6 +128,9 @@ const CartList = (props) => {
               There is no data
           </Box>
           }
+          <Grid item xs={12}>
+            <ChargeBalance actions={actions}/>
+          </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
           <Payment items={cartItems} selected={isSelected} />
