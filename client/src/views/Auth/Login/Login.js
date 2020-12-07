@@ -78,7 +78,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
   }
 
   useEffect(() => {
-    if (loginStatus == "FAILURE") {
+    if (loginStatus === "FAILURE") {
       setError("Email or Password is not correct")
     }
   }, [loginStatus])

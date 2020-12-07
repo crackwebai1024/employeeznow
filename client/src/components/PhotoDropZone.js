@@ -11,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import BackupIcon from '@material-ui/icons/Backup';
-import Avatar from "@material-ui/core/Avatar";
 // import setAlert from '../../store/actions/alert';
 
 // set styles - material-ui
@@ -166,7 +165,7 @@ const PhotoDropZone = ({
         <Grid item className={classes.avatarContainer}>
           {
             (fileNames || (image && image.url)) ? (
-              fileNames ? (type == "image" ?
+              fileNames ? (type === "image" ?
                 <img src={fileNames.file}
                   alt="profile"
                   className={classes.avatar}
@@ -178,7 +177,7 @@ const PhotoDropZone = ({
                 </video>
               )
                 :
-                ((image.style == "image" || image.style == undefined) ?
+                ((image.style === "image" || image.style === undefined) ?
                   <img src={`${image.url}?${Date.now()}`}
                     alt="profile"
                     className={classes.avatar}

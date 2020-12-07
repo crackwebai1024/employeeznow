@@ -4,12 +4,8 @@ import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -22,10 +18,6 @@ import { getUser } from '@helpers/auth-helpers';
 const useStyles = makeStyles((theme) => ({
   root: {
     ...theme.root
-  },
-  formControl: {
-    marginTop: '0.7rem',
-    backgroundColor: 'transparent',
   },
   heading1: {
     ...theme.typography.h1,

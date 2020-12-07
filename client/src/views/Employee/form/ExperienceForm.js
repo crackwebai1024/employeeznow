@@ -15,29 +15,24 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import CloseIcon from "@material-ui/icons/Close";
-import { jobTypes, roles } from "../professionTypes";
+import { jobTypes } from "../professionTypes";
 import { getUser } from "@helpers/auth-helpers";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import MenuItem from "@material-ui/core/MenuItem";
-import { successMessage, errorMessage } from '@helpers/utils'
+import { successMessage } from '@helpers/utils'
 import { Box } from "@material-ui/core";
 import { usaStates } from '../professionTypes';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import RoomIcon from '@material-ui/icons/Room';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   KeyboardDatePicker,
-  TimePicker,
-  DKeyboardatePicker,
-  DateTimePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 // set style
@@ -154,7 +149,6 @@ const ExperienceForm = ({
     exclude: []
   });
 
-  const [showAlert, setShowAlert] = useState(0);
   const [isopen, setIsOpen] = useState("")
   const [error, setError] = useState({
     primaryJob: "",
@@ -214,18 +208,12 @@ const ExperienceForm = ({
 
   useEffect(() => {
     if (success) {
-      setShowAlert(1);
       successMessage("Successfully Saved!")
       history.push(`/employees/${user.slug}`)
     } else if (success === false) {
-      setShowAlert(2);
-      successMessage("Sorry! Saving is failed!")
-    } else {
-      setShowAlert(0);
+      errorMessage("Sorry! Saving is failed!")
     }
-    setTimeout(() => {
       actions.initiateSuccess();
-    }, 5000);
   }, [success]);
 
   // destructure

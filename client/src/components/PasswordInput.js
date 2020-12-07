@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 
 const styles = theme => ({

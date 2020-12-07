@@ -16,7 +16,6 @@ import { actions as employeeActions } from '@store/employee';
 import { actions as authActions } from '@store/auth';
 import { bindActionCreators } from 'redux';
 import { getUser } from '@helpers/auth-helpers';
-import PublishIcon from '@material-ui/icons/Publish';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -91,8 +90,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EditEmployeeAccountForm = (props) => {
-  const { employee: { _id, firstName, middleName, lastName, cell, email, address, employeezNowId },
-    actions, errorMessage, updateLoading, setOpenAccount, success, veteranLoading } = props
+  const { employee: {firstName, middleName, lastName, cell, email, address },
+    actions, errorMessage, updateLoading, setOpenAccount } = props
   // react-hook-form
   const { register, handleSubmit, errors } = useForm({
     // add current value in the input value value name matches with name in input field
@@ -142,13 +141,13 @@ const EditEmployeeAccountForm = (props) => {
 
   const onChange = (e) => {
     console.log(e.target.name)
-    if (e.target.name == 'status')
+    if (e.target.name === 'status')
       return setVeteran({
         ...veteran,
         status: !veteran.status
       })
 
-    if (e.target.name == 'veteranId') {
+    if (e.target.name === 'veteranId') {
       setVeteran({
         ...veteran,
         veteranId: e.target.value

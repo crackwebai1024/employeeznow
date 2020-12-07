@@ -101,7 +101,7 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, change
   };
 
   useEffect(() => {
-    if (changepassword == "SUCCESS") {
+    if (changepassword === "SUCCESS") {
       setOpenPassword(false)
     }
   }, [changepassword])
@@ -126,10 +126,10 @@ const EmployeeAccount = ({ employeeData, history, actions, updateSuccess, change
   };
 
   useEffect(() => {
-    if (updateSuccess == "SUCCESS") {
+    if (updateSuccess === "SUCCESS") {
       setOpenAccount(false);
       return successMessage("Profile update is successed!")
-    } else if (updateSuccess == "FAILURE") {
+    } else if (updateSuccess === "FAILURE") {
       return errorMessage("Profile update is failed!")
     }
   }, [updateSuccess])

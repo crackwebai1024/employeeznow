@@ -311,7 +311,7 @@ const Home = () => {
       <Container width="sm" className={classes.mainContainer} style={{ marginTop: '4rem' }}>
         <Hospitality />
       </Container >
-      <Grid xs={12}>
+      <Grid container item xs={12}>
         <VeteranSection />
       </Grid>
     </Box>

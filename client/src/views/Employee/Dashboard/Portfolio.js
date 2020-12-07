@@ -6,11 +6,10 @@ import {
   DialogContentText,
   DialogContent,
   Checkbox,
-  Icon,
 } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
@@ -122,9 +121,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "12px",
     display: "flex",
   },
-  sequence: {
-    padding: "2rem 4rem",
-  },
   checkbox: {
     marginRight: "0.5rem",
   },
@@ -175,7 +171,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
   const handleClickOpen = () => {
     setConfirm(false);
 
-    if (!portfolios || portfolios.length == 0) {
+    if (!portfolios || portfolios.length === 0) {
       return setSequence(true);
     }
     setOpen(true);

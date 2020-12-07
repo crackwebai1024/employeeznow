@@ -14,11 +14,11 @@ import _ from 'lodash';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { jobTypes, roles } from "../professionTypes";
+import { jobTypes } from "../professionTypes";
 import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
-import { FormControl, MenuItem } from "@material-ui/core";
+import { FormControl } from "@material-ui/core";
 import { successMessage, errorMessage } from '@helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
@@ -111,20 +111,14 @@ const ProfessionDetailsForm = ({
     newOpportunity: [],
     veteran: { status: false, veteranId: "" },
   });
-  const [showAlert, setShowAlert] = useState(0);
   const {
     employmentStatus,
     idealSalary,
-    planningToMove,
     randomShift,
-    randomShiftRole,
     newOpportunity,
-    veteran,
   } = formData;
 
   // disablt 'end date' for primaryJob if current was checked
-  const [toDisabled, setToDisabled] = useState(false);
-  const [toggleBox, setToggleBox] = useState(false);
 
   const history = useHistory()
 
@@ -158,8 +152,6 @@ const ProfessionDetailsForm = ({
       history.push(`/employees/${user.slug}`)
     } else if (success === false) {
       errorMessage("Sorry! Saving is failed!")
-    } else {
-      setShowAlert(0);
     }
     actions.initiateSuccess();
   }, [success]);

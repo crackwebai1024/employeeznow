@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Paper, Box } from "@material-ui/core";
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import { makeStyles } from '@material-ui/core/styles';
-import PaymentForm from './form/PaymentForm';
+import PaymentForm from './PaymentForm';
 
 const useStyles = makeStyles(() => ({
   boxWrapper: {
@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
 const Payment = (props) => {
   const [stripe, setStripe] = useState("")
   const classes = useStyles();
+  const { items, selected } = props;
 
   useEffect(() => {
     console.log(process.env, "process.env.REACT")
@@ -41,7 +42,7 @@ const Payment = (props) => {
           stripe && (
             <StripeProvider stripe={stripe}>
               <Elements>
-                <PaymentForm match={props.match} />
+                <PaymentForm items = {items} selected ={selected}/>
               </Elements>
             </StripeProvider>
           )
