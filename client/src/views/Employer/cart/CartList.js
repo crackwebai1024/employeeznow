@@ -45,6 +45,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     paddingLeft: '2rem',
     marginBottom: '1rem'
+  },
+  content: {
+    minHeight: '300px',
+    maxHeight: '300px',
+    overflowY: 'scroll',
+    background: 'white',
+    padding: '0.5rem'
   }
 }))
 
@@ -89,47 +96,49 @@ const CartList = (props) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={8}>
-          {
-            cartItems.map((cart, key) => (
-              <Card key={`cart_${key}`}
-                className={classes.cartContainer}
-                onClick={e => onItemClick(key)}
-              >
-                <Box className={isSelected[key] && classes.isSelected}>
-                  <CardContent className={classes.cartContent}>
-                    ID: #{cart.employeezNowId}
-                    <Grid item container xs={12}>
-                      <Grid item xs={4}>
-                        {
-                          cart.employeeskill.shift.length > 0 &&
-                          <Box style={{ display: 'flex' }}>
-                            shift
+          <Box className={classes.content}>
+            {
+              cartItems.map((cart, key) => (
+                <Card key={`cart_${key}`}
+                  className={classes.cartContainer}
+                  onClick={e => onItemClick(key)}
+                >
+                  <Box className={isSelected[key] && classes.isSelected}>
+                    <CardContent className={classes.cartContent}>
+                      ID: #{cart.employeezNowId}
+                      <Grid item container xs={12}>
+                        <Grid item xs={4}>
+                          {
+                            cart.employeeskill.shift.length > 0 &&
+                            <Box style={{ display: 'flex' }}>
+                              shift
                             {cart.employeeskill.shift.map((sh, key) =>
-                            <Box key={key}>&nbsp;&nbsp;{sh}</Box>
-                          )}
-                          </Box>
-                        }
-                      </Grid>
-                      <Grid item xs={4}>
+                              <Box key={key}>&nbsp;&nbsp;{sh}</Box>
+                            )}
+                            </Box>
+                          }
+                        </Grid>
+                        <Grid item xs={4}>
 
-                      </Grid>
-                      <Grid item xs={4}>
+                        </Grid>
+                        <Grid item xs={4}>
 
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </CardContent>
-                </Box>
-              </Card>
-            ))
-          }
-          {
-            !cartItems.length > 0 &&
-            <Box >
-              There is no data
+                    </CardContent>
+                  </Box>
+                </Card>
+              ))
+            }
+            {
+              !cartItems.length > 0 &&
+              <Box >
+                There is no data
+              </Box>
+            }
           </Box>
-          }
           <Grid item xs={12}>
-            <ChargeBalance actions={actions}/>
+            <ChargeBalance actions={actions} />
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>

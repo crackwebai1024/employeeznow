@@ -4,6 +4,8 @@ import { StripeProvider, Elements } from 'react-stripe-elements';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import PaymentForm from './PaymentForm';
 
+const publish_key = 'pk_test_51HhcEXCIGo4tK7NRleEfPk3GUJ3oqCZoxzfB0FbDjOp5Zw1csOmHhFVP2vBP5pM0R47aJjO6qNCghPuQwo6Y1RtA0013Su773C';
+
 const useStyles = makeStyles((theme) => ({
   boxWrapper: {
     marginBottom: "55px",
@@ -37,11 +39,11 @@ const Payment = (props) => {
 
   useEffect(() => {
     if (window.Stripe) {
-      setStripe(window.Stripe("publish_key"))
+      setStripe(window.Stripe(publish_key))
     } else {
       if (document.querySelector("#stripe-js")) {
         document.querySelector("#stripe-js").addEventListener("load", () => {
-          setStripe(window.Stripe("publish_key"))
+          setStripe(window.Stripe(publish_key))
         });
       }
     }

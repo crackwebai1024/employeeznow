@@ -259,4 +259,25 @@ export const updateCartItems = (state, { payload }) => {
   }
 }
 
+export const getEvent = (state, { payload }) => ({
+  ...state,
+  payEvent: payload
+})
+
+export const chargeRequest = (state, { payload }) => ({
+  ...state,
+  
+})
+
+export const chargeSuccess = (state, { payload }) => ({
+  ...state,
+  
+})
+
+export const chargeFailure = (state, { payload }) => ({
+  ...state,
+  
+})
+
+
 export default initialState;
