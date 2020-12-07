@@ -44,18 +44,14 @@ const charge = async (req, res) => {
   const idempotencyKey = uuid();
   console.log("uuid generated key ==> ", idempotencyKey);
   let addnum = 0;
-  switch (purchasenum) {
-    case 10:
-      addnum = 14;
-      break;
-    case 20:
-      addnum = 28;
-      break;
-    case 50:
-      addnum = 75;
-      break;
-    default:
-      break;
+  if (purchasenum < 10) {
+    addnum = purchasenum;
+  } else if (purchasenum < 20) {
+    addnum = purchasenum + 4;
+  } else if (purchasenum < 50) {
+    addnum = purchasenum + 8;
+  } else {
+    addnum = purchasenum + 25;
   }
 
   try {

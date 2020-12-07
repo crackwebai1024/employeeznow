@@ -40,11 +40,19 @@ const addToCart = async (req, res) => {
 
 const readFromCart = async (req, res) => {
   const role = "employerID";
-  const result = await CRUD.find_ByID(Cart, role, req.query.id, res);
+  const [result, employer] = [
+    await CRUD.find_ByID(Cart, role, req.query.id, res),
+    await CRUD.find_ByID(Employer, "_id", req.query.id, res),
+  ];
   if (result) {
-    return res.status(200).json({ cartItems: result.cartItems });
+    return res.status(200).json({
+      cartItems: result.cartItems,
+      freeNum: employer.canPurchaseFreeNum,
+    });
   } else {
-    return res.status(200).json({ cartItems: result });
+    return res
+      .status(200)
+      .json({ cartItems: result, freeNum: employer.canPurchaseFreeNum });
   }
 };
 
