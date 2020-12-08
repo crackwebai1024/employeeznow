@@ -19,9 +19,9 @@ router.route("/deleteone").post(requireSignin, hasAuthorization, deleteByID);
 // get profile by using canpurchasable freenum
 router.route("/purchase").post(requireSignin, hasAuthorization, addToInterest);
 
-//charge 14 purchasable number by paying prices of 10 profiles
-//charge 28 purchasable number by paying prices of 20 profiles
-//charge 75 purchasable number by paying prices of 50 profiles
-router.route("/charge").post(requireSignin, hasAuthorization, updateByID);
+// //charge 14 purchasable number by paying prices of 10 profiles
+// //charge 28 purchasable number by paying prices of 20 profiles
+// //charge 75 purchasable number by paying prices of 50 profiles
+// router.route("/charge").post(requireSignin, hasAuthorization, updateByID);
 
 export default router;
