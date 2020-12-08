@@ -363,9 +363,9 @@ function Dashboard(props) {
                           ? "Present"
                           : moment(new Date(experience.primaryJob.endDate)).format('MM/DD/YYYY')}
                       </Typography>
-                      <Typography className={classes.description}>
+                      {/* <Typography className={classes.description}>
                         {experience.primaryJob.description}
-                      </Typography>
+                      </Typography> */}
                     </Fragment>
                   )}
                 </Grid>
@@ -385,9 +385,9 @@ function Dashboard(props) {
                             ? "Present"
                             : moment(new Date(experience.secondaryJob.endDate)).format('MM/DD/YYYY')}
                         </Typography>
-                        <Typography className={classes.jobPeriod}>
+                        {/* <Typography className={classes.jobPeriod}>
                           {experience.secondaryJob.description}
-                        </Typography>
+                        </Typography> */}
                       </Fragment>
                     )}
                   </Grid>
