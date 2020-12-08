@@ -63,7 +63,6 @@ const charge = async (req, res) => {
       source: token.id,
     });
 
-    console.log("customer created", customer);
     await _stripe.charges.create(
       {
         amount: 8 * 100 * purchasenum,
@@ -74,15 +73,15 @@ const charge = async (req, res) => {
       },
       { idempotencyKey }
     );
-    console.log("after charges");
+
     let [employer, cart] = [
       await Employer.findById(id),
       await Cart.findOne({ employerID: id }),
     ];
-    console.log(employer, cart);
     let newCartItems = cart.cartItems.filter(
       (item) => !employees.includes(item._id.toString())
     );
+
     cart.cartItems = newCartItems;
     employer.canPurchaseFreeNum += addnum;
     if (emp_leng > 0) {
@@ -91,6 +90,7 @@ const charge = async (req, res) => {
         ...employees,
       ];
     }
+
     [await employer.save(), await cart.save()];
     return res.status(200).json({
       canPurchaseFreeNum: employer.canPurchaseFreeNum,
