@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { TextField, Grid, Typography, Box, Button } from "@material-ui/core";
+import { TextField, Grid, Typography, Box } from "@material-ui/core";
 import { connect } from 'react-redux';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { getUser } from '@helpers/auth-helpers';
 import StripeInput from '@components/StripeInput';
 import { makeStyles } from '@material-ui/core/styles'
-import { CardElement, injectStripe } from 'react-stripe-elements';
+import { CardNumberElement, CardExpiryElement, CardCvcElement, injectStripe } from 'react-stripe-elements';
 
 const useStyles = makeStyles(theme => ({
   mainBox: {
@@ -19,6 +19,9 @@ const useStyles = makeStyles(theme => ({
   },
   payform: {
     padding: '10px'
+  },
+  formControl: {
+    margin: '15px 0'
   },
   button: {
     width: "100%",
@@ -41,10 +44,6 @@ const useStyles = makeStyles(theme => ({
   error: {
     color: 'red',
     fontSize: '12px'
-  },
-  buttonWrapper: {
-    marginTop: '1rem',
-    marginBottom: "1rem"
   },
   summarybody: {
     color: 'gray',
@@ -82,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 const cardsLogo = ["cirrus", "dankort", "jcb", "maestro", "mastercard", "visa"];
 
 const PaymentForm = (props) => {
-  const { actions, stripe, selected, items } = props;
+  const { actions, stripe, selected, items, payEvent } = props;
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [profilePrice, setProfilePrice] = useState(0)
@@ -94,19 +93,25 @@ const PaymentForm = (props) => {
   useEffect(() => {
     let profilePrice = 0
     selected.forEach(item => {
-      if(item){
+      if (item) {
         profilePrice += 8.99
       }
     })
     setProfilePrice(profilePrice)
   }, [selected])
 
+  useEffect(() => {
+    if (payEvent)
+      handleSubmit();
+  }, [payEvent])
+
   const handleSubmit = (e) => {
     setError("")
-    e.preventDefault()
-    let employeeId = items.filter((item, key) => {
+    // e.preventDefault()
+    let employeeId = []
+    items.forEach((item, key) => {
       if (selected[key]) {
-        return item._id
+        employeeId.push(item._id)
       }
     })
 
@@ -116,13 +121,14 @@ const PaymentForm = (props) => {
           const data = {
             token: result.token,
             id: user._id,
-            employeeID: employeeId,
-            email: email
+            employees: employeeId,
+            purchasenum: payEvent
           }
-          actions.payRequest(data)
+          actions.chargeRequest(data);
         } else {
           setError(result.error.message)
         }
+        actions.getEvent(undefined);
       })
   }
 
@@ -168,7 +174,7 @@ const PaymentForm = (props) => {
                   Total
                 </Typography>
                 <Typography className={classes.flexR}>
-                  ${(Number((profilePrice * 5.6 /100).toFixed(2)) + Number(profilePrice.toFixed(2)) + 0.67).toFixed(2)}
+                  ${(Number((profilePrice * 5.6 / 100).toFixed(2)) + Number(profilePrice.toFixed(2)) + 0.67).toFixed(2)}
                 </Typography>
               </Grid>
             </Grid>
@@ -183,9 +189,59 @@ const PaymentForm = (props) => {
           </Grid>
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <Box className={classes.cardElement}>
-                <CardElement />
-              </Box>
+              <Grid item xs={12} className={classes.formControl}>
+                <TextField
+                  label="Credit Card Number"
+                  name="ccnumber"
+                  variant="outlined"
+                  size="small"
+                  required
+                  InputProps={{
+                    inputComponent: StripeInput,
+                    inputProps: {
+                      component: CardNumberElement
+                    },
+                  }}
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} className={classes.formControl}>
+                <TextField
+                  label="Expiration Date"
+                  name="ccexp"
+                  variant="outlined"
+                  size="small"
+                  required
+                  // onChange={inputHandle}
+                  InputProps={{
+                    inputComponent: StripeInput,
+                    inputProps: {
+                      component: CardExpiryElement
+                    }
+                  }}
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} className={classes.formControl}>
+                <TextField
+                  label="CVC"
+                  name="cvc"
+                  variant="outlined"
+                  size="small"
+                  required
+                  InputProps={{
+                    inputComponent: StripeInput,
+                    inputProps: {
+                      component: CardCvcElement
+                    }
+                  }}
+                  // onChange={inputHandle}
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
             </Grid>
             <Typography className={classes.error}>
               {error}
@@ -193,20 +249,10 @@ const PaymentForm = (props) => {
           </Grid>
         </Grid>
 
-        <Grid container item xs={12} spacing={3} className={classes.buttonWrapper}>
+        {/* <Grid container item xs={12} spacing={3} className={classes.buttonWrapper}>
           <Grid item xs={12} sm={6}>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-            >
-              PAY
-            </Button>
-          </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   </form>
@@ -214,10 +260,10 @@ const PaymentForm = (props) => {
 
 const mapStateToProps = ({
   employer: {
-    formValues, paid
+    formValues, paid, payEvent
   },
 }) => ({
-  formValues, paid
+  formValues, paid, payEvent
 });
 
 const mapDispatchToProps = (dispatch) => ({

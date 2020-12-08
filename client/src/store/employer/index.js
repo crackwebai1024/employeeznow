@@ -64,7 +64,16 @@ export const actions = createActions({
   LOAD_CART_LIST: undefined,
   LOAD_CART_LIST_SUCCESS: undefined,
 
-  UPDATE_CART_ITEMS: undefined
+  UPDATE_CART_ITEMS: undefined,
+  PAY_EVENT: undefined,
+  GET_EVENT: undefined,
+
+  CHARGE_REQUEST: undefined,
+  CHARGE_SUCCESS: undefined,
+  CHARGE_FAILURE: undefined,
+
+  REMOVE_CART: undefined,
+  REMOVE_CART_SUCCESS: undefined
 });
 
 const reducer = handleActions(
@@ -127,7 +136,16 @@ const reducer = handleActions(
     [actions.loadCartList, handlers.loadCartList],
     [actions.loadCartListSuccess, handlers.loadCartListSuccess],
 
-    [actions.updateCartItems, handlers.updateCartItems]
+    [actions.updateCartItems, handlers.updateCartItems],
+
+    [actions.getEvent, handlers.getEvent],
+
+    [actions.chargeRequest, handlers.chargeRequest],
+    [actions.chargeSuccess, handlers.chargeSuccess],
+    [actions.chargeFailure, handlers.chargeFailure],
+    
+    [actions.removeCart, handlers.removeCart],
+    [actions.removeCartSuccess, handlers.removeCartSuccess],
     
   ]),
   initialState,

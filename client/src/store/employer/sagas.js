@@ -4,6 +4,7 @@ import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUs
 import { actions as types } from './index';
 import * as  EmployerAPI from '@services/EmployerAPI';
 import Axios from '@lib/axios';
+import { successMessage, errorMessage } from '@helpers/utils';
 import { _arrayBufferToBase64 } from '@helpers/utils';
 import { setFilterID } from '@helpers/auth-helpers';
 
@@ -185,6 +186,46 @@ function* onLoadCartList({ payload }) {
   }
 }
 
+function* onChargeRequest({ payload }) {
+  try {
+    let purchasenum = undefined;
+    switch(payload.purchasenum){
+      case 'BUY_10':
+        purchasenum = 10;
+        break;
+      case 'BUY_20':
+        purchasenum = 20;
+        break;
+      case 'BUY_50':
+        purchasenum = 50;
+        break;
+      default: 
+        purchasenum = payload.employees.length
+        break;
+    }
+
+    let data = { ...payload, purchasenum: purchasenum }
+    const res = yield call(EmployerAPI.onChargeRequest, data)
+    if(res && res.data) {
+      yield put(types.chargeSuccess())
+    }
+  } catch {
+    yield put(types.chargeFailure())
+  }
+}
+
+function* onRemoveCart ({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onRemoveCart, payload)
+    if(res && res.data) {
+      yield put(types.removeCartSuccess(res.data.cartItems))
+      successMessage('Success')
+    }
+  } catch {
+
+  }
+}
+
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
   takeEvery(types.updateEmployerAccount, onUpdateEmployer),
@@ -198,7 +239,9 @@ const employerSagas = [
   takeEvery(types.purchaseRequest, onPurhcaseEmployee),
   takeEvery(types.payRequest, onPayRequest),
   takeEvery(types.addToCartRequest, onAddToCart),
-  takeEvery(types.loadCartList, onLoadCartList)
+  takeEvery(types.loadCartList, onLoadCartList),
+  takeEvery(types.chargeRequest, onChargeRequest),
+  takeEvery(types.removeCart, onRemoveCart)
 ];
 
 export default employerSagas;

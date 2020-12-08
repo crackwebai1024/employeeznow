@@ -213,7 +213,7 @@ const ExperienceForm = ({
     } else if (success === false) {
       errorMessage("Sorry! Saving is failed!")
     }
-      actions.initiateSuccess();
+    actions.initiateSuccess();
   }, [success]);
 
   // destructure
@@ -347,7 +347,7 @@ const ExperienceForm = ({
   };
 
   const handleInput = (name, value, key) => {
-      setIsOpen("")
+    setIsOpen("")
     let data = otherJobs;
     data[key][name] = value;
     if (data[key].startDate && data[key].endDate) {
@@ -497,7 +497,7 @@ const ExperienceForm = ({
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     disableToolbar
-                    open={isopen === "2"?true:false}
+                    open={isopen === "2" ? true : false}
                     onClick={e => setIsOpen("2")}
                     format="MM/dd/yyyy"
                     onChange={e => onChange({
@@ -508,7 +508,7 @@ const ExperienceForm = ({
                         checked: false
                       }
                     })}
-                    value={primaryJob.startDate}
+                    value={primaryJob.startDate ? primaryJob.startDate : null}
                     variant="inline"
                     name="startDate"
                     InputLabelProps={{ shrink: true }}
@@ -522,8 +522,8 @@ const ExperienceForm = ({
                       disableToolbar
                       label="End Date"
                       variant="inline"
-                      open={isopen === "1"?true:false}
-                    onClick={e => setIsOpen("1")}
+                      open={isopen === "1" ? true : false}
+                      onClick={e => setIsOpen("1")}
                       format="MM/dd/yyyy"
                       onChange={e => onChange({
                         target: {
@@ -534,7 +534,7 @@ const ExperienceForm = ({
                         }
                       })}
                       InputLabelProps={{ shrink: true }}
-                      value={primaryJob.endDate}
+                      value={primaryJob.endDate ? primaryJob.endDate : null}
                       className={classes.item}
                     />
                   }
@@ -634,7 +634,7 @@ const ExperienceForm = ({
 
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
-                    disableToolbar
+
                     onChange={e => onChange({
                       target: {
                         id: 'secondaryJob',
@@ -643,13 +643,13 @@ const ExperienceForm = ({
                         checked: false
                       }
                     })}
-                    value={secondaryJob.startDate}
+                    value={secondaryJob.startDate ? secondaryJob.startDate : null}
                     variant="inline"
                     name="startDate"
                     format="MM/dd/yyyy"
                     InputLabelProps={{ shrink: true }}
                     label="Start Date"
-                    open={isopen === "3"?true:false}
+                    open={isopen === "3" ? true : false}
                     onClick={e => setIsOpen("3")}
                   />
                 </Grid>
@@ -658,7 +658,7 @@ const ExperienceForm = ({
                   <KeyboardDatePicker
                     disableToolbar
                     format="MM/dd/yyyy"
-                    open={isopen === "4"?true:false}
+                    open={isopen === "4" ? true : false}
                     onClick={e => setIsOpen("4")}
                     onChange={e => onChange({
                       target: {
@@ -668,7 +668,7 @@ const ExperienceForm = ({
                         checked: false
                       }
                     })}
-                    value={secondaryJob.endDate}
+                    value={secondaryJob.endDate ? secondaryJob.endDate : null}
                     variant="inline"
                     name="endDate"
                     InputLabelProps={{ shrink: true }}
@@ -746,8 +746,8 @@ const ExperienceForm = ({
                         <KeyboardDatePicker
                           disableToolbar
                           format="MM/dd/yyyy"
-                          open={isopen === (2*key+4)?true:false}
-                    onClick={e => setIsOpen(2*key+4)}
+                          open={isopen === (2 * key + 4) ? true : false}
+                          onClick={e => setIsOpen(2 * key + 4)}
                           onChange={e => handleInput('startDate', e, key)}
                           value={otherJobs[key].startDate ? otherJobs[key].startDate : null}
                           variant="inline"
@@ -764,8 +764,8 @@ const ExperienceForm = ({
                           onChange={e => handleInput('endDate', e, key)}
                           value={otherJobs[key].endDate ? otherJobs[key].endDate : null}
                           variant="inline"
-                          open={isopen === (2*key+5)?true:false}
-                    onClick={e => setIsOpen(2*key+5)}
+                          open={isopen === (2 * key + 5) ? true : false}
+                          onClick={e => setIsOpen(2 * key + 5)}
                           InputLabelProps={{ shrink: true }}
                           label="End Date"
                           initialFocusedDate={''}

@@ -29,7 +29,7 @@ export const jobTypes = [
     'Bar Manager',
     'Lead Bartender',
     'Fastfood Server',
-    'Velet',
+    'Valet',
     'Casher',
     'Hotel Front Desk',
     'Sales Manager',
