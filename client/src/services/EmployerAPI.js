@@ -59,3 +59,7 @@ export async function onChargeRequest(data) {
 export async function onRemoveCart(data) {
   return await Axios.post('/cart/deleteone', data)
 }
+
+export async function onFreePurchase(data) {
+  return await Axios.post('/cart/purchase', data)
+}

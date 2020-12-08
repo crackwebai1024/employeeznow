@@ -73,7 +73,9 @@ export const actions = createActions({
   CHARGE_FAILURE: undefined,
 
   REMOVE_CART: undefined,
-  REMOVE_CART_SUCCESS: undefined
+  REMOVE_CART_SUCCESS: undefined,
+
+  FREE_PURCHASE: undefined
 });
 
 const reducer = handleActions(
@@ -146,6 +148,8 @@ const reducer = handleActions(
     
     [actions.removeCart, handlers.removeCart],
     [actions.removeCartSuccess, handlers.removeCartSuccess],
+    
+    [actions.freePurchase, handlers.freePurchase],
     
   ]),
   initialState,

@@ -57,7 +57,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: '30px'
   },
   headerTitle: {
-    height: 70,
+    // height: 70,
+    padding: '1rem',
     width: '100%',
     background: 'white',
     fontWeight: 600,
@@ -90,22 +91,26 @@ const useStyles = makeStyles(theme => ({
 
 const CartList = (props) => {
   const classes = useStyles();
-  const { actions, cartItems, freeNum } = props;
+  const { actions, cartItems } = props;
+  const [freeNum, setFreeNum] = useState(0)
   const user = JSON.parse(getUser());
   const filterID = getFilterID();
   const [isSelected, setIsSelected] = useState([]);
   const [selCount, setSelCount] = useState(0);
+  const [buyCount, setBuyCount] = useState(0)
 
   useEffect(() => {
     const data = {
       id: user._id,
     }
     actions.loadCartList(data)
+    window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {
-
-  }, [cartItems])
+    if (props.freeNum)
+      setFreeNum(props.freeNum)
+  }, [cartItems, props.freeNum])
 
   const deleteCart = (key) => {
     let data = {
@@ -124,20 +129,29 @@ const CartList = (props) => {
         selCount++;
     })
     setSelCount(selCount)
+    if (props.freeNum - selCount >= 0) {
+      setFreeNum(props.freeNum - selCount)
+      setBuyCount(0)
+    } else {
+      setBuyCount(selCount - props.freeNum)
+    }
   }
-  console.log(cartItems, "cartItems")
+
   return (
     <Container width="sm" className={classes.container}>
       <Grid item container xs={12} md={12}>
-        <Grid item xs={12}>
-          <Box className={classes.headerTitle}>
-            <Box>
-              EMPLOYEE PROFILES: {cartItems.length} / {selCount}
-            </Box>
-            <Box className={classes.avaliableCount}>
-              {freeNum}
-            </Box>
-          </Box>
+        <Grid container item xs={12} className={classes.headerTitle}>
+          <Grid item xs={12} sm={6} >
+            EMPLOYEE PROFILES: {cartItems.length} / {selCount}
+          </Grid>
+          <Grid container item xs={12} sm={6} className={classes.avaliableCount}>
+            <Grid item xs={12} md={6}>
+              Available Free Count : {freeNum}
+            </Grid>
+            <Grid item xs={12} md={6}>
+              Buy Count : {buyCount}
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} md={8}>
           <Box className={classes.content} id="cartList">
@@ -210,7 +224,7 @@ const CartList = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Payment items={cartItems} selected={isSelected} />
+          <Payment items={cartItems} selected={isSelected} buyCount={buyCount} />
         </Grid>
       </Grid>
     </Container >
