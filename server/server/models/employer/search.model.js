@@ -47,7 +47,7 @@ const SearchFilterSchema = new mongoose.Schema({
       "Server Assitant",
       "Banquet Server",
       "Banquet Bartender",
-      "Hostess",
+      "Host/Hostess",
       "Dishwasher",
       "Barista",
       "Fastfood Cook",
