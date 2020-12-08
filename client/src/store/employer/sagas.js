@@ -205,10 +205,12 @@ function* onChargeRequest({ payload }) {
     }
 
     let data = { ...payload, purchasenum: purchasenum }
-    const res = yield call(EmployerAPI.onChargeRequest, data)
-    if(res && res.data) {
-      yield put(types.chargeSuccess())
-    }
+    debugger
+    // const res = yield call(EmployerAPI.onChargeRequest, data)
+    // if(res && res.data) {
+    //   yield put(types.chargeSuccess(res.data.canPurchaseFreeNum))
+
+    // }
   } catch {
     yield put(types.chargeFailure())
   }
@@ -220,6 +222,17 @@ function* onRemoveCart ({ payload }) {
     if(res && res.data) {
       yield put(types.removeCartSuccess(res.data.cartItems))
       successMessage('Success')
+    }
+  } catch {
+
+  }
+}
+
+function* onFreePurchase ({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onFreePurchase, payload)
+    if(res && res.data) {
+      debugger
     }
   } catch {
 
@@ -241,7 +254,8 @@ const employerSagas = [
   takeEvery(types.addToCartRequest, onAddToCart),
   takeEvery(types.loadCartList, onLoadCartList),
   takeEvery(types.chargeRequest, onChargeRequest),
-  takeEvery(types.removeCart, onRemoveCart)
+  takeEvery(types.removeCart, onRemoveCart),
+  takeEvery(types.freePurchase, onFreePurchase)
 ];
 
 export default employerSagas;

@@ -207,7 +207,7 @@ const Contact = ({ actions, sendMessage }) => {
 
         <Grid item xs={12} md={5} style={{ marginTop: '2rem' }}>
           <div style={{ padding: "75% 0 0 0", position: "relative" }}>
-          {/* title=0&byline=0&portrait=0 */}
+            {/* title=0&byline=0&portrait=0 */}
             <iframe src="https://player.vimeo.com/video/484177026?title=0&byline=0&portrait=0" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
             </iframe>
           </div>
@@ -221,16 +221,26 @@ const Contact = ({ actions, sendMessage }) => {
             Contact Information
           </Typography>
         </Grid>
-        <Grid xs={12} sm={6}>
-          <Typography style={{fontWeight: '600'}}>
+        <Grid item xs={12} sm={6}>
+          <Typography style={{ fontWeight: '600' }}>
             PHONE: (888) 66 EZ-NOW
           </Typography>
         </Grid>
-        <Grid xs={12} sm={6} >
-          <Typography style={{fontWeight: '600'}}>
+        <Grid item xs={12} sm={6} >
+          <Typography style={{ fontWeight: '600' }}>
             EMAIL: QUESTIONS@EMPLOYEEZNOW
           </Typography>
         </Grid>
+        <Box item xs={12} sm={12} style={{ display: 'flex', paddingTop: '1rem', margin: 'auto' }}>
+          <Typography style={{ fontWeight: '600' }}>
+            ADDRESS : &nbsp;
+            </Typography>
+          <Typography style={{ textAlign: 'left' }}>
+            <span style={{ fontWeight: '600' }}>
+              3133 W. Frye Rd Suite 101  Chandler, AZ 85226
+            </span>
+          </Typography>
+        </Box>
       </Grid>
     </Container>
 

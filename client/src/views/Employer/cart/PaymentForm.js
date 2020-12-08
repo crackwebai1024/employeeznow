@@ -81,9 +81,8 @@ const useStyles = makeStyles(theme => ({
 const cardsLogo = ["cirrus", "dankort", "jcb", "maestro", "mastercard", "visa"];
 
 const PaymentForm = (props) => {
-  const { actions, stripe, selected, items, payEvent } = props;
+  const { actions, stripe, selected, items, buyCount, payEvent } = props;
   const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
   const [profilePrice, setProfilePrice] = useState(0)
 
   const classes = useStyles();
@@ -91,13 +90,7 @@ const PaymentForm = (props) => {
   const user = JSON.parse(getUser());
 
   useEffect(() => {
-    let profilePrice = 0
-    selected.forEach(item => {
-      if (item) {
-        profilePrice += 8.99
-      }
-    })
-    setProfilePrice(profilePrice)
+    setProfilePrice(buyCount * 8.99)
   }, [selected])
 
   useEffect(() => {
@@ -114,7 +107,12 @@ const PaymentForm = (props) => {
         employeeId.push(item._id)
       }
     })
-
+    if(buyCount === 0 && payEvent === "BUY_SELECT") {
+      return actions.freePurchase({
+        id: user._id,
+        employees: employeeId
+      })
+    }
     stripe.createToken({})
       .then(result => {
         if (!result.error) {
@@ -122,7 +120,8 @@ const PaymentForm = (props) => {
             token: result.token,
             id: user._id,
             employees: employeeId,
-            purchasenum: payEvent
+            purchasenum: payEvent,
+            buyCount: buyCount
           }
           actions.chargeRequest(data);
         } else {
@@ -158,7 +157,7 @@ const PaymentForm = (props) => {
                   Credit card convenience fee
                 </Typography>
                 <Typography className={classes.flexR}>
-                  $0.67
+                  ${(profilePrice * 105.6 /100 * 0.03).toFixed(2)}
                 </Typography>
               </Grid>
               <Grid item xs={12} className={classes.bodyList}>
@@ -174,7 +173,7 @@ const PaymentForm = (props) => {
                   Total
                 </Typography>
                 <Typography className={classes.flexR}>
-                  ${(Number((profilePrice * 5.6 / 100).toFixed(2)) + Number(profilePrice.toFixed(2)) + 0.67).toFixed(2)}
+                  ${(Number((profilePrice * 5.6 / 100).toFixed(2)) + Number(profilePrice.toFixed(2)) + Number(profilePrice * 105.6 /100 * 0.03)).toFixed(2)}
                 </Typography>
               </Grid>
             </Grid>

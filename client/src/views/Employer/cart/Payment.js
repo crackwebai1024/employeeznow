@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const Payment = (props) => {
   const [stripe, setStripe] = useState("")
   const classes = useStyles();
-  const { items, selected } = props;
+  const { items, selected, buyCount } = props;
 
   useEffect(() => {
     if (window.Stripe) {
@@ -53,13 +53,12 @@ const Payment = (props) => {
     <Container maxWidth="md" className={classes.container}>
       <Paper elevation={0}>
         <Box className={classes.header}>
-
         </Box>
         {
           stripe && (
             <StripeProvider stripe={stripe}>
               <Elements>
-                <PaymentForm items = {items} selected ={selected}/>
+                <PaymentForm items = {items} selected ={selected} buyCount={buyCount}/>
               </Elements>
             </StripeProvider>
           )

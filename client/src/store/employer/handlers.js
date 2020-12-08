@@ -269,11 +269,12 @@ export const chargeRequest = (state, { payload }) => ({
   
 })
 
-export const chargeSuccess = (state, { payload }) => ({
+export const chargeSuccess = (state, { payload }) => {
+  debugger
+  return {
   ...state,
-  
-})
-
+  freeNum: payload
+}}
 export const chargeFailure = (state, { payload }) => ({
   ...state,
   
@@ -290,5 +291,9 @@ export const removeCartSuccess = (state, { payload }) => {
     cartItems: [...payload]
   }
 }
+
+export const freePurchase = (state, { payload }) => ({
+  ...state
+})
 
 export default initialState;
