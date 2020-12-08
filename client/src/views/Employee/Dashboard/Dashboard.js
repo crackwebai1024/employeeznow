@@ -33,7 +33,20 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: "white",
   },
+  subheader: {
+    // fontFamily: "Arial, Helvetica, sans-serif"
+    color: '#cc0000',
+    fontWeight: 600
+  },
   container: {
+  },
+  description: {
+    maxHeight: '50px',
+    paddingBottom: '1rem',
+    overflowY: 'hidden',
+    overflowX: 'hidden',
+    marginBottom: '1rem',
+    whiteSpace: "nowrap"
   },
   header: {
     background: "white",
@@ -41,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
     boxShadow:
       "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+  },
+  red: {
+    color: '#cc0000'
   },
   expand: {
     transform: "rotate(0deg)",
@@ -94,7 +110,8 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.common.blue,
   },
   moreSkills: {
-    fontSize: '16px'
+    fontSize: '16px',
+    marginTop: '-2rem'
   },
   card: {
     boxShadow:
@@ -111,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
   jobPeriod: {
     color: "gray",
     fontWeight: 300,
-    marginBottom: 40,
+    marginBottom: 10,
   },
   input: {
     display: "none",
@@ -210,8 +227,16 @@ function Dashboard(props) {
                     : "Add Personal Preference"}
                 </Button>
               }
-              title="Personal Preference"
-              subheader=""
+              title={
+                <Box className={classes.red}>
+                  Personal Preferences
+                </Box>
+              }
+              subheader={
+                <Box className={classes.subheader}>
+                  <i>this section must be filled in for you to be seen by employers</i>
+                </Box>
+              }
             />
             <CardContent>
               <Grid container item xs={12}>
@@ -280,8 +305,14 @@ function Dashboard(props) {
                   {skill ? "Update Experience" : "Add Experience"}
                 </Button>
               }
-              title="Experience"
-              subheader=""
+              title={
+                <Box className={classes.red}>Experience</Box>
+              }
+              subheader={
+                <Box className={classes.subheader}>
+                  <i>this section must be filled in for you to be seen by employers</i>
+                </Box>
+              }
             />
             {skill && (
               <Fragment>
@@ -323,8 +354,8 @@ function Dashboard(props) {
                   {experience && experience.primaryJob && (
                     <Fragment>
                       <Typography className={classes.company}>
-                      {experience.primaryJob.company}
-                        {}
+                        {experience.primaryJob.company}
+                        { }
                       </Typography>
                       <Typography className={classes.jobPeriod}>
                         {moment(new Date(experience.primaryJob.startDate)).format('MM/DD/YYYY')}&nbsp;~ &nbsp;
@@ -332,6 +363,9 @@ function Dashboard(props) {
                           ? "Present"
                           : moment(new Date(experience.primaryJob.endDate)).format('MM/DD/YYYY')}
                       </Typography>
+                      {/* <Typography className={classes.description}>
+                        {experience.primaryJob.description}
+                      </Typography> */}
                     </Fragment>
                   )}
                 </Grid>
@@ -351,6 +385,9 @@ function Dashboard(props) {
                             ? "Present"
                             : moment(new Date(experience.secondaryJob.endDate)).format('MM/DD/YYYY')}
                         </Typography>
+                        {/* <Typography className={classes.jobPeriod}>
+                          {experience.secondaryJob.description}
+                        </Typography> */}
                       </Fragment>
                     )}
                   </Grid>

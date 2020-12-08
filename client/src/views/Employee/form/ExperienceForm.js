@@ -148,8 +148,6 @@ const ExperienceForm = ({
     employmentStatus: "",
     exclude: []
   });
-
-  const [isopen, setIsOpen] = useState("")
   const [error, setError] = useState({
     primaryJob: "",
   });
@@ -228,7 +226,6 @@ const ExperienceForm = ({
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
-    setIsOpen("")
     switch (name) {
       case "employmentStatus": {
         return setFormData({ ...formData, [name]: value });
@@ -347,7 +344,6 @@ const ExperienceForm = ({
   };
 
   const handleInput = (name, value, key) => {
-    setIsOpen("")
     let data = otherJobs;
     data[key][name] = value;
     if (data[key].startDate && data[key].endDate) {
@@ -496,9 +492,7 @@ const ExperienceForm = ({
 
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
-                    disableToolbar
-                    open={isopen === "2" ? true : false}
-                    onClick={e => setIsOpen("2")}
+                    autoOk
                     format="MM/dd/yyyy"
                     onChange={e => onChange({
                       target: {
@@ -519,11 +513,9 @@ const ExperienceForm = ({
                 <Grid item sm={3} xs={6}>
                   {!toDisabled &&
                     <KeyboardDatePicker
-                      disableToolbar
+                      autoOk
                       label="End Date"
                       variant="inline"
-                      open={isopen === "1" ? true : false}
-                      onClick={e => setIsOpen("1")}
                       format="MM/dd/yyyy"
                       onChange={e => onChange({
                         target: {
@@ -634,7 +626,7 @@ const ExperienceForm = ({
 
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
-
+                    autoOk
                     onChange={e => onChange({
                       target: {
                         id: 'secondaryJob',
@@ -649,17 +641,13 @@ const ExperienceForm = ({
                     format="MM/dd/yyyy"
                     InputLabelProps={{ shrink: true }}
                     label="Start Date"
-                    open={isopen === "3" ? true : false}
-                    onClick={e => setIsOpen("3")}
                   />
                 </Grid>
 
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
-                    disableToolbar
+                    autoOk
                     format="MM/dd/yyyy"
-                    open={isopen === "4" ? true : false}
-                    onClick={e => setIsOpen("4")}
                     onChange={e => onChange({
                       target: {
                         id: 'secondaryJob',
@@ -744,10 +732,8 @@ const ExperienceForm = ({
 
                       <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
-                          disableToolbar
+                          autoOk
                           format="MM/dd/yyyy"
-                          open={isopen === (2 * key + 4) ? true : false}
-                          onClick={e => setIsOpen(2 * key + 4)}
                           onChange={e => handleInput('startDate', e, key)}
                           value={otherJobs[key].startDate ? otherJobs[key].startDate : null}
                           variant="inline"
@@ -759,16 +745,13 @@ const ExperienceForm = ({
 
                       <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
-                          disableToolbar
+                          autoOk
                           format="MM/dd/yyyy"
                           onChange={e => handleInput('endDate', e, key)}
                           value={otherJobs[key].endDate ? otherJobs[key].endDate : null}
                           variant="inline"
-                          open={isopen === (2 * key + 5) ? true : false}
-                          onClick={e => setIsOpen(2 * key + 5)}
                           InputLabelProps={{ shrink: true }}
                           label="End Date"
-                          initialFocusedDate={''}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}

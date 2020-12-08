@@ -104,3 +104,12 @@
     padding-right: 0px;
   }
 }
+
+.MuiPickersToolbar-toolbar {
+  height: 50px !important;
+  display: flex !important;
+}
+
+.MuiPickersToolbar-toolbar > button > span > h4 {
+  font-size: 1rem;
+}

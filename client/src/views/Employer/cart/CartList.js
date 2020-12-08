@@ -20,6 +20,14 @@ const useStyles = makeStyles(theme => ({
   },
   cartContainer: {
     borderRadius: '0px',
+    boxShadow: 'none',
+    borderBottom: '1px solid lightgray',
+    '&:hover': {
+      background: theme.palette.common.hover_white,
+    },
+    '&:selected': {
+      background: theme.palette.common.hover_white
+    }
   },
   shift: {
     display: 'flex',
@@ -28,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   isSelected: {
     background: theme.palette.common.hover_white,
-    // borderLeft: '4px solid green'
+    height: '100%'
   },
   nodata: {
     textAlign: 'center',
@@ -41,12 +49,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     position: "relative",
-    '&:hover': {
-      background: theme.palette.common.hover_white,
-    },
-    '&:selected': {
-      background: theme.palette.common.hover_white
-    }
+    margin: '1rem'
   },
   flexR: {
     width: '100%',
@@ -122,7 +125,7 @@ const CartList = (props) => {
     })
     setSelCount(selCount)
   }
-
+  console.log(cartItems, "cartItems")
   return (
     <Container width="sm" className={classes.container}>
       <Grid item container xs={12} md={12}>
@@ -132,16 +135,16 @@ const CartList = (props) => {
               EMPLOYEE PROFILES: {cartItems.length} / {selCount}
             </Box>
             <Box className={classes.avaliableCount}>
-              {/* {freeNum} */}
+              {freeNum}
             </Box>
           </Box>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Box className={classes.content}>
+          <Box className={classes.content} id="cartList">
             {
               cartItems.map((cart, key) => (
                 <Card key={`cart_${key}`}
-                  className={classes.cartContainer}
+                  className={`${classes.cartContainer} ${isSelected[key] && classes.isSelected}`}
                 >
                   <Box className={isSelected[key] && classes.isSelected}>
                     <CardContent className={classes.cartContent}>
@@ -162,20 +165,21 @@ const CartList = (props) => {
                         <Grid item xs={12} className={classes.employeezNowId}>
                           ID: #{cart.employeezNowId}
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} className={classes.shift}>
                           {
-                            cart.employeeskill.shift.length > 0 &&
-                            <Box className={classes.shift}>
-                              SHIFT : 
-                              {cart.employeeskill.shift.map((sh, key) =>
-                                <Box key={key}>&nbsp;&nbsp;{sh}</Box>
-                              )}
-                            </Box>
+                            cart.employeeskill.primaryJob && "PRIMARY JOB :" +
+                            cart.employeeskill.primaryJob.years + "years of " + cart.employeeskill.primaryJob.title
                           }
                         </Grid>
                         <Grid item xs={12}>
                           {
-                            // cart.employeeskill
+                            cart.employeeskill.shift.length > 0 &&
+                            <Box className={classes.shift}>
+                              SHIFT :
+                              {cart.employeeskill.shift.map((sh, key) =>
+                              <Box key={key}>&nbsp;&nbsp;{sh}</Box>
+                            )}
+                            </Box>
                           }
                         </Grid>
                       </Grid>
