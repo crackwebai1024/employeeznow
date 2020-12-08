@@ -157,7 +157,7 @@ const PaymentForm = (props) => {
                   Credit card convenience fee
                 </Typography>
                 <Typography className={classes.flexR}>
-                  $0.67
+                  ${(profilePrice * 105.6 /100 * 0.03).toFixed(2)}
                 </Typography>
               </Grid>
               <Grid item xs={12} className={classes.bodyList}>
@@ -173,7 +173,7 @@ const PaymentForm = (props) => {
                   Total
                 </Typography>
                 <Typography className={classes.flexR}>
-                  ${(Number((profilePrice * 5.6 / 100).toFixed(2)) + Number(profilePrice.toFixed(2)) + 0.67).toFixed(2)}
+                  ${(Number((profilePrice * 5.6 / 100).toFixed(2)) + Number(profilePrice.toFixed(2)) + Number(profilePrice * 105.6 /100 * 0.03)).toFixed(2)}
                 </Typography>
               </Grid>
             </Grid>
