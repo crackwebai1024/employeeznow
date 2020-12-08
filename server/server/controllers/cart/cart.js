@@ -88,6 +88,11 @@ const addToInterest = async (req, res) => {
       ...employer.interestedEmployees,
       ...employees,
     ];
+    if (employer.canPurchaseFreeNum < employees.length) {
+      return res.status(500).json({
+        error: "invalid request count error",
+      });
+    }
     employer.canPurchaseFreeNum -= employees.length;
     let removedItems = cartItem.cartItems.filter(
       (employee) => !employees.includes(employee._id.toString())
@@ -98,6 +103,7 @@ const addToInterest = async (req, res) => {
     [(await employer.save(), await cartItem.save())];
     return res.status(200).json({
       freeNum: employer.canPurchaseFreeNum,
+      cartItems: cartItem.cartItems,
     });
   } catch (err) {
     return res.status(500).json({
