@@ -230,23 +230,17 @@ const Contact = ({ actions, sendMessage }) => {
           <Typography style={{ fontWeight: '600' }}>
             EMAIL: QUESTIONS@EMPLOYEEZNOW
           </Typography>
-          <Box style={{display: 'flex', marginTop: '1rem', }}>
-            <Typography style={{ fontWeight: '600' }}>
-              ADDRESS : &nbsp;
-            </Typography>
-            <Typography style={{ textAlign: 'left' }}>
-              <span style={{ fontWeight: '600' }}>
-                3133 W. Frye Rd
-              </span><br />
-              <span style={{ fontWeight: '600' }}>
-                Suite 101<br />
-              </span>
-              <span style={{ fontWeight: '600' }}>
-                Chandler, AZ 85226
-              </span>
-            </Typography>
-          </Box>
         </Grid>
+        <Box item xs={12} sm={12} style={{ display: 'flex', paddingTop: '1rem', margin: 'auto' }}>
+          <Typography style={{ fontWeight: '600' }}>
+            ADDRESS : &nbsp;
+            </Typography>
+          <Typography style={{ textAlign: 'left' }}>
+            <span style={{ fontWeight: '600' }}>
+              3133 W. Frye Rd Suite 101  Chandler, AZ 85226
+            </span>
+          </Typography>
+        </Box>
       </Grid>
     </Container>
 
