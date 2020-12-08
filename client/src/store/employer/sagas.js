@@ -4,6 +4,7 @@ import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUs
 import { actions as types } from './index';
 import * as  EmployerAPI from '@services/EmployerAPI';
 import Axios from '@lib/axios';
+import { successMessage, errorMessage } from '@helpers/utils';
 import { _arrayBufferToBase64 } from '@helpers/utils';
 import { setFilterID } from '@helpers/auth-helpers';
 
@@ -213,6 +214,18 @@ function* onChargeRequest({ payload }) {
   }
 }
 
+function* onRemoveCart ({ payload }) {
+  try {
+    const res = yield call(EmployerAPI.onRemoveCart, payload)
+    if(res && res.data) {
+      yield put(types.removeCartSuccess(res.data.cartItems))
+      successMessage('Success')
+    }
+  } catch {
+
+  }
+}
+
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
   takeEvery(types.updateEmployerAccount, onUpdateEmployer),
@@ -227,7 +240,8 @@ const employerSagas = [
   takeEvery(types.payRequest, onPayRequest),
   takeEvery(types.addToCartRequest, onAddToCart),
   takeEvery(types.loadCartList, onLoadCartList),
-  takeEvery(types.chargeRequest, onChargeRequest)
+  takeEvery(types.chargeRequest, onChargeRequest),
+  takeEvery(types.removeCart, onRemoveCart)
 ];
 
 export default employerSagas;

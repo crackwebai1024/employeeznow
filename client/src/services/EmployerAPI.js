@@ -55,3 +55,7 @@ export async function onLoadCartList(data) {
 export async function onChargeRequest(data) {
   return await Axios.post('/payment/charge', data )
 }
+
+export async function onRemoveCart(data) {
+  return await Axios.post('/cart/deleteone', data)
+}

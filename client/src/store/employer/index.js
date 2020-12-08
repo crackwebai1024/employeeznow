@@ -70,7 +70,10 @@ export const actions = createActions({
 
   CHARGE_REQUEST: undefined,
   CHARGE_SUCCESS: undefined,
-  CHARGE_FAILURE: undefined
+  CHARGE_FAILURE: undefined,
+
+  REMOVE_CART: undefined,
+  REMOVE_CART_SUCCESS: undefined
 });
 
 const reducer = handleActions(
@@ -140,6 +143,9 @@ const reducer = handleActions(
     [actions.chargeRequest, handlers.chargeRequest],
     [actions.chargeSuccess, handlers.chargeSuccess],
     [actions.chargeFailure, handlers.chargeFailure],
+    
+    [actions.removeCart, handlers.removeCart],
+    [actions.removeCartSuccess, handlers.removeCartSuccess],
     
   ]),
   initialState,

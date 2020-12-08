@@ -279,5 +279,16 @@ export const chargeFailure = (state, { payload }) => ({
   
 })
 
+export const removeCart = (state, { payload }) => {
+  return {
+  ...state,
+}}
+
+export const removeCartSuccess = (state, { payload }) => {
+  return {
+    ...state,
+    cartItems: [...payload]
+  }
+}
 
 export default initialState;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Grid, Container, Button, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import MainButton from '@components/Element/Button/MainButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChargeBalance = (props) => {
   const classes = useStyles();
-  const { actions } = props;
+  const { actions, count } = props;
 
   return <>
     <Grid item container xs={12}>
@@ -36,19 +36,21 @@ const ChargeBalance = (props) => {
           Buy Selections
         </Grid>
         <Grid sm={12} md={4}>
-          <MainButton
-            background="dodgerBlue"
-            pd={10} fontSize={16}
-            label={"Charge"}
-            width="150px"
-            bd={5}
-            hoverBack="#1e80ff"
-            border="dodgerBlue"
-            onClick={e => actions.getEvent("BUY_SELECT")}
-            color="white"
-            hoverColor="white"
-          >
-          </MainButton>
+          {
+            count > 0 && <MainButton
+              background="dodgerBlue"
+              pd={10} fontSize={16}
+              label={"Purchase"}
+              width="150px"
+              bd={5}
+              hoverBack="#1e80ff"
+              border="dodgerBlue"
+              onClick={e => actions.getEvent("BUY_SELECT")}
+              color="white"
+              hoverColor="white"
+            >
+            </MainButton>
+          }
         </Grid>
       </Grid>
       <Typography className={classes.topic}>
