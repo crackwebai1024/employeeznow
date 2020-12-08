@@ -161,6 +161,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2rem",
     fontWeight: 600,
   },
+  details: {
+    fontSize: '1.5rem',
+    marginLeft: '1rem'
+  },
   section: {
     color: "RGB(23,41, 64)",
     marginBottom: 10,
@@ -266,6 +270,16 @@ const DashboardCandidate = ({ location, mployee, actions, askInterestStatus, isL
                 basic && `ID - #${basic.employeezNowId}`
               }
             </Grid>
+            {
+              purchased && basic && <>
+                <Grid className={classes.details}>
+                  Email: {basic.email}
+                </Grid>
+                <Grid className={classes.details}>
+                  Phone: {basic.cell}
+                </Grid>
+              </>
+            }
           </Grid>
         </Grid>
 
