@@ -103,7 +103,7 @@ export default function RegisterSection() {
           <Typography>
             <img
               className={classes.bar}
-              src={`${process.env.PUBLIC_URL}/img/bar.png`}
+              src={`${process.env.PUBLIC_URL}/img/test/bar.png`}
               alt="chef"
             />
           </Typography>
@@ -133,7 +133,7 @@ export default function RegisterSection() {
           <Typography>
             <img
               className={classes.bar}
-              src={`${process.env.PUBLIC_URL}/img/bar.png`}
+              src={`${process.env.PUBLIC_URL}/img/test/bar.png`}
               alt="chef"
             />
           </Typography>
