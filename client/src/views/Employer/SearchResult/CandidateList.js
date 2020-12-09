@@ -71,7 +71,7 @@ const CandidateList = (props) => {
   const key = props.result._id;
   const id = props.result._id;
   const { purchased, incart, employeezNowId, employeeId } = props.result;
-  const { actions } = props
+  const { actions, purchasedEmployees } = props
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
   const theme = useTheme();
@@ -236,7 +236,7 @@ const CandidateList = (props) => {
               In Cart
               </Button>
           }
-          {!purchased && !incart &&
+          {!purchased && !incart && !purchasedEmployees &&
             <Button
               variant="outlined"
               color="secondary"

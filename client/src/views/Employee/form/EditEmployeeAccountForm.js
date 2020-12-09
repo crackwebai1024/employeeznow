@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditEmployeeAccountForm = (props) => {
   const { employee: {firstName, middleName, lastName, cell, email, address },
-    actions, errorMessage, updateLoading, setOpenAccount } = props
+    actions, updateLoading, setOpenAccount } = props
   // react-hook-form
   const { register, handleSubmit, errors } = useForm({
     // add current value in the input value value name matches with name in input field
@@ -574,11 +574,6 @@ const EditEmployeeAccountForm = (props) => {
           </DialogActions>
 
           {/* If authorization was failed */}
-          {errorMessage && (
-            <Grid item className={classes.invalidMessage}>
-              {errorMessage}
-            </Grid>
-          )}
         </form>
       </Grid >
     </div >

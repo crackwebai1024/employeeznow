@@ -63,7 +63,7 @@ const VideoGallery = ({videos = [], employee, slug }) => {
   };
 
   const uploadVideo = (a,v,b,c) => {
-    debugger
+    
   }
 
   //fileNames is blob url

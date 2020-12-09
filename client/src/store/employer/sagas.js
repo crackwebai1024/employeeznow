@@ -253,6 +253,18 @@ function* onFreePurchase({ payload }) {
   }
 }
 
+function* onGetPurchasedEmployees({ payload }) {
+  try {
+    let queryString = `?id=${payload.id}`
+    const res = yield call(EmployerAPI.onGetPurchasedEmployees, queryString)
+    if(res && res.data) {
+      yield put(types.setPurchasedEmployees(res.data))
+    }
+  } catch {
+
+  }
+}
+
 const employerSagas = [
   takeEvery(types.getEmployerData, onGetEmployerData),
   takeEvery(types.updateEmployerAccount, onUpdateEmployer),
@@ -269,7 +281,8 @@ const employerSagas = [
   takeEvery(types.loadCartList, onLoadCartList),
   takeEvery(types.chargeRequest, onChargeRequest),
   takeEvery(types.removeCart, onRemoveCart),
-  takeEvery(types.freePurchase, onFreePurchase)
+  takeEvery(types.freePurchase, onFreePurchase),
+  takeEvery(types.getPurchaseEmployees, onGetPurchasedEmployees)
 ];
 
 export default employerSagas;

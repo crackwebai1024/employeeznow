@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import CSSModules from "react-css-modules";
 import { makeStyles } from "@material-ui/styles";
-import styled from "styled-components";
 import cx from "classnames";
 import styles from "./Button.module.css";
 

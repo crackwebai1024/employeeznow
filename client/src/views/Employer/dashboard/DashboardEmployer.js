@@ -177,28 +177,22 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
                 <Typography variant="h5">{name}</Typography>
               </Grid>
             )}
+            <Grid item className={classes.center}>
+              <Button 
+                variant="outlined" 
+                color="secondary"
+                onClick={e => history.push('/purchased')}
+              >
+                Purchased Employees
+              </Button>
+            </Grid>
+
             {queryButton}
           </Box>
         </Grid>
 
         <Grid item xs={12} md={8}>
           <Box item className={classes.leftSection}>
-            {/* <Grid item>
-              <Grid container>
-                <Grid item>
-                  <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
-                    fullWidth className={classes.dialog}
-                  >
-                    <SearchForm
-                      employerId={employer._id}
-                      // history={history}
-                      slug={user.slug}
-                      setOpenSearchForm={setOpenSearchForm}
-                    />
-                  </Dialog>
-                </Grid>
-              </Grid>
-            </Grid> */}
             {name && (
               <Grid container item spacing={3}>
                 <Grid item xs={12} sm={6}>

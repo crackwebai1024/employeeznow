@@ -15,7 +15,8 @@ const initialState = {
   isLimited: false,
   cartItems: [],
   addCartSuccess: "NONE",
-  badge: undefined
+  badge: undefined,
+  purchasedEmployees: []
 };
 
 export const getEmployerData = (state) => ({
@@ -47,7 +48,6 @@ export const saveFilterSuccess = (state, { payload }) => {
     ...state,
     saveFilter: 'SUCCESS',
     searchLoading: "SUCCESS",
-    // filterID: payload.filterID,
     filterResult: payload.filterResult,
   }
 };
@@ -86,7 +86,6 @@ export const searchEmployeeSuccess = (state, { payload }) => ({
   ...state,
   searchLoading: "SUCCESS",
   filterResult: payload.searchResult,
-  // filterID: payload.filterID
 })
 
 export const initialLoading = (state, { payload }) => ({
@@ -214,17 +213,18 @@ export const addToCartRequest = (state) => ({
 
 export const addToCartSuccess = (state, { payload }) => {
   return {
-  ...state,
-  addCartSuccess: 'SUCCESS',
-  filterResult: [...state.filterResult.map(filter => {
-    if (filter._id === payload)
-      return {
-        ...filter,
-        incart: true
-      }
-    return filter
-  })]
-}}
+    ...state,
+    addCartSuccess: 'SUCCESS',
+    filterResult: [...state.filterResult.map(filter => {
+      if (filter._id === payload)
+        return {
+          ...filter,
+          incart: true
+        }
+      return filter
+    })]
+  }
+}
 
 export const addToCartFailure = (state) => ({
   ...state,
@@ -267,24 +267,26 @@ export const getEvent = (state, { payload }) => ({
 
 export const chargeRequest = (state, { payload }) => ({
   ...state,
-  
+
 })
 
 export const chargeSuccess = (state, { payload }) => {
   return {
-  ...state,
-  freeNum: payload.canPurchaseFreeNum,
-  cartItems: [...payload.cartItems]
-}}
+    ...state,
+    freeNum: payload.canPurchaseFreeNum,
+    cartItems: [...payload.cartItems]
+  }
+}
 export const chargeFailure = (state, { payload }) => ({
   ...state,
-  
+
 })
 
 export const removeCart = (state, { payload }) => {
   return {
-  ...state,
-}}
+    ...state,
+  }
+}
 
 export const removeCartSuccess = (state, { payload }) => {
   return {
@@ -295,6 +297,15 @@ export const removeCartSuccess = (state, { payload }) => {
 
 export const freePurchase = (state, { payload }) => ({
   ...state
+})
+
+export const getPurchaseEmployees = (state, { payload }) => ({
+  ...state,
+})
+
+export const setPurchasedEmployees = (state, { payload }) => ({
+  ...state,
+  purchasedEmployees: [...payload.purchased]
 })
 
 export default initialState;

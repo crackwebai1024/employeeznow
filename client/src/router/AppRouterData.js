@@ -24,6 +24,7 @@ import Payment from '@views/Employer/Payment/Payment'
 import { getUser } from '@helpers/auth-helpers';
 import Contact from '@views/Contact';
 import CartList from '@views/Employer/cart/CartList';
+import Purchased from "@views/Employer/purchased";
 
 const user = JSON.parse(getUser())
 
@@ -53,7 +54,8 @@ export const AppPrivateRouterEmployerData = [
   { 'path': `/candidate/:slug`, component: DashboardCandidate },
   { 'path': `/payment/:slug`, component: Payment },
   { 'path': `/contactus`, component: Contact },
-  { 'path': '/carts', component: CartList}
+  { 'path': '/carts', component: CartList},
+  { 'path': '/purchased', component: Purchased}
 ]
 
 export const AppPrivateRouteeEmployeeData = [

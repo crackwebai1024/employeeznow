@@ -75,11 +75,17 @@ export const actions = createActions({
   REMOVE_CART: undefined,
   REMOVE_CART_SUCCESS: undefined,
 
-  FREE_PURCHASE: undefined
+  FREE_PURCHASE: undefined,
+
+  GET_PURCHASE_EMPLOYEES: undefined,
+  SET_PURCHASED_EMPLOYEES: undefined
 });
 
 const reducer = handleActions(
-  new Map([
+  new Map([    
+    [actions.getPurchaseEmployees, handlers.getPurchaseEmployees],
+    [actions.setPurchasedEmployees, handlers.setPurchasedEmployees],
+
     [actions.getEmployerData, handlers.getEmployerData],
     [actions.getEmployerSuccess, handlers.getEmployerSuccess],
     [actions.getEmployerFailure, handlers.getEmployerFailure],
