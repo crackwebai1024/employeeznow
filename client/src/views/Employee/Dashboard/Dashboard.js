@@ -248,10 +248,13 @@ function Dashboard(props) {
                 <Grid item xs={12} sm={6} md={4}>
                   {preference && (
                     <Typography>
-                      <b className={classes.title}>Expected : </b> US${" "}
-                      {preference.idealSalary.amount +
-                        "/" +
-                        preference.idealSalary.unit}
+                      <b className={classes.title}>Expected : </b>
+                      {preference.idealSalary.amount && <span>US${" "}
+                        {preference.idealSalary.amount +
+                          "/" +
+                          preference.idealSalary.unit}
+                      </span>
+                      }
                     </Typography>
                   )}
                 </Grid>

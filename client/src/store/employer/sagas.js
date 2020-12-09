@@ -178,7 +178,7 @@ function* onLoadCartList({ payload }) {
   try {
     const queryString = `?id=${payload.id}`
     const res = yield call(EmployerAPI.onLoadCartList, queryString)
-    if(res && res.data) {
+    if (res && res.data) {
       yield put(types.loadCartListSuccess(res.data))
     }
   } catch {
@@ -189,7 +189,7 @@ function* onLoadCartList({ payload }) {
 function* onChargeRequest({ payload }) {
   try {
     let purchasenum = undefined;
-    switch(payload.purchasenum){
+    switch (payload.purchasenum) {
       case 'BUY_10':
         purchasenum = 10;
         break;
@@ -199,27 +199,41 @@ function* onChargeRequest({ payload }) {
       case 'BUY_50':
         purchasenum = 50;
         break;
-      default: 
+      case 'BUY_SELECT':
         purchasenum = payload.employees.length
         break;
     }
 
-    let data = { ...payload, purchasenum: purchasenum }
-    debugger
-    // const res = yield call(EmployerAPI.onChargeRequest, data)
-    // if(res && res.data) {
-    //   yield put(types.chargeSuccess(res.data.canPurchaseFreeNum))
+    let freeRes = undefined
+    if (payload.purchasenum === "BUY_SELECT") {
+      let freeData = {
+        id: payload.id,
+        employees: payload.employees.splice(0, payload.employees.length - payload.buyCount)
+      }
+      freeRes = yield put(types.freePurchase(freeData))
+    }
 
-    // }
+    if (freeRes) {
+      let data = {
+        employees: payload.employees,
+        id: payload.id,
+        token: payload.token,
+        purchasenum: purchasenum
+      }
+      const res = yield call(EmployerAPI.onChargeRequest, data)
+      if (res && res.data) {
+        yield put(types.chargeSuccess(res.data))
+      }
+    }
   } catch {
     yield put(types.chargeFailure())
   }
 }
 
-function* onRemoveCart ({ payload }) {
+function* onRemoveCart({ payload }) {
   try {
     const res = yield call(EmployerAPI.onRemoveCart, payload)
-    if(res && res.data) {
+    if (res && res.data) {
       yield put(types.removeCartSuccess(res.data.cartItems))
       successMessage('Success')
     }
@@ -228,11 +242,23 @@ function* onRemoveCart ({ payload }) {
   }
 }
 
-function* onFreePurchase ({ payload }) {
+function* onFreePurchase({ payload }) {
   try {
     const res = yield call(EmployerAPI.onFreePurchase, payload)
+    if (res && res.data) {
+      yield put(types.chargeSuccess(res.data))
+    }
+  } catch {
+
+  }
+}
+
+function* onGetPurchasedEmployees({ payload }) {
+  try {
+    let queryString = `?id=${payload.id}`
+    const res = yield call(EmployerAPI.onGetPurchasedEmployees, queryString)
     if(res && res.data) {
-      debugger
+      yield put(types.setPurchasedEmployees(res.data))
     }
   } catch {
 
@@ -255,7 +281,8 @@ const employerSagas = [
   takeEvery(types.loadCartList, onLoadCartList),
   takeEvery(types.chargeRequest, onChargeRequest),
   takeEvery(types.removeCart, onRemoveCart),
-  takeEvery(types.freePurchase, onFreePurchase)
+  takeEvery(types.freePurchase, onFreePurchase),
+  takeEvery(types.getPurchaseEmployees, onGetPurchasedEmployees)
 ];
 
 export default employerSagas;

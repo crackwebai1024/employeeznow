@@ -63,3 +63,7 @@ export async function onRemoveCart(data) {
 export async function onFreePurchase(data) {
   return await Axios.post('/cart/purchase', data)
 }
+
+export async function onGetPurchasedEmployees(data) {
+  return await Axios.get('/crud/employer/readpurchase' + data)
+}

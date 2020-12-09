@@ -5,7 +5,7 @@ import MainButton from '@components/Element/Button/MainButton';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-
+    marginTop: '2rem'
   },
   topic: {
     fontSize: 30,
@@ -30,7 +30,7 @@ const ChargeBalance = (props) => {
   const { actions, count } = props;
 
   return <>
-    <Grid item container xs={12}>
+    <Grid item container xs={12} className={classes.container}>
       <Grid container item xs={12} className={classes.buyCommand}>
         <Grid sm={12} md={8}>
           Buy Selections

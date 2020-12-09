@@ -25,7 +25,7 @@ import { jobTypes } from "../professionTypes";
 import { getUser } from "@helpers/auth-helpers";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import MenuItem from "@material-ui/core/MenuItem";
-import { successMessage } from '@helpers/utils'
+import { successMessage, errorMessage } from '@helpers/utils'
 import { Box } from "@material-ui/core";
 import { usaStates } from '../professionTypes';
 import RoomIcon from '@material-ui/icons/Room';
@@ -119,13 +119,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ExperienceForm = ({
-  // loadProfessionDetails,
-  // updateProfessionDetails,
   success,
   loading,
   experience,
   actions,
-  errorMessage,
 }) => {
   const [formData, setFormData] = useState({
     primaryJob: {
@@ -884,12 +881,6 @@ const ExperienceForm = ({
             </Grid>
           </Grid>
 
-          {/* If authorization was failed */}
-          {errorMessage && (
-            <Grid item className={classes.invalidMessage}>
-              {errorMessage}
-            </Grid>
-          )}
         </form>
         {!experience.experience && (
           <Dialog
