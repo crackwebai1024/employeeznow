@@ -6,7 +6,7 @@ import ComCtrl from "../../controllers/crud/common/common.crud";
 
 const router = express.Router();
 const { requireSignin, hasAuthorization } = authCtrl;
-const { find_ByID, updateByID } = EmpCtrl;
+const { find_ByID, updateByID, getAllPurchased } = EmpCtrl;
 // update employer basic data
 router.route("/update").post(requireSignin, hasAuthorization, updateByID);
 // update password
@@ -23,5 +23,10 @@ router
 router
   .route("/searchfilter/delete")
   .post(requireSignin, hasAuthorization, SefCtrl.deleteByID);
+
+// get all purchased profile
+router
+  .route("/readpurchase")
+  .get(requireSignin, hasAuthorization, getAllPurchased);
 
 export default router;
