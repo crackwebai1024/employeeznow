@@ -270,10 +270,10 @@ export const chargeRequest = (state, { payload }) => ({
 })
 
 export const chargeSuccess = (state, { payload }) => {
-  debugger
   return {
   ...state,
-  freeNum: payload
+  freeNum: payload.canPurchaseFreeNum,
+  cartItems: [...payload.cartItems]
 }}
 export const chargeFailure = (state, { payload }) => ({
   ...state,
