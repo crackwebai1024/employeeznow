@@ -112,8 +112,8 @@ const useStyles = makeStyles((theme) => ({
 // Nav Function
 const Header = ({
   actions,
-  history,
   value,
+  badge,
   setValue,
   isAuthenticated
 }) => {
@@ -178,6 +178,7 @@ const Header = ({
           <LinkTab
             to={route.link}
             title={route.name}
+            badge={badge}
           >
           </LinkTab>
         </li>
@@ -293,6 +294,14 @@ const Header = ({
     </>
   );
 };
+
+const mapStateToProps = ({
+  employer: {
+    formValues, paid, payEvent, badge
+  },
+}) => ({
+  formValues, paid, payEvent, badge
+});
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({

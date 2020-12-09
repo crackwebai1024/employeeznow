@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Link, useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Grid, Box, Dialog, Button, Typography } from '@material-ui/core';
+import { Grid, Box, Button, Typography } from '@material-ui/core';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import { getUser, getFilterID } from '@helpers/auth-helpers';
-import SearchForm from '../form/SearchForm';
+import { getUser, setFilterID } from '@helpers/auth-helpers';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -53,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
     width: '200px',
     marginTop: "2rem"
   },
-  dialog: {
-    marginTop: '5rem',
-    zIndex: 1303, // larger than header and footer
-  },
+  // dialog: {
+  //   marginTop: '5rem',
+  //   zIndex: 1303, // larger than header and footer
+  // },
   filterTitleContainer: {
     marginTop: '0.5rem',
     marginBottom: '0.5rem',
@@ -81,19 +80,14 @@ const useStyles = makeStyles((theme) => ({
   center: {
     textAlign: 'center'
   },
-  description: {
-    textAlign: 'center',
-    fontSize: '12rem'
-  },
+  // description: {
+  //   textAlign: 'center',
+  //   fontSize: '12rem'
+  // },
   filterIcon: {
     position: 'relative',
     top: "0.5rem",
     margin: '0 0.5rem 0 0.5rem'
-  },
-  searchButton: {
-    width: '90%',
-    marginLeft: '5%',
-    height: '26px'
   },
   filterList: {
     width: '100%',
@@ -105,21 +99,13 @@ const useStyles = makeStyles((theme) => ({
       background: "#00800010",
       borderLeft: "solid 3px green"
     },
-
   }
 }));
 
-const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => {
+const DashboardEmployer = ({ employerData, actions, filter }) => {
 
   const classes = useStyles();
-  //open dialog(modal) - sarch form modal
-  const [openSearchForm, setOpenSearchForm] = useState(false);
   const [searchQueries, setSearchQueries] = useState([])
-  const [employer, getEmployer] = useState({})
-  const [reload, setReload] = useState(false)
-
-  const [currentSearchId, setCurrentSearchId] = useState()
-
   const { name, address, generalEmail, website, firstName, lastName, title, phone, email } = employerData;
 
   const user = JSON.parse(getUser());
@@ -135,28 +121,9 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
 
   useEffect(() => {
     if (filter) {
-      setSearchQueries(filter.filters)
-      setReload(!reload)
+      setSearchQueries([...filter.filters])
     }
   }, [filter])
-
-  useEffect(() => {
-    if (searchLoading === "SUCCESS") {
-      actions.initialLoading()
-      history.push(`/search/${currentSearchId}`)
-    } else if (searchLoading === "REQUEST") {
-
-    }
-  }, [searchLoading])
-
-  //update state when open/close dialog
-  const clickFormOpen = () => {
-    setOpenSearchForm(true);
-  };
-
-  const clickFormClose = () => {
-    setOpenSearchForm(false);
-  };
 
   // search professions with saved search query
   const handleSubmit = (e, index) => {
@@ -166,8 +133,8 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
       id: user._id,
       filterID: formData._id
     }
-    setCurrentSearchId(formData._id)
-    actions.searchEmployee(data)
+    setFilterID(formData._id)
+    history.push(`/search/${formData._id}`)
   };
 
   // Render search query button
@@ -210,38 +177,28 @@ const DashboardEmployer = ({ employerData, actions, filter, searchLoading }) => 
                 <Typography variant="h5">{name}</Typography>
               </Grid>
             )}
-            <Button onClick={clickFormOpen} variant="outlined" color="secondary"
-              className={classes.searchButton}
-            >
-                Create New Search
-            </Button>
             {queryButton}
           </Box>
         </Grid>
 
         <Grid item xs={12} md={8}>
           <Box item className={classes.leftSection}>
-            <Grid item>
-              {/* only signed employer can see the button  - need to check later */}
-              {localStorage.role === 'employer' ? (
-                <Grid container>
-                  <Grid item>
-                    <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
-                      fullWidth className={classes.dialog}
-                    >
-                      <SearchForm
-                        employerId={employer._id}
-                        // history={history}
-                        slug={user.slug}
-                        setOpenSearchForm={setOpenSearchForm}
-                      />
-                    </Dialog>
-                  </Grid>
+            {/* <Grid item>
+              <Grid container>
+                <Grid item>
+                  <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
+                    fullWidth className={classes.dialog}
+                  >
+                    <SearchForm
+                      employerId={employer._id}
+                      // history={history}
+                      slug={user.slug}
+                      setOpenSearchForm={setOpenSearchForm}
+                    />
+                  </Dialog>
                 </Grid>
-              ) : (
-                  ''
-                )}
-            </Grid>
+              </Grid>
+            </Grid> */}
             {name && (
               <Grid container item spacing={3}>
                 <Grid item xs={12} sm={6}>

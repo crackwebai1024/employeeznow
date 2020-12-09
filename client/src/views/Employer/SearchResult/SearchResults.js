@@ -13,7 +13,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
 import { getUser, setFilterID } from '@helpers/auth-helpers';
-import professions from './data';
 import SearchForm from '../form/SearchForm';
 import CandidateList from './CandidateList';
 import ProfileShimmer from '@components/Element/Loading/ProfileShimmer';
@@ -146,7 +145,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       marginLeft: '0rem'
     }
-  }
+  },
+  searchButton: {
+    width: '90%',
+    marginLeft: '5%',
+    height: '26px'
+  },
 }));
 
 const SearchResults = (props) => {
@@ -194,12 +198,6 @@ const SearchResults = (props) => {
   }, [filter])
 
   useEffect(() => {
-    if (filterID)
-      history.push(`/search/${filterID}`)
-    setFilterID(filterID)
-  }, [filterID])
-
-  useEffect(() => {
     if (addCartSuccess === "SUCCESS") {
       successMessage('Add to cart')
       actions.initCartSuccess()
@@ -213,11 +211,18 @@ const SearchResults = (props) => {
     setSearchFormdata(data)
   }
 
+  const createNewSearch = (data) => {
+    setOpenSearchForm(true)
+    setSearchFormdata(undefined)
+  }
+
   const onFilterClick = (e, id) => {
     const searchData = {
       filterID: id,
       id: user._id
     }
+    setFilterID(id)
+    history.push(`/search/${id}`)
     actions.searchEmployee(searchData)
   }
 
@@ -239,6 +244,7 @@ const SearchResults = (props) => {
     setRemoveData(data)
     setOpenDelete(true)
   }
+
   // Render search query button
   const FilterLists = filter && filter.filters.length !== 0 && (
     <Box className={classes.filterTitleContainer}>
@@ -247,7 +253,13 @@ const SearchResults = (props) => {
           SEARCH FILTERS
         </Typography>
       </Grid>
-
+      <Button
+        onClick={createNewSearch} 
+        variant="outlined" color="secondary"
+        className={classes.searchButton}
+      >
+        Create New Search
+      </Button>
       <Grid item>
         <Grid
           container
@@ -290,7 +302,7 @@ const SearchResults = (props) => {
       <Container className={classes.container}>
         <Grid item container justify="center">
           {/* <Grid item xs ={4}></Grid> */}
-          <Grid item xs ={12}>
+          <Grid item xs={12}>
             {/* <Box className={classes.filterInfo}>
 
             </Box> */}
@@ -307,20 +319,20 @@ const SearchResults = (props) => {
               {
                 searchLoading === "REQUEST" ?
                   <Box>
-                    <ProfileShimmer/>
-                    <ProfileShimmer/>
+                    <ProfileShimmer />
+                    <ProfileShimmer />
                   </Box>
-                :
-                  filterResult.length > 0
-                  ? filterResult.map((result) => (
-                    <CandidateList
-                      actions={actions}
-                      result={result}
-                    />
-                  ))
                   :
-                  <Typography className={classes.no_result}>
-                    There are no search results. Pleast try with different search.
+                  filterResult.length > 0
+                    ? filterResult.map((result) => (
+                      <CandidateList
+                        actions={actions}
+                        result={result}
+                      />
+                    ))
+                    :
+                    <Typography className={classes.no_result}>
+                      There are no search results. Pleast try with different search.
                   </Typography>}
             </Box>
           </Grid>
@@ -328,7 +340,8 @@ const SearchResults = (props) => {
         <Dialog open={openSearchForm} onClose={clickFormClose} aria-labelledby="dialog-title"
           fullWidth className={classes.dialog}
         >
-          <SearchForm employerId={user._id}
+          <SearchForm 
+            employerId={user._id}
             searchFormData={searchFormData}
             slug={slug} setOpenSearchForm={setOpenSearchForm}
           />

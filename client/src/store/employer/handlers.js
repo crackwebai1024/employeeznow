@@ -14,7 +14,8 @@ const initialState = {
   employeeData: {},
   isLimited: false,
   cartItems: [],
-  addCartSuccess: "NONE"
+  addCartSuccess: "NONE",
+  badge: undefined
 };
 
 export const getEmployerData = (state) => ({
@@ -46,7 +47,7 @@ export const saveFilterSuccess = (state, { payload }) => {
     ...state,
     saveFilter: 'SUCCESS',
     searchLoading: "SUCCESS",
-    filterID: payload.filterID,
+    // filterID: payload.filterID,
     filterResult: payload.filterResult,
   }
 };
@@ -85,7 +86,7 @@ export const searchEmployeeSuccess = (state, { payload }) => ({
   ...state,
   searchLoading: "SUCCESS",
   filterResult: payload.searchResult,
-  filterID: payload.filterID
+  // filterID: payload.filterID
 })
 
 export const initialLoading = (state, { payload }) => ({
