@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
     float: "right",
     [theme.breakpoints.down("sm")]: {
       marginTop: "1rem",
+      float: "none",
+      margin: "auto",
     },
   },
   header: {

@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     color: "gray",
   },
   cartContent: {
-    height: 75,
+    minHeight: "75px",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     // height: 70,
     padding: "1rem",
     width: "100%",
-    background: "white",
+    background: "#fafafa",
     fontWeight: 600,
     fontSize: 20,
     display: "flex",
@@ -68,11 +68,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1rem",
   },
   content: {
-    minHeight: "300px",
-    maxHeight: "300px",
+    minHeight: "440px",
+    maxHeight: "440px",
     overflowY: "auto",
-    background: "white",
-    padding: "0.5rem",
+    background: "#fafafa",
   },
   cartActions: {
     textAlign: "right",
