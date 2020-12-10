@@ -243,6 +243,7 @@ export const loadCartList = (state) => ({
 export const loadCartListSuccess = (state, { payload }) => ({
   ...state,
   cartItems: [...payload.cartItems],
+
   freeNum: payload.freeNum
 })
 
@@ -274,7 +275,8 @@ export const chargeSuccess = (state, { payload }) => {
   return {
     ...state,
     freeNum: payload.canPurchaseFreeNum,
-    cartItems: [...payload.cartItems]
+    cartItems: [...payload.cartItems],
+    badge: payload.cartItems.length
   }
 }
 export const chargeFailure = (state, { payload }) => ({
@@ -291,7 +293,8 @@ export const removeCart = (state, { payload }) => {
 export const removeCartSuccess = (state, { payload }) => {
   return {
     ...state,
-    cartItems: [...payload]
+    cartItems: [...payload],
+    badge: payload.length
   }
 }
 

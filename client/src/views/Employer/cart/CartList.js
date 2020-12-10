@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid, selectionStateSelector } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Card, CardContent, Grid, Box } from '@material-ui/core';
 import { actions as employerActions } from '@store/employer';
@@ -7,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { getUser, getFilterID } from '@helpers/auth-helpers';
+import { getUser } from '@helpers/auth-helpers';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import IconButton from '@material-ui/core/IconButton';
 import Payment from './Payment';
@@ -94,7 +93,6 @@ const CartList = (props) => {
   const { actions, cartItems } = props;
   const [freeNum, setFreeNum] = useState(0)
   const user = JSON.parse(getUser());
-  const filterID = getFilterID();
   const [isSelected, setIsSelected] = useState([]);
   const [selCount, setSelCount] = useState(0);
   const [buyCount, setBuyCount] = useState(0)

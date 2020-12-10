@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
-import AddIcon from "@material-ui/icons/Add";
 import { getUser } from "@helpers/auth-helpers";
 import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import PhotoDropZone from "@components/PhotoDropZone";
-import { AccordionActions } from "@material-ui/core";
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({

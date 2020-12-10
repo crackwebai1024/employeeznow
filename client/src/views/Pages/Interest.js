@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from "react-redux";
 import { actions as emailActions } from "@store/email";
 import { Box, Typography } from '@material-ui/core'
@@ -38,17 +38,17 @@ function Interest(props) {
   return (
     <Box className={classes.wrapper}>
       {
-        interestSuccess == "SUCCESS" &&
+        interestSuccess === "SUCCESS" &&
         <Typography className={classes.title}>
           Successfully sent the message
         </Typography>
       }
       {
-        interestSuccess == "REQUEST" &&
+        interestSuccess === "REQUEST" &&
         <LoadingCircular />
       }
       {
-        interestSuccess == "FAILURE" &&
+        interestSuccess === "FAILURE" &&
         <Typography className={classes.title}>
           Sorry!
         </Typography>

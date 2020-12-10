@@ -11,7 +11,7 @@ const styles = theme => ({
   },
 });
 
-export default function PasswordInput(props) {
+function PasswordInput(props) {
   const [passwordIsMasked, setPasswordIsMasked] = useState(true)
 
   const togglePasswordMask = () => {
@@ -51,4 +51,4 @@ PasswordInput.propTypes = {
   value: PropTypes.func.isRequired,
 };
 
-PasswordInput = withStyles(styles)(PasswordInput);
+export default  withStyles(styles)(PasswordInput);

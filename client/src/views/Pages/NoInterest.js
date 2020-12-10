@@ -38,17 +38,17 @@ function NoInterest(props) {
   return (
     <Box className={classes.wrapper}>
       {
-        noInterestSuccess == "SUCCESS" &&
+        noInterestSuccess === "SUCCESS" &&
         <Typography className={classes.title}>
           Successfully sent the message
         </Typography>
       }
       {
-        noInterestSuccess == "REQUEST" &&
+        noInterestSuccess === "REQUEST" &&
         <LoadingCircular />
       }
       {
-        noInterestSuccess == "FAILURE" &&
+        noInterestSuccess === "FAILURE" &&
         <Typography className={classes.title}>
           Sorry!
         </Typography>

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
@@ -30,12 +30,13 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
   },
   profilePhoto: {
-    width: 166,
-    display: 'flex',
-    marginLeft: '3rem',
+    width: 100,
+    textAlign: "center",
+    marginLeft: "3rem",
     marginTop: -100,
     padding: 0,
     cursor: "pointer",
+    display: 'flex',
     [theme.breakpoints.down('xs')]: {
       display: 'block',
       margin: 'auto',
@@ -118,13 +119,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     backgroundColor: "white",
   },
-  header: {
-    background: "white",
-    paddingBottom: "1rem",
-    marginBottom: "10px",
-    boxShadow:
-      "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
-  },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
@@ -145,14 +139,6 @@ const useStyles = makeStyles((theme) => ({
   deploma: {
     textAlign: 'center',
     padding: '1rem'
-  },
-  profilePhoto: {
-    width: 100,
-    textAlign: "center",
-    marginLeft: "3rem",
-    marginTop: -100,
-    padding: 0,
-    cursor: "pointer",
   },
   name: {
     marginLeft: "1rem",

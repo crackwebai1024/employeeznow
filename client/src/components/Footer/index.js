@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Box, Typography } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -108,7 +107,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Footer({ isAuthenticated, value, setValue }) {
   const classes = useStyles();
-  const theme = useTheme();
 
   const user = JSON.parse(getUser())
   /** value/setValue is connected with value of Nav(Header) If eigther Nav/Footer change the order, value has to be matched */

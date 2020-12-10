@@ -1,17 +1,14 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import BusinessIcon from '@material-ui/icons/Business';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import { Container } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -75,9 +72,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
   const classes = useStyles();
-  const theme = useTheme();
-  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Container width="md" container direction="column" className={classes.mainContainer}>

@@ -36,6 +36,7 @@ export default function ExampleProfile() {
       </Typography>
       <img 
         className={classes.imageWrapper}
+        alt="img"
         src={`${process.env.PUBLIC_URL}/img/test/img6.png`}
       />
     </Box>

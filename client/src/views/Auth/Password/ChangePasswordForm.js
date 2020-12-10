@@ -62,7 +62,7 @@ const ChangePassfordForm = ({
   };
 
   useEffect(() => {
-    if (changepassword == "FAILURE") {
+    if (changepassword === "FAILURE") {
       setError("Current password is not correct!")
     }
   }, [changepassword])
@@ -70,7 +70,7 @@ const ChangePassfordForm = ({
   return (
     <Grid container direction="column" alignItems="center">
       {
-        changepassword == "REQUEST" && <LoadingCircular />
+        changepassword === "REQUEST" && <LoadingCircular />
       }
       <Box className={classes.passwordWrapper}>
         <Grid item>

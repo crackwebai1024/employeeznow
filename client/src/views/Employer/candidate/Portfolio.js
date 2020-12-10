@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Card, Grid, CardHeader, GridList, GridListTile, CardContent, Box, Typography, GridListTileBar, IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Card, Grid, CardHeader, GridList, GridListTile, CardContent, Box, Typography, GridListTileBar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -92,9 +92,6 @@ const useStyles = makeStyles((theme) => ({
   sequenceDescription: {
     fontSize: "12px",
     display: "flex",
-  },
-  sequence: {
-    padding: "2rem 4rem",
   },
   checkbox: {
     marginRight: "0.5rem",

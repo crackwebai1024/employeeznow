@@ -163,6 +163,10 @@ const Header = ({
   };
 
   // Setup Tabs render
+  const [badges, setBadges] = useState()
+  useEffect(() => {
+    setBadges(badge)
+  }, [badge])
   const tabs = (routes) => (
     <ul
       value={value}
@@ -178,7 +182,7 @@ const Header = ({
           <LinkTab
             to={route.link}
             title={route.name}
-            badge={badge}
+            badge={badges}
           >
           </LinkTab>
         </li>
@@ -309,4 +313,4 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(Header));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

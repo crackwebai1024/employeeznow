@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, TextField, Box } from '@material-ui/core';
@@ -16,7 +15,6 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Typography from '@material-ui/core/Typography';
 import { actions as authActions } from '@store/auth';
 import MainButton from '@components/Element/Button/MainButton';
-import PasswordInput from '@components/PasswordInput'
 import { successMessage } from '@helpers/utils';
 import { bindActionCreators } from 'redux';
 
@@ -95,9 +93,9 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
   }, [success])
 
   useEffect(() => {
-    if (changepassword == "SUCCESS") {
+    if (changepassword === "SUCCESS") {
       setSuccess(true)
-    } else if (changepassword == "FAILURE") {
+    } else if (changepassword === "FAILURE") {
       setError("Email is Invalid.")
       setSuccess(false)
     }

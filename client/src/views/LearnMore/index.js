@@ -1,16 +1,11 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Typography, Box } from '@material-ui/core';
 import logo from '@assets/logo.svg';
 import RegisterSection from '../Home/RegisterSection';
 import SelfInterviewSection from '../Home/SelfInterviewSection';
-import ContestSection from '../Home/ContestSection';
-import RestaurantOutlinedIcon from '@material-ui/icons/RestaurantOutlined';
-import { getUser, getFilterID } from '@helpers/auth-helpers';
-
-const imageList = ["desktop", "binoculars", "memo", "profile", "question", "", "", "calendar"]
+import { getUser } from '@helpers/auth-helpers';
 
 const listData = [
   { img: 'desktop', title: "EMPLOYEE REGISTRATION", description: "It is free for anyone to sign up and create their employee profile. It is not just about up loading a resume, personal preferences are  included to complete your overall profile." },

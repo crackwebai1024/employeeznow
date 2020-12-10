@@ -129,10 +129,6 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
   const handleSubmit = (e, index) => {
     e.preventDefault();
     const formData = searchQueries[index];
-    const data = {
-      id: user._id,
-      filterID: formData._id
-    }
     setFilterID(formData._id)
     history.push(`/search/${formData._id}`)
   };

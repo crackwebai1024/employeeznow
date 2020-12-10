@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Box, Container, TextField, Avatar, Button } from '@material-ui/core';
+import { Grid, Box, Container, Avatar, Button } from '@material-ui/core';
 import MainButton from '@components/Element/Button/MainButton';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
@@ -15,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { actions as authActions } from '@store/auth';
 import PasswordInput from '@components/PasswordInput'
 import { bindActionCreators } from 'redux';
-import { successMessage, errorMessage } from '@helpers/utils';
+import { successMessage } from '@helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -65,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 const Login = ({ actions, resetPassword, loading, slug }) => {
   const { register, handleSubmit, errors, watch } = useForm({});
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
   const classes = useStyles();
   const history = useHistory();
 
@@ -84,14 +82,10 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
     actions.resetPasswordRequest(data)
   };
 
-  const handleInputChange = () => {
-    setError('')
-  }
-
   useEffect(() => {
-    if (resetPassword == "SUCCESS") {
+    if (resetPassword === "SUCCESS") {
       successMessage("Successfully changed your password.")
-    } else if (resetPassword == "FAILURE") {
+    } else if (resetPassword === "FAILURE") {
       setError("Something Wrong!")
       // errorMessage("")
     }

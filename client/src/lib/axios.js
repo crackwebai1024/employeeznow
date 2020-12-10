@@ -1,5 +1,4 @@
 import axios from 'axios';
-import _ from 'lodash';
 
 const axiosApiInstance = axios.create({
   baseURL: "http://192.168.0.106:8000/api"

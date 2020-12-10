@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Box } from '@material-ui/core';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const listData = [
   "It is FREE to search anytime!",
@@ -96,7 +95,7 @@ const Hospitality = () => {
         </Box>
       </Grid>
       <Grid xs={12} sm={6} className={classes.center}>
-        <img src={`${process.env.PUBLIC_URL}/img/test/img4.png`} className={classes.image} />
+        <img src={`${process.env.PUBLIC_URL}/img/test/img4.png`} alt="img" className={classes.image} />
       </Grid>
     </Grid>
     <Grid xs={12}>

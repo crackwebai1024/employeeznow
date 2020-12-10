@@ -495,6 +495,7 @@ const EditEmployeeAccountForm = (props) => {
                 <Grid item container direction="column" justify="center" alignItems="center">
                   <img
                     className={classes.uploadImage}
+                    alt="img"
                     src={
                       !veteranCard ? props.veteranCard &&
                         `data:image/png;base64, ${props.veteranCard}` :

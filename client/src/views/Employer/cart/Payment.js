@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Paper, Box } from "@material-ui/core";
 import { StripeProvider, Elements } from 'react-stripe-elements';
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import PaymentForm from './PaymentForm';
 
 const publish_key = 'pk_test_51HhcEXCIGo4tK7NRleEfPk3GUJ3oqCZoxzfB0FbDjOp5Zw1csOmHhFVP2vBP5pM0R47aJjO6qNCghPuQwo6Y1RtA0013Su773C';

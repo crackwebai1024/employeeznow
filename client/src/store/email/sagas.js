@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { actions, actions as types } from "./index";
+import { actions as types } from "./index";
 import * as EmailAPI from "@services/EmailAPI";
 
 function* onSendInterest({ payload }) {

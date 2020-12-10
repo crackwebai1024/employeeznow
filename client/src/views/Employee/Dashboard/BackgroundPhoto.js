@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
@@ -60,9 +59,7 @@ const useStyles = makeStyles((theme) => ({
 // props from parent - Dashboard
 const BackgourndPhoto = ({ background, actions }) => {
   const classes = useStyles();
-  const theme = useTheme();
   const user = JSON.parse(getUser());
-  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   // Dialog
   const [open, setOpen] = useState(false);

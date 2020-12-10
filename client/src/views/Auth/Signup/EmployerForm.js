@@ -511,7 +511,11 @@ const EmployerForm = ({
                 onChange={(e) => handleCheck(e)}
               />
               <Box>I agree to the&nbsp;
-                <a className={classes.link} target="_blank" href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6">
+                <a 
+                  className={classes.link} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6">
                   Terms & Conditions
                 </a>
               </Box>
@@ -530,7 +534,6 @@ const EmployerForm = ({
                 background="green"
                 hoverColor="white"
                 hoverBack="#007000"
-                color="white"
                 fontSize={16}
                 onClick={handleSubmit(onSubmit)}
               >

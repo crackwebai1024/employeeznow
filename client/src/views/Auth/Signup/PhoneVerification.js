@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
@@ -15,7 +14,6 @@ import ReactCodeInput from "react-code-input";
 import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
 import { makeStyles } from "@material-ui/core/styles";
-import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -99,7 +97,7 @@ const PhoneVerification = ({
   signupUser,
 }) => {
   // react-hook-form setup
-  const { register, handleSubmit, errors, watch } = useForm({});
+  // const { register, handleSubmit, errors, watch } = useForm({});
   // address.state error customized check
   const [error, setError] = useState("");
   const [phone, setPhone] = useState("");

@@ -1,5 +1,4 @@
 import React from 'react'
-import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from 'styled-components';
 
 
@@ -21,7 +20,7 @@ export default function LoadingCircular({ text }) {
   return (
     <LoadingWrapper>
       <div disableShrink size={100}>
-        <img src={`${process.env.PUBLIC_URL}/img/test/loading.jpg`} style={{ width: '50px' }} />
+        <img src={`${process.env.PUBLIC_URL}/img/test/loading.jpg`} alt="img" style={{ width: '50px' }} />
       </div>
     </LoadingWrapper>
   )

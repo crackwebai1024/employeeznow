@@ -154,7 +154,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SearchResults = (props) => {
-  const { actions, filter, match, filterResult, filterID, result, addCartSuccess, searchLoading } = props
+  const { actions, filter, match, filterResult, result, addCartSuccess, searchLoading } = props
   const classes = useStyles();
   const theme = useTheme();
   const { slug } = match.params
@@ -372,10 +372,10 @@ const SearchResults = (props) => {
 
 const mapStateToProps = ({
   employer: {
-    employerData, filter, searchLoading, filterResult, filterID, result, addCartSuccess
+    employerData, filter, searchLoading, filterResult, result, addCartSuccess
   },
 }) => ({
-  employerData, filter, searchLoading, filterResult, filterID, result, addCartSuccess
+  employerData, filter, searchLoading, filterResult, result, addCartSuccess
 });
 
 const mapDispatchToProps = (dispatch) => ({

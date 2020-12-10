@@ -77,8 +77,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EditEmployerAccountForm = ({ employerData, actions }) => {
-  const [formData, setFormData] = useState({})
-  const { register, handleSubmit, errors, setValue } = useForm({
+  // const [formData, setFormData] = useState({})
+  const { register, handleSubmit, errors } = useForm({
     defaultValues: employerData
   });
   const user = JSON.parse(getUser())
@@ -107,11 +107,11 @@ const EditEmployerAccountForm = ({ employerData, actions }) => {
     actions.getEmployerData(data);
   }, [])
 
-  useEffect(() => {
-    if (!_.isEmpty(employerData)) {
-      setFormData({ defaultValues: employerData })
-    }
-  }, [employerData])
+  // useEffect(() => {
+  //   if (!_.isEmpty(employerData)) {
+  //     setFormData({ defaultValues: employerData })
+  //   }
+  // }, [employerData])
 
   return (
     !_.isEmpty(employerData) &&

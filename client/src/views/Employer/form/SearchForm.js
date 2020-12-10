@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { actions as employerActions } from '@store/employer';
 import { bindActionCreators } from 'redux';
-import { makeStyles, useTheme } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -262,7 +262,7 @@ const SearchForm = ({ actions, saveFilter, setOpenSearchForm, searchFormData, sl
                           control={
                             <Checkbox id={sh}
                               value={sh} name={sh} onChange={(e) => handleChange(e)}
-                              checked={searchFormData.shift.filter(shift => shift == sh).length > 0 ? true : false}
+                              checked={searchFormData.shift.filter(shift => shift === sh).length > 0 ? true : false}
                             />
                           }
                           key={`${sh}${i}`} name="shift" label={sh}

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Grid, Box, Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -66,9 +66,10 @@ const useStyles = makeStyles((theme) => ({
 const CandidateList = (props) => {
   const {
     primaryTitle, primaryYears, secondaryTitle, secondaryYears, shift,
-    style, cuisine, wineKnowledge, cocktailKnowledge, systems
+    style, cuisine 
+    // wineKnowledge, cocktailKnowledge, systems
   } = props.result.employeeskill
-  const key = props.result._id;
+  // const key = props.result._id;
   const id = props.result._id;
   const { purchased, incart, employeezNowId, employeeId } = props.result;
   const { actions, purchasedEmployees } = props

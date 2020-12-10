@@ -148,7 +148,6 @@ const ExperienceForm = ({
   const [error, setError] = useState({
     primaryJob: "",
   });
-  const [otherOpen, setOtherOpen] = ([])
 
   const user = JSON.parse(getUser());
   // material-ui
@@ -164,23 +163,12 @@ const ExperienceForm = ({
   const [reload, setReload] = useState(false);
   const [limit, setLimit] = useState(false);
 
-  const units = [
-    { value: "hourly" },
-    { value: "weekly" },
-    { value: "annually" },
-  ];
-
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  // convert date (MongoDB/UTC) to "month, year"
-  const convertDate = (date) => {
-    return date !== null && date.slice(0, 10);
-  };
-
+  
   // load profession details and set default
   useEffect(() => {
     let data = {
