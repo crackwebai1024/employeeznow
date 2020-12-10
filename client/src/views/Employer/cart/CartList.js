@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     minHeight: "300px",
     maxHeight: "300px",
-    overflowY: "scroll",
+    overflowY: "auto",
     background: "white",
     padding: "0.5rem",
   },

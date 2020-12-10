@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     background: "#FAFAFA",
     padding: "5rem 0 5rem 0",
+    width: "100%",
   },
   center: {
     textAlign: "center",

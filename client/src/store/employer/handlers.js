@@ -261,14 +261,6 @@ export const loadCartListSuccess = (state, { payload }) => ({
 export const updateCartItems = (state, { payload }) => {
   return {
     ...state,
-    // filterResult: [...state.filterResult.map(filter => {
-    //   if(filter._id === payload)
-    //     return {
-    //       ...filter,
-    //       incart: true
-    //     }
-    //   return filter
-    // })]
   };
 };
 
