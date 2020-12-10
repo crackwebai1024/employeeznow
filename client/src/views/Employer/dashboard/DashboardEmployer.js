@@ -174,8 +174,8 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
               </Grid>
             )}
             <Grid item className={classes.center}>
-              <Button 
-                variant="outlined" 
+              <Button
+                variant="outlined"
                 color="secondary"
                 onClick={e => history.push('/purchased')}
               >

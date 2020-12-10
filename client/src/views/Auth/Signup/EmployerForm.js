@@ -1,19 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Grid, Box, TextField, Avatar, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import MainButton from '@components/Element/Button/MainButton';
-import Select from '@material-ui/core/Select';
-import { actions as authActions } from '@store/auth';
-import { bindActionCreators } from 'redux';
-import { countryOptions } from './AddressState'
-import _ from 'lodash';
+import React, { useRef, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import {
+  Grid,
+  Box,
+  TextField,
+  Avatar,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+} from "@material-ui/core";
+import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import MainButton from "@components/Element/Button/MainButton";
+import Select from "@material-ui/core/Select";
+import { actions as authActions } from "@store/auth";
+import { bindActionCreators } from "redux";
+import { countryOptions } from "./AddressState";
+import _ from "lodash";
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
@@ -22,82 +30,82 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.blue,
   },
   policy: {
-    display: 'flex',
-    marginLeft: '1rem',
-    height: '28px'
+    display: "flex",
+    marginLeft: "1rem",
+    height: "28px",
     // color: theme.palette.common.blue,
   },
   formControl: {
-    marginTop: '1rem',
-    backgroundColor: 'transparent',
+    marginTop: "1rem",
+    backgroundColor: "transparent",
   },
   heading1: {
-    fontSize: '30px',
-    marginBottom: '1.5rem',
+    fontSize: "30px",
+    marginBottom: "1.5rem",
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
-    marginBottom: '2rem',
-    margin: 'auto'
+    marginBottom: "2rem",
+    margin: "auto",
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: "none",
     color: theme.palette.common.blue,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
   companyInfo: {
-    marginTop: '1rem',
-    marginBottom: '-1rem',
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
+    marginTop: "1rem",
+    marginBottom: "-1rem",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
     },
   },
   wrapper: {
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
-    maxWidth: '500px',
+    maxWidth: "500px",
     position: "relative",
-    top: '5rem',
-    padding: '2rem',
-    margin: 'auto',
+    top: "5rem",
+    padding: "2rem",
+    margin: "auto",
     background: theme.palette.common.white,
-    [theme.breakpoints.down('xs')]: {
-      padding: "1rem"
+    [theme.breakpoints.down("xs")]: {
+      padding: "1rem",
     },
   },
   horizontal: {
-    border: 'none',
+    border: "none",
     borderTop: `1px dotted ${theme.palette.common.blue}`,
   },
   contactInfo: {
-    marginTop: '1rem',
-    marginBottom: '-1rem',
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
+    marginTop: "1rem",
+    marginBottom: "-1rem",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
     },
   },
   emailInfo: {
     ...theme.typography.caption,
-    marginTop: '-0.5rem',
+    marginTop: "-0.5rem",
     color: theme.palette.common.blue,
   },
   stateLabel: {
-    background: 'white'
+    background: "white",
   },
   buttonWrapper: {
     width: "100%",
-    marginTop: '1rem',
-    marginBottom: '2rem'
-  }
+    marginTop: "1rem",
+    marginBottom: "2rem",
+  },
 }));
 
 const EmployerForm = ({
@@ -111,41 +119,41 @@ const EmployerForm = ({
   // react-hook-form setup
   const { register, handleSubmit, errors, watch } = useForm({});
   const password = useRef({});
-  password.current = watch('password', '');
+  password.current = watch("password", "");
 
   // address.state error customized check
-  const [stateError, setStateError] = useState('');
+  const [stateError, setStateError] = useState("");
 
-  const [policy, confirmPolicy] = useState(false)
-  const [policyError, setPolicyError] = useState("")
+  const [policy, confirmPolicy] = useState(false);
+  const [policyError, setPolicyError] = useState("");
   // material-ui
   const classes = useStyles();
 
   // check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
-    register({ name: "address.state", value: e.target.value })
+    register({ name: "address.state", value: e.target.value });
     if (e.target.value) setStateError(false);
   };
 
   // connected to action
   const onSubmit = (formData) => {
-    setPolicyError("")
+    setPolicyError("");
     if (!formData.address.state) return setStateError(true);
     if (!policy) {
-      return setPolicyError("Please check the Terms & Condition")
+      return setPolicyError("Please check the Terms & Condition");
     }
     if (formData) {
       let data = {
         ...formData,
-        role: "employer"
-      }
-      actions.employerSignupRequest(data)
+        role: "employer",
+      };
+      actions.employerSignupRequest(data);
     }
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   // Redirect to employer account page after sign up
   if (isAuthenticated) {
@@ -153,17 +161,22 @@ const EmployerForm = ({
   }
 
   if (!_.isEmpty(signupUser)) {
-    return <Redirect to='/signup/emailverify' />
+    return <Redirect to="/signup/emailverify" />;
   }
 
   const handleCheck = (e) => {
-    confirmPolicy(e.target.checked)
-  }
+    confirmPolicy(e.target.checked);
+  };
 
   return (
-    <Container maxWidth="sm" style={{ paddingBottom: '10rem' }}>
-      <Grid container direction="column" alignItems="center" className={classes.wrapper}>
-        <Grid item style={{ display: 'flex' }}>
+    <Container maxWidth="sm" style={{ paddingBottom: "10rem" }}>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        className={classes.wrapper}
+      >
+        <Grid item style={{ display: "flex" }}>
           <Avatar className={classes.avatar}>
             <VpnKeyOutlinedIcon />
           </Avatar>
@@ -183,7 +196,7 @@ const EmployerForm = ({
             <Grid item sm={12} xs={12}>
               <TextField
                 error={errors.name ? true : false}
-                helperText={errors.name ? 'This filed is required' : ''}
+                helperText={errors.name ? "This filed is required" : ""}
                 variant="outlined"
                 margin="normal"
                 required
@@ -203,8 +216,8 @@ const EmployerForm = ({
                 error={errors.address && errors.address.street1 ? true : false}
                 helperText={
                   errors.address && errors.address.street1
-                    ? 'This filed is required'
-                    : ''
+                    ? "This filed is required"
+                    : ""
                 }
                 variant="outlined"
                 margin="normal"
@@ -240,8 +253,8 @@ const EmployerForm = ({
                 error={errors.address && errors.address.city ? true : false}
                 helperText={
                   errors.address && errors.address.city
-                    ? 'This filed is required'
-                    : ''
+                    ? "This filed is required"
+                    : ""
                 }
                 variant="outlined"
                 margin="normal"
@@ -266,7 +279,12 @@ const EmployerForm = ({
                 error={stateError ? true : false}
                 className={classes.formControl}
               >
-                <InputLabel htmlFor="address.state" className={classes.stateLabel}>State</InputLabel>
+                <InputLabel
+                  htmlFor="address.state"
+                  className={classes.stateLabel}
+                >
+                  State
+                </InputLabel>
 
                 <Select
                   native
@@ -276,11 +294,13 @@ const EmployerForm = ({
                   onChange={(e) => handleChange(e)}
                 >
                   <option aria-label="None" value="" />
-                  {
-                    countryOptions.map((option, item) => {
-                      return <option key={item} value={option.value}>{option.label}</option>
-                    })
-                  }
+                  {countryOptions.map((option, item) => {
+                    return (
+                      <option key={item} value={option.value}>
+                        {option.label}
+                      </option>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </Grid>
@@ -290,8 +310,8 @@ const EmployerForm = ({
                 error={errors.address && errors.address.zipcode ? true : false}
                 helperText={
                   errors.address && errors.address.zipcode
-                    ? 'This filed is required'
-                    : ''
+                    ? "This filed is required"
+                    : ""
                 }
                 required
                 variant="outlined"
@@ -315,7 +335,7 @@ const EmployerForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.generalEmail ? true : false}
-                helperText={errors.generalEmail ? 'This filed is required' : ''}
+                helperText={errors.generalEmail ? "This filed is required" : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -336,7 +356,7 @@ const EmployerForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.website ? true : false}
-                helperText={errors.website ? 'Invalid Address' : ''}
+                helperText={errors.website ? "Invalid Address" : ""}
                 variant="outlined"
                 margin="normal"
                 fullWidth
@@ -363,7 +383,7 @@ const EmployerForm = ({
             <Grid item sm={6} xs={12}>
               <TextField
                 error={errors.firstName ? true : false}
-                helperText={errors.firstName ? 'This filed is required' : ''}
+                helperText={errors.firstName ? "This filed is required" : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -381,7 +401,7 @@ const EmployerForm = ({
             <Grid item sm={6} xs={12}>
               <TextField
                 error={errors.lastName ? true : false}
-                helperText={errors.lastName ? 'This filed is required' : ''}
+                helperText={errors.lastName ? "This filed is required" : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -414,7 +434,7 @@ const EmployerForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.phone ? true : false}
-                helperText={errors.phone ? 'Phone number is required' : ''}
+                helperText={errors.phone ? "Phone number is required" : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -437,7 +457,7 @@ const EmployerForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.email ? true : false}
-                helperText={errors.email ? 'This filed is required' : ''}
+                helperText={errors.email ? "This filed is required" : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -463,7 +483,7 @@ const EmployerForm = ({
               <TextField
                 error={errors.password ? true : false}
                 helperText={
-                  errors.password ? 'Password must be munimum 8 characters' : ''
+                  errors.password ? "Password must be munimum 8 characters" : ""
                 }
                 required
                 variant="outlined"
@@ -485,7 +505,7 @@ const EmployerForm = ({
             <Grid item xs={12}>
               <TextField
                 error={errors.password ? true : false}
-                helperText={errors.password ? 'Password do not match' : ''}
+                helperText={errors.password ? "Password do not match" : ""}
                 required
                 variant="outlined"
                 margin="normal"
@@ -498,7 +518,7 @@ const EmployerForm = ({
                 autoComplete="passwordConfirm"
                 inputRef={register({
                   validate: (value) =>
-                    value === password.current || 'The passwords do not match',
+                    value === password.current || "The passwords do not match",
                 })}
               />
             </Grid>
@@ -510,18 +530,20 @@ const EmployerForm = ({
                 required
                 onChange={(e) => handleCheck(e)}
               />
-              <Box>I agree to the&nbsp;
-                <a 
-                  className={classes.link} 
+              <Box>
+                I agree to the&nbsp;
+                <a
+                  className={classes.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6">
+                  href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6"
+                >
                   Terms & Conditions
                 </a>
               </Box>
             </Grid>
 
-            <Grid item xs={12} style={{color: 'red'}}>
+            <Grid item xs={12} style={{ color: "red" }}>
               {policyError}
             </Grid>
 
@@ -536,8 +558,7 @@ const EmployerForm = ({
                 hoverBack="#007000"
                 fontSize={16}
                 onClick={handleSubmit(onSubmit)}
-              >
-              </MainButton>
+              ></MainButton>
             </Box>
             {/* If authorization was failed */}
             {errorMessage && (
@@ -552,8 +573,8 @@ const EmployerForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-                ''
-              )}
+              ""
+            )}
           </Grid>
         </form>
 
@@ -567,18 +588,18 @@ const EmployerForm = ({
   );
 };
 
-const mapStateToProps = ({
-  auth: {
-    phoneVerifyNeed, signupUser
-  },
-}) => ({
-  phoneVerifyNeed, signupUser
+const mapStateToProps = ({ auth: { phoneVerifyNeed, signupUser } }) => ({
+  phoneVerifyNeed,
+  signupUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...authActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...authActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmployerForm);

@@ -132,7 +132,7 @@ export default function Portfolio(props) {
                             {p && (
                               <Fragment>
                                 <Box className={classes.imagewrapper}>
-                                  {p.style == "video" ? (
+                                  {p.style === "video" ? (
                                     <Fragment>
                                       <Box className={classes.videoBox}></Box>
                                       <video controls className={classes.video}>
@@ -152,6 +152,7 @@ export default function Portfolio(props) {
                                         <img
                                           src={p.url && `${p.url}?${Date.now()}`}
                                           className={classes.image}
+                                          alt="img"
                                         />
                                       </Fragment>
                                     )}

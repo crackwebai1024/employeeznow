@@ -1,6 +1,5 @@
-import React from 'react'
-import styled from 'styled-components';
-
+import React from "react";
+import styled from "styled-components";
 
 const LoadingWrapper = styled.div`
   position: absolute;
@@ -11,7 +10,7 @@ const LoadingWrapper = styled.div`
   margin: auto;
   align-items: center;
   height: 100vh;
-  background: RGB(255,255,255, 0.8);
+  background: RGB(255, 255, 255, 0.8);
   padding-left: 45%;
   z-index: 10000;
 `;
@@ -20,8 +19,12 @@ export default function LoadingCircular({ text }) {
   return (
     <LoadingWrapper>
       <div disableShrink size={100}>
-        <img src={`${process.env.PUBLIC_URL}/img/test/loading.jpg`} alt="img" style={{ width: '50px' }} />
+        <img
+          src={`${process.env.PUBLIC_URL}/img/test/loading.jpg`}
+          alt="img"
+          style={{ width: "50px" }}
+        />
       </div>
     </LoadingWrapper>
-  )
+  );
 }

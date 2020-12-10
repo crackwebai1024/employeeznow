@@ -1,27 +1,27 @@
-import { InputAdornment, withStyles } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import { InputAdornment, withStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 
-const styles = theme => ({
+const styles = (theme) => ({
   eye: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
 });
 
 function PasswordInput(props) {
-  const [passwordIsMasked, setPasswordIsMasked] = useState(true)
+  const [passwordIsMasked, setPasswordIsMasked] = useState(true);
 
   const togglePasswordMask = () => {
-    setPasswordIsMasked(!passwordIsMasked)
+    setPasswordIsMasked(!passwordIsMasked);
   };
   const { classes } = props;
 
   return (
     <TextField
-      type={passwordIsMasked ? 'password' : 'text'}
+      type={passwordIsMasked ? "password" : "text"}
       required
       fullWidth
       margin="normal"
@@ -31,13 +31,17 @@ function PasswordInput(props) {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            {passwordIsMasked ?
+            {passwordIsMasked ? (
               <VisibilityIcon
                 className={classes.eye}
-                onClick={togglePasswordMask} /> :
+                onClick={togglePasswordMask}
+              />
+            ) : (
               <VisibilityOffIcon
                 className={classes.eye}
-                onClick={togglePasswordMask} />}
+                onClick={togglePasswordMask}
+              />
+            )}
           </InputAdornment>
         ),
       }}
@@ -51,4 +55,4 @@ PasswordInput.propTypes = {
   value: PropTypes.func.isRequired,
 };
 
-export default  withStyles(styles)(PasswordInput);
+export default withStyles(styles)(PasswordInput);

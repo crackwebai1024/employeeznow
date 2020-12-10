@@ -1,7 +1,6 @@
+import { handleActions, createActions } from "redux-actions";
 
-import { handleActions, createActions } from 'redux-actions';
-
-import initialState, * as handlers from './handlers';
+import initialState, * as handlers from "./handlers";
 
 export const actions = createActions({
   GET_USER_DATA_REQUEST: undefined,
@@ -78,11 +77,11 @@ export const actions = createActions({
   FREE_PURCHASE: undefined,
 
   GET_PURCHASE_EMPLOYEES: undefined,
-  SET_PURCHASED_EMPLOYEES: undefined
+  SET_PURCHASED_EMPLOYEES: undefined,
 });
 
 const reducer = handleActions(
-  new Map([    
+  new Map([
     [actions.getPurchaseEmployees, handlers.getPurchaseEmployees],
     [actions.setPurchasedEmployees, handlers.setPurchasedEmployees],
 
@@ -91,7 +90,7 @@ const reducer = handleActions(
     [actions.getEmployerFailure, handlers.getEmployerFailure],
 
     [actions.updateEmployerAccount, handlers.updateEmployerAccount],
-    
+
     [actions.saveFilterRequest, handlers.saveFilterRequest],
     [actions.saveFilterSuccess, handlers.saveFilterSuccess],
     [actions.saveFilterFailure, handlers.saveFilterFailure],
@@ -102,9 +101,9 @@ const reducer = handleActions(
 
     [actions.searchEmployee, handlers.searchEmployee],
     [actions.searchEmployeeSuccess, handlers.searchEmployeeSuccess],
-    
+
     [actions.initialLoading, handlers.initialLoading],
-    
+
     [actions.getSearchResult, handlers.getSearchResult],
     [actions.getSearchResultSuccess, handlers.getSearchResultSuccess],
 
@@ -151,14 +150,13 @@ const reducer = handleActions(
     [actions.chargeRequest, handlers.chargeRequest],
     [actions.chargeSuccess, handlers.chargeSuccess],
     [actions.chargeFailure, handlers.chargeFailure],
-    
+
     [actions.removeCart, handlers.removeCart],
     [actions.removeCartSuccess, handlers.removeCartSuccess],
-    
+
     [actions.freePurchase, handlers.freePurchase],
-    
   ]),
-  initialState,
+  initialState
 );
 
 export default reducer;

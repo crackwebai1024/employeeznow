@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Container from "@material-ui/core/Container";
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: "80%",
-    marginBottom: '1.5rem'
+    marginBottom: "1.5rem",
   },
   link: {
     textDecoration: "none",
@@ -117,7 +116,7 @@ const PhoneVerification = ({
   }, [digicodeConfirmError]);
 
   const onSendDigitCode = () => {
-    if (digitCode.length == 6) {
+    if (digitCode.length === 6) {
       let confirmedSixCode = {
         sixDigitCode: digitCode,
       };
@@ -203,8 +202,7 @@ const PhoneVerification = ({
     actions.signupuserEmpty();
   };
 
-  const onDigitBack = () => {
-  }
+  const onDigitBack = () => {};
 
   return (
     <Container component="main" maxWidth="sm">
@@ -265,68 +263,80 @@ const PhoneVerification = ({
             </Grid>
           </Fragment>
         ) : (
-            <form onSubmit={(e) => e.preventDefault()}>
-              <Grid item container direction="row" spacing={0}>
-                {/* {error && (
+          <form onSubmit={(e) => e.preventDefault()}>
+            <Grid item container direction="row" spacing={0}>
+              {/* {error && (
                   <Grid item className={classes.invalidMessage}>
                     {error}
                   </Grid>
                 )} */}
-                <MuiPhoneNumber
-                  name="phone"
-                  label="Phone Number"
-                  data-cy="user-phone"
-                  defaultCountry={"us"}
-                  variant="outlined"
-                  fullWidth
-                  value={phone}
-                  error={error}
-                  onChange={handlePhoneChange}
-                  helperText={`${error ? "Invalid PhoneNumber" : ""}`}
-                />
-                <Grid item container>
-                  <Grid xs={5}>
-                    <Button
-                      type="submit"
-                      variant="outlined"
-                      color="primary"
-                      fullWidth
-                      onClick={onBack}
-                      className={classes.button}
-                    >
-                      Back
+              <MuiPhoneNumber
+                name="phone"
+                label="Phone Number"
+                data-cy="user-phone"
+                defaultCountry={"us"}
+                variant="outlined"
+                fullWidth
+                value={phone}
+                error={error}
+                onChange={handlePhoneChange}
+                helperText={`${error ? "Invalid PhoneNumber" : ""}`}
+              />
+              <Grid item container>
+                <Grid xs={5}>
+                  <Button
+                    type="submit"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    onClick={onBack}
+                    className={classes.button}
+                  >
+                    Back
                   </Button>
-                  </Grid>
-                  <Grid xs={2}></Grid>
-                  <Grid xs={5}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      onClick={onConfirm}
-                      className={classes.button}
-                    >
-                      Send Code
-                  </Button>
-                  </Grid>
                 </Grid>
-
-                {/* If authorization was failed */}
+                <Grid xs={2}></Grid>
+                <Grid xs={5}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={onConfirm}
+                    className={classes.button}
+                  >
+                    Send Code
+                  </Button>
+                </Grid>
               </Grid>
-            </form>
-          )}
+
+              {/* If authorization was failed */}
+            </Grid>
+          </form>
+        )}
       </Grid>
     </Container>
   );
-}
+};
 
 const mapStateToProps = ({
   auth: {
-    signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser, veteranCardData,
+    signupUser,
+    isSentPhoneNumber,
+    isAuthenticated,
+    user,
+    digicodeConfirmError,
+    isSingupUser,
+    veteranCardData,
   },
 }) => ({
-  signupUser, isSentPhoneNumber, isAuthenticated, user, digicodeConfirmError, isSingupUser, veteranCardData,
+  signupUser,
+  isSentPhoneNumber,
+  isAuthenticated,
+  user,
+  digicodeConfirmError,
+  isSingupUser,
+  veteranCardData,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,18 +1,14 @@
-import React, { Fragment, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Typography, Box, TextField } from '@material-ui/core';
-import ContestSection from './Home/ContestSection';
 import MainButton from '@components/Element/Button/MainButton';
 import { connect } from "react-redux";
 import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
-import { getUser, getFilterID } from '@helpers/auth-helpers';
+import { getUser } from '@helpers/auth-helpers';
 import { successMessage, errorMessage } from '@helpers/utils'
 import { useForm } from 'react-hook-form';
-
-const imageList = ["desktop", "binoculars", "memo", "profile", "question", "", "", "calendar"]
 
 const invalidError = "This field is invalid!";
 
@@ -87,9 +83,9 @@ const Contact = ({ actions, sendMessage }) => {
   }
 
   useEffect(() => {
-    if (sendMessage == "SUCCESS") {
+    if (sendMessage === "SUCCESS") {
       successMessage("Your Message was sent to employeez successfully!")
-    } else if (sendMessage == "FAILURE") {
+    } else if (sendMessage === "FAILURE") {
       errorMessage("Message sending failed!")
     }
   }, [sendMessage])

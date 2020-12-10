@@ -43,7 +43,7 @@ export const actions = createActions({
   UPDATE_BASIC_INFO_FAILURE: undefined,
 
   UPLOAD_VETERAN_CARD: undefined,
-  VIDEO_UPLOAD_SUCCESS: undefined
+  VIDEO_UPLOAD_SUCCESS: undefined,
 });
 
 const reducer = handleActions(
@@ -89,7 +89,6 @@ const reducer = handleActions(
     [actions.uploadVeteranCard, handlers.uploadVeteranCard],
 
     [actions.videoUploadSuccess, handlers.videoUploadSuccess],
-    
   ]),
   initialState
 );

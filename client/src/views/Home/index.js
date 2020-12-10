@@ -1,10 +1,8 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Grid, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import ContestSection from './ContestSection';
 import ProfileDescription from './ProfileDescription';
 import Hospitality from './Hospitality';
 import VeteranSection from './VeteranSection';

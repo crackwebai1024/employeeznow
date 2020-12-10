@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Box, Container, Avatar, Button } from '@material-ui/core';
-import MainButton from '@components/Element/Button/MainButton';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { actions as authActions } from '@store/auth';
-import PasswordInput from '@components/PasswordInput'
-import { bindActionCreators } from 'redux';
-import { successMessage } from '@helpers/utils';
+import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Box, Container, Avatar, Button } from "@material-ui/core";
+import MainButton from "@components/Element/Button/MainButton";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { actions as authActions } from "@store/auth";
+import PasswordInput from "@components/PasswordInput";
+import { bindActionCreators } from "redux";
+import { successMessage } from "@helpers/utils";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -22,53 +22,53 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.blue,
   },
   eye: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   form: {
     width: "100%",
-    padding: '0 2rem 0 2rem'
+    padding: "0 2rem 0 2rem",
   },
   heading1: {
     ...theme.typography.h4,
-    marginBottom: '1.5rem',
+    marginBottom: "1.5rem",
   },
   button: {
     marginTop: 30,
-    width: '100%',
+    width: "100%",
     marginBottom: 25,
   },
   container: {
-    maxWidth: '600px',
-    margin: 'auto',
-    background: 'white',
-    padding: '2rem 0',
+    maxWidth: "600px",
+    margin: "auto",
+    background: "white",
+    padding: "2rem 0",
     boxShadow: "0 0 4px 0 rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.12)",
   },
   linkContainer: {
-    marginBottom: '8rem',
+    marginBottom: "8rem",
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: "none",
     color: theme.palette.common.blue,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
 }));
 
 const Login = ({ actions, resetPassword, loading, slug }) => {
   const { register, handleSubmit, errors, watch } = useForm({});
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   const classes = useStyles();
   const history = useHistory();
 
   const password = useRef({});
-  password.current = watch('password', '');
+  password.current = watch("password", "");
 
   const onSubmit = (formData) => {
     let token = window.location.pathname.split("/")[2];
@@ -76,25 +76,30 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
       role: formData.role,
       newPasswordConfirm: formData.password,
       newPassword: formData.password,
-      token
-    }
+      token,
+    };
 
-    actions.resetPasswordRequest(data)
+    actions.resetPasswordRequest(data);
   };
 
   useEffect(() => {
     if (resetPassword === "SUCCESS") {
-      successMessage("Successfully changed your password.")
+      successMessage("Successfully changed your password.");
     } else if (resetPassword === "FAILURE") {
-      setError("Something Wrong!")
+      setError("Something Wrong!");
       // errorMessage("")
     }
-  }, [resetPassword])
+  }, [resetPassword]);
 
   return (
     <Container>
-      <Grid container direction="column" width="sm" className={classes.container} alignItems="center">
-
+      <Grid
+        container
+        direction="column"
+        width="sm"
+        className={classes.container}
+        alignItems="center"
+      >
         <Grid item xs={12}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -132,9 +137,9 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
               </Grid>
               <FormHelperText
                 error={errors.role ? true : false}
-                style={{ textAlign: 'center' }}
+                style={{ textAlign: "center" }}
               >
-                {errors.role ? 'Please select your role' : ''}
+                {errors.role ? "Please select your role" : ""}
               </FormHelperText>
             </RadioGroup>
 
@@ -146,7 +151,7 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
                 size="small"
                 label="Password"
                 helperText={
-                  errors.password ? 'Password must be munimum 8 characters' : ''
+                  errors.password ? "Password must be munimum 8 characters" : ""
                 }
                 id="password"
                 autoComplete="password"
@@ -162,7 +167,7 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
                 error={errors.passwordConfirm ? true : false}
                 label="Password Confirm"
                 helperText={
-                  errors.passwordConfirm ? 'Passwords do not match' : ''
+                  errors.passwordConfirm ? "Passwords do not match" : ""
                 }
                 id="passwordConfirm"
                 name="passwordConfirm"
@@ -170,7 +175,7 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
                 size="small"
                 inputRef={register({
                   validate: (value) =>
-                    value === password.current || 'The passwords do not match',
+                    value === password.current || "The passwords do not match",
                 })}
               />
             </Grid>
@@ -180,7 +185,8 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
                 <Box className={classes.button}>
                   <MainButton
                     background="green"
-                    pd={20} fontSize={18}
+                    pd={20}
+                    fontSize={18}
                     bd={3}
                     label="Change Password"
                     width="100%"
@@ -189,17 +195,18 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
                     border="green"
                     color="white"
                     hoverColor="white"
-                  >
-                  </MainButton>
+                  ></MainButton>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
                   color="primary"
                   className={classes.button}
-                  onClick={e => history.push("/forgotPassword")}
+                  onClick={(e) => history.push("/forgotPassword")}
                   variant="outlined"
-                >Cancel</Button>
+                >
+                  Cancel
+                </Button>
               </Grid>
             </Grid>
             {/* errorMassge when authentication is failed */}
@@ -210,24 +217,28 @@ const Login = ({ actions, resetPassword, loading, slug }) => {
             )}
           </form>
         </Grid>
-
       </Grid>
     </Container>
   );
 };
 
 const mapStateToProps = ({
-  auth: {
-    resetPassword, loading, changepassword, user, loginStatus
-  },
+  auth: { resetPassword, loading, changepassword, user, loginStatus },
 }) => ({
-  resetPassword, loading, changepassword, user, loginStatus
+  resetPassword,
+  loading,
+  changepassword,
+  user,
+  loginStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...authActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...authActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

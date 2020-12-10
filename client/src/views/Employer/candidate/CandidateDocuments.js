@@ -1,46 +1,46 @@
-import React, { useEffect } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
+import React, { useEffect } from "react";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
 
 const AntTabs = withStyles({
   root: {
-    borderBottom: '1px solid #e8e8e8',
+    borderBottom: "1px solid #e8e8e8",
   },
   indicator: {
-    backgroundColor: '#1890ff',
+    backgroundColor: "#1890ff",
   },
 })(Tabs);
 
 const AntTab = withStyles((theme) => ({
   root: {
-    textTransform: 'none',
+    textTransform: "none",
     minWidth: 72,
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing(4),
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
+      "-apple-system",
+      "BlinkMacSystemFont",
       '"Segoe UI"',
-      'Roboto',
+      "Roboto",
       '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
+      "Arial",
+      "sans-serif",
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
-    '&:hover': {
-      color: '#40a9ff',
+    ].join(","),
+    "&:hover": {
+      color: "#40a9ff",
       opacity: 1,
     },
-    '&$selected': {
-      color: '#1890ff',
+    "&$selected": {
+      color: "#1890ff",
       fontWeight: theme.typography.fontWeightMedium,
     },
-    '&:focus': {
-      color: '#40a9ff',
+    "&:focus": {
+      color: "#40a9ff",
     },
   },
   selected: {},
@@ -66,17 +66,17 @@ export default function CandidateDocuments() {
   useEffect(() => {
     switch (value) {
       case 0:
-        return setDocument("resume")
+        return setDocument("resume");
       case 1:
-        return setDocument("Reference")
+        return setDocument("Reference");
       case 2:
-        return setDocument("At Work Videos")
+        return setDocument("At Work Videos");
       case 3:
-        return setDocument("Diploma")
+        return setDocument("Diploma");
       case 4:
-        return setDocument("Portfolio")
+        return setDocument("Portfolio");
     }
-  }, [value])
+  }, [value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -92,9 +92,7 @@ export default function CandidateDocuments() {
           <AntTab label="Portfolio" />
           <AntTab label="Documentation" />
         </AntTabs>
-        <Typography>
-          {document}
-        </Typography>
+        <Typography>{document}</Typography>
         <Typography className={classes.padding} />
       </div>
     </div>

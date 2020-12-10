@@ -1,97 +1,101 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import { actions as employeeActions } from '@store/employee';
-import { actions as authActions } from '@store/auth';
-import { bindActionCreators } from 'redux';
-import { getUser } from '@helpers/auth-helpers';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { useForm } from "react-hook-form";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import { actions as employeeActions } from "@store/employee";
+import { actions as authActions } from "@store/auth";
+import { bindActionCreators } from "redux";
+import { getUser } from "@helpers/auth-helpers";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    marginTop: '1.3rem',
-    backgroundColor: 'transparent',
+    marginTop: "1.3rem",
+    backgroundColor: "transparent",
   },
   uploadImage: {
     width: "150px",
-    height: "150px"
+    height: "150px",
   },
   heading1: {
     ...theme.typography.h1,
-    marginBottom: '1.5rem',
+    marginBottom: "1.5rem",
   },
   uploadButton: {
-    marginTop: '1rem',
-    textAlign: 'center'
+    marginTop: "1rem",
+    textAlign: "center",
   },
   input: {
-    display: 'none',
+    display: "none",
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
-    marginBottom: '8rem',
+    marginBottom: "8rem",
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: "none",
     color: theme.palette.common.blue,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
   companyInfo: {
-    marginTop: '3rem',
-    marginBottom: '-1rem',
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
+    marginTop: "3rem",
+    marginBottom: "-1rem",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
     },
   },
   horizontal: {
-    border: 'none',
+    border: "none",
     borderTop: `1px dotted ${theme.palette.common.blue}`,
   },
   contactInfo: {
-    marginTop: '1rem',
-    marginBottom: '-1rem',
-    [theme.breakpoints.down('xs')]: {
-      textAlign: 'center',
+    marginTop: "1rem",
+    marginBottom: "-1rem",
+    [theme.breakpoints.down("xs")]: {
+      textAlign: "center",
     },
   },
   emailInfo: {
     ...theme.typography.caption,
-    marginTop: '-1.3rem',
+    marginTop: "-1.3rem",
     color: theme.palette.common.blue,
   },
   stateError: {
     color: theme.palette.error.main,
   },
   stateInput: {
-    marginTop: '0.3rem',
+    marginTop: "0.3rem",
   },
 }));
 
 const EditEmployeeAccountForm = (props) => {
-  const { employee: {firstName, middleName, lastName, cell, email, address },
-    actions, updateLoading, setOpenAccount } = props
+  const {
+    employee: { firstName, middleName, lastName, cell, email, address },
+    actions,
+    updateLoading,
+    setOpenAccount,
+  } = props;
   // react-hook-form
   const { register, handleSubmit, errors } = useForm({
     // add current value in the input value value name matches with name in input field
@@ -105,22 +109,22 @@ const EditEmployeeAccountForm = (props) => {
     },
   });
   // address.state error customized check
-  const [stateError, setStateError] = useState('');
+  const [stateError, setStateError] = useState("");
   const [updatedState, setUpdatedState] = useState(address.state); //default value - avoid submitting empty string
 
   const [veteran, setVeteran] = useState({ status: false });
-  const [veteranError, setVeteranError] = useState("")
-  const [veteranCard, setVeteranCard] = useState(null)
+  const [veteranError, setVeteranError] = useState("");
+  const [veteranCard, setVeteranCard] = useState(null);
 
   // material-ui
   const classes = useStyles();
-  const user = JSON.parse(getUser())
+  const user = JSON.parse(getUser());
 
   useEffect(() => {
     if (props.veteranCard) {
-      setVeteran({ status: true })
+      setVeteran({ status: true });
     }
-  }, [props.veteranCard])
+  }, [props.veteranCard]);
 
   // control address.state manually - check if address.state has value. It it has value, errror => false
   const handleChange = (e) => {
@@ -133,34 +137,34 @@ const EditEmployeeAccountForm = (props) => {
 
   const uploadVeteranCard = (e, type) => {
     const formData = new FormData();
-    formData.append("type", type)
-    formData.append("content", e.target.files[0])
-    formData.append("fname", e.target.files[0].name)
+    formData.append("type", type);
+    formData.append("content", e.target.files[0]);
+    formData.append("fname", e.target.files[0].name);
     setVeteranCard(formData);
-  }
+  };
 
   const onChange = (e) => {
-    console.log(e.target.name)
-    if (e.target.name === 'status')
+    console.log(e.target.name);
+    if (e.target.name === "status")
       return setVeteran({
         ...veteran,
-        status: !veteran.status
-      })
+        status: !veteran.status,
+      });
 
-    if (e.target.name === 'veteranId') {
+    if (e.target.name === "veteranId") {
       setVeteran({
         ...veteran,
-        veteranId: e.target.value
-      })
+        veteranId: e.target.value,
+      });
     }
-  }
+  };
 
   const onSubmit = async (formData) => {
     // if (veteran.status && veteran.veteranId == "") {
     //   return setVeteranError("This field is required")
     // }
     if (veteran.status && veteranCard == null) {
-      return setVeteranError("please Upload Veteran Card Image!")
+      return setVeteranError("please Upload Veteran Card Image!");
     }
     const sendData = {
       ...formData,
@@ -168,12 +172,12 @@ const EditEmployeeAccountForm = (props) => {
       address: { ...formData.address, state: updatedState },
     };
     console.log(sendData);
-    if(veteran.status) {
+    if (veteran.status) {
       veteranCard.append("id", user._id);
-      veteranCard.append("role", "employee")
-      await actions.uploadVeteranCard(veteranCard)
+      veteranCard.append("role", "employee");
+      await actions.uploadVeteranCard(veteranCard);
     }
-    await actions.updateBasicInfoRequest(sendData)
+    await actions.updateBasicInfoRequest(sendData);
   };
 
   return (
@@ -191,7 +195,7 @@ const EditEmployeeAccountForm = (props) => {
               <Grid item md={4} xs={12}>
                 <TextField
                   error={errors.firstName ? true : false}
-                  helperText={errors.firstName ? 'This filed is required' : ''}
+                  helperText={errors.firstName ? "This filed is required" : ""}
                   required
                   variant="outlined"
                   margin="normal"
@@ -210,7 +214,7 @@ const EditEmployeeAccountForm = (props) => {
               <Grid item md={4} xs={12}>
                 <TextField
                   error={errors.middleName ? true : false}
-                  helperText={errors.middleName ? 'This filed is required' : ''}
+                  helperText={errors.middleName ? "This filed is required" : ""}
                   variant="outlined"
                   margin="normal"
                   size="small"
@@ -227,7 +231,7 @@ const EditEmployeeAccountForm = (props) => {
               <Grid item md={4} xs={12}>
                 <TextField
                   error={errors.lastName ? true : false}
-                  helperText={errors.lastName ? 'This filed is required' : ''}
+                  helperText={errors.lastName ? "This filed is required" : ""}
                   required
                   variant="outlined"
                   margin="normal"
@@ -250,8 +254,8 @@ const EditEmployeeAccountForm = (props) => {
                   }
                   helpertext={
                     errors.address && errors.address.street1
-                      ? 'This filed is required'
-                      : ''
+                      ? "This filed is required"
+                      : ""
                   }
                   variant="outlined"
                   margin="normal"
@@ -288,8 +292,8 @@ const EditEmployeeAccountForm = (props) => {
                   error={errors.address && errors.address.city ? true : false}
                   helpertext={
                     errors.address && errors.address.city
-                      ? 'This filed is required'
-                      : ''
+                      ? "This filed is required"
+                      : ""
                   }
                   variant="outlined"
                   margin="normal"
@@ -312,7 +316,7 @@ const EditEmployeeAccountForm = (props) => {
                   // helpertext={stateError ? 'Please select state' : ''}
                   className={classes.formControl}
                 >
-                  {address.state === '' && (
+                  {address.state === "" && (
                     <InputLabel htmlFor="address.state">State</InputLabel>
                   )}
 
@@ -325,14 +329,14 @@ const EditEmployeeAccountForm = (props) => {
                     className={classes.stateInput}
                     defaultValue={address.state}
                     inputProps={{
-                      name: 'address.state',
-                      id: 'address.state',
+                      name: "address.state",
+                      id: "address.state",
                       inputRef: (ref) => {
                         if (!ref) return;
                         console.log(ref.value);
                         register(
                           //{ required: !ref.value, minLength: 2 }, // *does not work,
-                          { name: 'address.state', value: ref.value }
+                          { name: "address.state", value: ref.value }
                         );
                       },
                     }}
@@ -397,8 +401,8 @@ const EditEmployeeAccountForm = (props) => {
                     <Typography variant="caption">State is requreid</Typography>
                   </Grid>
                 ) : (
-                    ''
-                  )}
+                  ""
+                )}
               </Grid>
 
               <Grid item sm={4} xs={6}>
@@ -408,8 +412,8 @@ const EditEmployeeAccountForm = (props) => {
                   }
                   helperText={
                     errors.address && errors.address.zipcode
-                      ? 'This filed is required'
-                      : ''
+                      ? "This filed is required"
+                      : ""
                   }
                   required
                   variant="outlined"
@@ -459,7 +463,7 @@ const EditEmployeeAccountForm = (props) => {
               <Grid item xs={12}>
                 <TextField
                   error={errors.email ? true : false}
-                  helperText={errors.email ? 'This filed is required' : ''}
+                  helperText={errors.email ? "This filed is required" : ""}
                   required
                   variant="outlined"
                   margin="normal"
@@ -492,34 +496,45 @@ const EditEmployeeAccountForm = (props) => {
                 className={classes.checkboxText}
               />
               {veteran.status ? (
-                <Grid item container direction="column" justify="center" alignItems="center">
+                <Grid
+                  item
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                >
                   <img
                     className={classes.uploadImage}
                     alt="img"
                     src={
-                      !veteranCard ? props.veteranCard &&
-                        `data:image/png;base64, ${props.veteranCard}` :
-                        URL.createObjectURL(veteranCard.getAll("content")[0])
+                      !veteranCard
+                        ? props.veteranCard &&
+                          `data:image/png;base64, ${props.veteranCard}`
+                        : URL.createObjectURL(veteranCard.getAll("content")[0])
                     }
-                  >
-                  </img>
+                  ></img>
                   <Grid>
                     <input
                       accept="*"
                       className={classes.input}
                       id="contained-button-license"
                       multiple
-                      onChange={e => uploadVeteranCard(e, "veteran")}
+                      onChange={(e) => uploadVeteranCard(e, "veteran")}
                       type="file"
                     />
                   </Grid>
                   <Grid>
                     <label htmlFor="contained-button-license">
-                      <Button color="primary" component="span" className={classes.uploadButton}>
+                      <Button
+                        color="primary"
+                        component="span"
+                        className={classes.uploadButton}
+                      >
                         {/* <PublishIcon />Upload Image */}
-                          Upload Image<br />
-                          (Military ID or DD214)
-                        </Button>
+                        Upload Image
+                        <br />
+                        (Military ID or DD214)
+                      </Button>
                     </label>
                   </Grid>
                   {/* formData.append("fname", e.target.files[0].name) */}
@@ -541,8 +556,8 @@ const EditEmployeeAccountForm = (props) => {
                   /> */}
                 </Grid>
               ) : (
-                  ''
-                )}
+                ""
+              )}
             </Grid>
             <Grid item className={classes.invalidMessage}>
               {veteranError}
@@ -556,7 +571,7 @@ const EditEmployeeAccountForm = (props) => {
               disabled={updateLoading ? true : false}
               variant="outlined"
               color="primary"
-              onClick={e => setOpenAccount(false)}
+              onClick={(e) => setOpenAccount(false)}
               className={classes.button}
             >
               CANCEL
@@ -576,24 +591,44 @@ const EditEmployeeAccountForm = (props) => {
 
           {/* If authorization was failed */}
         </form>
-      </Grid >
-    </div >
+      </Grid>
+    </div>
   );
 };
 
 const mapStateToProps = ({
   employee: {
-    experience, loading, updateLoading, updateEmployee, updateSuccess, veteranCard, success, veteranCardLoading
+    experience,
+    loading,
+    updateLoading,
+    updateEmployee,
+    updateSuccess,
+    veteranCard,
+    success,
+    veteranCardLoading,
   },
 }) => ({
-  experience, loading, updateLoading, updateEmployee, updateSuccess, veteranCard, success, veteranCardLoading
+  experience,
+  loading,
+  updateLoading,
+  updateEmployee,
+  updateSuccess,
+  veteranCard,
+  success,
+  veteranCardLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...authActions,
-    ...employeeActions
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...authActions,
+      ...employeeActions,
+    },
+    dispatch
+  ),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditEmployeeAccountForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditEmployeeAccountForm);

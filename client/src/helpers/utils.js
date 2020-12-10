@@ -1,18 +1,18 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export const getBoxSize = () => {
-  return window.innerHeight - 240
-}
+  return window.innerHeight - 240;
+};
 
 export const _arrayBufferToBase64 = (buffer) => {
-  var binary = '';
+  var binary = "";
   var bytes = new Uint8Array(buffer);
   var len = bytes.byteLength;
   for (var i = 0; i < len; i++) {
     binary += String.fromCharCode(bytes[i]);
   }
   return window.btoa(binary);
-}
+};
 
 export const successMessage = (title) => {
   toast.success(title, {
@@ -22,8 +22,8 @@ export const successMessage = (title) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-  })
-}
+  });
+};
 
 export const errorMessage = (title) => {
   toast.error(title, {
@@ -33,8 +33,8 @@ export const errorMessage = (title) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-  })
-}
+  });
+};
 
 export const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
@@ -44,4 +44,4 @@ export const descendingComparator = (a, b, orderBy) => {
     return 1;
   }
   return 0;
-}
+};

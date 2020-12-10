@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
-import { actions as employerActions } from '@store/employer';
-import { bindActionCreators } from 'redux';
+import React from "react";
+import { connect } from "react-redux";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { actions as employerActions } from "@store/employer";
+import { bindActionCreators } from "redux";
 import {
   jobTypes,
   styles,
@@ -13,7 +13,7 @@ import {
   cocktailKnowledges,
   poss,
   reservations,
-} from '../../Employee/professionTypes';
+} from "../../Employee/professionTypes";
 // import { searchAndSavefilterProfessions } from '../../../store/actions/professions';
 // import { loadSearchQuery } from '../../../store/actions/searchQuery';
 
@@ -86,7 +86,7 @@ const EditSearchForm = ({
             <select
               name="searchAddress.state"
               id="state"
-              ref={register({ required: 'Pleae select state' })}
+              ref={register({ required: "Pleae select state" })}
             >
               <option value="">-- Select a State --</option>
               <option value="AL">Alabama</option>
@@ -332,17 +332,20 @@ const EditSearchForm = ({
 };
 
 const mapStateToProps = ({
-  employer: {
-    employerData, filter, searchLoading
-  },
+  employer: { employerData, filter, searchLoading },
 }) => ({
-  employerData, filter, searchLoading
+  employerData,
+  filter,
+  searchLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...employerActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...employerActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditSearchForm);

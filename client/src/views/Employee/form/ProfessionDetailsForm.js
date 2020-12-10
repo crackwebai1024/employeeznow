@@ -345,7 +345,7 @@ const ProfessionDetailsForm = ({
                               name="newOpportunity"
                               id={type}
                               checked={
-                                newOpportunity.filter((r) => r == type)
+                                newOpportunity.filter((r) => r === type)
                                   .length > 0
                                   ? true
                                   : false

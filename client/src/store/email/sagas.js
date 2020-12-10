@@ -4,29 +4,29 @@ import * as EmailAPI from "@services/EmailAPI";
 
 function* onSendInterest({ payload }) {
   try {
-    const res = yield call(EmailAPI.onSendInterest, payload)
-    if(res && res.data) {
-      yield put(types.sendInterestSuccess())
+    const res = yield call(EmailAPI.onSendInterest, payload);
+    if (res && res.data) {
+      yield put(types.sendInterestSuccess());
     }
   } catch {
-    yield put(types.sendInterestFailure())
+    yield put(types.sendInterestFailure());
   }
 }
 
 function* onSendNoInterest({ payload }) {
   try {
-    const res = yield call(EmailAPI.onSendNoInterest, payload)
-    if(res && res.data) {
-      yield put(types.sendNoInterestSuccess())
+    const res = yield call(EmailAPI.onSendNoInterest, payload);
+    if (res && res.data) {
+      yield put(types.sendNoInterestSuccess());
     }
   } catch {
-    yield put(types.sendNoInterestFailure())
+    yield put(types.sendNoInterestFailure());
   }
 }
 
 const emailSagas = [
   takeEvery(types.sendInterestRequest, onSendInterest),
-  takeEvery(types.sendNoInterestRequest, onSendNoInterest)
-]
+  takeEvery(types.sendNoInterestRequest, onSendNoInterest),
+];
 
 export default emailSagas;

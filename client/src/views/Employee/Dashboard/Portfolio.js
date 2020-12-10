@@ -334,7 +334,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
                             {p && (
                               <Fragment>
                                 <Box className={classes.imagewrapper}>
-                                  {p.style == "video" ? (
+                                  {p.style === "video" ? (
                                     <Fragment>
                                       <Box className={classes.videoBox}></Box>
                                       <video controls className={classes.video}>

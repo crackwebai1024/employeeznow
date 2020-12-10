@@ -55,8 +55,8 @@ const VeteranSection = () => {
   return (
     <Grid className={classes.wrapper}>
       <Container width="md">
-        <Grid container xs={12}>
-          <Grid xs={12}>
+        <Grid item container xs={12}>
+          <Grid item xs={12}>
             <Typography className={`${classes.center} ${classes.subTitle}`}>
               Thank you for your service
             </Typography>
@@ -67,14 +67,14 @@ const VeteranSection = () => {
               EmployeezNow wants to thank veterans for their service, as we know none of this would be possible without them!
             </Typography>
           </Grid>
-          <Grid xs={12} sm={6} className={classes.center}>
+          <Grid item xs={12} sm={6} className={classes.center}>
             <img src={`${process.env.PUBLIC_URL}/img/test/img5.svg`} alt="img5" className={classes.image}/>
           </Grid>
-          <Grid xs={12} sm={6} className={classes.col_center}>
+          <Grid item xs={12} sm={6} className={classes.col_center}>
             <Box>
               {
-                listData.map(list => {
-                  return <Box style={{ display: 'flex' }}>
+                listData.map((list, key) => {
+                  return <Box key = {key} style={{ display: 'flex' }}>
                     <img src={`${process.env.PUBLIC_URL}/img/test/arrow.svg`} alt="arrow" className={classes.arrowIcon} />
                     <div dangerouslySetInnerHTML={{ __html: list }} className={classes.font14}>
                     </div>

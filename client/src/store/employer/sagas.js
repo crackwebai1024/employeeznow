@@ -1,10 +1,7 @@
-import { call, put, take, takeEvery } from 'redux-saga/effects';
-import * as Sentry from '@sentry/browser';
-import { deleteToken, setToken, deleteUser, deleteRole, setUserConfigured, setUser, setRole } from '@helpers/auth-helpers';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { actions as types } from './index';
 import * as  EmployerAPI from '@services/EmployerAPI';
-import Axios from '@lib/axios';
-import { successMessage, errorMessage } from '@helpers/utils';
+import { successMessage } from '@helpers/utils';
 import { _arrayBufferToBase64 } from '@helpers/utils';
 import { setFilterID } from '@helpers/auth-helpers';
 

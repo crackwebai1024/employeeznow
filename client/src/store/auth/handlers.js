@@ -21,7 +21,7 @@ const initialState = {
   isEmailCodeError: "",
   changepassword: null,
   resetPassword: null,
-  sendMessage: "NONE"
+  sendMessage: "NONE",
 };
 
 export const signupRequest = (state, { payload }) => ({
@@ -208,7 +208,7 @@ export const resetPasswordFailure = (state) => ({
 export const changePasswordRequest = (state) => ({
   ...state,
   loading: true,
-  changepassword: "REQUEST"
+  changepassword: "REQUEST",
 });
 
 export const changePasswordSuccess = (state) => ({
@@ -230,17 +230,17 @@ export const saveVeteranCard = (state, { payload }) => ({
 
 export const sendContactMessage = (state, { payload }) => ({
   ...state,
-  sendMessage: "NONE"
+  sendMessage: "NONE",
 });
 
 export const sendMessageSuccess = (state, { payload }) => ({
   ...state,
-  sendMessage: "SUCCESS"
+  sendMessage: "SUCCESS",
 });
 
 export const sendMessageFailure = (state, { payload }) => ({
   ...state,
-  sendMessage: "FAILURE"
+  sendMessage: "FAILURE",
 });
 
 export default initialState;

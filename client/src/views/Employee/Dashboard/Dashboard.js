@@ -149,7 +149,6 @@ function Dashboard(props) {
   } = props;
   const user = JSON.parse(getUser());
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(true);
   const [document, setDocument] = useState([]);
 
   useEffect(() => {
@@ -159,18 +158,18 @@ function Dashboard(props) {
     actions.getUserDataRequest(data);
   }, []);
 
-  const uploadDocument = (e, type) => {
-    setDocument({
-      ...document,
-      [type]: e.target.files[0].name,
-    });
-    const formData = new FormData();
-    formData.append("id", user._id);
-    formData.append("type", type);
-    formData.append("content", e.target.files[0]);
-    formData.append("fname", e.target.files[0].name);
-    actions.uploadDocumentRequest(formData);
-  };
+  // const uploadDocument = (e, type) => {
+  //   setDocument({
+  //     ...document,
+  //     [type]: e.target.files[0].name,
+  //   });
+  //   const formData = new FormData();
+  //   formData.append("id", user._id);
+  //   formData.append("type", type);
+  //   formData.append("content", e.target.files[0]);
+  //   formData.append("fname", e.target.files[0].name);
+  //   actions.uploadDocumentRequest(formData);
+  // };
 
   const { basic, skill, experience, preference } = employeeData;
 
@@ -308,7 +307,7 @@ function Dashboard(props) {
             />
             {skill && (
               <Fragment>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <Collapse in={true} timeout="auto" unmountOnExit>
                   <CardContent className={classes.moreSkills}>
                     <Profession profession={employeeData.skill} />
                   </CardContent>

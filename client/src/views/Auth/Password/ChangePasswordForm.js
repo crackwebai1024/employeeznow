@@ -10,7 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
-import LoadingCircular from '@components/LoadingCircular';
+import LoadingCircular from "@components/LoadingCircular";
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 25,
   },
   passwordWrapper: {
-    width: '80%',
+    width: "80%",
     [theme.breakpoints.down("sm")]: {
-      width: '95%'
-    }
+      width: "95%",
+    },
   },
   error: {
-    fontSize: '8px',
-    color: 'red'
+    fontSize: "8px",
+    color: "red",
   },
   invalidMessage: {
     textAlign: "center",
@@ -47,7 +47,7 @@ const ChangePassfordForm = ({
 }) => {
   // react-hook-form
   const { register, handleSubmit, errors, watch } = useForm({});
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const password = useRef({});
   password.current = watch("password", "");
 
@@ -63,20 +63,18 @@ const ChangePassfordForm = ({
 
   useEffect(() => {
     if (changepassword === "FAILURE") {
-      setError("Current password is not correct!")
+      setError("Current password is not correct!");
     }
-  }, [changepassword])
+  }, [changepassword]);
 
   return (
     <Grid container direction="column" alignItems="center">
-      {
-        changepassword === "REQUEST" && <LoadingCircular />
-      }
+      {changepassword === "REQUEST" && <LoadingCircular />}
       <Box className={classes.passwordWrapper}>
         <Grid item>
           <DialogTitle id="dialog-title" className={classes.heading1}>
             Change Your Password
-        </DialogTitle>
+          </DialogTitle>
         </Grid>
 
         <form onSubmit={(e) => e.preventDefault()}>
@@ -164,7 +162,7 @@ const ChangePassfordForm = ({
               className={classes.button}
             >
               CANCEL
-          </Button>
+            </Button>
             <Button
               type="submit"
               fullWidth
@@ -174,7 +172,7 @@ const ChangePassfordForm = ({
               className={classes.button}
             >
               Update
-          </Button>
+            </Button>
           </DialogActions>
 
           {/* If authorization was failed */}
@@ -190,14 +188,12 @@ const ChangePassfordForm = ({
 };
 
 const mapStateToProps = ({
-  employee: {
-    employeeData, updateSuccess
-  },
-  auth: {
-    changepassword
-  }
+  employee: { employeeData, updateSuccess },
+  auth: { changepassword },
 }) => ({
-  employeeData, updateSuccess, changepassword
+  employeeData,
+  updateSuccess,
+  changepassword,
 });
 
 const mapDispatchToProps = (dispatch) => ({

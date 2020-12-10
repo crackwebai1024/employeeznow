@@ -1,111 +1,116 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Grid, TextField, Box } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import Typography from '@material-ui/core/Typography';
-import { actions as authActions } from '@store/auth';
-import MainButton from '@components/Element/Button/MainButton';
-import { successMessage } from '@helpers/utils';
-import { bindActionCreators } from 'redux';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { Grid, TextField, Box } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import Typography from "@material-ui/core/Typography";
+import { actions as authActions } from "@store/auth";
+import MainButton from "@components/Element/Button/MainButton";
+import { successMessage } from "@helpers/utils";
+import { bindActionCreators } from "redux";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginRight: theme.spacing(2),
     background: theme.palette.common.blue,
-    alignItems: 'center'
+    alignItems: "center",
   },
   eye: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   form: {
-    maxWidth: '30rem',
+    maxWidth: "30rem",
     width: "100%",
   },
   heading1: {
-    marginBottom: '1.5rem',
-    marginTop: '0.5rem',
-    fontSize: '24px',
-    textAlign: 'center'
+    marginBottom: "1.5rem",
+    marginTop: "0.5rem",
+    fontSize: "24px",
+    textAlign: "center",
   },
   button: {
     marginTop: 30,
-    height: '42px',
+    height: "42px",
     marginBottom: 25,
   },
   container: {
-    background: 'white',
-    padding: '2rem',
+    background: "white",
+    padding: "2rem",
     maxWidth: "600px",
     margin: "auto",
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
-    [theme.breakpoints.down('xs')]: {
-      padding: '1rem'
-    }
+    [theme.breakpoints.down("xs")]: {
+      padding: "1rem",
+    },
   },
   linkContainer: {
-    marginBottom: '8rem',
+    marginBottom: "8rem",
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: "none",
     color: theme.palette.common.blue,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
+    marginBottom: "2rem",
   },
 }));
 
 const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
   const { register, handleSubmit, errors } = useForm({});
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const classes = useStyles();
   const history = useHistory();
 
   const onSubmit = (formData) => {
-    actions.forgotPasswordRequest(formData)
+    actions.forgotPasswordRequest(formData);
   };
 
   const handleInputChange = () => {
-    setError('')
-  }
+    setError("");
+  };
 
   useEffect(() => {
     if (success) {
       setTimeout(() => {
-        setSuccess(false)
-      }, [8000])
+        setSuccess(false);
+      }, [8000]);
     }
-  }, [success])
+  }, [success]);
 
   useEffect(() => {
     if (changepassword === "SUCCESS") {
-      setSuccess(true)
+      setSuccess(true);
     } else if (changepassword === "FAILURE") {
-      setError("Email is Invalid.")
-      setSuccess(false)
+      setError("Email is Invalid.");
+      setSuccess(false);
     }
-  }, [changepassword])
+  }, [changepassword]);
 
   return (
     <Container>
       {success && successMessage("Sent the Forgot Password link to you email.")}
-      <Grid container direction="column" className={classes.container} alignItems="center">
-        <Grid item style={{ display: 'flex' }}>
+      <Grid
+        container
+        direction="column"
+        className={classes.container}
+        alignItems="center"
+      >
+        <Grid item style={{ display: "flex" }}>
           <Avatar className={classes.avatar}>
             <MailOutlineIcon />
           </Avatar>
@@ -117,9 +122,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
         </Grid>
 
         <form onSubmit={(e) => e.preventDefault()} className={classes.form}>
-          <Grid container item xs={12} width="sm">
-
-          </Grid>
+          <Grid container item xs={12} width="sm"></Grid>
           <Grid item xs={12}>
             <RadioGroup aria-label="role">
               <Grid item container direction="row" justify="center">
@@ -145,9 +148,9 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
 
               <FormHelperText
                 error={errors.role ? true : false}
-                style={{ textAlign: 'center' }}
+                style={{ textAlign: "center" }}
               >
-                {errors.role ? 'Please select your role' : ''}
+                {errors.role ? "Please select your role" : ""}
               </FormHelperText>
             </RadioGroup>
           </Grid>
@@ -155,7 +158,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
           <Grid item xs={12}>
             <TextField
               error={errors.email ? true : false}
-              helperText={errors.email ? 'Invalid Email' : ''}
+              helperText={errors.email ? "Invalid Email" : ""}
               variant="outlined"
               margin="normal"
               onChange={handleInputChange}
@@ -181,7 +184,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
                 fullWidth
                 variant="outlined"
                 color="primary"
-                onClick={e => history.push("/login")}
+                onClick={(e) => history.push("/login")}
                 className={classes.button}
               >
                 Back
@@ -191,7 +194,8 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
               <Box className={classes.button}>
                 <MainButton
                   background="green"
-                  pd={20} fontSize={20}
+                  pd={20}
+                  fontSize={20}
                   bd={3}
                   label="Confirm"
                   width="100%"
@@ -200,8 +204,7 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
                   border="green"
                   color="white"
                   hoverColor="white"
-                >
-                </MainButton>
+                ></MainButton>
               </Box>
               {/* <Button
                 fullWidth
@@ -228,17 +231,22 @@ const Login = ({ actions, errorMessage, loading, slug, changepassword }) => {
 };
 
 const mapStateToProps = ({
-  auth: {
-    signupUser, loading, changepassword, user, loginStatus
-  },
+  auth: { signupUser, loading, changepassword, user, loginStatus },
 }) => ({
-  signupUser, loading, changepassword, user, loginStatus
+  signupUser,
+  loading,
+  changepassword,
+  user,
+  loginStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...authActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...authActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

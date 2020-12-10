@@ -1,94 +1,99 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { makeStyles, useTheme } from '@material-ui/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Grid, Button } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { getUser, getFilterID } from '@helpers/auth-helpers';
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import { makeStyles, useTheme } from "@material-ui/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Grid, Button } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { getUser, getFilterID } from "@helpers/auth-helpers";
 
 const useStyles = makeStyles((theme) => ({
   itemsContainer: {
-    borderRadius: '0px',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '2.5rem',
+    borderRadius: "0px",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "2.5rem",
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       paddingLeft: 0,
     },
   },
   wrapper: {
-    borderRadius: '0px',
+    borderRadius: "0px",
     borderBottom: `1px solid ${theme.palette.common.white}`,
-    cursor: 'pointer',
-    transition: '0.2s',
-    '&:hover': {
-      background: theme.palette.common.hover_white
-    }
+    cursor: "pointer",
+    transition: "0.2s",
+    "&:hover": {
+      background: theme.palette.common.hover_white,
+    },
   },
   subtitle: {
     color: theme.palette.common.blue,
-    fontSize: '0.875rem',
-    minWidth: '5rem',
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'left',
+    fontSize: "0.875rem",
+    minWidth: "5rem",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "left",
     },
   },
   itemSpan: {
-    paddingRight: '0.5rem',
+    paddingRight: "0.5rem",
   },
   buttonContainer: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
   },
   button: {
-    display: 'inline-block',
-    marginRight: '2rem',
-    marginBottom: '0.5rem',
+    display: "inline-block",
+    marginRight: "2rem",
+    marginBottom: "0.5rem",
     color: theme.palette.common.darkBlue,
-    textDecoration: 'none',
-    fontSize: '1rem',
-    '&:hover': {
+    textDecoration: "none",
+    fontSize: "1rem",
+    "&:hover": {
       color: theme.palette.common.blue,
     },
   },
   purchased: {
     background: theme.palette.common.green,
-    width: 'fit-content',
-    float: 'right',
-    color: 'white',
-    padding: '0 20px',
-    borderRadius: '15px'
-  }
+    width: "fit-content",
+    float: "right",
+    color: "white",
+    padding: "0 20px",
+    borderRadius: "15px",
+  },
 }));
 const CandidateList = (props) => {
   const {
-    primaryTitle, primaryYears, secondaryTitle, secondaryYears, shift,
-    style, cuisine 
+    primaryTitle,
+    primaryYears,
+    secondaryTitle,
+    secondaryYears,
+    shift,
+    style,
+    cuisine,
     // wineKnowledge, cocktailKnowledge, systems
-  } = props.result.employeeskill
+  } = props.result.employeeskill;
   // const key = props.result._id;
   const id = props.result._id;
   const { purchased, incart, employeezNowId, employeeId } = props.result;
-  const { actions, purchasedEmployees } = props
+  const { actions, purchasedEmployees } = props;
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
   const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const user = JSON.parse(getUser());
-  const filterID = getFilterID()
-  const history = useHistory()
+  const filterID = getFilterID();
+  const history = useHistory();
 
   const addToCart = () => {
     let data = {
       id: user._id,
       filterID: filterID,
-      employeeID: id
-    }
-    actions.addToCartRequest(data)
-  }
+      employeeID: id,
+    };
+    actions.addToCartRequest(data);
+  };
 
   return (
     <Card key={id} className={classes.wrapper}>
@@ -100,7 +105,11 @@ const CandidateList = (props) => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6" color="secondary" className={classes.purchased}>
+            <Typography
+              variant="h6"
+              color="secondary"
+              className={classes.purchased}
+            >
               {purchased && "purchased"}
             </Typography>
           </Grid>
@@ -119,8 +128,8 @@ const CandidateList = (props) => {
                 </Grid>
               </Grid>
             ) : (
-                ''
-              )}
+              ""
+            )}
           </Grid>
 
           <Grid item>
@@ -138,8 +147,8 @@ const CandidateList = (props) => {
                 </Grid>
               </Grid>
             ) : (
-                ''
-              )}
+              ""
+            )}
           </Grid>
 
           <Grid item>
@@ -157,14 +166,14 @@ const CandidateList = (props) => {
                       className={classes.itemSpan}
                     >
                       {sh}
-                      {i !== shift.length - 1 ? ',' : ''}
+                      {i !== shift.length - 1 ? "," : ""}
                     </Typography>
                   </Grid>
                 ))}
               </Grid>
             ) : (
-                ''
-              )}
+              ""
+            )}
           </Grid>
 
           <Grid item>
@@ -173,12 +182,9 @@ const CandidateList = (props) => {
                 <Typography className={classes.subtitle}>Style:</Typography>
               </Grid>
               <Grid item>
-                <Grid item container direction={matchesSM ? 'column' : 'row'}>
+                <Grid item container direction={matchesSM ? "column" : "row"}>
                   <Grid item>
-                    <Typography
-                      variant="body2"
-                      className={classes.itemSpan}
-                    >
+                    <Typography variant="body2" className={classes.itemSpan}>
                       {style.type} for {style.years} years
                     </Typography>
                   </Grid>
@@ -194,7 +200,7 @@ const CandidateList = (props) => {
                   <Typography className={classes.subtitle}>Cuisine:</Typography>
                 </Grid>
                 <Grid item>
-                  <Grid item container direction={matchesSM ? 'column' : 'row'}>
+                  <Grid item container direction={matchesSM ? "column" : "row"}>
                     {cuisine.map((cu, i) => (
                       <Grid item key={cu._id}>
                         <Typography
@@ -202,7 +208,7 @@ const CandidateList = (props) => {
                           className={classes.itemSpan}
                         >
                           {cu.type} for {cu.years} years
-                          {i !== cuisine.length - 1 ? ',' : ''}
+                          {i !== cuisine.length - 1 ? "," : ""}
                         </Typography>
                       </Grid>
                     ))}
@@ -211,8 +217,8 @@ const CandidateList = (props) => {
               </Grid>
             </Grid>
           ) : (
-              ''
-            )}
+            ""
+          )}
         </Grid>
       </CardContent>
 
@@ -228,28 +234,23 @@ const CandidateList = (props) => {
           >
             VIEW THIS PROFILE
           </Link>
-          {!purchased && incart &&
+          {!purchased && incart && (
             <Button
               variant="outlined"
               color="secondary"
-              onClick={e => history.push('/carts')}
+              onClick={(e) => history.push("/carts")}
             >
               In Cart
-              </Button>
-          }
-          {!purchased && !incart && !purchasedEmployees &&
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={addToCart}
-            >
+            </Button>
+          )}
+          {!purchased && !incart && !purchasedEmployees && (
+            <Button variant="outlined" color="secondary" onClick={addToCart}>
               <ShoppingCartIcon />
-            Add To Cart
-          </Button>
-          }
+              Add To Cart
+            </Button>
+          )}
         </div>
       </CardActions>
-
     </Card>
   );
 };

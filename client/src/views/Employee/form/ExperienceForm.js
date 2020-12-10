@@ -1,17 +1,18 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Container from "@material-ui/core/Container";
-import { useForm } from 'react-hook-form';
-import MainButton from '@components/Element/Button/MainButton';
+import { useForm } from "react-hook-form";
+import MainButton from "@components/Element/Button/MainButton";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+
 import Dialog from "@material-ui/core/Dialog";
-import Chip from '@material-ui/core/Chip';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Chip from "@material-ui/core/Chip";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -25,20 +26,20 @@ import { jobTypes } from "../professionTypes";
 import { getUser } from "@helpers/auth-helpers";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import MenuItem from "@material-ui/core/MenuItem";
-import { successMessage, errorMessage } from '@helpers/utils'
+import { successMessage, errorMessage } from "@helpers/utils";
 import { Box } from "@material-ui/core";
-import { usaStates } from '../professionTypes';
-import RoomIcon from '@material-ui/icons/Room';
-import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
-import DateFnsUtils from '@date-io/date-fns';
+import { usaStates } from "../professionTypes";
+import RoomIcon from "@material-ui/icons/Room";
+import EmojiTransportationIcon from "@material-ui/icons/EmojiTransportation";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+} from "@material-ui/pickers";
 // set style
 const useStyles = makeStyles((theme) => ({
   green: {
-    color: theme.palette.common.green
+    color: theme.palette.common.green,
   },
   heading1: {
     marginTop: "5rem",
@@ -47,13 +48,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   center: {
-    textAlign: 'center'
+    textAlign: "center",
   },
   excludeIcon: {
-    display: 'flex',
-    width: '100px',
-    paddingTop: '0.5rem',
-    fontWeight: 600
+    display: "flex",
+    width: "100px",
+    paddingTop: "0.5rem",
+    fontWeight: 600,
   },
   formContainer: {
     // marginTop: "1rem",
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addOtherJob: {
     fontSize: "40px",
-    margin: '1rem 0 1rem 0',
+    margin: "1rem 0 1rem 0",
     cursor: "pointer",
   },
   dialog: {
@@ -90,10 +91,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: "2rem",
-    float: 'right',
+    float: "right",
     [theme.breakpoints.down("xs")]: {
-      width: '100%'
-    }
+      width: "100%",
+    },
   },
   invalidMessage: {
     textAlign: "center",
@@ -108,22 +109,17 @@ const useStyles = makeStyles((theme) => ({
   },
   goback_button: {
     marginTop: "2rem",
-    float: 'left',
+    float: "left",
     [theme.breakpoints.down("xs")]: {
-      float: 'none'
-    }
+      float: "none",
+    },
   },
   menuItem: {
     maxHeight: "500px",
   },
 }));
 
-const ExperienceForm = ({
-  success,
-  loading,
-  experience,
-  actions,
-}) => {
+const ExperienceForm = ({ success, loading, experience, actions }) => {
   const [formData, setFormData] = useState({
     primaryJob: {
       title: "",
@@ -143,7 +139,7 @@ const ExperienceForm = ({
       years: 0,
     },
     employmentStatus: "",
-    exclude: []
+    exclude: [],
   });
   const [error, setError] = useState({
     primaryJob: "",
@@ -168,7 +164,7 @@ const ExperienceForm = ({
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   // load profession details and set default
   useEffect(() => {
     let data = {
@@ -185,29 +181,29 @@ const ExperienceForm = ({
       setFormData(experience.experience);
       setOpen(false);
       setOtherJobs(experience.experience.otherJob);
-      setExclude(experience.experience.exclude)
+      setExclude(experience.experience.exclude);
     }
   }, [experience]);
 
   useEffect(() => {
     if (success) {
-      successMessage("Successfully Saved!")
-      history.push(`/employees/${user.slug}`)
+      successMessage("Successfully Saved!");
+      history.push(`/employees/${user.slug}`);
     } else if (success === false) {
-      errorMessage("Sorry! Saving is failed!")
+      errorMessage("Sorry! Saving is failed!");
     }
     actions.initiateSuccess();
   }, [success]);
 
   // destructure
   const { primaryJob, secondaryJob } = formData;
-  const history = useHistory()
+  const history = useHistory();
   const { register, handleSubmit, errors, watch } = useForm({});
   const [datepickerOpen, setDatepickerOpen] = useState({
     primary: [false, false],
     secondary: [false, false],
-    other: otherJobs.map(job => [false, false])
-  })
+    other: otherJobs.map((job) => [false, false]),
+  });
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
@@ -319,12 +315,12 @@ const ExperienceForm = ({
       id: user._id,
       exclude: {
         ...exclude,
-        address: exclude.address
-      }
+        address: exclude.address,
+      },
     };
     // if(!data.primaryJob.title)
     //   return error.primaryJob
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     actions.updateJobExperience(submitData);
   };
 
@@ -361,40 +357,39 @@ const ExperienceForm = ({
   };
 
   const goBackHandle = () => {
-    history.push(`/employees/${user.slug}`)
-  }
-
+    history.push(`/employees/${user.slug}`);
+  };
 
   const [exclude, setExclude] = useState({
     name: [],
-    address: []
-  })
+    address: [],
+  });
   const handleBusiness = (event, value, type) => {
     if (value.length > 4) {
-      return
+      return;
     }
     if (type === "name")
       return setExclude({
         ...exclude,
-        [type]: value
-      })
+        [type]: value,
+      });
     if (type === "address") {
       setExclude({
         ...exclude,
-        [type]: value.map(address => address.value)
+        [type]: value.map((address) => address.value),
         // [type]: value
-      })
+      });
     }
-  }
+  };
 
   const otherJobChange = (key) => {
-    let newArray = otherJobs.map(job => [false, false])
-    newArray[key][1] = true
+    let newArray = otherJobs.map((job) => [false, false]);
+    newArray[key][1] = true;
     setDatepickerOpen({
       ...datepickerOpen,
-      other: newArray
-    })
-  }
+      other: newArray,
+    });
+  };
 
   console.log(primaryJob.title, "payload");
   return experience ? (
@@ -408,10 +403,13 @@ const ExperienceForm = ({
           <Grid item>
             <Typography variant="h1" className={classes.heading1}>
               WORK EXPERIENCE
-          </Typography>
+            </Typography>
           </Grid>
         </Grid>
-        <form onSubmit={(e) => e.preventDefault()} className={classes.formContainer}>
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className={classes.formContainer}
+        >
           <Grid
             container
             direction="column"
@@ -421,7 +419,7 @@ const ExperienceForm = ({
             <Grid item>
               <Typography gutterBottom variant="h6">
                 Current/Last Job
-            </Typography>
+              </Typography>
             </Grid>
 
             <Grid
@@ -479,14 +477,16 @@ const ExperienceForm = ({
                   <KeyboardDatePicker
                     autoOk
                     format="MM/dd/yyyy"
-                    onChange={e => onChange({
-                      target: {
-                        id: 'primaryJob',
-                        name: "startDate",
-                        value: e,
-                        checked: false
-                      }
-                    })}
+                    onChange={(e) =>
+                      onChange({
+                        target: {
+                          id: "primaryJob",
+                          name: "startDate",
+                          value: e,
+                          checked: false,
+                        },
+                      })
+                    }
                     value={primaryJob.startDate ? primaryJob.startDate : null}
                     variant="inline"
                     name="startDate"
@@ -496,31 +496,31 @@ const ExperienceForm = ({
                 </Grid>
 
                 <Grid item sm={3} xs={6}>
-                  {!toDisabled &&
+                  {!toDisabled && (
                     <KeyboardDatePicker
                       autoOk
                       label="End Date"
                       variant="inline"
                       format="MM/dd/yyyy"
-                      onChange={e => onChange({
-                        target: {
-                          id: 'primaryJob',
-                          name: 'endDate',
-                          value: e,
-                          checked: false
-                        }
-                      })}
+                      onChange={(e) =>
+                        onChange({
+                          target: {
+                            id: "primaryJob",
+                            name: "endDate",
+                            value: e,
+                            checked: false,
+                          },
+                        })
+                      }
                       InputLabelProps={{ shrink: true }}
                       value={primaryJob.endDate ? primaryJob.endDate : null}
                       className={classes.item}
                     />
-                  }
+                  )}
                 </Grid>
               </Grid>
               <Grid container>
-                <Typography>
-                  {primaryJob.error}
-                </Typography>
+                <Typography>{primaryJob.error}</Typography>
               </Grid>
               <Grid container>
                 <Grid item xs={12} sm={12}>
@@ -562,7 +562,7 @@ const ExperienceForm = ({
             <Grid item>
               <Typography gutterBottom variant="h6">
                 Previous Job
-            </Typography>
+              </Typography>
             </Grid>
 
             <Grid
@@ -612,15 +612,19 @@ const ExperienceForm = ({
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     autoOk
-                    onChange={e => onChange({
-                      target: {
-                        id: 'secondaryJob',
-                        name: "startDate",
-                        value: e,
-                        checked: false
-                      }
-                    })}
-                    value={secondaryJob.startDate ? secondaryJob.startDate : null}
+                    onChange={(e) =>
+                      onChange({
+                        target: {
+                          id: "secondaryJob",
+                          name: "startDate",
+                          value: e,
+                          checked: false,
+                        },
+                      })
+                    }
+                    value={
+                      secondaryJob.startDate ? secondaryJob.startDate : null
+                    }
                     variant="inline"
                     name="startDate"
                     format="MM/dd/yyyy"
@@ -633,14 +637,16 @@ const ExperienceForm = ({
                   <KeyboardDatePicker
                     autoOk
                     format="MM/dd/yyyy"
-                    onChange={e => onChange({
-                      target: {
-                        id: 'secondaryJob',
-                        name: "endDate",
-                        value: e,
-                        checked: false
-                      }
-                    })}
+                    onChange={(e) =>
+                      onChange({
+                        target: {
+                          id: "secondaryJob",
+                          name: "endDate",
+                          value: e,
+                          checked: false,
+                        },
+                      })
+                    }
                     value={secondaryJob.endDate ? secondaryJob.endDate : null}
                     variant="inline"
                     name="endDate"
@@ -678,7 +684,7 @@ const ExperienceForm = ({
                   <Grid item className={classes.textContainer}>
                     <Typography gutterBottom variant="h6">
                       Previous Job
-                  </Typography>
+                    </Typography>
                   </Grid>
                   <Grid container justify="flex-start" alignItems="center">
                     <Grid container item spacing={1}>
@@ -691,7 +697,9 @@ const ExperienceForm = ({
                           fullWidth
                           value={otherJobs[key].title}
                           InputLabelProps={{ shrink: true }}
-                          onChange={(e) => handleInput('title', e.target.value, key)}
+                          onChange={(e) =>
+                            handleInput("title", e.target.value, key)
+                          }
                         >
                           {jobTypes.map((job) => {
                             return (
@@ -711,7 +719,9 @@ const ExperienceForm = ({
                           fullWidth
                           InputLabelProps={{ shrink: true }}
                           value={otherJobs[key].company}
-                          onChange={(e) => handleInput('company', e.target.value, key)}
+                          onChange={(e) =>
+                            handleInput("company", e.target.value, key)
+                          }
                         />
                       </Grid>
 
@@ -719,8 +729,12 @@ const ExperienceForm = ({
                         <KeyboardDatePicker
                           autoOk
                           format="MM/dd/yyyy"
-                          onChange={e => handleInput('startDate', e, key)}
-                          value={otherJobs[key].startDate ? otherJobs[key].startDate : null}
+                          onChange={(e) => handleInput("startDate", e, key)}
+                          value={
+                            otherJobs[key].startDate
+                              ? otherJobs[key].startDate
+                              : null
+                          }
                           variant="inline"
                           name="startDate"
                           InputLabelProps={{ shrink: true }}
@@ -732,13 +746,17 @@ const ExperienceForm = ({
                         <KeyboardDatePicker
                           autoOk
                           format="MM/dd/yyyy"
-                          onChange={e => handleInput('endDate', e, key)}
-                          value={otherJobs[key].endDate ? otherJobs[key].endDate : null}
+                          onChange={(e) => handleInput("endDate", e, key)}
+                          value={
+                            otherJobs[key].endDate
+                              ? otherJobs[key].endDate
+                              : null
+                          }
                           variant="inline"
                           InputLabelProps={{ shrink: true }}
                           label="End Date"
                           KeyboardButtonProps={{
-                            'aria-label': 'change date',
+                            "aria-label": "change date",
                           }}
                         />
                       </Grid>
@@ -754,7 +772,9 @@ const ExperienceForm = ({
                           value={otherJobs[key].description}
                           className={classes.description}
                           variant="outlined"
-                          onChange={(e) => handleInput('description', e.target.value, key)}
+                          onChange={(e) =>
+                            handleInput("description", e.target.value, key)
+                          }
                           rows={4}
                         />
                       </Grid>
@@ -768,27 +788,31 @@ const ExperienceForm = ({
             })}
             {!limit && (
               <Grid className={classes.addOtherJob}>
-                <Button onClick={addOtherJobs} >
+                <Button onClick={addOtherJobs}>
                   <AddBoxIcon />
-                &nbsp;&nbsp;&nbsp;Add Other Jobs
-              </Button>
+                  &nbsp;&nbsp;&nbsp;Add Other Jobs
+                </Button>
               </Grid>
             )}
 
             <Grid container item xs={12} spacing={1}>
               <Grid item xs={12}>
-                <Typography className={`${classes.center} ${classes.green}`} variant="h6">
+                <Typography
+                  className={`${classes.center} ${classes.green}`}
+                  variant="h6"
+                >
                   EXCLUDED BUSINESSES
-              </Typography>
+                </Typography>
               </Grid>
               <Grid item xs={12} className={classes.center}>
-                Please enter business you <b>DO NOT</b> wish to show up on their searches
-            </Grid>
-              <Grid item xs={12} style={{ display: 'flex' }}>
+                Please enter business you <b>DO NOT</b> wish to show up on their
+                searches
+              </Grid>
+              <Grid item xs={12} style={{ display: "flex" }}>
                 <Box className={classes.excludeIcon}>
                   <EmojiTransportationIcon />
-                &nbsp;Name
-              </Box>
+                  &nbsp;Name
+                </Box>
                 <Autocomplete
                   multiple
                   options={[]}
@@ -797,43 +821,46 @@ const ExperienceForm = ({
                   freeSolo
                   autoSelect
                   value={exclude.name}
-                  onChange={(e, value) => handleBusiness(e, value, 'name')}
+                  onChange={(e, value) => handleBusiness(e, value, "name")}
                   renderTags={(value, getTagProps) =>
                     value.map((option, index) => (
-                      <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                      <Chip
+                        variant="outlined"
+                        label={option}
+                        {...getTagProps({ index })}
+                      />
                     ))
                   }
-                  renderInput={(params) => (
-                    <TextField {...params}
-                      variant="standard"
-                      fullWidth
-                      // label="Excluded Businesses"
-                      InputLabelProps={{ shrink: true }}
-
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} style={{ display: 'flex' }}>
-                <Box className={classes.excludeIcon}>
-                  <RoomIcon />
-                &nbsp;Address
-              </Box>
-                <Autocomplete
-                  multiple
-                  id="tags-standard"
-                  fullWidth
-                  options={usaStates.map(state => state)}
-                  value={exclude.address.map(address => {
-                    return usaStates.filter(state => state.value === address)[0]
-                  })}
-                  onChange={(e, value) => handleBusiness(e, value, 'address')}
-                  getOptionLabel={(option) => option.label}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       variant="standard"
+                      fullWidth
+                      // label="Excluded Businesses"
+                      InputLabelProps={{ shrink: true }}
                     />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} style={{ display: "flex" }}>
+                <Box className={classes.excludeIcon}>
+                  <RoomIcon />
+                  &nbsp;Address
+                </Box>
+                <Autocomplete
+                  multiple
+                  id="tags-standard"
+                  fullWidth
+                  options={usaStates.map((state) => state)}
+                  value={exclude.address.map((address) => {
+                    return usaStates.filter(
+                      (state) => state.value === address
+                    )[0];
+                  })}
+                  onChange={(e, value) => handleBusiness(e, value, "address")}
+                  getOptionLabel={(option) => option.label}
+                  renderInput={(params) => (
+                    <TextField {...params} variant="standard" />
                   )}
                 />
               </Grid>
@@ -853,8 +880,7 @@ const ExperienceForm = ({
                     color="white"
                     fontSize={16}
                     onClick={handleSubmit(onSubmit)}
-                  >
-                  </MainButton>
+                  ></MainButton>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -868,7 +894,6 @@ const ExperienceForm = ({
               </Grid>
             </Grid>
           </Grid>
-
         </form>
         {!experience.experience && (
           <Dialog
@@ -887,11 +912,11 @@ const ExperienceForm = ({
                   <i>
                     You can manually enter your work experience or email your
                     resume and it will be uploaded in approximately 48 hours
-                </i>
+                  </i>
                 </Typography>
                 <Typography className={classes.contactEmail}>
                   Register@EmployeezNow.com
-              </Typography>
+                </Typography>
               </DialogContentText>
             </DialogContent>
           </Dialog>
@@ -899,8 +924,8 @@ const ExperienceForm = ({
       </Container>
     </MuiPickersUtilsProvider>
   ) : (
-      ""
-    );
+    ""
+  );
 };
 
 const mapStateToProps = ({ employee: { experience, loading, success } }) => ({

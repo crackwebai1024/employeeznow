@@ -1,30 +1,30 @@
 const initialState = {
-  interestSuccess: 'NONE',
-  noInterestSuccess: "NONE"
+  interestSuccess: "NONE",
+  noInterestSuccess: "NONE",
 };
 
 export const sendInterestRequest = (state) => ({
-  interestSuccess: "REQUEST"
+  interestSuccess: "REQUEST",
 });
 
 export const sendInterestSuccess = (state) => ({
-  interestSuccess: "SUCCESS"
+  interestSuccess: "SUCCESS",
 });
 
 export const sendInterestFailure = (state) => ({
-  interestSuccess: "FAILURE"
+  interestSuccess: "FAILURE",
 });
 
 export const sendNoInterestRequest = (state) => ({
-  noInterestSuccess: "REQUEST"
+  noInterestSuccess: "REQUEST",
 });
 
 export const sendNoInterestSuccess = (state) => ({
-  noInterestSuccess: "SUCCESS"
+  noInterestSuccess: "SUCCESS",
 });
 
 export const sendNoInterestFailure = (state) => ({
-  noInterestSuccess: "FAILURE"
+  noInterestSuccess: "FAILURE",
 });
 
 export default initialState;

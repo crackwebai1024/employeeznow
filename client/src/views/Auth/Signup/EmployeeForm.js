@@ -18,7 +18,7 @@ import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import PublishIcon from "@material-ui/icons/Publish";
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { countryOptions } from "./AddressState";
 
 const invalidError = "This field is invalid!";
@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.blue,
   },
   policy: {
-    display: 'flex',
-    marginTop: '2rem',
-    height: '28px',
+    display: "flex",
+    marginTop: "2rem",
+    height: "28px",
   },
   link_terms: {
     color: theme.palette.common.blue,
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   uploadButton: {
     marginTop: "1rem",
-    textAlign: 'center'
+    textAlign: "center",
   },
   uploadImage: {
     width: "150px",
@@ -143,8 +143,8 @@ const EmployeeForm = ({
   const [veteranError, setVeteranError] = useState("");
   const [veteranCard, setVeteranCard] = useState(null);
 
-  const [policy, confirmPolicy] = useState(false)
-  const [policyError, setPolicyError] = useState("")
+  const [policy, confirmPolicy] = useState(false);
+  const [policyError, setPolicyError] = useState("");
   // material-ui
   const classes = useStyles();
 
@@ -200,10 +200,9 @@ const EmployeeForm = ({
   };
   // connected to action
   const onSubmit = async (formData) => {
-
-    setPolicyError("")
+    setPolicyError("");
     if (!policy) {
-      return setPolicyError("Please check the Terms & Condition")
+      return setPolicyError("Please check the Terms & Condition");
     }
 
     // if (veteran.status) {
@@ -236,8 +235,8 @@ const EmployeeForm = ({
   }
 
   const handleCheck = (e) => {
-    confirmPolicy(e.target.checked)
-  }  
+    confirmPolicy(e.target.checked);
+  };
 
   return (
     <Container
@@ -551,7 +550,8 @@ const EmployeeForm = ({
                           className={classes.uploadButton}
                         >
                           {/* <PublishIcon /> */}
-                          Upload Image<br/>
+                          Upload Image
+                          <br />
                           (Military ID or DD214)
                         </Button>
                       </label>
@@ -573,8 +573,8 @@ const EmployeeForm = ({
                     /> */}
                   </Grid>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </Grid>
             </Grid>
 
@@ -591,14 +591,19 @@ const EmployeeForm = ({
                 required
                 onChange={(e) => handleCheck(e)}
               />
-              <Box>I agree to the&nbsp;
-                <a className={classes.link_terms} target="_blank" href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6">
+              <Box>
+                I agree to the&nbsp;
+                <a
+                  className={classes.link_terms}
+                  target="_blank"
+                  href="https://www.termsandconditionsgenerator.com/live.php?token=hGzUKi4ebKg83jsIZjOZoKviB7zt2cv6"
+                >
                   Terms & Conditions
                 </a>
               </Box>
             </Grid>
 
-            <Grid item xs={12} style={{ color: 'red' }}>
+            <Grid item xs={12} style={{ color: "red" }}>
               {policyError}
             </Grid>
 
@@ -626,8 +631,8 @@ const EmployeeForm = ({
                 State is missing. Plese review your address fields.
               </Grid>
             ) : (
-                ""
-              )}
+              ""
+            )}
           </Grid>
         </form>
 

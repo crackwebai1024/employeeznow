@@ -59,7 +59,7 @@ export const actions = createActions({
   SEND_CONTACT_MESSAGE: undefined,
 
   SEND_MESSAGE_SUCCESS: undefined,
-  SEND_MESSAGE_FAILURE: undefined
+  SEND_MESSAGE_FAILURE: undefined,
 });
 
 const reducer = handleActions(
@@ -119,7 +119,6 @@ const reducer = handleActions(
     [actions.sendContactMessage, handlers.sendContactMessage],
     [actions.sendMessageSuccess, handlers.sendMessageSuccess],
     [actions.sendMessageFailure, handlers.sendMessageFailure],
-
   ]),
   initialState
 );

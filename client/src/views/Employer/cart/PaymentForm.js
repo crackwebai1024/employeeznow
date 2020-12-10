@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { TextField, Grid, Typography, Box } from "@material-ui/core";
 import { connect } from 'react-redux';
 import { actions as employerActions } from '@store/employer';
@@ -107,7 +106,7 @@ const PaymentForm = (props) => {
         employeeId.push(item._id)
       }
     })
-    if(buyCount === 0 && payEvent === "BUY_SELECT") {
+    if (buyCount === 0 && payEvent === "BUY_SELECT") {
       return actions.freePurchase({
         id: user._id,
         employees: employeeId
@@ -157,7 +156,7 @@ const PaymentForm = (props) => {
                   Credit card convenience fee
                 </Typography>
                 <Typography className={classes.flexR}>
-                  ${(profilePrice * 105.6 /100 * 0.03).toFixed(2)}
+                  ${(profilePrice * 105.6 / 100 * 0.03).toFixed(2)}
                 </Typography>
               </Grid>
               <Grid item xs={12} className={classes.bodyList}>
@@ -173,7 +172,7 @@ const PaymentForm = (props) => {
                   Total
                 </Typography>
                 <Typography className={classes.flexR}>
-                  ${(Number((profilePrice * 5.6 / 100).toFixed(2)) + Number(profilePrice.toFixed(2)) + Number(profilePrice * 105.6 /100 * 0.03)).toFixed(2)}
+                  ${(Number((profilePrice * 5.6 / 100).toFixed(2)) + Number(profilePrice.toFixed(2)) + Number(profilePrice * 105.6 / 100 * 0.03)).toFixed(2)}
                 </Typography>
               </Grid>
             </Grid>

@@ -1,20 +1,16 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import * as Sentry from "@sentry/browser";
 import {
   deleteToken,
   setToken,
   deleteUser,
   deleteRole,
-  setUserConfigured,
   setUser,
   setRole,
 } from "@helpers/auth-helpers";
-import { actions, actions as types } from "./index";
+import { actions as types } from "./index";
 import * as AuthAPI from "@services/AuthAPI";
 
-function* onAuthenticate({ payload }) { }
-
-function* onIsAuthenticated() { }
+function* onIsAuthenticated() {}
 
 function* onLogout() {
   yield put(types.logoutSuccess());
@@ -68,11 +64,12 @@ function* onSignupConfirm({ payload }) {
         let data = payload.veteranCardData;
         data.append("id", res.data.employee._id);
         data.append("role", payload.confirmData.role);
-        const response = yield call(AuthAPI.onUploadVeteranCard, data);
+        yield call(AuthAPI.onUploadVeteranCard, data);
       }
 
-      window.location.pathname = `employees/${res.data[payload.confirmData.role].slug
-        }`;
+      window.location.pathname = `employees/${
+        res.data[payload.confirmData.role].slug
+      }`;
       yield put(types.signupConfirmSuccess(res.data.employee));
     }
   } catch {
@@ -87,9 +84,9 @@ function* onLogin({ payload }) {
       setToken(res.data.token);
       setUser(res.data[payload.role]);
       setRole(payload.role);
-      if (payload.role == "employee") {
+      if (payload.role === "employee") {
         window.location.pathname = `employees/${res.data[payload.role].slug}`;
-      } else if (payload.role == "employer") {
+      } else if (payload.role === "employer") {
         window.location.pathname = `employers/${res.data[payload.role].slug}`;
       }
       yield put(types.loginSuccess(res.data.employee));
@@ -164,11 +161,11 @@ function* onChangePassword({ payload }) {
 function* onSendMessage({ payload }) {
   try {
     const res = yield call(AuthAPI.onSendMessage, payload);
-    if(res && res.data) {
-      yield put(types.sendMessageSuccess())
+    if (res && res.data) {
+      yield put(types.sendMessageSuccess());
     }
   } catch {
-    yield put(types.sendMessageFailure())
+    yield put(types.sendMessageFailure());
   }
 }
 
@@ -184,7 +181,7 @@ const authSagas = [
   takeEvery(types.forgotPasswordRequest, onForgotPassword),
   takeEvery(types.resetPasswordRequest, onResetPassword),
   takeEvery(types.changePasswordRequest, onChangePassword),
-  takeEvery(types.sendContactMessage, onSendMessage)
+  takeEvery(types.sendContactMessage, onSendMessage),
 ];
 
 export function* watchUnauthorized() {

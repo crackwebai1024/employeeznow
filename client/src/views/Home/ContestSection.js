@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Typography, Button } from '@material-ui/core';
+import { Grid, Paper, Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import MainButton from '@components/Element/Button/MainButton';
 
@@ -93,7 +93,6 @@ export default function ContestSection() {
             </Typography>
             <MainButton
               background="green"
-              color="color"
               border="green"
               hoverColor="white"
               hoverBack="#007000"

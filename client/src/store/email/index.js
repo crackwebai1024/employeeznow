@@ -21,9 +21,8 @@ const reducer = handleActions(
     [actions.sendNoInterestRequest, handlers.sendNoInterestRequest],
     [actions.sendNoInterestSuccess, handlers.sendNoInterestSuccess],
     [actions.sendNoInterestFailure, handlers.sendNoInterestFailure],
-    
   ]),
   initialState
-)
+);
 
 export default reducer;

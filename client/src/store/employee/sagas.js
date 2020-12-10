@@ -1,19 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import * as Sentry from "@sentry/browser";
-import {
-  deleteToken,
-  setToken,
-  deleteUser,
-  deleteRole,
-  setUserConfigured,
-  setUser,
-  setRole,
-} from "@helpers/auth-helpers";
-import { actions, actions as types } from "./index";
+
+import { actions as types } from "./index";
 import * as EmployeeAPI from "@services/EmployeeAPI";
-import Axios from "@lib/axios";
 import { _arrayBufferToBase64 } from "@helpers/utils";
-import { updateBasicInfoSuccess } from "./handlers";
 
 function* getUserData({ payload }) {
   try {
@@ -26,7 +15,7 @@ function* getUserData({ payload }) {
       yield put(types.getUserDataSuccess(res.data));
       yield put(types.initiateSuccess());
     }
-  } catch { }
+  } catch {}
 }
 
 function* onLoadSkill({ payload }) {
@@ -37,7 +26,7 @@ function* onLoadSkill({ payload }) {
       yield put(types.updateSkillSuccess(res.data.skill));
       yield put(types.initiateSuccess());
     }
-  } catch { }
+  } catch {}
 }
 
 function* onUpdateSkill({ payload }) {
@@ -47,7 +36,7 @@ function* onUpdateSkill({ payload }) {
       yield put(types.updateSkillSuccess(payload));
       yield put(types.setSuccess());
     }
-  } catch { }
+  } catch {}
 }
 
 function* onUpdateJobExperience({ payload }) {
@@ -97,7 +86,7 @@ function* onLoadPreference({ payload }) {
       yield put(types.success({ type: "preference", data: res.data }));
       yield put(types.initiateSuccess());
     }
-  } catch { }
+  } catch {}
 }
 
 function* onUploadPhoto({ payload }) {
@@ -109,7 +98,7 @@ function* onUploadPhoto({ payload }) {
         types.success({ type: payload.photoType, success: true, data: photo })
       );
     }
-  } catch { }
+  } catch {}
 }
 
 function* onDeletePhoto({ payload }) {
@@ -118,7 +107,7 @@ function* onDeletePhoto({ payload }) {
     if (res) {
       yield put(types.success({ type: payload.photoType, data: "" }));
     }
-  } catch { }
+  } catch {}
 }
 
 function* onGetProfilePhoto({ payload }) {
@@ -139,7 +128,7 @@ function* onGetBackground({ payload }) {
     let queryString = `?id=${payload.id}&type=${payload.type}`;
     const res = yield call(EmployeeAPI.getBackgroundImage, queryString);
     if (res && res.data) {
-      const photo = res.data
+      const photo = res.data;
       yield put(types.success({ type: payload.type, data: photo }));
     }
   } catch {
@@ -151,7 +140,7 @@ function* onUploadPortfolio({ payload }) {
   try {
     const res = yield call(EmployeeAPI.uploadPortfolioImage, payload.formData);
     if (res && res.data) {
-      yield put(types.videoUploadSuccess())
+      yield put(types.videoUploadSuccess());
       yield put(types.getPortfolioImage(payload));
     }
   } catch {
@@ -167,7 +156,7 @@ function* onGetPortfolio({ payload }) {
       let portfolios = res.data.portfolio.portfolios;
       yield put(types.success({ type: "portfolios", data: portfolios }));
     }
-  } catch { }
+  } catch {}
 }
 
 function* onDeleteFolio({ payload }) {
@@ -176,7 +165,7 @@ function* onDeleteFolio({ payload }) {
     if (res && res.data) {
       yield put(types.deleteFolioSuccess(payload.folioID));
     }
-  } catch { }
+  } catch {}
 }
 
 function* onUploadDocument({ payload }) {
@@ -190,22 +179,19 @@ function* onUploadDocument({ payload }) {
         })
       );
     }
-  } catch { }
+  } catch {}
 }
 
 function* onGetUserDocument({ payload }) {
   try {
     let { id, type } = payload;
-    const queryString = `?id=${id}&type=${type}`
-    const res = yield call(EmployeeAPI.onGetUserDocument, queryString)
+    const queryString = `?id=${id}&type=${type}`;
+    const res = yield call(EmployeeAPI.onGetUserDocument, queryString);
     if (res && res.data) {
-      let result = _arrayBufferToBase64(res.data.content.Body.data)
+      let result = _arrayBufferToBase64(res.data.content.Body.data);
       yield put(types.getUserDocumentSuccess({ result, type: "veteranCard" }));
     }
-
-  } catch {
-
-  }
+  } catch {}
 }
 
 function* onUpdateBasicInfo({ payload }) {
@@ -215,7 +201,7 @@ function* onUpdateBasicInfo({ payload }) {
       yield put(types.updateBasicInfoSuccess(res.data));
     }
   } catch {
-    yield put(types.updateBasicInfoFailure())
+    yield put(types.updateBasicInfoFailure());
   }
 }
 
@@ -223,12 +209,10 @@ function* onUploadVeteranCard({ payload }) {
   try {
     const res = yield call(EmployeeAPI.uploadDocument, payload);
     if (res && res.data) {
-      let result = _arrayBufferToBase64(res.data.content.data)
+      let result = _arrayBufferToBase64(res.data.content.data);
       yield put(types.getUserDocumentSuccess({ result, type: "veteranCard" }));
     }
-  } catch {
-
-  }
+  } catch {}
 }
 
 const employeeSagas = [

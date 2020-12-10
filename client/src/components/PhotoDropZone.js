@@ -10,7 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import BackupIcon from '@material-ui/icons/Backup';
+import BackupIcon from "@material-ui/icons/Backup";
 // import setAlert from '../../store/actions/alert';
 
 // set styles - material-ui
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarContainer: {
     width: 300,
-    height: 'fit-content',
+    height: "fit-content",
     maxHeight: 300,
     zIndex: 1,
-    margin: 'auto',
+    margin: "auto",
     overflow: "hidden",
   },
   userdialog: {
@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
   uploadIcon: {
     color: theme.palette.common.hover_white,
-    width: '100%',
-    height: "100%"
+    width: "100%",
+    height: "100%",
   },
   avatar: {
-    width: '100%',
-    maxHeight: "300px"
+    width: "100%",
+    maxHeight: "300px",
   },
   dropzoneText: {
     color: theme.palette.common.white,
@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto 1rem auto",
   },
   video: {
-    width: '100%',
-    maxHeight: "300px"
-  }
+    width: "100%",
+    maxHeight: "300px",
+  },
 }));
 
 // props are through parents
@@ -92,16 +92,16 @@ const PhotoDropZone = ({
   // setAlert,
 }) => {
   // style material-ui
-  const classes = useStyles("");  // title for Photo
+  const classes = useStyles(""); // title for Photo
   const [title, setTitle] = useState();
   const [titleError, setTitleError] = useState("");
 
   useEffect(() => {
     if (image) {
-      return setTitle(image.description)
+      return setTitle(image.description);
     }
-    setTitle("")
-  }, [image, open])
+    setTitle("");
+  }, [image, open]);
 
   const handleClose = () => {
     setFileNames("");
@@ -112,12 +112,12 @@ const PhotoDropZone = ({
 
   //sendPhoto is file data including buffer etc
   const [sendPhoto, setSendPhoto] = useState();
-  const [type, setType] = useState()
+  const [type, setType] = useState();
 
   const onDrop = (acceptedFiles) => {
     console.log(acceptedFiles[0], "acceptedfile");
-    let type = acceptedFiles[0].type.split("/")[0]
-    setType(type)
+    let type = acceptedFiles[0].type.split("/")[0];
+    setType(type);
     //setFileNames(acceptedFiles.map((file) => file.name));  -- when there is multiple pictures
     const imgName = acceptedFiles.map((file) => file.name);
     console.log(imgName);
@@ -148,10 +148,14 @@ const PhotoDropZone = ({
     handleClose();
   };
 
-  console.log(fileNames, "filenames")
+  console.log(fileNames, "filenames");
 
   return (
-    <Dialog open={open ? true : false} onClose={handleClose} aria-labelledby="dialog-title">
+    <Dialog
+      open={open ? true : false}
+      onClose={handleClose}
+      aria-labelledby="dialog-title"
+    >
       <DialogTitle id="dialog-title">
         <Typography>{headerTitle}</Typography>
         {fileNames &&
@@ -163,36 +167,35 @@ const PhotoDropZone = ({
       </DialogTitle>
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
-          {
-            (fileNames || (image && image.url)) ? (
-              fileNames ? (type === "image" ?
-                <img src={fileNames.file}
+          {fileNames || (image && image.url) ? (
+            fileNames ? (
+              type === "image" ? (
+                <img
+                  src={fileNames.file}
                   alt="profile"
                   className={classes.avatar}
                 />
-                :
+              ) : (
                 <video controls className={classes.video}>
-                  <source src={fileNames.file}>
-                  </source>
+                  <source src={fileNames.file}></source>
                 </video>
               )
-                :
-                ((image.style === "image" || image.style === undefined) ?
-                  <img src={`${image.url}?${Date.now()}`}
-                    alt="profile"
-                    className={classes.avatar}
-                  /> :
-                  <video controls className={classes.video}>
-                    <source src={image.url}>
-                    </source>
-                  </video>
-                )
+            ) : image.style === "image" || image.style === undefined ? (
+              <img
+                src={`${image.url}?${Date.now()}`}
+                alt="profile"
+                className={classes.avatar}
+              />
+            ) : (
+              <video controls className={classes.video}>
+                <source src={image.url}></source>
+              </video>
             )
-              :
-              <div>
-                <BackupIcon className={classes.uploadIcon} />
-              </div>
-          }
+          ) : (
+            <div>
+              <BackupIcon className={classes.uploadIcon} />
+            </div>
+          )}
         </Grid>
       </DialogContent>
       {photoType === "portfolio" && (
@@ -234,17 +237,17 @@ const PhotoDropZone = ({
                 </DialogContent>
               </div>
             ) : (
-                <div className={classes.dropzoneContainer}>
-                  <DialogContent>
-                    <Typography
-                      variant="caption"
-                      className={classes.dropzoneText}
-                    >
-                      If you want to change the photo, drag and drop again
+              <div className={classes.dropzoneContainer}>
+                <DialogContent>
+                  <Typography
+                    variant="caption"
+                    className={classes.dropzoneText}
+                  >
+                    If you want to change the photo, drag and drop again
                   </Typography>
-                  </DialogContent>
-                </div>
-              )}
+                </DialogContent>
+              </div>
+            )}
           </div>
         )}
       </Dropzone>

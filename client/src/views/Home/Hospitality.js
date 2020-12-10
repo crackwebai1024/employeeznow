@@ -81,7 +81,7 @@ const Hospitality = () => {
         EMPLOYERS OF HOSPITALITY
     </Typography>
     </Grid>
-    <Grid container xs={12}>
+    <Grid container item xs={12}>
       <Grid item xs={12} sm={6} className={classes.col_center}>
         <Box style={{ margin: 'auto' }}>
           <Typography className={classes.profileSubtitle}>
@@ -94,15 +94,15 @@ const Hospitality = () => {
           </Typography>
         </Box>
       </Grid>
-      <Grid xs={12} sm={6} className={classes.center}>
+      <Grid item xs={12} sm={6} className={classes.center}>
         <img src={`${process.env.PUBLIC_URL}/img/test/img4.png`} alt="img" className={classes.image} />
       </Grid>
     </Grid>
-    <Grid xs={12}>
+    <Grid item xs={12}>
       <Box className={classes.listDescription}>
         {
-          listData.map(list => {
-            return <Box style={{ display: 'flex' }}>
+          listData.map((list, key) => {
+            return <Box style={{ display: 'flex' }} key={key}>
               <img src={`${process.env.PUBLIC_URL}/img/test/arrow.svg`} alt="arrow" className={classes.arrowIcon} />
               <div dangerouslySetInnerHTML={{ __html: list }} className={classes.font14}>
               </div>

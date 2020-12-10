@@ -6,13 +6,13 @@ const initialState = {
   background: undefined,
   success: "",
   updateSuccess: "NONE",
-  videoUpload: 'NONE'
+  videoUpload: "NONE",
 };
 
 export const initiateSuccess = (state) => ({
   ...state,
   success: "",
-  updateSuccess: "NONE"
+  updateSuccess: "NONE",
 });
 
 export const getUserDataRequest = (state, { payload }) => ({
@@ -77,7 +77,7 @@ export const failure = (state, { payload }) => ({
   ...state,
   loading: false,
   success: false,
-  videoUpload: 'FAILURE'
+  videoUpload: "FAILURE",
 });
 
 export const loadPreference = (state, { payload }) => ({
@@ -103,12 +103,12 @@ export const getBackgroundImage = (state, { payload }) => ({
 
 export const uploadPortfolioImage = (state, { payload }) => ({
   ...state,
-  videoUpload: 'REQUEST'
+  videoUpload: "REQUEST",
 });
 
 export const videoUploadSuccess = (state, { payload }) => ({
   ...state,
-  videoUpload: 'SUCCESS'
+  videoUpload: "SUCCESS",
 });
 
 export const getPortfolioImage = (state, { payload }) => ({
@@ -117,13 +117,13 @@ export const getPortfolioImage = (state, { payload }) => ({
 
 export const deletePortfolio = (state, { payload }) => ({
   ...state,
-  videoUpload: 'REQUEST'
+  videoUpload: "REQUEST",
 });
 
 export const deleteFolioSuccess = (state, { payload }) => ({
   ...state,
   portfolios: state.portfolios.filter((folio) => folio.index !== payload),
-  videoUpload: 'SUCCESS'
+  videoUpload: "SUCCESS",
 });
 
 export const uploadDocumentRequest = (state, { payload }) => {
@@ -150,7 +150,7 @@ export const updateBasicInfoRequest = (state, { payload }) => ({
   ...state,
   updateLoading: true,
   updateEmployee: false,
-  updateSuccess: "REQUEST"
+  updateSuccess: "REQUEST",
 });
 
 export const updateBasicInfoSuccess = (state, { payload }) => ({
@@ -166,8 +166,8 @@ export const updateBasicInfoSuccess = (state, { payload }) => ({
 
 export const updateBasicInfoFailure = (state) => ({
   ...state,
-  updateSuccess : "FAILURE"
-})
+  updateSuccess: "FAILURE",
+});
 
 export const setSuccess = (state) => ({
   ...state,

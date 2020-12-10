@@ -1,41 +1,41 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import Dropzone from 'react-dropzone';
-import { makeStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import Dropzone from "react-dropzone";
+import { makeStyles } from "@material-ui/styles";
+import Typography from "@material-ui/core/Typography";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   dropzoneStyle: {},
   dropzoneContainer: {
-    justifyContent: 'center',
-    alignSelf: 'center',
-    textAlign: 'center',
-    border: 'none',
+    justifyContent: "center",
+    alignSelf: "center",
+    textAlign: "center",
+    border: "none",
     backgroundColor: theme.palette.secondary.main,
-    outline: 'none',
-    '&:hover': {
+    outline: "none",
+    "&:hover": {
       backgroundColor: theme.palette.primary.main,
     },
-    '&:active': {
+    "&:active": {
       backgroundColor: theme.palette.primary.light,
     },
   },
   dropzoneText: {
     color: theme.palette.common.white,
     fontWeight: 700,
-    textDecoration: 'underline',
-    marginBottom: '1rem',
-    cursor: 'pointer',
+    textDecoration: "underline",
+    marginBottom: "1rem",
+    cursor: "pointer",
   },
   inputContainer: {
-    margin: '0 auto 1rem auto',
+    margin: "0 auto 1rem auto",
   },
 }));
 
@@ -54,27 +54,20 @@ const VideoDropzone = ({
   const classes = useStyles();
 
   // title for Photo
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  //const [dropzoneStyle, setDropzoneStyle] = useState();
-
-  //sendPhoto is file data including buffer etc
   const [sendVideo, setSendVideo] = useState();
 
   const onDrop = (acceptedFiles) => {
     console.log(acceptedFiles[0]);
-    //setFileNames(acceptedFiles.map((file) => file.name));  -- when there is multiple pictures
     const imgName = acceptedFiles.map((file) => file.name);
     console.log(imgName);
-    // setVideo({ photo: imgName[0] });
     setFileNames({ file: URL.createObjectURL(acceptedFiles[0]) });
-    //setDropzoneStyle('dropped');
     setSendVideo(acceptedFiles[0]);
-    // uploadVideo(acceptedFiles[0]);  //if you want to send photo onDrop
   };
 
   const onDragOver = (e) => {
@@ -90,8 +83,8 @@ const VideoDropzone = ({
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby="dialog-title">
       <DialogTitle id="dialog-title">
-        {!fileNames && 'Upload Video'}
-        {fileNames && 'Almost there! Please click CONFIRM'}
+        {!fileNames && "Upload Video"}
+        {fileNames && "Almost there! Please click CONFIRM"}
       </DialogTitle>
 
       <Dropzone onDrop={onDrop} accept="video/*">

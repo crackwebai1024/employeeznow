@@ -14,7 +14,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AddIcon from "@material-ui/icons/Add";
@@ -129,8 +128,6 @@ const SkillsForm = ({
   employee,
   success,
 }) => {
-  // set State
-  const [showAlert, setShowAlert] = useState(0);
 
   const [primaryJob, setPrimaryJob] = useState({ title: "", years: "" });
   const [secondaryJob, setSecondaryJob] = useState({ title: "", years: "" });
@@ -443,8 +440,6 @@ const SkillsForm = ({
       history.push(`/employees/${user.slug}`)
     } else if (success === false) {
       errorMessage("Sorry! Saving is failed")
-    } else {
-      setShowAlert(0);
     }
     actions.initiateSuccess();
   }, [success]);

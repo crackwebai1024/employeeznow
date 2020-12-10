@@ -75,5 +75,5 @@ export async function updateBasicInfo(data) {
 }
 
 export async function onGetUserDocument(data) {
-  return await Axios.get('/crud/employee/document' + data)
+  return await Axios.get("/crud/employee/document" + data);
 }

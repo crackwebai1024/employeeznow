@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Button from '@material-ui/core/Button';
-import LinkTab from '@components/Element/Button/LinkTab';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import { actions as authActions } from '@store/auth';
-import { bindActionCreators } from 'redux';
-import {
-  employeeRoutes,
-  employerRoutes,
-  noAuthRoutes
-} from './HeaderUrls'
-import logo from '@assets/logo2.png';
-import { Typography } from '@material-ui/core';
-import { Router } from '@material-ui/icons';
-
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
+import { makeStyles } from "@material-ui/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import Button from "@material-ui/core/Button";
+import LinkTab from "@components/Element/Button/LinkTab";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import MenuIcon from "@material-ui/icons/Menu";
+import IconButton from "@material-ui/core/IconButton";
+import { actions as authActions } from "@store/auth";
+import { bindActionCreators } from "redux";
+import { employeeRoutes, employerRoutes, noAuthRoutes } from "./HeaderUrls";
+import logo from "@assets/logo2.png";
+import { Typography } from "@material-ui/core";
 
 // Nav Bar Elevation
 function ElevationScroll(props) {
@@ -44,8 +38,8 @@ function ElevationScroll(props) {
 // Custom style setup
 const useStyles = makeStyles((theme) => ({
   appbar: {
-    height: '5rem',
-    paddingRight: '1rem',
+    height: "5rem",
+    paddingRight: "1rem",
     backgroundColor: "#FDFDFD",
     color: theme.palette.common.black,
     zIndex: theme.zIndex.modal + 1, //zIndex of modal default + 1
@@ -53,70 +47,64 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     width: "25rem",
     paddingTop: "15px",
-    padding: '0rem',
-    '&:hover': {
-      backgroundColor: 'transparent',
+    padding: "0rem",
+    "&:hover": {
+      backgroundColor: "transparent",
     },
   },
   logo: {
-    width: '70%',
+    width: "70%",
   },
   bottomEffect: {
     width: "100%",
-    height: '1px',
-    background: theme.palette.common.green
+    height: "1px",
+    background: theme.palette.common.green,
   },
   tabContainer: {
-    marginLeft: 'auto',
-    display: 'flex'
+    marginLeft: "auto",
+    display: "flex",
   },
   list: {
-    paddingLeft: '0px'
+    paddingLeft: "0px",
   },
   tab: {
     minWidth: 10,
-    listStyleType: 'none',
-    cursor: 'pointer',
+    listStyleType: "none",
+    cursor: "pointer",
     fontSize: 16,
     fontWeight: 300,
   },
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: '1rem',
+    marginBottom: "1rem",
   },
   drawerIconContainer: {
-    marginLeft: 'auto',
-    '&:hover': {
-      backgroundColor: 'transparent',
+    marginLeft: "auto",
+    "&:hover": {
+      backgroundColor: "transparent",
     },
   },
   drawerIcon: {
     color: theme.palette.grey[900],
-    height: '35px',
-    width: '35px',
+    height: "35px",
+    width: "35px",
   },
   drawer: {
-    width: '15rem',
+    width: "15rem",
     backgroundColor: "theme.palette.background.paper",
   },
   drawerItem: {
     opacity: 1,
   },
   drawerItemSelected: {
-    '& .MuiListItemText-root': {
+    "& .MuiListItemText-root": {
       opacity: 1,
     },
   },
 }));
 
 // Nav Function
-const Header = ({
-  actions,
-  value,
-  badge,
-  setValue,
-  isAuthenticated
-}) => {
+const Header = ({ actions, value, badge, setValue, isAuthenticated }) => {
   //**  style **//
   const classes = useStyles();
 
@@ -126,25 +114,22 @@ const Header = ({
   const theme = useTheme();
 
   // Media Query - screen smaller than small breakpoints
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   //Swipeable drawer
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent) || window.innerWidth < 1024;
-  console.log(iOS, "iOS")
+  const iOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) || window.innerWidth < 1024;
   // Click and Logout handler
   const handleLogout = (e) => {
     e.preventDefault();
     actions.logoutRequest();
     setValue(2);
-    return window.location.pathname = "/"
+    return (window.location.pathname = "/");
   };
 
   // Loop routes(tab) - trigger tabs(routes) changes
   useEffect(() => {
-    [ ...employeeRoutes, 
-      ...employerRoutes, 
-      ...noAuthRoutes
-    ].forEach((route) => {
+    [...employeeRoutes, ...employerRoutes, ...noAuthRoutes].forEach((route) => {
       switch (window.location.pathname) {
         case `${route.link}`:
           if (value !== route.activeIndex) {
@@ -163,28 +148,19 @@ const Header = ({
   };
 
   // Setup Tabs render
-  const [badges, setBadges] = useState()
+  const [badges, setBadges] = useState();
   useEffect(() => {
-    setBadges(badge)
-  }, [badge])
+    setBadges(badge);
+  }, [badge]);
   const tabs = (routes) => (
-    <ul
-      value={value}
-      onChange={handleChange}
-      className={classes.tabContainer}
-    >
+    <ul value={value} onChange={handleChange} className={classes.tabContainer}>
       {routes.map((route, index) => (
         <li
           key={`${route}${index}`}
           className={classes.tab}
           onClick={route.onClick && handleLogout}
         >
-          <LinkTab
-            to={route.link}
-            title={route.name}
-            badge={badges}
-          >
-          </LinkTab>
+          <LinkTab to={route.link} title={route.name} badge={badges}></LinkTab>
         </li>
       ))}
     </ul>
@@ -267,23 +243,23 @@ const Header = ({
 
             {/* Employee Tab/Drawer */}
             {isAuthenticated &&
-              localStorage.getItem('role') === 'employee' &&
+              localStorage.getItem("role") === "employee" &&
               !matches &&
               employeeTabs}
 
             {isAuthenticated &&
-              localStorage.getItem('role') === 'employee' &&
+              localStorage.getItem("role") === "employee" &&
               matches &&
               employeeDrawer}
 
             {/* Employer Tab/Drawer */}
             {isAuthenticated &&
-              localStorage.getItem('role') === 'employer' &&
+              localStorage.getItem("role") === "employer" &&
               !matches &&
               employerTabs}
 
             {isAuthenticated &&
-              localStorage.getItem('role') === 'employer' &&
+              localStorage.getItem("role") === "employer" &&
               matches &&
               employerDrawer}
 
@@ -300,17 +276,21 @@ const Header = ({
 };
 
 const mapStateToProps = ({
-  employer: {
-    formValues, paid, payEvent, badge
-  },
+  employer: { formValues, paid, payEvent, badge },
 }) => ({
-  formValues, paid, payEvent, badge
+  formValues,
+  paid,
+  payEvent,
+  badge,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...authActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...authActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

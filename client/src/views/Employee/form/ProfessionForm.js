@@ -333,7 +333,7 @@ const ProfessionForm = ({
       ...formData,
       id: id,
     };
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     actions.addSkillsRequest(data);
   };
 

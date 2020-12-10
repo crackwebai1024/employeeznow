@@ -130,7 +130,7 @@ const LearnMore = () => {
                 {list.title}
               </Typography>
               <Typography className={classes.description}>
-                <div dangerouslySetInnerHTML={{ __html: list.description }}></div>
+                <span dangerouslySetInnerHTML={{ __html: list.description }}></span>
               </Typography>
             </Grid>
           })
@@ -158,7 +158,7 @@ const LearnMore = () => {
                 {list.title}
               </Typography>
               <Typography className={classes.description}>
-                <div dangerouslySetInnerHTML={{ __html: list.description }}></div>
+                <span dangerouslySetInnerHTML={{ __html: list.description }}></span>
               </Typography>
             </Grid>
           })
@@ -210,7 +210,7 @@ const LearnMore = () => {
         </Grid>
       }
       <Grid container ustify="center" spacing={0} style={{ marginTop: '100px', paddingBottom: '6rem' }}>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <Typography className={classes.title}>
             THE FIRST AUTOMATED SEARCH ENGINE FOR<br />
             EMPLOYEES OF HOSPITALITY

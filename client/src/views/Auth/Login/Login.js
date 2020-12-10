@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Grid, TextField, FormControlLabel, Box } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import MainButton from '@components/Element/Button/MainButton';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { actions as authActions } from '@store/auth';
-import PasswordInput from '@components/PasswordInput'
-import { bindActionCreators } from 'redux';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { Grid, TextField, FormControlLabel, Box } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import MainButton from "@components/Element/Button/MainButton";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { actions as authActions } from "@store/auth";
+import PasswordInput from "@components/PasswordInput";
+import { bindActionCreators } from "redux";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -22,80 +22,91 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.blue,
   },
   eye: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
 
   heading1: {
-    fontSize: '30px',
-    marginBottom: '1rem',
+    fontSize: "30px",
+    marginBottom: "1rem",
   },
   button: {
     marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
-    marginTop: '0.3rem',
-    borderTop: 'solid 1px lightgray'
+    marginTop: "0.3rem",
+    borderTop: "solid 1px lightgray",
     // marginBottom: '8rem',
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: "none",
     color: theme.palette.common.blue,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
   wrapper: {
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.16)",
-    maxWidth: '500px',
+    maxWidth: "500px",
     // position: "relative",
     background: theme.palette.common.white,
-    top: '5rem',
-    padding: '2rem',
-    margin: 'auto',
-    [theme.breakpoints.down('xs')]: {
-      padding: "1rem"
+    top: "5rem",
+    padding: "2rem",
+    margin: "auto",
+    [theme.breakpoints.down("xs")]: {
+      padding: "1rem",
     },
   },
   invalidMessage: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.error.main,
-    marginBottom: '2rem',
-  }
+    marginBottom: "2rem",
+  },
 }));
 
-const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) => {
+const Login = ({
+  actions,
+  errorMessage,
+  isAuthenticated,
+  slug,
+  loginStatus,
+}) => {
   const { register, handleSubmit, errors } = useForm({});
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   const classes = useStyles();
 
   const onSubmit = (formData) => {
-    actions.loginRequest(formData)
+    actions.loginRequest(formData);
   };
 
   const handleInputChange = () => {
-    setError('')
-  }
+    setError("");
+  };
 
   useEffect(() => {
     if (loginStatus === "FAILURE") {
-      setError("Email or Password is not correct")
+      setError("Email or Password is not correct");
     }
-  }, [loginStatus])
+  }, [loginStatus]);
 
   //Redirect to each account page after logged in
-  if (isAuthenticated && localStorage.getItem('role') === 'employer') {
+  if (isAuthenticated && localStorage.getItem("role") === "employer") {
     return <Redirect to={`/employers/${slug}`} />;
   }
 
-  if (isAuthenticated && localStorage.getItem('role') === 'employee') {
+  if (isAuthenticated && localStorage.getItem("role") === "employee") {
     return <Redirect to={`/employees/${slug}`} />;
   }
 
   return (
     <Container>
-      <Grid container direction="column" alignItems="center" className={classes.wrapper}>
-        <Grid item style={{ display: 'flex' }}>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        className={classes.wrapper}
+      >
+        <Grid item style={{ display: "flex" }}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -128,15 +139,15 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
             </Grid>
             <FormHelperText
               error={errors.role ? true : false}
-              style={{ textAlign: 'center' }}
+              style={{ textAlign: "center" }}
             >
-              {errors.role ? 'Please select your role' : ''}
+              {errors.role ? "Please select your role" : ""}
             </FormHelperText>
           </RadioGroup>
 
           <TextField
             error={errors.email ? true : false}
-            helperText={errors.email ? 'Invalid Email' : ''}
+            helperText={errors.email ? "Invalid Email" : ""}
             variant="outlined"
             margin="normal"
             onChange={handleInputChange}
@@ -159,7 +170,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
             label="password"
             size="small"
             helperText={
-              errors.password ? 'Passwords must be minimum 8 characters' : ''
+              errors.password ? "Passwords must be minimum 8 characters" : ""
             }
             name="password"
             inputRef={register({
@@ -178,8 +189,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
               color="white"
               fontSize={16}
               onClick={handleSubmit(onSubmit)}
-            >
-            </MainButton>
+            ></MainButton>
           </Box>
           {/* errorMassge when authentication is failed */}
           {error && (
@@ -188,7 +198,7 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
             </Grid>
           )}
         </form>
-        <hr/>
+        <hr />
         <Grid
           container
           direction="row"
@@ -213,17 +223,22 @@ const Login = ({ actions, errorMessage, isAuthenticated, slug, loginStatus }) =>
 };
 
 const mapStateToProps = ({
-  auth: {
-    signupUser, isSentPhoneNumber, isAuthenticated, user, loginStatus
-  },
+  auth: { signupUser, isSentPhoneNumber, isAuthenticated, user, loginStatus },
 }) => ({
-  signupUser, isSentPhoneNumber, isAuthenticated, user, loginStatus
+  signupUser,
+  isSentPhoneNumber,
+  isAuthenticated,
+  user,
+  loginStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    ...authActions,
-  }, dispatch),
+  actions: bindActionCreators(
+    {
+      ...authActions,
+    },
+    dispatch
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
