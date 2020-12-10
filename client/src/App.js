@@ -12,7 +12,7 @@ import theme from "@helpers/Theme";
 import AppRouter from "@router/AppRouter";
 import { getBoxSize } from "@helpers/utils";
 import { ToastContainer, toast } from "react-toastify";
-import LoadingCircular from '@components/LoadingCircular'
+import LoadingCircular from "@components/LoadingCircular";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -20,22 +20,22 @@ toast.configure();
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    background: '#f3f2ef',
-    paddingTop: '3rem',
-    paddingBottom: '3rem'
-  }
-}))
+    background: "#f3f2ef",
+    paddingTop: "3rem",
+    paddingBottom: "3rem",
+  },
+}));
 
 function App(props) {
   const [value, setValue] = useState(1);
   const { loading } = props;
   const isAuthenticated = localStorage.getItem("USER") ? true : false;
-  const classes = useStyles()
+  const classes = useStyles();
 
-  if(loading) {
-    document.body.style.overflowY = 'hidden'
+  if (loading) {
+    document.body.style.overflowY = "hidden";
   } else {
-    document.body.style.overflowY = 'scroll'
+    document.body.style.overflowY = "scroll";
   }
   return (
     <div className="App">
@@ -47,12 +47,10 @@ function App(props) {
             slug=""
             value={value}
             setValue={setValue}
-          // selectedIndex={selectedIndex}
-          // setSelectedIndex={setSelectedIndex}
+            // selectedIndex={selectedIndex}
+            // setSelectedIndex={setSelectedIndex}
           />
-          {loading &&
-            <LoadingCircular />
-          }
+          {loading && <LoadingCircular />}
           <Box minHeight={getBoxSize()} className={classes.content}>
             <Switch>
               <AppRouter />
@@ -82,13 +80,13 @@ function App(props) {
 
 const mapStateToProps = ({
   auth: { signupUser, isSentPhoneNumber, isAuthenticated, user },
-  employee: { loading }
+  employee: { loading },
 }) => ({
   signupUser,
   isSentPhoneNumber,
   isAuthenticated,
   user,
-  loading
+  loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,34 +1,34 @@
-import React, { Fragment } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { Typography } from '@material-ui/core';
+import React, { Fragment } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   interviewText: {
-    maxWidth: '350px',
-    margin: 'auto',
-    fontSize: '20px',
+    maxWidth: "350px",
+    margin: "auto",
+    fontSize: "20px",
     // textAlign: 'center',
     fontWeight: 900,
-    fontFamily: 'calibri'
+    fontFamily: "calibri",
   },
   listText: {
-    fontSize: '18px',
+    fontSize: "18px",
     fontWeight: 300,
     lineHeight: 2,
-    margin: 'auto',
-    width: 'fit-content'
+    margin: "auto",
+    width: "fit-content",
   },
   title: {
-    fontSize: '32px',
-    textAlign: 'center',
-    marginTop: '4rem',
-    marginBottom: '1.5rem'
-  }
+    fontSize: "32px",
+    textAlign: "center",
+    marginTop: "4rem",
+    marginBottom: "1.5rem",
+  },
 }));
 
 export default function SelfInterviewSection() {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <Fragment>
       <Grid item xs={12} md={12}>
@@ -79,5 +79,5 @@ export default function SelfInterviewSection() {
         </Typography>
       </Grid>
     </Fragment>
-  )
+  );
 }

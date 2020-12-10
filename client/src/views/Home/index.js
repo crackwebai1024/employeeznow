@@ -1,138 +1,136 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, Grid, Box } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import ProfileDescription from './ProfileDescription';
-import Hospitality from './Hospitality';
-import VeteranSection from './VeteranSection';
-import MainButton from '@components/Element/Button/MainButton';
-import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
-import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
-import MovieFilterOutlinedIcon from '@material-ui/icons/MovieFilterOutlined';
-import DirectionsCarOutlinedIcon from '@material-ui/icons/DirectionsCarOutlined';
-import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
-import AutorenewOutlinedIcon from '@material-ui/icons/AutorenewOutlined';
-import { getUser, getRole } from '@helpers/auth-helpers';
-import ExampleProfile from './ExampleProfile';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Container, Grid, Box } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import ProfileDescription from "./ProfileDescription";
+import Hospitality from "./Hospitality";
+import VeteranSection from "./VeteranSection";
+import MainButton from "@components/Element/Button/MainButton";
+import InsertDriveFileOutlinedIcon from "@material-ui/icons/InsertDriveFileOutlined";
+import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnOutlined";
+import MovieFilterOutlinedIcon from "@material-ui/icons/MovieFilterOutlined";
+import DirectionsCarOutlinedIcon from "@material-ui/icons/DirectionsCarOutlined";
+import FormatListBulletedOutlinedIcon from "@material-ui/icons/FormatListBulletedOutlined";
+import AutorenewOutlinedIcon from "@material-ui/icons/AutorenewOutlined";
+import { getUser, getRole } from "@helpers/auth-helpers";
+import ExampleProfile from "./ExampleProfile";
 
 const useStyles = makeStyles((theme) => ({
   contestContainer: {
     background: "#FAFAFA",
-    textAlign: 'center',
-    width: '100%'
+    textAlign: "center",
+    width: "100%",
   },
   mainContainer: {
-    width: 'auto',
-    maxWidth: '1024',
-    [theme.breakpoints.down('md')]: {
-
-    },
+    width: "auto",
+    maxWidth: "1024",
+    [theme.breakpoints.down("md")]: {},
   },
   textLgContainer: {
-    marginTop: '10rem',
-    textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
+    marginTop: "10rem",
+    textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
     },
   },
   sectionIcon: {
-    width: '42px',
-    height: '42px',
-    color: theme.palette.common.lightBlack
+    width: "42px",
+    height: "42px",
+    color: theme.palette.common.lightBlack,
   },
   heading1: {
     color: theme.palette.primary.main,
     fontWeight: 400,
-    fontSize: '2.5rem',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '2.5rem',
-      letterSpacing: '0.08rem',
+    fontSize: "2.5rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "2.5rem",
+      letterSpacing: "0.08rem",
     },
   },
   heading2: {
-    marginTop: '2rem',
-    marginBottom: '0.5rem',
-    fontFamily: 'Nunito Sans',
-    fontSize: '2rem',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '2rem',
-      letterSpacing: '0.05rem',
+    marginTop: "2rem",
+    marginBottom: "0.5rem",
+    fontFamily: "Nunito Sans",
+    fontSize: "2rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "2rem",
+      letterSpacing: "0.05rem",
     },
   },
   headingBatang: {
-    textAlign: 'center',
-    fontSize: '30px',
-    fontWeight: 550
+    textAlign: "center",
+    fontSize: "30px",
+    fontWeight: 550,
   },
   heading3: {
     fontWeight: 600,
-    fontSize: '30px',
-    textAlign: 'center',
+    fontSize: "30px",
+    textAlign: "center",
     marginTop: "2rem",
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.8rem',
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.8rem",
     },
   },
   bottom: {
-    marginBottom: '8rem'
+    marginBottom: "8rem",
   },
   text: {
     fontWeight: 500,
-    textAlign: 'center',
-    fontSize: '16px',
+    textAlign: "center",
+    fontSize: "16px",
   },
   HomeWrapper: {
     background: "white",
-    marginTop: '-3rem',
-    marginBottom: '-3rem'
+    marginTop: "-3rem",
+    marginBottom: "-3rem",
   },
   paper1: {
-    padding: '10px',
+    padding: "10px",
     marginTop: "1.5rem",
-    borderRadius: '10px',
+    borderRadius: "10px",
     fontWeight: 800,
-    fontSize: '16px'
+    fontSize: "16px",
   },
   center: {
-    textAlign: "center"
+    textAlign: "center",
   },
   getStartedSection: {
-    textAlign: "center"
+    textAlign: "center",
   },
   font14: {
-    fontSize: '14px',
-    textAlign: 'center'
+    fontSize: "14px",
+    textAlign: "center",
   },
   font16: {
-    fontSize: '16px'
+    fontSize: "16px",
   },
   font24: {
-    fontSize: '24px',
+    fontSize: "24px",
   },
   getStartedButton: {
-    marginTop: '5rem'
+    marginTop: "5rem",
   },
   col_center: {
-    display: 'flex',
-    alignItems: "center"
+    display: "flex",
+    alignItems: "center",
   },
   p1: {
-    padding: '1rem'
+    padding: "1rem",
   },
   p3: {
-    padding: '2rem'
+    padding: "2rem",
   },
   profileSection: {
     background: "#FAFAFA",
-    padding: '3rem 0 3rem 0'
-  }
+    padding: "3rem 0 3rem 0",
+  },
 }));
 
 const Home = () => {
   const classes = useStyles();
-  const user = JSON.parse(getUser())
-  const role = getRole()
+  const user = JSON.parse(getUser());
+  const role = getRole();
 
   return (
     <Box className={classes.HomeWrapper}>
@@ -155,22 +153,22 @@ const Home = () => {
                     <Typography variant="h2" className={classes.heading2}>
                       Get EmployeezNow in just a few minutes!
                     </Typography>
-                        <Box className={classes.getStartedButton}>
-                          <MainButton
-                            background="green"
-                            pd={30} fontSize={20}
-                            label={user ? "Go To Dashboard" : "Get Started"}
-                            to={user ? `${role}s/${user.slug}` : "/signup"}
-                            width="250px"
-                            hoverBack="#007000"
-                            border="green"
-                            color="white"
-                            hoverColor="white"
-                          >
-                          </MainButton>
-                        </Box>
-                        <Typography className={classes.heading3}>
-                          FREE to Register
+                    <Box className={classes.getStartedButton}>
+                      <MainButton
+                        background="green"
+                        pd={30}
+                        fontSize={20}
+                        label={user ? "Go To Dashboard" : "Get Started"}
+                        to={user ? `${role}s/${user.slug}` : "/signup"}
+                        width="250px"
+                        hoverBack="#007000"
+                        border="green"
+                        color="white"
+                        hoverColor="white"
+                      ></MainButton>
+                    </Box>
+                    <Typography className={classes.heading3}>
+                      FREE to Register
                     </Typography>
                   </Grid>
                   {/* nested column 1/2 button */}
@@ -180,7 +178,7 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        <Grid container style={{ marginTop: '100px' }}>
+        <Grid container style={{ marginTop: "100px" }}>
           <Grid item xs={12} md={12}>
             <Grid>
               <Typography variant="h4" className={classes.headingBatang}>
@@ -188,9 +186,12 @@ const Home = () => {
               </Typography>
               <Paper elevation={0} className={classes.paper1}>
                 <Typography className={classes.text}>
-                  You've never had a profile like this.<br />
-                Register your FREE employment profile and when you want, we will show it to dozens of employers that are hiring in your area.
-              </Typography>
+                  You've never had a profile like this.
+                  <br />
+                  Register your FREE employment profile and when you want, we
+                  will show it to dozens of employers that are hiring in your
+                  area.
+                </Typography>
                 <Typography className={`${classes.text} ${classes.p1}`}>
                   YOUR PROFILE CAN BE SO MUCH MORE THAN JUST A RESUME
                 </Typography>
@@ -247,68 +248,83 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={3} style={{ marginTop: '3rem' }}>
+        <Grid container spacing={3} style={{ marginTop: "3rem" }}>
           <Grid item xs={12} className={classes.center}>
             <Typography className={`${classes.font24} ${classes.p1}`}>
               Much, Much More!
             </Typography>
             <Typography className={`${classes.center} ${classes.font16}`}>
-              Once you are registered, we will help you keep your profile current and always up to date.
-              </Typography>
+              Once you are registered, we will help you keep your profile
+              current and always up to date.
+            </Typography>
             <Typography className={`${classes.center} ${classes.font16}`}>
-              When you are ready, we will bring the job opportunites to you and only the ones that fit your needs!
-              </Typography>
+              When you are ready, we will bring the job opportunites to you and
+              only the ones that fit your needs!
+            </Typography>
             <Typography className={`${classes.center} ${classes.font16}`}>
               We're like a personal staffing agency that works for FREE.
-              </Typography>
-            <Typography className={`${classes.center} ${classes.font16} ${classes.bottom}`}>
-              Until you're ready for something new, just keep building your profile to be the best it can be!
+            </Typography>
+            <Typography
+              className={`${classes.center} ${classes.font16} ${classes.bottom}`}
+            >
+              Until you're ready for something new, just keep building your
+              profile to be the best it can be!
             </Typography>
           </Grid>
         </Grid>
-      </Container >
+      </Container>
       <Grid container className={classes.contestContainer}>
         {/* <ContestSection /> */}
       </Grid>
       <Container width="sm" className={classes.mainContainer}>
-        <Grid container spacing={3} style={{ marginTop: '50px' }}>
+        <Grid container spacing={3} style={{ marginTop: "50px" }}>
           <ProfileDescription />
         </Grid>
       </Container>
-      {
-        !user &&
-        <Grid container className={classes.profileSection} style={{ marginTop: "100px" }}>
+      {!user && (
+        <Grid
+          container
+          className={classes.profileSection}
+          style={{ marginTop: "100px" }}
+        >
           <Container width="sm">
             <Grid container item xs={12}>
               <Grid item xs={12} md={6} className={classes.col_center}>
-                <Typography className={`${classes.font24}`} style={{ margin: 'auto' }}>
+                <Typography
+                  className={`${classes.font24}`}
+                  style={{ margin: "auto" }}
+                >
                   REGISTER YOUR EMPLOYEE PROFILE
-              </Typography>
+                </Typography>
               </Grid>
               <Grid item xs={12} md={6}>
                 <MainButton
                   background="green"
                   hoverBack="#007000"
-                  pd={50} fontSize={24}
+                  pd={50}
+                  fontSize={24}
                   label="SIGN UP NOW"
                   to="/signup"
                   width="280px"
                   border="green"
                   hoverColor="white"
                   color="white"
-                >
-                </MainButton>
+                ></MainButton>
               </Grid>
             </Grid>
           </Container>
         </Grid>
-      }
+      )}
       <Container width="sm" className={classes.mainContainer}>
         <ExampleProfile />
       </Container>
-      <Container width="sm" className={classes.mainContainer} style={{ marginTop: '4rem' }}>
+      <Container
+        width="sm"
+        className={classes.mainContainer}
+        style={{ marginTop: "4rem" }}
+      >
         <Hospitality />
-      </Container >
+      </Container>
       <Grid container item xs={12}>
         <VeteranSection />
       </Grid>
