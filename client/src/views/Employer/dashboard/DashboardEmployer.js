@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Grid, Box, Button, Typography } from "@material-ui/core";
+import { Grid, Box, Button, Typography, Dialog } from "@material-ui/core";
 import { actions as employerActions } from "@store/employer";
 import { bindActionCreators } from "redux";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
@@ -14,10 +14,10 @@ import LanguageIcon from "@material-ui/icons/Language";
 import PhoneIcon from "@material-ui/icons/Phone";
 import PersonIcon from "@material-ui/icons/Person";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
+import SearchForm from "../form/SearchForm";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    paddingTop: "5rem",
     marginBottom: "5rem",
   },
   hr: {
@@ -69,10 +69,10 @@ const useStyles = makeStyles((theme) => ({
     width: "200px",
     marginTop: "2rem",
   },
-  // dialog: {
-  //   marginTop: '5rem',
-  //   zIndex: 1303, // larger than header and footer
-  // },
+  dialog: {
+    marginTop: "5rem",
+    zIndex: 1303, // larger than header and footer
+  },
   filterTitleContainer: {
     marginTop: "0.5rem",
     marginBottom: "0.5rem",
@@ -94,6 +94,11 @@ const useStyles = makeStyles((theme) => ({
       float: "left",
       width: "100%",
     },
+  },
+  searchButton: {
+    width: "90%",
+    marginLeft: "5%",
+    height: "26px",
   },
   center: {
     textAlign: "center",
@@ -143,6 +148,9 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
   const user = JSON.parse(getUser());
   const history = useHistory();
 
+  const [openSearchForm, setOpenSearchForm] = useState(false);
+  const [searchFormData, setSearchFormdata] = useState({});
+
   useEffect(() => {
     let data = {
       id: user._id,
@@ -151,11 +159,20 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
     actions.getFilterListRequest(data);
   }, []);
 
+  const createNewSearch = (data) => {
+    setOpenSearchForm(true);
+    setSearchFormdata(undefined);
+  };
+
   useEffect(() => {
     if (filter) {
       setSearchQueries([...filter.filters]);
     }
   }, [filter]);
+
+  const clickFormClose = () => {
+    setOpenSearchForm(false);
+  };
 
   // search professions with saved search query
   const handleSubmit = (e, index) => {
@@ -179,6 +196,14 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
       </Grid>
 
       <Grid item>
+        <Button
+          onClick={createNewSearch}
+          variant="outlined"
+          color="secondary"
+          className={classes.searchButton}
+        >
+          + Create New Search
+        </Button>
         <Grid
           container
           className={classes.filterButttonContainer}
@@ -318,6 +343,22 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
           </Box>
         </Grid>
       </Grid>
+      <Box>
+        <Dialog
+          open={openSearchForm}
+          onClose={clickFormClose}
+          aria-labelledby="dialog-title"
+          fullWidth
+          className={classes.dialog}
+        >
+          <SearchForm
+            employerId={user._id}
+            searchFormData={searchFormData}
+            // slug={slug}
+            setOpenSearchForm={setOpenSearchForm}
+          />
+        </Dialog>
+      </Box>
     </Container>
   );
 };

@@ -72,6 +72,15 @@ const useStyles = makeStyles((theme) => ({
     background: "#00800010",
     borderLeft: "solid 3px green",
   },
+  center: {
+    textAlign: "center",
+  },
+  hr: {
+    width: "90%",
+    margin: "auto",
+    marginTop: "2rem",
+    border: `1px solid ${theme.palette.grey[200]}`,
+  },
   no_result: {
     fontSize: "20px",
     textAlign: "center",
@@ -158,6 +167,7 @@ const useStyles = makeStyles((theme) => ({
     width: "90%",
     marginLeft: "5%",
     height: "26px",
+    marginTop: "1rem",
   },
 }));
 
@@ -254,13 +264,23 @@ const SearchResults = (props) => {
   // Render search query button
   const FilterLists = filter && filter.filters.length !== 0 && (
     <Box className={classes.filterTitleContainer}>
+      <Grid item className={classes.center}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={(e) => history.push("/purchased")}
+        >
+          Purchased Employees
+        </Button>
+      </Grid>
+      <hr className={classes.hr} />
       <Grid item>
         <Typography
           variant="h6"
           color="secondary"
           className={classes.filterTitle}
         >
-          SEARCH FILTERS
+          MY FILTERS
         </Typography>
       </Grid>
       <Button
@@ -269,7 +289,7 @@ const SearchResults = (props) => {
         color="secondary"
         className={classes.searchButton}
       >
-        Create New Search
+        + Create New Search
       </Button>
       <Grid item>
         <Grid
@@ -348,7 +368,7 @@ const SearchResults = (props) => {
                 ))
               ) : (
                 <Typography className={classes.no_result}>
-                  There are no search results. Pleast try with different search.
+                  There is no search result. Pleast try with different search.
                 </Typography>
               )}
             </Box>
