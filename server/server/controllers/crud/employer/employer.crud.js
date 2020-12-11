@@ -32,8 +32,14 @@ const getAllPurchased = async (req, res) => {
       {
         $project: {
           salt: 0,
-          hashedpassword: 0,
+          hashed_password: 0,
           passwordChangedAt: 0,
+          createdAt: 0,
+        },
+      },
+      {
+        $addFields: {
+          purchased: true,
         },
       },
       {
@@ -63,6 +69,14 @@ const getAllPurchased = async (req, res) => {
       },
       { $unwind: "$employeepreference" },
       { $unwind: "$employeeexperience" },
+      {
+        $lookup: {
+          from: "employeeimgs",
+          localField: "_id",
+          foreignField: "employee",
+          as: "employeeimg",
+        },
+      },
     ]);
     return res.status(200).json({
       purchased,

@@ -14,6 +14,8 @@ const SearchResultSchema = new mongoose.Schema(
         distBetweenEmp: Number,
         purchased: Boolean,
         incart: Boolean,
+        firstName: String,
+        lastName: String,
         employeeskill: Object,
         employeepreference: Object,
         employeeexperience: Object,

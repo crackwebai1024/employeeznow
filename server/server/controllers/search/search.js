@@ -70,6 +70,20 @@ const searchEmployee = async (filter) => {
               else: false,
             },
           },
+          firstName: {
+            $cond: {
+              if: { $in: ["$_id", employer.interestedEmployees] },
+              then: "$firstName",
+              else: false,
+            },
+          },
+          lastName: {
+            $cond: {
+              if: { $in: ["$_id", employer.interestedEmployees] },
+              then: "$lastName",
+              else: null,
+            },
+          },
           incart: {
             $cond: {
               if: { $in: ["$_id", inCartIds] },
