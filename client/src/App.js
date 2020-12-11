@@ -13,7 +13,6 @@ import AppRouter from "@router/AppRouter";
 import { getBoxSize } from "@helpers/utils";
 import { ToastContainer, toast } from "react-toastify";
 import LoadingCircular from "@components/LoadingCircular";
-import { successMessage, errorMessage } from "@helpers/utils";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -38,7 +37,6 @@ function App(props) {
   } else {
     document.body.style.overflowY = "scroll";
   }
-  successMessage();
   return (
     <div className="App">
       <ThemeProvider theme={theme}>

@@ -13,7 +13,7 @@ import DashboardCandidate from "@views/Employer/candidate/DashboardCandidate";
 import EmployerDashbaord from "@views/Employer/dashboard/DashboardEmployer";
 import SkillsForm from "@views/Employee/form/SkillsForm";
 import ProfessionDetailsForm from "@views/Employee/form/ProfessionDetailsForm";
-import ExperienceForm from "@views/Employee/form/ExperienceForm";
+import WorkHistory from "@views/Employee/form/WorkHistory";
 import ForgotPassword from "@views/Auth/Password/ForgotPasswordForm";
 import ResetPasswordForm from "@views/Auth/Password/ResetPasswordForm";
 import SearchResults from "@views/Employer/SearchResult/SearchResults";
@@ -73,7 +73,7 @@ export const AppPrivateRouteeEmployeeData = [
     path: `/${user && user.slug}/professiondetails-form`,
     component: ProfessionDetailsForm,
   },
-  { path: `/${user && user.slug}/work-experience`, component: ExperienceForm },
+  { path: `/${user && user.slug}/work-experience`, component: WorkHistory },
   { path: `/contactus`, component: Contact },
   { path: `/sendmail/employerint/:slug`, component: Interest },
   { path: `/sendmail/employernoint/:slug`, component: NoInterest },

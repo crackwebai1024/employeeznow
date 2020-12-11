@@ -26,7 +26,6 @@ import { jobTypes } from "../professionTypes";
 import { getUser } from "@helpers/auth-helpers";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import MenuItem from "@material-ui/core/MenuItem";
-import { successMessage, errorMessage } from "@helpers/utils";
 import { Box } from "@material-ui/core";
 import { usaStates } from "../professionTypes";
 import RoomIcon from "@material-ui/icons/Room";
@@ -119,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ExperienceForm = ({ success, experience, actions }) => {
+const WorkHistory = ({ success, experience, actions }) => {
   const [formData, setFormData] = useState({
     primaryJob: {
       title: "",
@@ -921,4 +920,4 @@ const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({ ...employeeActions }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExperienceForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WorkHistory);

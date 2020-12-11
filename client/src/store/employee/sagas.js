@@ -36,10 +36,13 @@ function* onUpdateSkill({ payload }) {
   try {
     const res = yield call(EmployeeAPI.updateSkill, payload);
     if (res && res.data) {
+      successMessage("Saving Success!");
       yield put(types.updateSkillSuccess(payload));
       yield put(types.setSuccess());
     }
-  } catch {}
+  } catch {
+    errorMessage("Saving Failed!");
+  }
 }
 
 function* onUpdateJobExperience({ payload }) {
@@ -74,6 +77,7 @@ function* onUpdatePreference({ payload }) {
   try {
     const res = yield call(EmployeeAPI.updatePreference, payload);
     if (res && res.data) {
+      successMessage("Saving Success!");
       yield put(
         types.success({ type: "preference", data: { preference: res.data } })
       );
@@ -81,6 +85,7 @@ function* onUpdatePreference({ payload }) {
     }
   } catch {
     yield put(types.failure);
+    errorMessage("Saving Failed!");
   }
 }
 
