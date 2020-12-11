@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { actions as employerActions } from "@store/employer";
@@ -214,9 +213,9 @@ const DashboardCandidate = ({
   }, []);
 
   useEffect(() => {
-    if (askInterestStatus == "SUCCESS") {
+    if (askInterestStatus === "SUCCESS") {
       successMessage("Message is sent successfully!");
-    } else if (askInterestStatus == "FAILURE") {
+    } else if (askInterestStatus === "FAILURE") {
       errorMessage("Sending message is failed!");
     }
     actions.askInterestStatusHidden();

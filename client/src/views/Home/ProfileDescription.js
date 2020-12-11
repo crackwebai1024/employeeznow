@@ -202,6 +202,7 @@ const ProfileDescription = () => {
         <img
           src={`${process.env.PUBLIC_URL}/img/test/img3.svg`}
           className={classes.image}
+          alt="img"
         />
       </Grid>
       <Grid item xs={12} md={6} className={classes.col_center}>

@@ -6,7 +6,6 @@ import MainButton from "@components/Element/Button/MainButton";
 import { connect } from "react-redux";
 import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
-import { getUser } from "@helpers/auth-helpers";
 import { successMessage, errorMessage } from "@helpers/utils";
 import { useForm } from "react-hook-form";
 
@@ -72,9 +71,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Contact = ({ actions, sendMessage }) => {
   const classes = useStyles();
-  const user = JSON.parse(getUser());
 
-  const { register, handleSubmit, errors, watch } = useForm({});
+  const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = (data) => {
     actions.sendContactMessage(data);
@@ -100,6 +98,7 @@ const Contact = ({ actions, sendMessage }) => {
           <Grid xs={12} className={classes.servingImage}>
             <img
               style={{ width: "100%" }}
+              alt="img"
               src={`${process.env.PUBLIC_URL}/img/test/serving.svg`}
             />
           </Grid>
@@ -218,6 +217,7 @@ const Contact = ({ actions, sendMessage }) => {
               {/* title=0&byline=0&portrait=0 */}
               <iframe
                 src="https://player.vimeo.com/video/484177026?title=0&byline=0&portrait=0"
+                title="iframe"
                 style={{
                   position: "absolute",
                   top: 0,

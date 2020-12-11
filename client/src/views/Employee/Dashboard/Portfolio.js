@@ -236,7 +236,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <img src={modalImageUrl} className={classes.modalImage} />
+        <img src={modalImageUrl} className={classes.modalImage} alt="img" />
         <IconButton
           className={classes.closeIcon}
           onClick={(e) => openImageModal(false)}
@@ -356,6 +356,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
                                       <img
                                         src={p.url && `${p.url}?${Date.now()}`}
                                         className={classes.image}
+                                        alt="img"
                                       />
                                     </Fragment>
                                   )}

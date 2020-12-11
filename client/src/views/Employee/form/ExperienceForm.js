@@ -198,7 +198,7 @@ const ExperienceForm = ({ success, loading, experience, actions }) => {
   // destructure
   const { primaryJob, secondaryJob } = formData;
   const history = useHistory();
-  const { register, handleSubmit, errors, watch } = useForm({});
+  const { handleSubmit, errors } = useForm({});
   const [datepickerOpen, setDatepickerOpen] = useState({
     primary: [false, false],
     secondary: [false, false],
@@ -380,15 +380,6 @@ const ExperienceForm = ({ success, loading, experience, actions }) => {
         // [type]: value
       });
     }
-  };
-
-  const otherJobChange = (key) => {
-    let newArray = otherJobs.map((job) => [false, false]);
-    newArray[key][1] = true;
-    setDatepickerOpen({
-      ...datepickerOpen,
-      other: newArray,
-    });
   };
 
   console.log(primaryJob.title, "payload");

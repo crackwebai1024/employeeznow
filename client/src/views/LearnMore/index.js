@@ -319,6 +319,7 @@ const LearnMore = () => {
                     height: "100%",
                   }}
                   frameborder="0"
+                  title="iframe"
                   allow="autoplay; fullscreen"
                   allowfullscreen
                 ></iframe>

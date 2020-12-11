@@ -47,7 +47,8 @@
   border-radius: 3px;
   font-size: 34px;
   height: 65px;
-  padding-left: 17px;
+  margin: 0 10px;
+  padding-left: 0px;
   background-color: white;
   color: black;
   border: 1px solid black;
@@ -89,7 +90,7 @@
     width: 50px;
     height: 65px;
     font-size: 34px;
-    padding-left: 15px;
+    padding-left: 0px;
     padding-right: 0px;
   }
 }

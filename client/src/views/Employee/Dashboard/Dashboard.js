@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Box } from "@material-ui/core";
-import moment from 'moment';
+import moment from "moment";
 import Collapse from "@material-ui/core/Collapse";
 import { getUser } from "@helpers/auth-helpers";
 import { connect } from "react-redux";
@@ -30,18 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
   subheader: {
     // fontFamily: "Arial, Helvetica, sans-serif"
-    color: '#cc0000',
-    fontWeight: 600
+    color: "#cc0000",
+    fontWeight: 600,
   },
-  container: {
-  },
+  container: {},
   description: {
-    maxHeight: '50px',
-    paddingBottom: '1rem',
-    overflowY: 'hidden',
-    overflowX: 'hidden',
-    marginBottom: '1rem',
-    whiteSpace: "nowrap"
+    maxHeight: "50px",
+    paddingBottom: "1rem",
+    overflowY: "hidden",
+    overflowX: "hidden",
+    marginBottom: "1rem",
+    whiteSpace: "nowrap",
   },
   header: {
     background: "white",
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
       "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
   },
   red: {
-    color: '#cc0000'
+    color: "#cc0000",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -71,8 +70,8 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.blue,
   },
   deploma: {
-    textAlign: 'center',
-    padding: '1rem'
+    textAlign: "center",
+    padding: "1rem",
   },
   profilePhoto: {
     width: 100,
@@ -105,8 +104,8 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.common.blue,
   },
   moreSkills: {
-    fontSize: '16px',
-    marginTop: '-2rem'
+    fontSize: "16px",
+    marginTop: "-2rem",
   },
   card: {
     boxShadow:
@@ -143,13 +142,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Dashboard(props) {
-  const {
-    actions,
-    employeeData,
-  } = props;
+  const { actions, employeeData } = props;
   const user = JSON.parse(getUser());
   const classes = useStyles();
-  const [document, setDocument] = useState([]);
+  // const [document, setDocument] = useState([]);
 
   useEffect(() => {
     let data = {
@@ -185,8 +181,8 @@ function Dashboard(props) {
             <Grid className={classes.name}>
               {basic &&
                 employeeData.basic.firstName +
-                " " +
-                employeeData.basic.lastName}
+                  " " +
+                  employeeData.basic.lastName}
               <Button
                 component={Link}
                 variant="outlined"
@@ -215,14 +211,13 @@ function Dashboard(props) {
                     : "Add Personal Preference"}
                 </Button>
               }
-              title={
-                <Box className={classes.red}>
-                  Personal Preferences
-                </Box>
-              }
+              title={<Box className={classes.red}>Personal Preferences</Box>}
               subheader={
                 <Box className={classes.subheader}>
-                  <i>this section must be filled in for you to be seen by employers</i>
+                  <i>
+                    this section must be filled in for you to be seen by
+                    employers
+                  </i>
                 </Box>
               }
             />
@@ -237,12 +232,14 @@ function Dashboard(props) {
                   {preference && (
                     <Typography>
                       <b className={classes.title}>Expected : </b>
-                      {preference.idealSalary.amount && <span>US${" "}
-                        {preference.idealSalary.amount +
-                          "/" +
-                          preference.idealSalary.unit}
-                      </span>
-                      }
+                      {preference.idealSalary.amount && (
+                        <span>
+                          US${" "}
+                          {preference.idealSalary.amount +
+                            "/" +
+                            preference.idealSalary.unit}
+                        </span>
+                      )}
                     </Typography>
                   )}
                 </Grid>
@@ -296,12 +293,13 @@ function Dashboard(props) {
                   {skill ? "Update Experience" : "Add Experience"}
                 </Button>
               }
-              title={
-                <Box className={classes.red}>Experience</Box>
-              }
+              title={<Box className={classes.red}>Experience</Box>}
               subheader={
                 <Box className={classes.subheader}>
-                  <i>this section must be filled in for you to be seen by employers</i>
+                  <i>
+                    this section must be filled in for you to be seen by
+                    employers
+                  </i>
                 </Box>
               }
             />
@@ -346,13 +344,18 @@ function Dashboard(props) {
                     <Fragment>
                       <Typography className={classes.company}>
                         {experience.primaryJob.company}
-                        { }
+                        {}
                       </Typography>
                       <Typography className={classes.jobPeriod}>
-                        {moment(new Date(experience.primaryJob.startDate)).format('MM/DD/YYYY')}&nbsp;~ &nbsp;
+                        {moment(
+                          new Date(experience.primaryJob.startDate)
+                        ).format("MM/DD/YYYY")}
+                        &nbsp;~ &nbsp;
                         {experience.primaryJob.current
                           ? "Present"
-                          : moment(new Date(experience.primaryJob.endDate)).format('MM/DD/YYYY')}
+                          : moment(
+                              new Date(experience.primaryJob.endDate)
+                            ).format("MM/DD/YYYY")}
                       </Typography>
                       {/* <Typography className={classes.description}>
                         {experience.primaryJob.description}
@@ -360,7 +363,7 @@ function Dashboard(props) {
                     </Fragment>
                   )}
                 </Grid>
-                {experience && experience.secondaryJob.title &&
+                {experience && experience.secondaryJob.title && (
                   <Grid item xs={12} md={6}>
                     <Typography className={classes.jobtitle}>
                       {experience && experience.secondaryJob.title}
@@ -371,10 +374,15 @@ function Dashboard(props) {
                           {experience.secondaryJob.company}
                         </Typography>
                         <Typography className={classes.jobPeriod}>
-                          {moment(new Date(experience.secondaryJob.startDate)).format('MM/DD/YYYY')}&nbsp;~ &nbsp;
-                                      {experience.secondaryJob.current
+                          {moment(
+                            new Date(experience.secondaryJob.startDate)
+                          ).format("MM/DD/YYYY")}
+                          &nbsp;~ &nbsp;
+                          {experience.secondaryJob.current
                             ? "Present"
-                            : moment(new Date(experience.secondaryJob.endDate)).format('MM/DD/YYYY')}
+                            : moment(
+                                new Date(experience.secondaryJob.endDate)
+                              ).format("MM/DD/YYYY")}
                         </Typography>
                         {/* <Typography className={classes.jobPeriod}>
                           {experience.secondaryJob.description}
@@ -382,25 +390,32 @@ function Dashboard(props) {
                       </Fragment>
                     )}
                   </Grid>
-                }
+                )}
                 {experience &&
-                  experience.otherJob.map((job, i) => (
-                    job.title &&
-                    <Grid item xs={12} md={6} key={i}>
-                      <Typography className={classes.jobtitle}>
-                        {job.title}
-                      </Typography>
-                      <Fragment>
-                        <Typography className={classes.company}>
-                          {job.company}
-                        </Typography>
-                        <Typography className={classes.jobPeriod}>
-                          {moment(new Date(job.startDate)).format('MM/DD/YYYY')}&nbsp;~ &nbsp;
-                          {moment(new Date(job.endDate)).format('MM/DD/YYYY')}
-                        </Typography>
-                      </Fragment>
-                    </Grid>
-                  ))}
+                  experience.otherJob.map(
+                    (job, i) =>
+                      job.title && (
+                        <Grid item xs={12} md={6} key={i}>
+                          <Typography className={classes.jobtitle}>
+                            {job.title}
+                          </Typography>
+                          <Fragment>
+                            <Typography className={classes.company}>
+                              {job.company}
+                            </Typography>
+                            <Typography className={classes.jobPeriod}>
+                              {moment(new Date(job.startDate)).format(
+                                "MM/DD/YYYY"
+                              )}
+                              &nbsp;~ &nbsp;
+                              {moment(new Date(job.endDate)).format(
+                                "MM/DD/YYYY"
+                              )}
+                            </Typography>
+                          </Fragment>
+                        </Grid>
+                      )
+                  )}
               </Grid>
 
               {/* {employeeData.experience && employeeData.experience.employee} */}
@@ -413,24 +428,20 @@ function Dashboard(props) {
         </Grid>
         <Grid className={classes.deploma}>
           <Typography className={classes.center}>
-            To upload any documents (diplomas, letter of recommentation, etc) please email to: Register@EmployeezNow.com
+            To upload any documents (diplomas, letter of recommentation, etc)
+            please email to: Register@EmployeezNow.com
           </Typography>
         </Grid>
       </Container>
     </Fragment>
   ) : (
-      <Fragment></Fragment>
-    );
+    <Fragment></Fragment>
+  );
 }
 
-const mapStateToProps = ({
-  employee: {
-    employeeData,
-    videoUpload
-  },
-}) => ({
+const mapStateToProps = ({ employee: { employeeData, videoUpload } }) => ({
   employeeData,
-  videoUpload
+  videoUpload,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
   companyName: {
     border: `1px solid ${theme.palette.grey[200]}`,
     textAlign: "center",
-    margin: "0.5rem",
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem",
     cursor: "pointer",
     padding: "1rem 3rem",
     width: "fit-content",

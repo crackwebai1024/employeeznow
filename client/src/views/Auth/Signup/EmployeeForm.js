@@ -17,8 +17,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import PublishIcon from "@material-ui/icons/Publish";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { countryOptions } from "./AddressState";
 
 const invalidError = "This field is invalid!";
@@ -149,7 +147,7 @@ const EmployeeForm = ({
   const classes = useStyles();
 
   const onChange = (e) => {
-    if (e.target.name == "status")
+    if (e.target.name === "status")
       return setVeteran({
         ...veteran,
         status: !veteran.status,
@@ -208,7 +206,7 @@ const EmployeeForm = ({
     // if (veteran.status) {
     //   return setVeteranError("This field is required");
     // }
-    if (veteran.status && veteranCard == null) {
+    if (veteran.status && veteranCard === null) {
       return setVeteranError("please Upload Veteran Card Image!");
     }
     if (!formData.address.state) return setStateError(true);
@@ -527,6 +525,7 @@ const EmployeeForm = ({
                   >
                     <img
                       className={classes.uploadImage}
+                      alt="img"
                       src={
                         veteranCard &&
                         URL.createObjectURL(veteranCard.getAll("content")[0])
@@ -549,7 +548,6 @@ const EmployeeForm = ({
                           component="span"
                           className={classes.uploadButton}
                         >
-                          {/* <PublishIcon /> */}
                           Upload Image
                           <br />
                           (Military ID or DD214)

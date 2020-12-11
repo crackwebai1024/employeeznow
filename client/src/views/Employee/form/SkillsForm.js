@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -23,7 +23,7 @@ import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
 import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
-import { successMessage, errorMessage } from '@helpers/utils';
+import { successMessage, errorMessage } from "@helpers/utils";
 
 import {
   jobTypes,
@@ -39,7 +39,7 @@ import {
 // set styles - material-ui
 const useStyles = makeStyles((theme) => ({
   heading1: {
-    marginTop: '5rem',
+    marginTop: "5rem",
     fontSize: "2rem",
     color: theme.palette.primary.main,
   },
@@ -109,10 +109,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "5rem",
   },
   goback_button: {
-    float: 'right',
+    float: "right",
     marginTop: "1rem",
     marginBottom: "5rem",
-  }
+  },
 }));
 
 ///*** This route should come from Dashboard (profession.js) because link has current profession data */
@@ -128,7 +128,6 @@ const SkillsForm = ({
   employee,
   success,
 }) => {
-
   const [primaryJob, setPrimaryJob] = useState({ title: "", years: "" });
   const [secondaryJob, setSecondaryJob] = useState({ title: "", years: "" });
   const [checkbox, setCheckbox] = useState(false);
@@ -145,37 +144,10 @@ const SkillsForm = ({
   const [milesToWork, setMilesToWork] = useState("");
   const [openJob, setOpenJob] = useState(false);
 
-  const [professionId, setProfessionId] = useState("");
-
   const [primaryYearsError, setPrimaryYearsError] = useState("");
   const [secondaryYearsError, setSecondaryYearsError] = useState("");
   const [styleYearsError, setStyleYearsError] = useState("");
   const [cuisineYearsError, setCuisineYearsError] = useState("");
-
-  const [currency, setCurrency] = React.useState("EUR");
-
-  const handleChange1 = (event) => {
-    setCurrency(event.target.value);
-  };
-
-  const currencies = [
-    {
-      value: "USD",
-      label: "$",
-    },
-    {
-      value: "EUR",
-      label: "€",
-    },
-    {
-      value: "BTC",
-      label: "฿",
-    },
-    {
-      value: "JPY",
-      label: "¥",
-    },
-  ];
 
   // material-ui
   const classes = useStyles();
@@ -333,8 +305,7 @@ const SkillsForm = ({
         if (value < 0) {
           return setStyleYearsError("Invalid input. Years must be above 0");
         }
-        if (style.length > 4)
-          return
+        if (style.length > 4) return;
         let newArray = [];
         let idx = style.findIndex((item) => item.type === id);
         if (value === "") {
@@ -350,7 +321,7 @@ const SkillsForm = ({
             newArray = [...style];
           }
         }
-        return setStyle(newArray)
+        return setStyle(newArray);
       }
       case "cuisine": {
         console.log(cuisine.length);
@@ -429,26 +400,26 @@ const SkillsForm = ({
     }
 
     const formData = createFormData();
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     actions.updateSkillRequest(formData);
     _loadData();
   };
 
   useEffect(() => {
     if (success === true) {
-      successMessage("Successfully saved!")
-      history.push(`/employees/${user.slug}`)
+      successMessage("Successfully saved!");
+      history.push(`/employees/${user.slug}`);
     } else if (success === false) {
-      errorMessage("Sorry! Saving is failed")
+      errorMessage("Sorry! Saving is failed");
     }
     actions.initiateSuccess();
   }, [success]);
 
-  const history = useHistory()
+  const history = useHistory();
   const onCancleHandle = () => {
     const slug = user.slug;
-    history.push(`/employees/${slug}`)
-  }
+    history.push(`/employees/${slug}`);
+  };
 
   return (
     <>
@@ -637,7 +608,7 @@ const SkillsForm = ({
             <Grid item className={classes.titleContainer}>
               <Typography className={classes.title}>
                 Please enter your years of experience for each style of service
-            </Typography>
+              </Typography>
             </Grid>
 
             <FormControl component="fieldset">
@@ -652,7 +623,8 @@ const SkillsForm = ({
                         label={st}
                         value={
                           style.filter((style) => style.type === st)[0]
-                            ? style.filter((style) => style.type === st)[0].years
+                            ? style.filter((style) => style.type === st)[0]
+                                .years
                             : ""
                         }
                         onChange={(e) => handleChange(e)}
@@ -900,14 +872,14 @@ const SkillsForm = ({
                   className={classes.goback_button}
                 >
                   Go Back
-              </Button>
+                </Button>
               </Grid>
             </Grid>
           </form>
         </Grid>
       </Container>
     </>
-  )
+  );
   // );
 };
 

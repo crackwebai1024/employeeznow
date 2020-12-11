@@ -2,9 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { actions as types } from "./index";
 import * as EmployerAPI from "@services/EmployerAPI";
 import { successMessage } from "@helpers/utils";
-import { _arrayBufferToBase64 } from "@helpers/utils";
 import { setFilterID } from "@helpers/auth-helpers";
-import { isWidthDown } from "@material-ui/core";
 
 function* onGetEmployerData({ payload }) {
   try {
@@ -197,6 +195,8 @@ function* onChargeRequest({ payload }) {
         break;
       case "BUY_SELECT":
         purchasenum = payload.employees.length;
+        break;
+      default:
         break;
     }
 

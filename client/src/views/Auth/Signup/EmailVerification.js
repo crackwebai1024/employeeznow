@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import ReactCodeInput from "react-code-input";
 import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
-import { getUser } from "@helpers/auth-helpers";
 import { makeStyles } from "@material-ui/core/styles";
 import _ from "lodash";
 

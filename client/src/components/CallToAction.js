@@ -77,35 +77,31 @@ const CallToAction = ({
     <Grid container justify="space-evenly">
       {!purchased && (
         <Grid item className={classes.buttonContainer} xs={12} sm={4}>
-          <Fragment>
-            <Button
-              className={`${classes.button} ${classes.button1}`}
-              onClick={purchaseProfile}
-            >
-              PURCHASE THIS PROFILE
-            </Button>
-            <Typography className={classes.button_explanation}>
-              Purchasing profiles will provide the candidate’s full contact
-              information to take the next step in the hiring process
-            </Typography>
-          </Fragment>
+          <Button
+            className={`${classes.button} ${classes.button1}`}
+            onClick={purchaseProfile}
+          >
+            PURCHASE THIS PROFILE
+          </Button>
+          <Typography className={classes.button_explanation}>
+            Purchasing profiles will provide the candidate’s full contact
+            information to take the next step in the hiring process
+          </Typography>
         </Grid>
       )}
       {!purchased && (
         <Grid item className={classes.buttonContainer} xs={12} sm={4}>
-          <Fragment>
-            <Button
-              className={`${classes.button} ${classes.button2}`}
-              onClick={onAskInterest}
-            >
-              ASK ABOUT INTEREST
-            </Button>
-            <Typography className={classes.button_explanation}>
-              We will message this candidate to find out if they would be
-              interested in your employment opportunity. You will receive an
-              email with their answer!
-            </Typography>
-          </Fragment>
+          <Button
+            className={`${classes.button} ${classes.button2}`}
+            onClick={onAskInterest}
+          >
+            ASK ABOUT INTEREST
+          </Button>
+          <Typography className={classes.button_explanation}>
+            We will message this candidate to find out if they would be
+            interested in your employment opportunity. You will receive an email
+            with their answer!
+          </Typography>
         </Grid>
       )}
       <Grid item className={classes.buttonContainer} xs={12} sm={4}>
