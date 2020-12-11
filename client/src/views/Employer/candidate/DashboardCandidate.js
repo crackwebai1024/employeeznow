@@ -183,12 +183,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardCandidate = ({
-  location,
-  mployee,
   actions,
   askInterestStatus,
   isLimited,
-  background,
   match,
   employeeData,
 }) => {
@@ -202,13 +199,9 @@ const DashboardCandidate = ({
   } = employeeData;
   const classes = useStyles();
   const history = useHistory();
-  const theme = useTheme();
   const { slug } = match.params;
   const user = JSON.parse(getUser());
-  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
-  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [value, setValue] = React.useState(0);
   const currentFilterID = getFilterID();
   /* eslint-disable react/jsx-one-expression-per-line */
 

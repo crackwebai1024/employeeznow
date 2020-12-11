@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     textAlign: "center",
     marginTop: "2rem",
+    marginBottom: "2rem",
   },
   button_explanation: {
     padding: "1rem",
@@ -74,8 +75,8 @@ const CallToAction = ({
 
   return (
     <Grid container justify="space-evenly">
-      <Grid item className={classes.buttonContainer} xs={12} sm={4}>
-        {!purchased && (
+      {!purchased && (
+        <Grid item className={classes.buttonContainer} xs={12} sm={4}>
           <Fragment>
             <Button
               className={`${classes.button} ${classes.button1}`}
@@ -88,22 +89,25 @@ const CallToAction = ({
               information to take the next step in the hiring process
             </Typography>
           </Fragment>
-        )}
-      </Grid>
-
-      <Grid item className={classes.buttonContainer} xs={12} sm={4}>
-        <Button
-          className={`${classes.button} ${classes.button2}`}
-          onClick={onAskInterest}
-        >
-          ASK ABOUT INTEREST
-        </Button>
-        <Typography className={classes.button_explanation}>
-          We will message this candidate to find out if they would be interested
-          in your employment opportunity. You will receive an email with their
-          answer!
-        </Typography>
-      </Grid>
+        </Grid>
+      )}
+      {!purchased && (
+        <Grid item className={classes.buttonContainer} xs={12} sm={4}>
+          <Fragment>
+            <Button
+              className={`${classes.button} ${classes.button2}`}
+              onClick={onAskInterest}
+            >
+              ASK ABOUT INTEREST
+            </Button>
+            <Typography className={classes.button_explanation}>
+              We will message this candidate to find out if they would be
+              interested in your employment opportunity. You will receive an
+              email with their answer!
+            </Typography>
+          </Fragment>
+        </Grid>
+      )}
       <Grid item className={classes.buttonContainer} xs={12} sm={4}>
         <Button
           className={`${classes.button} ${classes.button1}`}
