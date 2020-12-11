@@ -23,7 +23,6 @@ import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
 import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
-import { successMessage, errorMessage } from "@helpers/utils";
 
 import {
   jobTypes,
@@ -398,7 +397,6 @@ const SkillsForm = ({
       );
       return window.scrollTo(0, 0);
     }
-
     const formData = createFormData();
     window.scrollTo(0, 0);
     actions.updateSkillRequest(formData);
@@ -407,10 +405,8 @@ const SkillsForm = ({
 
   useEffect(() => {
     if (success === true) {
-      successMessage("Successfully saved!");
       history.push(`/employees/${user.slug}`);
     } else if (success === false) {
-      errorMessage("Sorry! Saving is failed");
     }
     actions.initiateSuccess();
   }, [success]);

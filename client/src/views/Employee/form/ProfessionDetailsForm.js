@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -10,7 +10,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import _ from 'lodash';
+import _ from "lodash";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -19,7 +19,6 @@ import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
 import { FormControl } from "@material-ui/core";
-import { successMessage, errorMessage } from '@helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
   heading1: {
@@ -63,8 +62,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1.5rem",
   },
   textDetail: {
-    fontSize: '16px',
-    fontWeight: 400
+    fontSize: "16px",
+    fontWeight: 400,
   },
   item: {
     marginLeft: "2rem",
@@ -81,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "5rem",
   },
   return_button: {
-    float: 'right',
+    float: "right",
     marginTop: "2rem",
     marginBottom: "5rem",
   },
@@ -120,7 +119,7 @@ const ProfessionDetailsForm = ({
 
   // disablt 'end date' for primaryJob if current was checked
 
-  const history = useHistory()
+  const history = useHistory();
 
   // style material-ui
   const classes = useStyles();
@@ -148,10 +147,7 @@ const ProfessionDetailsForm = ({
 
   useEffect(() => {
     if (success) {
-      successMessage("Successfully saved!")
-      history.push(`/employees/${user.slug}`)
-    } else if (success === false) {
-      errorMessage("Sorry! Saving is failed!")
+      history.push(`/employees/${user.slug}`);
     }
     actions.initiateSuccess();
   }, [success]);
@@ -164,10 +160,10 @@ const ProfessionDetailsForm = ({
         return setFormData({ ...formData, [name]: value });
       }
       case "newOpportunity": {
-        let newValue = [...formData[name]]
+        let newValue = [...formData[name]];
         if (checked) {
-          if(newValue.length > 2) return
-          newValue.push(id)
+          if (newValue.length > 2) return;
+          newValue.push(id);
         } else {
           newValue = _.remove(formData[name], function (array) {
             return array !== id;
@@ -175,8 +171,8 @@ const ProfessionDetailsForm = ({
         }
         return setFormData({
           ...formData,
-          newOpportunity: newValue
-        })
+          newOpportunity: newValue,
+        });
       }
 
       case "randomShift": {
@@ -208,13 +204,13 @@ const ProfessionDetailsForm = ({
       ...formData,
       id: user._id,
     };
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     actions.updatePreference(data);
   };
 
   const goBackHandle = () => {
-    history.push(`/employees/${slug}`)
-  }
+    history.push(`/employees/${slug}`);
+  };
 
   return (
     !loading && (
@@ -248,7 +244,8 @@ const ProfessionDetailsForm = ({
               <Typography gutterBottom variant="h6">
                 Employment Status
                 <Typography className={classes.textDetail}>
-                  &nbsp;(Your profile will not appear in employer searches by selecting 'Employed and not looking')
+                  &nbsp;(Your profile will not appear in employer searches by
+                  selecting 'Employed and not looking')
                 </Typography>
               </Typography>
             </Grid>
@@ -362,8 +359,8 @@ const ProfessionDetailsForm = ({
                   </Grid>
                 </Grid>
               ) : (
-                  ""
-                )}
+                ""
+              )}
             </Grid>
 
             <Grid container item xs={12}>

@@ -243,34 +243,6 @@ function Dashboard(props) {
                     </Typography>
                   )}
                 </Grid>
-                {/* <Grid item xs={12} sm={6} md={4}>
-                  {preference && (
-                    <Typography>
-                      <b className={classes.title}>Planing to Move : </b>
-                      {preference.planningToMove.location}{" "}
-                      {preference.planningToMove.dateToMove}
-                    </Typography>
-                  )}
-                </Grid> */}
-                {/* <Grid item xs={12} sm={12} md={12}>
-                  {preference && (
-                    <Box className={classes.randomrole}>
-                      <span>
-                        <b className={classes.title}>Shift Availablity : </b>
-                      </span>
-                      <div>
-                        {preference.randomShiftRole.map((shift, key) => {
-                          return (
-                            <>
-                              {shift + ", "}
-                              {key % 2 === 1 ? <br></br> : ""}
-                            </>
-                          );
-                        })}
-                      </div>
-                    </Box>
-                  )}
-                </Grid> */}
                 <Grid item xs={12} sm={6} md={4}>
                   <Typography></Typography>
                 </Grid>
