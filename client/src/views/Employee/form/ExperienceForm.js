@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ExperienceForm = ({ success, loading, experience, actions }) => {
+const ExperienceForm = ({ success, experience, actions }) => {
   const [formData, setFormData] = useState({
     primaryJob: {
       title: "",
@@ -187,10 +187,7 @@ const ExperienceForm = ({ success, loading, experience, actions }) => {
 
   useEffect(() => {
     if (success) {
-      successMessage("Successfully Saved!");
       history.push(`/employees/${user.slug}`);
-    } else if (success === false) {
-      errorMessage("Sorry! Saving is failed!");
     }
     actions.initiateSuccess();
   }, [success]);
@@ -199,11 +196,6 @@ const ExperienceForm = ({ success, loading, experience, actions }) => {
   const { primaryJob, secondaryJob } = formData;
   const history = useHistory();
   const { handleSubmit, errors } = useForm({});
-  const [datepickerOpen, setDatepickerOpen] = useState({
-    primary: [false, false],
-    secondary: [false, false],
-    other: otherJobs.map((job) => [false, false]),
-  });
 
   const onChange = ({ target: { id, name, value, checked } }) => {
     console.log("id:", id, "name:", name, "value:", value, "checked", checked);
@@ -919,7 +911,7 @@ const ExperienceForm = ({ success, loading, experience, actions }) => {
   );
 };
 
-const mapStateToProps = ({ employee: { experience, loading, success } }) => ({
+const mapStateToProps = ({ employee: { success, experience, loading } }) => ({
   experience,
   loading,
   success,

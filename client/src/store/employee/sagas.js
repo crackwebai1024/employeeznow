@@ -3,6 +3,9 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { actions as types } from "./index";
 import * as EmployeeAPI from "@services/EmployeeAPI";
 import { _arrayBufferToBase64 } from "@helpers/utils";
+import { errorMessage, successMessage } from "@helpers/utils";
+import { getUser } from "@helpers/auth-helpers";
+const user = JSON.parse(getUser());
 
 function* getUserData({ payload }) {
   try {
@@ -43,11 +46,14 @@ function* onUpdateJobExperience({ payload }) {
   try {
     const res = yield call(EmployeeAPI.updateJobExperience, payload);
     if (res && res.data) {
+      // window.location.href = `/employees/${user.slug}`;
+      successMessage("Succefully Saved!");
       yield put(types.success({ type: "experience", data: res.data }));
       yield put(types.setSuccess());
     }
   } catch {
     yield put(types.failure);
+    errorMessage("Saving is failed!");
   }
 }
 
