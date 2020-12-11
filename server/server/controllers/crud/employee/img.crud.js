@@ -7,10 +7,16 @@ const find_ByID = async (req, res) => {
   const role = "employee";
   const type = req.query.type;
   let fileByID = await CRUD.find_ByID(EmployeeImg, role, req.query.id, res);
-  return res.status(200).json({
-    fname: fileByID[type].fname,
-    url: fileByID[type].url,
-  });
+  if (fileByID && fileByID[type]) {
+    return res.status(200).json({
+      fname: fileByID[type].fname,
+      url: fileByID[type].url,
+    });
+  } else {
+    return res.status(403).json({
+      error: "there is no data to response",
+    });
+  }
 };
 
 const updateByID = async (req, res) => {
