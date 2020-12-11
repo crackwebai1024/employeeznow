@@ -2,17 +2,19 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button, Box } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { getUser, getFilterID } from "@helpers/auth-helpers";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   itemsContainer: {
     borderRadius: "0px",
+    marginTop: "0.5rem",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "2.5rem",
     },
@@ -24,15 +26,19 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "0px",
     borderBottom: `1px solid ${theme.palette.common.white}`,
     cursor: "pointer",
-    transition: "0.2s",
+    color: "gray",
     "&:hover": {
       background: theme.palette.common.hover_white,
+      "& $button": {
+        color: theme.palette.common.green,
+      },
     },
   },
   subtitle: {
-    color: theme.palette.common.blue,
+    color: "gray",
     fontSize: "0.875rem",
     minWidth: "5rem",
+    fontWeight: 600,
     [theme.breakpoints.down("sm")]: {
       textAlign: "left",
     },
@@ -41,34 +47,57 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: "0.5rem",
   },
   buttonContainer: {
+    padding: "0 20px 10px 30px",
     marginLeft: "auto",
-  },
-  button: {
-    display: "inline-block",
-    marginRight: "2rem",
-    marginBottom: "0.5rem",
-    color: theme.palette.common.darkBlue,
-    textDecoration: "none",
-    fontSize: "1rem",
-    "&:hover": {
-      color: theme.palette.common.blue,
-    },
-  },
-  purchased: {
-    background: theme.palette.common.green,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
     width: "fit-content",
     float: "right",
-    color: "white",
-    padding: "0 20px",
-    borderRadius: "15px",
+  },
+  button: {
+    cursor: "pointer",
+    color: "#222222",
+    textDecoration: "none",
+    fontSize: "1.1rem",
+    fontWeight: 600,
+    fontFamily: "Nunito sans",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  cartButtons: {
+    display: "flex",
+  },
+  dataSection: {
+    marginLeft: "1rem",
+    width: "100%",
+  },
+  avatar: {
+    width: "60px",
+    height: "60px",
+  },
+  cartContent: {
+    display: "flex",
+    [theme.breakpoints.down("xs")]: {
+      padding: "0.5rem",
+    },
+  },
+  icon: {
+    width: "1rem",
+    height: "1rem",
+  },
+  checkIcon: {
+    color: "#14bff4",
+    display: "flex",
+    paddingLeft: "15px",
+    fontWeight: 600,
+    alignItems: "center",
   },
 }));
 const CandidateList = (props) => {
   const {
-    primaryTitle,
-    primaryYears,
-    secondaryTitle,
-    secondaryYears,
+    primaryJob,
     shift,
     style,
     cuisine,
@@ -76,7 +105,14 @@ const CandidateList = (props) => {
   } = props.result.employeeskill;
   // const key = props.result._id;
   const id = props.result._id;
-  const { purchased, incart, employeezNowId, employeeId } = props.result;
+  const {
+    purchased,
+    incart,
+    employeeId,
+    employeeimg,
+    firstName,
+    lastName,
+  } = props.result;
   const { actions, purchasedEmployees } = props;
   const classes = useStyles();
   // Media Query - screen smaller than small breakpoints
@@ -97,160 +133,180 @@ const CandidateList = (props) => {
 
   return (
     <Card key={id} className={classes.wrapper}>
-      <CardContent>
-        <Grid item container xs={12}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6" color="primary">
-              Candidate ID: {employeezNowId}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography
-              variant="h6"
-              color="secondary"
-              className={classes.purchased}
-            >
-              {purchased && "purchased"}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container direction="column" className={classes.itemsContainer}>
-          <Grid item>
-            {primaryTitle ? (
-              <Grid container>
-                <Grid item>
-                  <Typography className={classes.subtitle}>Primary:</Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body2">
-                    {primaryTitle} for {primaryYears} years
-                  </Typography>
-                </Grid>
-              </Grid>
-            ) : (
-              ""
-            )}
-          </Grid>
-
-          <Grid item>
-            {secondaryTitle ? (
-              <Grid container>
-                <Grid item>
-                  <Typography className={classes.subtitle}>
-                    Secondary:
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body2">
-                    {secondaryTitle} for {secondaryYears} years
-                  </Typography>
-                </Grid>
-              </Grid>
-            ) : (
-              ""
-            )}
-          </Grid>
-
-          <Grid item>
-            {shift ? (
-              <Grid container>
-                <Grid item>
-                  <Typography className={classes.subtitle}>Shift:</Typography>
-                </Grid>
-                {shift.map((sh, i) => (
-                  <Grid item key={`${sh}${i}`}>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      key={sh}
-                      className={classes.itemSpan}
-                    >
-                      {sh}
-                      {i !== shift.length - 1 ? "," : ""}
-                    </Typography>
-                  </Grid>
-                ))}
-              </Grid>
-            ) : (
-              ""
-            )}
-          </Grid>
-
-          <Grid item>
-            <Grid container>
-              <Grid item>
-                <Typography className={classes.subtitle}>Style:</Typography>
-              </Grid>
-              <Grid item>
-                <Grid item container direction={matchesSM ? "column" : "row"}>
-                  <Grid item>
-                    <Typography variant="body2" className={classes.itemSpan}>
-                      {style.type} for {style.years} years
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
+      <CardContent className={classes.cartContent}>
+        <Box>
+          <Avatar
+            alt="M"
+            src={employeeimg && employeeimg[0] && employeeimg[0].photo.url}
+            className={classes.avatar}
+          />
+        </Box>
+        <Box className={classes.dataSection}>
+          <Grid item container xs={12}>
+            <Grid item xs={12} sm={6} style={{ display: "flex" }}>
+              <Typography variant="h6" color="primary">
+                <Link
+                  to={{
+                    pathname: `/candidate/${id}`,
+                    data: { professionId: id, employeeId },
+                  }}
+                  className={classes.button}
+                >
+                  {purchased ? (
+                    <>
+                      {firstName} {lastName}
+                    </>
+                  ) : (
+                    <>EmploeezNow Candidate</>
+                  )}
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
-
-          {cuisine.length !== 0 ? (
+          <Grid container direction="column" className={classes.itemsContainer}>
             <Grid item>
-              <Grid container>
-                <Grid item>
-                  <Typography className={classes.subtitle}>Cuisine:</Typography>
+              {primaryJob ? (
+                <Grid container>
+                  <Grid item>
+                    <Typography className={classes.subtitle}>
+                      Primary:
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body2">
+                      {primaryJob.title} for {primaryJob.years} years
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Grid item container direction={matchesSM ? "column" : "row"}>
-                    {cuisine.map((cu, i) => (
-                      <Grid item key={cu._id}>
-                        <Typography
-                          variant="body2"
-                          className={classes.itemSpan}
-                        >
-                          {cu.type} for {cu.years} years
-                          {i !== cuisine.length - 1 ? "," : ""}
-                        </Typography>
-                      </Grid>
-                    ))}
+              ) : (
+                ""
+              )}
+            </Grid>
+
+            <Grid item>
+              {shift.length !== 0 ? (
+                <Grid container>
+                  <Grid item>
+                    <Typography className={classes.subtitle}>Shift:</Typography>
+                  </Grid>
+                  {shift.map((sh, i) => (
+                    <Grid item key={`${sh}${i}`}>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        key={sh}
+                        className={classes.itemSpan}
+                      >
+                        {sh}
+                        {i !== shift.length - 1 ? "," : ""}
+                      </Typography>
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : (
+                ""
+              )}
+            </Grid>
+            {style.length !== 0 ? (
+              <Grid item>
+                <Grid container>
+                  <Grid item>
+                    <Typography className={classes.subtitle}>Style:</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Grid
+                      item
+                      container
+                      direction={matchesSM ? "column" : "row"}
+                    >
+                      {style.slice(0, 2).map((st, i) => (
+                        <Grid item key={st._id}>
+                          <Typography
+                            variant="body2"
+                            className={classes.itemSpan}
+                          >
+                            {st.type} for {st.years} years
+                            {i !== style.length - 1 ? "," : ""}
+                          </Typography>
+                        </Grid>
+                      ))}
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          ) : (
-            ""
-          )}
-        </Grid>
+            ) : (
+              ""
+            )}
+            {cuisine.length !== 0 ? (
+              <Grid item>
+                <Grid container>
+                  <Grid item>
+                    <Typography className={classes.subtitle}>
+                      Cuisine:
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Grid
+                      item
+                      container
+                      direction={matchesSM ? "column" : "row"}
+                    >
+                      {cuisine.slice(0, 2).map((cu, i) => (
+                        <Grid item key={cu._id}>
+                          <Typography
+                            variant="body2"
+                            className={classes.itemSpan}
+                          >
+                            {cu.type} for {cu.years} years
+                            {i !== cuisine.length - 1 ? "," : ""}
+                          </Typography>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            ) : (
+              ""
+            )}
+          </Grid>
+        </Box>
       </CardContent>
 
       {/* Link to candidtate details page */}
-      <CardActions>
+      <Grid item xs={12}>
+        {purchased && (
+          <Box className={classes.checkIcon}>
+            <CheckCircleIcon className={classes.icon} /> &nbsp;&nbsp;&nbsp;
+            <span style={{ color: "gray" }}>Purchased</span>
+          </Box>
+        )}
         <div className={classes.buttonContainer}>
-          <Link
-            to={{
-              pathname: `/candidate/${id}`,
-              data: { professionId: id, employeeId },
-            }}
-            className={classes.button}
-          >
-            VIEW THIS PROFILE
-          </Link>
-          {!purchased && incart && (
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={(e) => history.push("/carts")}
-            >
-              In Cart
-            </Button>
-          )}
-          {!purchased && !incart && !purchasedEmployees && (
-            <Button variant="outlined" color="secondary" onClick={addToCart}>
-              <ShoppingCartIcon />
-              Add To Cart
-            </Button>
-          )}
+          <Box className={classes.cartButtons}>
+            {!purchased && incart && (
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={(e) => history.push("/carts")}
+              >
+                In Cart
+              </Button>
+            )}
+            {!purchased && !incart && !purchasedEmployees && (
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={addToCart}
+              >
+                <ShoppingCartIcon />
+                Add To Cart
+              </Button>
+            )}
+          </Box>
         </div>
-      </CardActions>
+      </Grid>
     </Card>
   );
 };

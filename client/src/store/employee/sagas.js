@@ -154,6 +154,7 @@ function* onGetPortfolio({ payload }) {
     const res = yield call(EmployeeAPI.getPortfolioImage, queryString);
     if (res && res.data) {
       let portfolios = res.data.portfolio.portfolios;
+      portfolios.reverse();
       yield put(types.success({ type: "portfolios", data: portfolios }));
     }
   } catch {}

@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sequence: {
     maxWidth: "1000px",
+    margin: "auto",
     padding: "2rem 4rem",
   },
   gridList: {

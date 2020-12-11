@@ -154,6 +154,7 @@ const CartList = (props) => {
             </Grid>
           </Grid>
         </Grid>
+
         <Grid item xs={12} md={8}>
           <Box className={classes.content} id="cartList">
             {cartItems.map((cart, key) => (
@@ -222,6 +223,7 @@ const CartList = (props) => {
             <ChargeBalance actions={actions} count={selCount} />
           </Grid>
         </Grid>
+
         <Grid item xs={12} md={4}>
           <Payment
             items={cartItems}
