@@ -100,6 +100,8 @@ const PreferenceSchema = new mongoose.Schema({
       "Host/Hostess",
       "Velet",
       "Casher",
+      "Bar Manager",
+      "Chef De Cuisine",
       "",
     ],
   },

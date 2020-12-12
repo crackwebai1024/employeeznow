@@ -54,6 +54,8 @@ const SearchFilterSchema = new mongoose.Schema({
       "Fastfood Server",
       "Velet",
       "Casher",
+      "Bar Manager",
+      "Chef De Cuisine",
       "",
     ],
   },

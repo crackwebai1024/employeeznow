@@ -157,7 +157,7 @@ const CandidateList = (props) => {
                       {firstName} {lastName}
                     </>
                   ) : (
-                    <>EmploeezNow Candidate</>
+                    <>EmployeezNow Candidate</>
                   )}
                 </Link>
               </Typography>
