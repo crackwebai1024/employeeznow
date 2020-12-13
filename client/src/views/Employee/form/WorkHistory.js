@@ -120,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
 
 const WorkHistory = ({ success, experience, actions }) => {
   const [formData, setFormData] = useState({
+    summary: "",
     primaryJob: {
       title: "",
       company: "",
@@ -192,7 +193,7 @@ const WorkHistory = ({ success, experience, actions }) => {
   }, [success]);
 
   // destructure
-  const { primaryJob, secondaryJob } = formData;
+  const { primaryJob, secondaryJob, summary } = formData;
   const history = useHistory();
   const { handleSubmit, errors } = useForm({});
 
@@ -284,6 +285,12 @@ const WorkHistory = ({ success, experience, actions }) => {
       case "company":
       case "description":
       case "jobTitle":
+      case "summary":
+        setFormData((prevState) => ({
+          ...prevState,
+          summary: value,
+        }));
+        break;
       default:
         return setFormData((prevState) => ({
           ...prevState,
@@ -300,6 +307,7 @@ const WorkHistory = ({ success, experience, actions }) => {
       ...formData,
     };
     let submitData = {
+      summary: data.summary,
       primaryJob: data.primaryJob,
       secondaryJob: data.secondaryJob,
       otherJob: otherJobs,
@@ -373,7 +381,7 @@ const WorkHistory = ({ success, experience, actions }) => {
     }
   };
 
-  console.log(primaryJob.title, "payload");
+  console.log(summary, "payload");
   return experience ? (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Container maxWidth="md">
@@ -397,6 +405,35 @@ const WorkHistory = ({ success, experience, actions }) => {
             direction="column"
             alignItems={matchesXS ? "center" : "flex-start"}
           >
+            {/* {corver letter} */}
+            <Grid item>
+              <Typography gutterBottom variant="h6">
+                Summary/Cover Letter
+              </Typography>
+            </Grid>
+
+            <Grid
+              container
+              justify="flex-start"
+              direction={matchesXS ? "column" : "row"}
+              alignItems="center"
+            >
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  id="summary"
+                  name="summary"
+                  label=""
+                  multiline
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  value={summary}
+                  onChange={(e) => onChange(e)}
+                  rows={4}
+                  className={classes.description}
+                  variant="outlined"
+                />
+              </Grid>
+            </Grid>
             {/* primary job */}
             <Grid item>
               <Typography gutterBottom variant="h6">
