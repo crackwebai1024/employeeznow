@@ -495,7 +495,8 @@ const WorkHistory = ({ success, experience, actions }) => {
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     autoOk
-                    format="MM/dd/yyyy"
+                    format="MM/yyyy"
+                    views={["year", "month"]}
                     onChange={(e) =>
                       onChange({
                         target: {
@@ -520,7 +521,8 @@ const WorkHistory = ({ success, experience, actions }) => {
                       autoOk
                       label="End Date"
                       variant="inline"
-                      format="MM/dd/yyyy"
+                      format="MM/yyyy"
+                      views={["year", "month"]}
                       onChange={(e) =>
                         onChange({
                           target: {
@@ -631,6 +633,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     autoOk
+                    views={["year", "month"]}
                     onChange={(e) =>
                       onChange({
                         target: {
@@ -646,7 +649,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                     }
                     variant="inline"
                     name="startDate"
-                    format="MM/dd/yyyy"
+                    format="MM/yyyy"
                     InputLabelProps={{ shrink: true }}
                     label="Start Date"
                   />
@@ -655,7 +658,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     autoOk
-                    format="MM/dd/yyyy"
+                    format="MM/yyyy"
                     onChange={(e) =>
                       onChange({
                         target: {
@@ -669,6 +672,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                     value={secondaryJob.endDate ? secondaryJob.endDate : null}
                     variant="inline"
                     name="endDate"
+                    views={["year", "month"]}
                     InputLabelProps={{ shrink: true }}
                     label="End Date"
                   />
@@ -747,7 +751,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                       <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
                           autoOk
-                          format="MM/dd/yyyy"
+                          format="MM/yyyy"
                           onChange={(e) => handleInput("startDate", e, key)}
                           value={
                             otherJobs[key].startDate
@@ -756,6 +760,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                           }
                           variant="inline"
                           name="startDate"
+                          views={["year", "month"]}
                           InputLabelProps={{ shrink: true }}
                           label="Start Date"
                         />
@@ -764,7 +769,8 @@ const WorkHistory = ({ success, experience, actions }) => {
                       <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
                           autoOk
-                          format="MM/dd/yyyy"
+                          format="MM/yyyy"
+                          views={["year", "month"]}
                           onChange={(e) => handleInput("endDate", e, key)}
                           value={
                             otherJobs[key].endDate
