@@ -77,11 +77,11 @@ function* onUpdatePreference({ payload }) {
   try {
     const res = yield call(EmployeeAPI.updatePreference, payload);
     if (res && res.data) {
-      successMessage("Saving Success!");
       yield put(
         types.success({ type: "preference", data: { preference: res.data } })
       );
       yield put(types.setSuccess());
+      successMessage("Saving Success!");
     }
   } catch {
     yield put(types.failure);
