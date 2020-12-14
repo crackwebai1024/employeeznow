@@ -197,14 +197,6 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
       </Grid>
 
       <Grid item>
-        <Button
-          onClick={createNewSearch}
-          variant="outlined"
-          color="secondary"
-          className={classes.searchButton}
-        >
-          + Create New Search
-        </Button>
         <Grid
           container
           className={classes.filterButttonContainer}
@@ -233,7 +225,7 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
       <Grid container justify="center" spacing={4}>
         <Grid item xs={12} md={4}>
           <Box className={classes.rightSection}>
-            <Grid item className={classes.center}>
+            <Grid item xs={12} className={classes.center}>
               <Button
                 variant="outlined"
                 color="secondary"
@@ -243,7 +235,16 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
               </Button>
             </Grid>
             <hr className={classes.hr} />
-
+            <Grid item xs={12}>
+              <Button
+                onClick={createNewSearch}
+                variant="outlined"
+                color="secondary"
+                className={classes.searchButton}
+              >
+                + Create New Search
+              </Button>
+            </Grid>
             {queryButton}
           </Box>
         </Grid>
