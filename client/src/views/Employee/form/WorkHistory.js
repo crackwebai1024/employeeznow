@@ -282,15 +282,15 @@ const WorkHistory = ({ success, experience, actions }) => {
         setToggleBox(!toggleBox);
         break;
       }
-      case "company":
-      case "description":
-      case "jobTitle":
       case "summary":
         setFormData((prevState) => ({
           ...prevState,
           summary: value,
         }));
         break;
+      case "company":
+      case "description":
+      case "jobTitle":
       default:
         return setFormData((prevState) => ({
           ...prevState,

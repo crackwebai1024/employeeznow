@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     width: "fit-content",
     float: "right",
   },
+  viewMore: {
+    marginLeft: "1rem",
+    color: theme.palette.common.blue,
+  },
   button: {
     cursor: "pointer",
     color: "#222222",
@@ -304,6 +308,13 @@ const CandidateList = (props) => {
                 Add To Cart
               </Button>
             )}
+            <Button
+              size="small"
+              onClick={(e) => history.push(`/candidate/${id}`)}
+              className={classes.viewMore}
+            >
+              View
+            </Button>
           </Box>
         </div>
       </Grid>
