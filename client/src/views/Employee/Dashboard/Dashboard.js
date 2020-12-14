@@ -321,13 +321,13 @@ function Dashboard(props) {
                       <Typography className={classes.jobPeriod}>
                         {moment(
                           new Date(experience.primaryJob.startDate)
-                        ).format("MM/DD/YYYY")}
+                        ).format("MM/YYYY")}
                         &nbsp;~ &nbsp;
                         {experience.primaryJob.current
                           ? "Present"
                           : moment(
                               new Date(experience.primaryJob.endDate)
-                            ).format("MM/DD/YYYY")}
+                            ).format("MM/YYYY")}
                       </Typography>
                       {/* <Typography className={classes.description}>
                         {experience.primaryJob.description}
@@ -348,13 +348,13 @@ function Dashboard(props) {
                         <Typography className={classes.jobPeriod}>
                           {moment(
                             new Date(experience.secondaryJob.startDate)
-                          ).format("MM/DD/YYYY")}
+                          ).format("MM/YYYY")}
                           &nbsp;~ &nbsp;
                           {experience.secondaryJob.current
                             ? "Present"
                             : moment(
                                 new Date(experience.secondaryJob.endDate)
-                              ).format("MM/DD/YYYY")}
+                              ).format("MM/YYYY")}
                         </Typography>
                         {/* <Typography className={classes.jobPeriod}>
                           {experience.secondaryJob.description}
@@ -377,12 +377,10 @@ function Dashboard(props) {
                             </Typography>
                             <Typography className={classes.jobPeriod}>
                               {moment(new Date(job.startDate)).format(
-                                "MM/DD/YYYY"
+                                "MM/YYYY"
                               )}
                               &nbsp;~ &nbsp;
-                              {moment(new Date(job.endDate)).format(
-                                "MM/DD/YYYY"
-                              )}
+                              {moment(new Date(job.endDate)).format("MM/YYYY")}
                             </Typography>
                           </Fragment>
                         </Grid>

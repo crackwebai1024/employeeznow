@@ -21,7 +21,6 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
-import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 
 import {
@@ -128,7 +127,7 @@ const SkillsForm = ({
   success,
 }) => {
   const [primaryJob, setPrimaryJob] = useState({ title: "", years: "" });
-  const [secondaryJob, setSecondaryJob] = useState({ title: "", years: "" });
+  const [secondaryJob, setSecondaryJob] = useState([]);
   const [checkbox, setCheckbox] = useState(false);
   const [primaryOther, setPrimaryOther] = useState("");
   const [secondaryOther, setSecondaryOther] = useState("");
@@ -140,7 +139,6 @@ const SkillsForm = ({
   const [cuisine, setCuisine] = useState([]);
   const [wineKnowledge, setWineKnowledge] = useState("");
   const [cocktailKnowledge, setCocktailKnowledge] = useState("");
-  const [milesToWork, setMilesToWork] = useState("");
   const [openJob, setOpenJob] = useState(false);
 
   const [primaryYearsError, setPrimaryYearsError] = useState("");
@@ -184,7 +182,6 @@ const SkillsForm = ({
         cuisine,
         wineKnowledge,
         cocktailKnowledge,
-        milesToWork,
       } = skill;
       setPrimaryJob(primaryJob);
       setSecondaryJob(secondaryJob);
@@ -199,8 +196,7 @@ const SkillsForm = ({
       setCuisine(cuisine);
       setWineKnowledge(wineKnowledge);
       setCocktailKnowledge(cocktailKnowledge);
-      setMilesToWork(milesToWork);
-      if (secondaryJob && secondaryJob.title) setOpenJob(true);
+      if (secondaryJob.length > 0) setOpenJob(true);
     }
   }, [skill]);
 
@@ -234,32 +230,6 @@ const SkillsForm = ({
 
         setPrimaryYearsError("");
         return setPrimaryJob({ ...primaryJob, years: value });
-      }
-      case "secondaryJob.title": {
-        // When other field is checked, mark change setCheckbox. If others are checked, unmark 'Other" checkbox and remove text from 'Other'
-        if (id === "secondaryOther") {
-          setSecondaryCheckbox(!secondaryCheckbox);
-        } else {
-          setSecondaryCheckbox(false);
-          setSecondaryOther("");
-        }
-        return setSecondaryJob({ ...secondaryJob, title: value });
-      }
-      case "secondaryOther": {
-        // Other text input value
-        if (value) {
-          setSecondaryOther(value);
-          return setSecondaryJob({ ...secondaryJob, title: value });
-        }
-        // if value is empty or deleted, it returns ''
-        return setSecondaryOther("");
-      }
-      case "secondaryJob.years": {
-        if (value < 0) {
-          return setSecondaryYearsError("Invalid input");
-        }
-        setSecondaryYearsError("");
-        return setSecondaryJob({ ...secondaryJob, years: value });
       }
       case "shift": {
         const newArray = [...shift];
@@ -322,8 +292,29 @@ const SkillsForm = ({
         }
         return setStyle(newArray);
       }
+      case "secondaryJob": {
+        if (value < 0) {
+          return;
+        }
+        let newArray = [];
+        let idx = secondaryJob.findIndex((item) => item.type === id);
+        if (value === "") {
+          secondaryJob.splice(idx, 1);
+          newArray = [...secondaryJob];
+        } else {
+          if (idx > -1) {
+            secondaryJob[idx].years = value;
+            newArray = [...secondaryJob];
+          } else {
+            if (secondaryJob.length > 2) return;
+            secondaryJob.push({ title: id, years: value });
+            newArray = [...secondaryJob];
+            console.log(newArray);
+          }
+        }
+        return setSecondaryJob(newArray);
+      }
       case "cuisine": {
-        console.log(cuisine.length);
         if (value < 0) {
           return setCuisineYearsError("Invalid input. Years must be above 0");
         }
@@ -354,9 +345,6 @@ const SkillsForm = ({
       case "cocktailKnowledge": {
         return setCocktailKnowledge(id);
       }
-      case "milesToWork": {
-        return setMilesToWork(value);
-      }
       default:
         break;
     }
@@ -377,7 +365,6 @@ const SkillsForm = ({
       systems,
       id: user._id,
       employee,
-      milesToWork,
     };
     return formData;
   };
@@ -416,6 +403,8 @@ const SkillsForm = ({
     const slug = user.slug;
     history.push(`/employees/${slug}`);
   };
+
+  console.log(secondaryJob, "secondaryJob");
 
   return (
     <>
@@ -513,64 +502,44 @@ const SkillsForm = ({
               <Grid item>
                 <Grid item className={classes.titleContainer}>
                   <Typography className={classes.title}>
-                    Please select your Secondary job title (1 max)
+                    Please select your Secondary job title (3 max)
                   </Typography>
                 </Grid>
 
                 <FormControl component="fieldset">
-                  <RadioGroup
-                    aria-label="secondaryJob.title"
-                    name="secondaryJob.title"
-                  >
-                    <Grid item container direction="row">
-                      {jobTypes.map((jobType, i) => (
-                        <Grid item key={`${jobType}${i}`} sm={4} xs={6}>
-                          <FormControlLabel
-                            control={
-                              <Radio
-                                value={jobType}
-                                checked={jobType === secondaryJob.title}
-                                id="secondaryJob"
-                                onChange={(e) => handleChange(e)}
-                              />
-                            }
-                            label={jobType}
-                            className={classes.item}
-                          />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </RadioGroup>
-                </FormControl>
-
-                <Grid item container direction="row">
-                  <Typography className={classes.yearsText}>
-                    &#42; How many years of experience for your secondary job
-                  </Typography>
-
-                  <Grid item>
-                    <TextField
-                      error={secondaryYearsError.length !== 0}
-                      helperText={secondaryYearsError}
-                      type="number"
-                      name="secondaryJob.years"
-                      id="secondaryJob.years"
-                      value={secondaryJob.years}
-                      onChange={(e) => handleChange(e)}
-                      className={classes.yearsInput}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment
-                            position="end"
-                            className={classes.adornment}
-                          >
-                            years
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
+                  <Grid item container direction="row">
+                    {jobTypes.map((cu, i) => (
+                      <Grid item key={`${cu}${i}`} xs={12} sm={6}>
+                        <TextField
+                          type="number"
+                          name="secondaryJob"
+                          label={cu}
+                          id={cu}
+                          value={
+                            secondaryJob.filter((cui) => cui.title === cu)[0]
+                              ? secondaryJob.filter(
+                                  (cui) => cui.title === cu
+                                )[0].years
+                              : ""
+                          }
+                          onChange={(e) => handleChange(e)}
+                          min="0"
+                          className={classes.styleandcuisineInput}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment
+                                position="end"
+                                className={classes.adornment}
+                              >
+                                years
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                    ))}
                   </Grid>
-                </Grid>
+                </FormControl>
               </Grid>
             )}
 
@@ -817,36 +786,6 @@ const SkillsForm = ({
                   </Grid>
                 ))}
               </Grid>
-            </Grid>
-
-            {/* miles to work */}
-            <Grid item className={classes.titleContainer}>
-              <Typography gutterBottom variant="h6">
-                Miles to Work
-              </Typography>
-              <Typography variant="caption">
-                &#42; Please input distance you can commute.
-              </Typography>
-            </Grid>
-
-            <Grid item>
-              <TextField
-                select
-                label="Miles To Work"
-                id="milesToWork"
-                name="milesToWork"
-                value={milesToWork}
-                onChange={(e) => handleChange(e)}
-                helperText="Please select the miles"
-                variant="outlined"
-              >
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={7}>7</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={15}>15</MenuItem>
-                <MenuItem value={25}>25</MenuItem>
-              </TextField>
             </Grid>
 
             <Grid container item xs={12}>

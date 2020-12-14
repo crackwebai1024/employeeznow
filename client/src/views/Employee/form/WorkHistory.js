@@ -120,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
 
 const WorkHistory = ({ success, experience, actions }) => {
   const [formData, setFormData] = useState({
+    summary: "",
     primaryJob: {
       title: "",
       company: "",
@@ -192,7 +193,7 @@ const WorkHistory = ({ success, experience, actions }) => {
   }, [success]);
 
   // destructure
-  const { primaryJob, secondaryJob } = formData;
+  const { primaryJob, secondaryJob, summary } = formData;
   const history = useHistory();
   const { handleSubmit, errors } = useForm({});
 
@@ -281,6 +282,12 @@ const WorkHistory = ({ success, experience, actions }) => {
         setToggleBox(!toggleBox);
         break;
       }
+      case "summary":
+        setFormData((prevState) => ({
+          ...prevState,
+          summary: value,
+        }));
+        break;
       case "company":
       case "description":
       case "jobTitle":
@@ -300,6 +307,7 @@ const WorkHistory = ({ success, experience, actions }) => {
       ...formData,
     };
     let submitData = {
+      summary: data.summary,
       primaryJob: data.primaryJob,
       secondaryJob: data.secondaryJob,
       otherJob: otherJobs,
@@ -373,7 +381,7 @@ const WorkHistory = ({ success, experience, actions }) => {
     }
   };
 
-  console.log(primaryJob.title, "payload");
+  console.log(summary, "payload");
   return experience ? (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Container maxWidth="md">
@@ -397,6 +405,35 @@ const WorkHistory = ({ success, experience, actions }) => {
             direction="column"
             alignItems={matchesXS ? "center" : "flex-start"}
           >
+            {/* {corver letter} */}
+            <Grid item>
+              <Typography gutterBottom variant="h6">
+                Summary/Cover Letter
+              </Typography>
+            </Grid>
+
+            <Grid
+              container
+              justify="flex-start"
+              direction={matchesXS ? "column" : "row"}
+              alignItems="center"
+            >
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  id="summary"
+                  name="summary"
+                  label=""
+                  multiline
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  value={summary}
+                  onChange={(e) => onChange(e)}
+                  rows={4}
+                  className={classes.description}
+                  variant="outlined"
+                />
+              </Grid>
+            </Grid>
             {/* primary job */}
             <Grid item>
               <Typography gutterBottom variant="h6">
@@ -458,7 +495,8 @@ const WorkHistory = ({ success, experience, actions }) => {
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     autoOk
-                    format="MM/dd/yyyy"
+                    format="MM/yyyy"
+                    views={["year", "month"]}
                     onChange={(e) =>
                       onChange({
                         target: {
@@ -483,7 +521,8 @@ const WorkHistory = ({ success, experience, actions }) => {
                       autoOk
                       label="End Date"
                       variant="inline"
-                      format="MM/dd/yyyy"
+                      format="MM/yyyy"
+                      views={["year", "month"]}
                       onChange={(e) =>
                         onChange({
                           target: {
@@ -594,6 +633,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     autoOk
+                    views={["year", "month"]}
                     onChange={(e) =>
                       onChange({
                         target: {
@@ -609,7 +649,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                     }
                     variant="inline"
                     name="startDate"
-                    format="MM/dd/yyyy"
+                    format="MM/yyyy"
                     InputLabelProps={{ shrink: true }}
                     label="Start Date"
                   />
@@ -618,7 +658,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                 <Grid item sm={3} xs={6}>
                   <KeyboardDatePicker
                     autoOk
-                    format="MM/dd/yyyy"
+                    format="MM/yyyy"
                     onChange={(e) =>
                       onChange({
                         target: {
@@ -632,6 +672,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                     value={secondaryJob.endDate ? secondaryJob.endDate : null}
                     variant="inline"
                     name="endDate"
+                    views={["year", "month"]}
                     InputLabelProps={{ shrink: true }}
                     label="End Date"
                   />
@@ -710,7 +751,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                       <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
                           autoOk
-                          format="MM/dd/yyyy"
+                          format="MM/yyyy"
                           onChange={(e) => handleInput("startDate", e, key)}
                           value={
                             otherJobs[key].startDate
@@ -719,6 +760,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                           }
                           variant="inline"
                           name="startDate"
+                          views={["year", "month"]}
                           InputLabelProps={{ shrink: true }}
                           label="Start Date"
                         />
@@ -727,7 +769,8 @@ const WorkHistory = ({ success, experience, actions }) => {
                       <Grid item xs={6} sm={3}>
                         <KeyboardDatePicker
                           autoOk
-                          format="MM/dd/yyyy"
+                          format="MM/yyyy"
+                          views={["year", "month"]}
                           onChange={(e) => handleInput("endDate", e, key)}
                           value={
                             otherJobs[key].endDate

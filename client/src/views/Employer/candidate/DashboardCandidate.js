@@ -1,15 +1,22 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 import { actions as employerActions } from "@store/employer";
 import { bindActionCreators } from "redux";
 import { getUser, getFilterID } from "@helpers/auth-helpers";
 import Typography from "@material-ui/core/Typography";
 import ProfilePhoto from "../../Employee/Dashboard/ProfilePhoto";
-import { Card, CardContent } from "@material-ui/core";
+import { Card, CardContent, Button } from "@material-ui/core";
 import { successMessage, errorMessage } from "@helpers/utils";
 import Profession from "../../Employee/Dashboard/Profession";
 import BackgroundPhoto from "../../Employee/Dashboard/BackgroundPhoto";
@@ -28,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1rem",
     boxShadow:
       "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+  },
+  dialog: {
+    maxHeight: "90vh",
+    overflowY: "auto",
   },
   profilePhoto: {
     width: 100,
@@ -69,6 +80,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     color: theme.palette.common.blue,
     borderColor: theme.palette.common.blue,
+    textAlign: "center",
+    margin: "auto",
   },
   nameText: {
     ...theme.typography.h6,
@@ -176,8 +189,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     fontSize: "0.9rem",
   },
-  randomrole: {
-    display: "flex",
+  description: {
+    wordWrap: "break-word",
+    marginBottom: 40,
+    marginTop: 10,
   },
 }));
 
@@ -200,7 +215,7 @@ const DashboardCandidate = ({
   const history = useHistory();
   const { slug } = match.params;
   const user = JSON.parse(getUser());
-
+  const [modal, setModal] = useState(false);
   const currentFilterID = getFilterID();
   /* eslint-disable react/jsx-one-expression-per-line */
 
@@ -332,22 +347,22 @@ const DashboardCandidate = ({
                     {experience && experience.primaryJob.title}
                   </Typography>
                   {experience && experience.primaryJob && (
-                    <Fragment>
+                    <>
                       <Typography className={classes.company}>
                         {experience.primaryJob.company}
                       </Typography>
                       <Typography className={classes.jobPeriod}>
                         {moment(
                           new Date(experience.primaryJob.startDate)
-                        ).format("MM/DD/YYYY")}
+                        ).format("MM/YYYY")}
                         &nbsp;~ &nbsp;
                         {experience.primaryJob.current
                           ? "Present"
                           : moment(
                               new Date(experience.primaryJob.endDate)
-                            ).format("MM/DD/YYYY")}
+                            ).format("MM/YYYY")}
                       </Typography>
-                    </Fragment>
+                    </>
                   )}
                 </Grid>
                 {experience && experience.secondaryJob.title && (
@@ -363,13 +378,13 @@ const DashboardCandidate = ({
                         <Typography className={classes.jobPeriod}>
                           {moment(
                             new Date(experience.secondaryJob.startDate)
-                          ).format("MM/DD/YYYY")}
+                          ).format("MM/YYYY")}
                           &nbsp;~ &nbsp;
                           {experience.secondaryJob.current
                             ? "Present"
                             : moment(
                                 new Date(experience.secondaryJob.endDate)
-                              ).format("MM/DD/YYYY")}
+                              ).format("MM/YYYY")}
                         </Typography>
                       </Fragment>
                     )}
@@ -389,19 +404,24 @@ const DashboardCandidate = ({
                             </Typography>
                             <Typography className={classes.jobPeriod}>
                               {moment(new Date(job.startDate)).format(
-                                "MM/DD/YYYY"
+                                "MM/YYYY"
                               )}
                               &nbsp;~ &nbsp;
-                              {moment(new Date(job.endDate)).format(
-                                "MM/DD/YYYY"
-                              )}
+                              {moment(new Date(job.endDate)).format("MM/YYYY")}
                             </Typography>
                           </Fragment>
                         </Grid>
                       )
                   )}
               </Grid>
-
+              <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Button
+                  className={classes.button}
+                  onClick={(e) => setModal(true)}
+                >
+                  Show Details
+                </Button>
+              </Grid>
               {/* {employeeData.experience && employeeData.experience.employee} */}
             </CardContent>
           </Card>
@@ -416,6 +436,107 @@ const DashboardCandidate = ({
             please email to: Register@EmployeezNow.com
           </Typography>
         </Grid>
+        <Dialog
+          open={modal}
+          onClose={(e) => setModal(false)}
+          aria-labelledby="dialog-title"
+          fullWidth
+          className={classes.dialog}
+        >
+          <DialogTitle>
+            <Typography>Work History</Typography>
+          </DialogTitle>
+          <DialogContent>
+            <Grid container item xs={12}>
+              <Grid item xs={12}>
+                <Typography className={classes.jobtitle}>
+                  {experience && experience.primaryJob.title}
+                </Typography>
+                {experience && experience.primaryJob && (
+                  <Fragment>
+                    <Typography className={classes.company}>
+                      {experience.primaryJob.company}
+                    </Typography>
+                    <Typography>
+                      {moment(new Date(experience.primaryJob.startDate)).format(
+                        "MM/YYYY"
+                      )}
+                      &nbsp;~ &nbsp;
+                      {experience.primaryJob.current
+                        ? "Present"
+                        : moment(
+                            new Date(experience.primaryJob.endDate)
+                          ).format("MM/YYYY")}
+                    </Typography>
+                    <Typography className={classes.description}>
+                      {experience.primaryJob.description}
+                    </Typography>
+                  </Fragment>
+                )}
+              </Grid>
+
+              <Grid item xs={12}>
+                {experience && experience.secondaryJob.title && (
+                  <Fragment>
+                    <Typography className={classes.jobtitle}>
+                      {experience && experience.secondaryJob.title}
+                    </Typography>
+                    {experience && experience.secondaryJob && (
+                      <Fragment>
+                        <Typography className={classes.company}>
+                          {experience.secondaryJob.company}
+                        </Typography>
+                        <Typography>
+                          {moment(
+                            new Date(experience.secondaryJob.startDate)
+                          ).format("MM/YYYY")}
+                          &nbsp;~ &nbsp;
+                          {experience.secondaryJob.current
+                            ? "Present"
+                            : moment(
+                                new Date(experience.secondaryJob.endDate)
+                              ).format("MM/YYYY")}
+                        </Typography>
+                        <Typography className={classes.description}>
+                          {experience.secondaryJob.description}
+                        </Typography>
+                      </Fragment>
+                    )}
+                  </Fragment>
+                )}
+              </Grid>
+
+              <Grid item xs={12}>
+                {experience &&
+                  experience.otherJob.map(
+                    (job, i) =>
+                      job.title && (
+                        <Grid item xs={12} md={6} key={i}>
+                          <Typography className={classes.jobtitle}>
+                            {job.title}
+                          </Typography>
+                          <Fragment>
+                            <Typography className={classes.company}>
+                              {job.company}
+                            </Typography>
+                            <Typography>
+                              {moment(new Date(job.startDate)).format(
+                                "MM/YYYY"
+                              )}
+                              &nbsp;~ &nbsp;
+                              {moment(new Date(job.endDate)).format("MM/YYYY")}
+                            </Typography>
+                            <Typography className={classes.description}>
+                              {job.description}
+                            </Typography>
+                          </Fragment>
+                        </Grid>
+                      )
+                  )}
+              </Grid>
+            </Grid>
+          </DialogContent>
+        </Dialog>
       </Container>
     </Fragment>
   ) : (

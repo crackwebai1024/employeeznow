@@ -18,6 +18,7 @@ import { jobTypes } from "../professionTypes";
 import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
+import MenuItem from "@material-ui/core/MenuItem";
 import { FormControl } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -108,12 +109,14 @@ const ProfessionDetailsForm = ({
     randomShift: false,
     randomShiftRole: [],
     newOpportunity: [],
+    milesToWork: "",
     veteran: { status: false, veteranId: "" },
   });
   const {
     employmentStatus,
     idealSalary,
     randomShift,
+    milesToWork,
     newOpportunity,
   } = formData;
 
@@ -192,6 +195,11 @@ const ProfessionDetailsForm = ({
           [id]: { ...prevState[id], [name]: value },
         }));
       case "planning":
+      case "milesToWork":
+        return setFormData((prevState) => ({
+          ...prevState,
+          milesToWork: value,
+        }));
       case "availability":
       default:
         return formData;
@@ -313,6 +321,36 @@ const ProfessionDetailsForm = ({
                     {unit.value}
                   </option>
                 ))}
+              </TextField>
+            </Grid>
+
+            {/* miles to work */}
+            <Grid item className={classes.titleContainer}>
+              <Typography gutterBottom variant="h6">
+                Miles to Work
+              </Typography>
+              <Typography variant="caption">
+                &#42; Please input distance you can commute.
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <TextField
+                select
+                label="Miles To Work"
+                id="milesToWork"
+                name="milesToWork"
+                value={milesToWork}
+                onChange={(e) => onChange(e)}
+                helperText="Please select the miles"
+                variant="outlined"
+              >
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={15}>15</MenuItem>
+                <MenuItem value={25}>25</MenuItem>
               </TextField>
             </Grid>
 
