@@ -123,10 +123,27 @@ const searchEmployee = async (filter) => {
       {
         $addFields: {
           diffdist: {
-            $subtract: ["$distBetweenEmp", "$employeeskill.milesToWork"],
+            $subtract: ["$distBetweenEmp", "$employeepreference.milesToWork"],
           },
           // get the intersection of shifts between filter and employee
           commonShift: { $setIntersection: ["$employeeskill.shift", shift] },
+          inSecondary: {
+            $cond: {
+              if: { $in: [primaryJob, "$employeeskill.secondaryJob.title"] },
+              then: {
+                $arrayElemAt: [
+                  "$employeeskill.secondaryJob.years",
+                  {
+                    $indexOfArray: [
+                      "$employeeskill.secondaryJob.title",
+                      primaryJob,
+                    ],
+                  },
+                ],
+              },
+              else: -1,
+            },
+          },
         },
       },
       { $match: { diffdist: { $lte: 0 } } },
@@ -142,12 +159,7 @@ const searchEmployee = async (filter) => {
                 { "employeeskill.primaryJob.years": { $gte: minimumExp } },
               ],
             },
-            {
-              $and: [
-                { "employeeskill.secondaryJob.title": { $eq: primaryJob } },
-                { "employeeskill.secondaryJob.years": { $gte: minimumExp } },
-              ],
-            },
+            { inSecondary: { $gte: minimumExp } },
           ],
           "employeeexperience.exclude.name": { $nin: [name] },
           "employeeexperience.exclude.address": { $nin: [states] },
@@ -224,7 +236,7 @@ const searchEmployee = async (filter) => {
                   if: { $eq: ["$employeeskill.primaryJob.title", primaryJob] },
                   then: { $multiply: ["$employeeskill.primaryJob.years", 2.5] },
                   else: {
-                    $multiply: ["$employeeskill.secondaryJob.years", 2.0],
+                    $multiply: ["$inSecondary", 2.0],
                   },
                 },
               },
@@ -441,9 +453,10 @@ const searchEmployee = async (filter) => {
       },
       { $sort: { totalpoints: -1 } },
     ]);
-    console.log(employer);
+    // console.log(employer);
     return professions;
   } catch (err) {
+    console.log(err);
     return err;
   }
 };

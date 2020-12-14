@@ -41,6 +41,9 @@ const updateByID = async (req, res, next) => {
         searchresult: searchres,
       },
     };
+    console.log(
+      "-----------------------------------------------------------------------------"
+    );
     await SearchRes.updateByID(reqbody, res);
     return;
     // await next();

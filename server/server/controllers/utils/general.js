@@ -24,7 +24,7 @@ const find_ByID = async (Model, role, id, res) => {
   console.log(role, id);
   try {
     let user = await Model.findOne({ [role]: id });
-    console.log("image finding result----------->", user);
+    // console.log("image finding result----------->", user);
     return user;
   } catch (err) {
     return res.status(400).json({
