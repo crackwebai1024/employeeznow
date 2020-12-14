@@ -21,6 +21,7 @@ const PreferenceSchema = new mongoose.Schema({
       },
     },
   },
+  milesToWork: Number,
   planningToMove: {
     planning: {
       type: Boolean,
@@ -102,6 +103,14 @@ const PreferenceSchema = new mongoose.Schema({
       "Casher",
       "Bar Manager",
       "Chef De Cuisine",
+      "Grill Cook",
+      "Saute Cook",
+      "Fry Cook",
+      "Pantry Cook",
+      "Hotel Front Desk",
+      "Hotel Outlet Server",
+      "Hotel Bellman",
+      "Pool Attendant",
       "",
     ],
   },

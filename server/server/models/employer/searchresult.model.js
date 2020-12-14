@@ -20,6 +20,7 @@ const SearchResultSchema = new mongoose.Schema(
         employeepreference: Object,
         employeeexperience: Object,
         diffdist: Number,
+        inSecondary: Number,
         commonShift: [String],
         ratediff: Number,
         totalpoints: Number,
