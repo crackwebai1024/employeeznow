@@ -7,7 +7,7 @@ import { actions as employerActions } from "@store/employer";
 import { bindActionCreators } from "redux";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { getFilterID } from "@helpers/auth-helpers";
+import { getFilterID, getUser } from "@helpers/auth-helpers";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -67,10 +67,10 @@ const CallToAction = ({
   const classes = useStyles();
   const history = useHistory();
   const filterID = getFilterID();
-
+  debugger;
+  const user = JSON.parse(getUser());
   const backToFilter = () => {
-    actions.setReturn();
-    history.push(`/search/${filterID}`);
+    history.goBack();
   };
 
   return (
@@ -109,7 +109,7 @@ const CallToAction = ({
           className={`${classes.button} ${classes.button1}`}
           onClick={backToFilter}
         >
-          <ReplayIcon /> Back To Filter Page
+          <ReplayIcon /> Return
         </Button>
       </Grid>
     </Grid>
