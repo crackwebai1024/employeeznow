@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "transparent",
   },
   heading1: {
-    ...theme.typography.h1,
+    ...theme.typography.h3,
+    textAlign: "center",
     marginBottom: "1.5rem",
   },
   button: {
