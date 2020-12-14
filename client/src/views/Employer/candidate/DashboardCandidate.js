@@ -4,13 +4,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
+import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { actions as employerActions } from "@store/employer";
 import { bindActionCreators } from "redux";
 import { getUser, getFilterID } from "@helpers/auth-helpers";
@@ -91,6 +85,10 @@ const useStyles = makeStyles((theme) => ({
   },
   noInfotext: {
     color: theme.palette.common.blue,
+  },
+  modalTitle: {
+    fontSize: 26,
+    fontWeight: 600,
   },
   basicTitle: {
     fontSize: 20,
@@ -444,7 +442,7 @@ const DashboardCandidate = ({
           className={classes.dialog}
         >
           <DialogTitle>
-            <Typography>Work History</Typography>
+            <Typography className={classes.modalTitle}>Work History</Typography>
           </DialogTitle>
           <DialogContent>
             <Grid container item xs={12}>

@@ -162,7 +162,11 @@ function* onAddToCart({ payload }) {
   try {
     const res = yield call(EmployerAPI.onAddToCart, payload);
     if (res && res.data) {
-      yield put(types.addToCartSuccess(payload.employeeID));
+      let data = {
+        cartItems: res.data.cartItems,
+        id: payload.employeeID,
+      };
+      yield put(types.addToCartSuccess(data));
       // yield put(types.updateCartItems(payload.employeeID))
     }
   } catch {

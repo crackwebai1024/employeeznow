@@ -124,7 +124,8 @@ const ChargeBalance = (props) => {
       <Grid container item xs={12}>
         <Typography className={classes.details}>
           For the Lifetime Unlimited Profiles Package, Email
-          Scott@EmployeezNow.com. The price is so low, you won’t believe it!
+          Scott@EmployeezNow.com.
+          <br /> The price is so low, you won’t believe it!
         </Typography>
       </Grid>
     </>

@@ -221,12 +221,14 @@ export const addToCartRequest = (state) => ({
 });
 
 export const addToCartSuccess = (state, { payload }) => {
+  debugger;
   return {
     ...state,
+    badge: payload.cartItems.length,
     addCartSuccess: "SUCCESS",
     filterResult: [
       ...state.filterResult.map((filter) => {
-        if (filter._id === payload)
+        if (filter._id === payload.id)
           return {
             ...filter,
             incart: true,
@@ -254,7 +256,7 @@ export const loadCartList = (state) => ({
 export const loadCartListSuccess = (state, { payload }) => ({
   ...state,
   cartItems: [...payload.cartItems],
-
+  badge: payload.cartItems.length,
   freeNum: payload.freeNum,
 });
 
