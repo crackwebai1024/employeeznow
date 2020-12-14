@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import { getUser, getFilterID } from "@helpers/auth-helpers";
+import { getUser, getFilterID, setReturnPage } from "@helpers/auth-helpers";
 import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
@@ -125,7 +125,7 @@ const CandidateList = (props) => {
   const user = JSON.parse(getUser());
   const filterID = getFilterID();
   const history = useHistory();
-
+  debugger;
   const addToCart = () => {
     let data = {
       id: user._id,
@@ -310,7 +310,9 @@ const CandidateList = (props) => {
             )}
             <Button
               size="small"
-              onClick={(e) => history.push(`/candidate/${id}`)}
+              onClick={(e) => {
+                history.push(`/candidate/${id}`);
+              }}
               className={classes.viewMore}
             >
               View
