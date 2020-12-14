@@ -40,6 +40,7 @@ export const jobTypes = [
   "Hotel Outlet Staff",
   "Pool Attendant",
   "Sales Manager",
+  "Dishwasher",
 ];
 
 export const shifts = ["Breakfast", "Lunch", "Dinner"];

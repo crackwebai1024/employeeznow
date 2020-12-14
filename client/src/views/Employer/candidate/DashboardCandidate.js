@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dialog: {
     maxHeight: "90vh",
+    marginTop: "5rem",
     overflowY: "auto",
   },
   profilePhoto: {
@@ -187,9 +188,18 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     fontSize: "0.9rem",
   },
+  summary: {
+    border: "1px solid gray",
+    padding: "10px",
+    maxHeight: "250px",
+    overflowY: "auto",
+    marginBottom: 40,
+  },
   description: {
     wordWrap: "break-word",
     marginBottom: 40,
+    maxHeight: "250px",
+    overflowY: "auto",
     marginTop: 10,
   },
 }));
@@ -446,6 +456,12 @@ const DashboardCandidate = ({
           </DialogTitle>
           <DialogContent>
             <Grid container item xs={12}>
+              <Grid item xs={12}>
+                <Typography className={classes.jobtitle}>Summary</Typography>
+                <Typography id="cartList" className={classes.summary}>
+                  {experience && experience.summary}
+                </Typography>
+              </Grid>
               <Grid item xs={12}>
                 <Typography className={classes.jobtitle}>
                   {experience && experience.primaryJob.title}
