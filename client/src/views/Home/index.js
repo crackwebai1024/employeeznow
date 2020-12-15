@@ -131,7 +131,7 @@ const Home = () => {
   const classes = useStyles();
   const user = JSON.parse(getUser());
   const role = getRole();
-
+  window.scrollTo(0, 0);
   return (
     <Box className={classes.HomeWrapper}>
       <Container width="sm" className={classes.mainContainer}>

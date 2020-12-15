@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Contact = ({ actions, sendMessage }) => {
   const classes = useStyles();
-
+  window.scrollTo(0, 0);
   const { register, handleSubmit, errors } = useForm({});
 
   const onSubmit = (data) => {

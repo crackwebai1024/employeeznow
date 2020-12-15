@@ -376,15 +376,21 @@ const DashboardCandidate = ({
                         {experience.primaryJob.company}
                       </Typography>
                       <Typography className={classes.jobPeriod}>
-                        {moment(
-                          new Date(experience.primaryJob.startDate)
-                        ).format("MM/YYYY")}
-                        &nbsp;~ &nbsp;
+                        {experience.primaryJob.startDate &&
+                          moment(
+                            new Date(experience.primaryJob.startDate)
+                          ).format("MM/YYYY")}
+
                         {experience.primaryJob.current
                           ? "Present"
-                          : moment(
-                              new Date(experience.primaryJob.endDate)
-                            ).format("MM/YYYY")}
+                          : experience.primaryJob.endDate && (
+                              <span>
+                                &nbsp;~ &nbsp;
+                                {moment(
+                                  new Date(experience.primaryJob.endDate)
+                                ).format("MM/YYYY")}
+                              </span>
+                            )}
                       </Typography>
                     </>
                   )}
@@ -400,15 +406,19 @@ const DashboardCandidate = ({
                           {experience.secondaryJob.company}
                         </Typography>
                         <Typography className={classes.jobPeriod}>
-                          {moment(
-                            new Date(experience.secondaryJob.startDate)
-                          ).format("MM/YYYY")}
-                          &nbsp;~ &nbsp;
-                          {experience.secondaryJob.current
-                            ? "Present"
-                            : moment(
+                          {experience.secondaryJob.startDate &&
+                            moment(
+                              new Date(experience.secondaryJob.startDate)
+                            ).format("MM/YYYY")}
+
+                          {experience.secondaryJob.endDate && (
+                            <span>
+                              &nbsp;~ &nbsp;
+                              {moment(
                                 new Date(experience.secondaryJob.endDate)
                               ).format("MM/YYYY")}
+                            </span>
+                          )}
                         </Typography>
                       </Fragment>
                     )}
@@ -427,11 +437,18 @@ const DashboardCandidate = ({
                               {job.company}
                             </Typography>
                             <Typography className={classes.jobPeriod}>
-                              {moment(new Date(job.startDate)).format(
-                                "MM/YYYY"
+                              {job.startDate &&
+                                moment(new Date(job.startDate)).format(
+                                  "MM/YYYY"
+                                )}
+                              {job.endDate && (
+                                <span>
+                                  &nbsp;~ &nbsp;
+                                  {moment(new Date(job.endDate)).format(
+                                    "MM/YYYY"
+                                  )}
+                                </span>
                               )}
-                              &nbsp;~ &nbsp;
-                              {moment(new Date(job.endDate)).format("MM/YYYY")}
                             </Typography>
                           </Fragment>
                         </Grid>
@@ -488,15 +505,21 @@ const DashboardCandidate = ({
                       {experience.primaryJob.company}
                     </Typography>
                     <Typography>
-                      {moment(new Date(experience.primaryJob.startDate)).format(
-                        "MM/YYYY"
-                      )}
-                      &nbsp;~ &nbsp;
-                      {experience.primaryJob.current
-                        ? "Present"
-                        : moment(
+                      {experience.primaryJob.startDate &&
+                        moment(
+                          new Date(experience.primaryJob.startDate)
+                        ).format("MM/YYYY")}
+
+                      {experience.primaryJob.current ? (
+                        <span>&nbsp;~ &nbsp;Present</span>
+                      ) : (
+                        <span>
+                          &nbsp;~ &nbsp;
+                          {moment(
                             new Date(experience.primaryJob.endDate)
                           ).format("MM/YYYY")}
+                        </span>
+                      )}
                     </Typography>
                     <Typography className={classes.description}>
                       {experience.primaryJob.description}
@@ -517,15 +540,20 @@ const DashboardCandidate = ({
                           {experience.secondaryJob.company}
                         </Typography>
                         <Typography>
-                          {moment(
-                            new Date(experience.secondaryJob.startDate)
-                          ).format("MM/YYYY")}
-                          &nbsp;~ &nbsp;
-                          {experience.secondaryJob.current
-                            ? "Present"
-                            : moment(
-                                new Date(experience.secondaryJob.endDate)
-                              ).format("MM/YYYY")}
+                          {experience.secondaryJob.startDate &&
+                            moment(
+                              new Date(experience.secondaryJob.startDate)
+                            ).format("MM/YYYY")}
+                          {experience.secondaryJob.endDate && (
+                            <span>
+                              &nbsp;~ &nbsp;
+                              {moment(
+                                new Date(
+                                  experience.secondaryJob.endDate
+                                ).format("MM/YYYY")
+                              )}
+                            </span>
+                          )}
                         </Typography>
                         <Typography className={classes.description}>
                           {experience.secondaryJob.description}
@@ -550,11 +578,18 @@ const DashboardCandidate = ({
                               {job.company}
                             </Typography>
                             <Typography>
-                              {moment(new Date(job.startDate)).format(
-                                "MM/YYYY"
+                              {job.startDate &&
+                                moment(new Date(job.startDate)).format(
+                                  "MM/YYYY"
+                                )}
+                              {job.endDate && (
+                                <span>
+                                  &nbsp;~ &nbsp;
+                                  {moment(new Date(job.endDate)).format(
+                                    "MM/YYYY"
+                                  )}
+                                </span>
                               )}
-                              &nbsp;~ &nbsp;
-                              {moment(new Date(job.endDate)).format("MM/YYYY")}
                             </Typography>
                             <Typography className={classes.description}>
                               {job.description}
