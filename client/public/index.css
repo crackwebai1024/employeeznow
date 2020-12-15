@@ -81,3 +81,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Copper Black';
+  src: url('./assets/fonts/Cooper-Black-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
