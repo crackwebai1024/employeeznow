@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 const Contest = () => {
   const classes = useStyles();
   const history = useHistory();
+  window.scrollTo(0, 0);
 
   return (
     <Box className={classes.wrapper}>
@@ -209,7 +210,7 @@ const Contest = () => {
               hoverBack="##70ad47"
               color="white"
               fontSize={24}
-              onClick={(e) => history.push("/")}
+              onClick={(e) => history.push("/signup/voter")}
             ></MainButton>
           </Box>
         </Grid>

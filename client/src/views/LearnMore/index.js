@@ -137,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
 const LearnMore = () => {
   const classes = useStyles();
   const user = JSON.parse(getUser());
-
+  window.scrollTo(0, 0);
   return (
     <Box className={classes.Wrapper}>
       <Container width="sm" className={classes.mainContainer}>

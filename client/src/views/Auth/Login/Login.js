@@ -74,6 +74,7 @@ const Login = ({
   const { register, handleSubmit, errors } = useForm({});
   const [error, setError] = useState("");
   const classes = useStyles();
+  window.scrollTo(0, 0);
 
   const onSubmit = (formData) => {
     actions.loginRequest(formData);

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
@@ -93,7 +93,9 @@ const PhoneVerification = ({
   digicodeConfirmError,
   isSentPhoneNumber,
   actions,
+  role,
   signupUser,
+  voterEmailValid,
 }) => {
   // react-hook-form setup
   // const { register, handleSubmit, errors, watch } = useForm({});
@@ -103,6 +105,8 @@ const PhoneVerification = ({
   const [countryCode, setCountryCode] = useState({});
   const [digitCode, setDigitCode] = useState("");
   const [phoneData, setPhoneData] = useState({});
+
+  const history = useHistory();
   // material-ui
   const classes = useStyles();
 
@@ -123,15 +127,12 @@ const PhoneVerification = ({
       let cellNumber = {
         cell: "" + phoneData.countryCode + phoneData.phoneNumber,
       };
-      let role = {
-        role: "employee",
-      };
       let confirmData = {
         ...confirmedSixCode,
         ...signupUser,
         ...cellNumber,
-        ...role,
         ...phoneData,
+        role: role,
       };
       actions.signupConfirmRequest({ confirmData, veteranCardData });
     } else {
@@ -190,19 +191,17 @@ const PhoneVerification = ({
     setError("");
   };
 
-  // Redirect to employer account page after sign up
-  if (isAuthenticated) {
-    return <Redirect to={`/employees/${user.slug}`} />;
-  }
   if (!isSingupUser) {
-    return <Redirect to="/signup/employee" />;
+    history.goBack();
   }
 
   const onBack = () => {
     actions.signupuserEmpty();
   };
 
-  const onDigitBack = () => {};
+  const onDigitBack = () => {
+    history.goBack();
+  };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -327,16 +326,20 @@ const mapStateToProps = ({
     user,
     digicodeConfirmError,
     isSingupUser,
+    role,
     veteranCardData,
+    voterEmailValid,
   },
 }) => ({
   signupUser,
   isSentPhoneNumber,
   isAuthenticated,
   user,
+  role,
   digicodeConfirmError,
   isSingupUser,
   veteranCardData,
+  voterEmailValid,
 });
 
 const mapDispatchToProps = (dispatch) => ({

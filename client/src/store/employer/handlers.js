@@ -221,7 +221,6 @@ export const addToCartRequest = (state) => ({
 });
 
 export const addToCartSuccess = (state, { payload }) => {
-  debugger;
   return {
     ...state,
     badge: payload.cartItems.length,

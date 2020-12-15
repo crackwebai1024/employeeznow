@@ -4,6 +4,7 @@ import {
   AppRouterData,
   AppPrivateRouterEmployerData,
   AppPrivateRouteeEmployeeData,
+  AppPrivateRouteVoterData,
 } from "./AppRouterData";
 // import EmptyPage from '@components/EmptyPage'
 import { getToken, getRole } from "@helpers/auth-helpers";
@@ -11,7 +12,7 @@ import { getToken, getRole } from "@helpers/auth-helpers";
 export default function AppRouter() {
   const token = getToken();
   const role = getRole();
-
+  console.log(role, "role");
   return (
     <Fragment>
       {!token ? (
@@ -27,31 +28,52 @@ export default function AppRouter() {
             );
           })}
         </Fragment>
-      ) : role === "employer" ? (
-        <Fragment>
-          {AppPrivateRouterEmployerData.map((Router) => {
-            return (
-              <Route
-                exact
-                key={`path_${Router.path}`}
-                path={Router.path}
-                component={Router.component}
-              />
-            );
-          })}
-        </Fragment>
       ) : (
         <Fragment>
-          {AppPrivateRouteeEmployeeData.map((Router) => {
-            return (
-              <Route
-                exact
-                key={`path_${Router.path}`}
-                path={Router.path}
-                component={Router.component}
-              ></Route>
-            );
-          })}
+          {role === "employer" && (
+            <Fragment>
+              {AppPrivateRouterEmployerData.map((Router) => {
+                return (
+                  <Route
+                    exact
+                    key={`path_${Router.path}`}
+                    path={Router.path}
+                    component={Router.component}
+                  />
+                );
+              })}
+            </Fragment>
+          )}
+
+          {role === "employee" && (
+            <Fragment>
+              {AppPrivateRouteeEmployeeData.map((Router) => {
+                return (
+                  <Route
+                    exact
+                    key={`path_${Router.path}`}
+                    path={Router.path}
+                    component={Router.component}
+                  ></Route>
+                );
+              })}
+            </Fragment>
+          )}
+
+          {role === "voter" && (
+            <Fragment>
+              {AppPrivateRouteVoterData.map((Router) => {
+                return (
+                  <Route
+                    exact
+                    key={`path_${Router.path}`}
+                    path={Router.path}
+                    component={Router.component}
+                  ></Route>
+                );
+              })}
+            </Fragment>
+          )}
         </Fragment>
       )}
     </Fragment>

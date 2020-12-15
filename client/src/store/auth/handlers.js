@@ -22,11 +22,13 @@ const initialState = {
   changepassword: null,
   resetPassword: null,
   sendMessage: "NONE",
+  voterEmailValid: "NONE",
 };
 
 export const signupRequest = (state, { payload }) => ({
   ...state,
   signupUser: payload,
+  role: "employee",
   signupLoading: true,
   isSingupUser: true,
   emailFailure: false,
@@ -228,19 +230,39 @@ export const saveVeteranCard = (state, { payload }) => ({
   veteranCardData: payload,
 });
 
-export const sendContactMessage = (state, { payload }) => ({
+export const sendContactMessage = (state) => ({
   ...state,
   sendMessage: "NONE",
 });
 
-export const sendMessageSuccess = (state, { payload }) => ({
+export const sendMessageSuccess = (state) => ({
   ...state,
   sendMessage: "SUCCESS",
 });
 
-export const sendMessageFailure = (state, { payload }) => ({
+export const sendMessageFailure = (state) => ({
   ...state,
   sendMessage: "FAILURE",
+});
+
+export const voterEmailConfirmRequest = (state, { payload }) => ({
+  ...state,
+  voterEmailValid: "REQUEST",
+  isSingupUser: false,
+  signupUser: payload,
+  role: "voter",
+});
+
+export const voterEmailConfirmSuccess = (state) => ({
+  ...state,
+  voterEmailValid: "SUCCESS",
+  isSingupUser: true,
+});
+
+export const voterEmailConfirmFailure = (state) => ({
+  ...state,
+  voterEmailValid: "FAILURE",
+  isSingupUser: false,
 });
 
 export default initialState;

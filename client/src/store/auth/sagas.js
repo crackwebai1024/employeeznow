@@ -57,7 +57,7 @@ function* onSignupConfirm({ payload }) {
     const res = yield call(AuthAPI.signupConfirm, payload.confirmData);
     if (res && res.data) {
       setToken(res.data.token);
-      setUser(res.data.employee);
+      setUser(res.data[payload.confirmData.role]);
       setRole(payload.confirmData.role);
 
       if (payload.veteranCardData) {
@@ -66,10 +66,17 @@ function* onSignupConfirm({ payload }) {
         data.append("role", payload.confirmData.role);
         yield call(AuthAPI.onUploadVeteranCard, data);
       }
+      debugger;
+      if (payload.confirmData.role === "employee") {
+        window.location.pathname = `employees/${
+          res.data[payload.confirmData.role].slug
+        }`;
+      } else if (payload.confirmData.role === "voter") {
+        window.location.pathname = `voters/${
+          res.data[payload.confirmData.role].slug
+        }`;
+      }
 
-      window.location.pathname = `employees/${
-        res.data[payload.confirmData.role].slug
-      }`;
       yield put(types.signupConfirmSuccess(res.data.employee));
     }
   } catch {
@@ -169,6 +176,20 @@ function* onSendMessage({ payload }) {
   }
 }
 
+function* onVoterEmailConfirm({ payload }) {
+  try {
+    let data = {
+      email: payload.email,
+    };
+    const res = yield call(AuthAPI.onVoterEmailConfirm, data);
+    if (res && res.data) {
+      yield put(types.voterEmailConfirmSuccess(payload));
+    }
+  } catch {
+    yield put(types.voterEmailConfirmFailure());
+  }
+}
+
 const authSagas = [
   takeEvery(types.loginRequest, onLogin),
   takeEvery(types.signupRequest, onEmailVerify),
@@ -182,6 +203,7 @@ const authSagas = [
   takeEvery(types.resetPasswordRequest, onResetPassword),
   takeEvery(types.changePasswordRequest, onChangePassword),
   takeEvery(types.sendContactMessage, onSendMessage),
+  takeEvery(types.voterEmailConfirmRequest, onVoterEmailConfirm),
 ];
 
 export function* watchUnauthorized() {

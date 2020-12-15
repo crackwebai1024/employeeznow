@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
   const classes = useStyles();
+  window.scrollTo(0, 0);
 
   return (
     <Container
