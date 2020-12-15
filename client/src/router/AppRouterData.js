@@ -24,11 +24,13 @@ import { getUser } from "@helpers/auth-helpers";
 import Contact from "@views/Contact";
 import CartList from "@views/Employer/cart/CartList";
 import Purchased from "@views/Employer/purchased";
+import Contest from "@views/Contest";
 
 const user = JSON.parse(getUser());
 
 export const AppRouterData = [
   { path: "/", component: Home },
+  { path: "/contest", component: Contest },
   { path: "/about", component: LearnMore },
   { path: "/resetpassword/:slug", component: ResetPasswordForm },
   { path: "/signup", component: Signup },

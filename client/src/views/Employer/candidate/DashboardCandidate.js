@@ -195,6 +195,11 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     marginBottom: 40,
   },
+  subTitle: {
+    fontWeight: 600,
+    fontSize: "26px",
+    padding: "10px 15px",
+  },
   description: {
     wordWrap: "break-word",
     marginBottom: 40,
@@ -309,6 +314,11 @@ const DashboardCandidate = ({
 
         <Grid className={classes.section}>
           <Card className={classes.section}>
+            <Grid>
+              <Typography className={classes.subTitle}>
+                Personal Preferences
+              </Typography>
+            </Grid>
             <CardContent>
               <Grid container item xs={12}>
                 <Grid item xs={12} sm={6} md={4}>
@@ -336,6 +346,9 @@ const DashboardCandidate = ({
 
         <Grid className={classes.section}>
           <Card className={classes.section}>
+            <Grid>
+              <Typography className={classes.subTitle}>Experience</Typography>
+            </Grid>
             {skill && (
               <Fragment>
                 <CardContent className={classes.moreSkills}>
@@ -348,6 +361,9 @@ const DashboardCandidate = ({
 
         <Grid className={classes.section}>
           <Card className={classes.section}>
+            <Grid>
+              <Typography className={classes.subTitle}>Work History</Typography>
+            </Grid>
             <CardContent>
               <Grid item container xs={12}>
                 <Grid item xs={12} md={6}>

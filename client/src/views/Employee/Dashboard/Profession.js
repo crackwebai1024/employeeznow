@@ -188,7 +188,7 @@ const Profession = ({ profession }) => {
             <Grid container className={classes.wrapper} justify="flex-start">
               <Grid item xs={7} md={5}>
                 <Typography className={classes.title}>
-                  Cocktail Knowldge
+                  Cocktail Knowledge
                 </Typography>
               </Grid>
               <Grid item xs={5} md={7}>

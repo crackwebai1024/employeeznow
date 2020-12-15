@@ -85,22 +85,23 @@ export const noAuthRoutes = [
     activeIndex: 1,
     icon: <BusinessOutlinedIcon />,
   },
+  { name: "Contest", link: "/contest", activeIndex: 2 },
   {
     name: "Log In",
     link: "/login",
-    activeIndex: 2,
+    activeIndex: 3,
     icon: <LockOpenOutlinedIcon />,
   },
   {
     name: "Sign Up",
     link: "/signup",
-    activeIndex: 3,
+    activeIndex: 4,
     icon: <VpnKeyOutlinedIcon />,
   },
   {
     name: "Contact Us",
     link: "/contactus",
-    activeIndex: 4,
+    activeIndex: 5,
     icon: <LockOutlinedIcon />,
   },
 ];

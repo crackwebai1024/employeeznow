@@ -211,7 +211,7 @@ function Dashboard(props) {
                     : "Add Personal Preference"}
                 </Button>
               }
-              title={<Box className={classes.red}>Personal Preferences</Box>}
+              title={<Box className={classes.red}>What you want</Box>}
               subheader={
                 <Box className={classes.subheader}>
                   <i>
@@ -265,7 +265,7 @@ function Dashboard(props) {
                   {skill ? "Update Experience" : "Add Experience"}
                 </Button>
               }
-              title={<Box className={classes.red}>Experience</Box>}
+              title={<Box className={classes.red}>Who you are</Box>}
               subheader={
                 <Box className={classes.subheader}>
                   <i>
