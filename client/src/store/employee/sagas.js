@@ -4,8 +4,6 @@ import { actions as types } from "./index";
 import * as EmployeeAPI from "@services/EmployeeAPI";
 import { _arrayBufferToBase64 } from "@helpers/utils";
 import { errorMessage, successMessage } from "@helpers/utils";
-import { getUser } from "@helpers/auth-helpers";
-const user = JSON.parse(getUser());
 
 function* getUserData({ payload }) {
   try {

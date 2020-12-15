@@ -25,6 +25,9 @@ import Contact from "@views/Contact";
 import CartList from "@views/Employer/cart/CartList";
 import Purchased from "@views/Employer/purchased";
 import Contest from "@views/Contest";
+import CockTailContest from "@views/Contest/CockTailContest";
+import FoodContest from "@views/Contest/FoodContest";
+import VoterForm from "@views/Auth/Signup/VoterForm";
 
 const user = JSON.parse(getUser());
 
@@ -44,6 +47,7 @@ export const AppRouterData = [
   { path: `/test`, component: PhoneVerification },
   { path: `/sendmail/employerint/:slug`, component: Interest },
   { path: `/sendmail/employernoint/:slug`, component: NoInterest },
+  { path: "/signup/voter", component: VoterForm },
 ];
 
 export const AppPrivateRouterEmployerData = [
@@ -79,4 +83,20 @@ export const AppPrivateRouteeEmployeeData = [
   { path: `/contactus`, component: Contact },
   { path: `/sendmail/employerint/:slug`, component: Interest },
   { path: `/sendmail/employernoint/:slug`, component: NoInterest },
+  { path: "/cocktail_contest", component: CockTailContest },
+  { path: "/food_contest", component: FoodContest },
+];
+
+export const AppPrivateRouteVoterData = [
+  { path: "/", component: Home },
+  { path: "/about", component: LearnMore },
+  {
+    path: `/voters/${user && user.slug}`,
+    component: Home,
+  },
+  { path: `/contactus`, component: Contact },
+  { path: `/sendmail/employerint/:slug`, component: Interest },
+  { path: `/sendmail/employernoint/:slug`, component: NoInterest },
+  { path: "/cocktail_contest", component: CockTailContest },
+  { path: "/food_contest", component: FoodContest },
 ];

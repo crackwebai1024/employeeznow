@@ -67,7 +67,6 @@ const CallToAction = ({
   const classes = useStyles();
   const history = useHistory();
   const filterID = getFilterID();
-  debugger;
   const user = JSON.parse(getUser());
   const backToFilter = () => {
     history.goBack();

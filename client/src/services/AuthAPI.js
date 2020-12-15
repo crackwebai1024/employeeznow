@@ -41,3 +41,7 @@ export async function onUploadVeteranCard(data) {
 export async function onSendMessage(data) {
   return await Axios.post("/mail/contact", data);
 }
+
+export async function onVoterEmailConfirm(data) {
+  return await Axios.post("/auth/contest/isvalidemail", data);
+}

@@ -60,6 +60,10 @@ export const actions = createActions({
 
   SEND_MESSAGE_SUCCESS: undefined,
   SEND_MESSAGE_FAILURE: undefined,
+
+  VOTER_EMAIL_CONFIRM_REQUEST: undefined,
+  VOTER_EMAIL_CONFIRM_SUCCESS: undefined,
+  VOTER_EMAIL_CONFIRM_FAILURE: undefined,
 });
 
 const reducer = handleActions(
@@ -119,6 +123,10 @@ const reducer = handleActions(
     [actions.sendContactMessage, handlers.sendContactMessage],
     [actions.sendMessageSuccess, handlers.sendMessageSuccess],
     [actions.sendMessageFailure, handlers.sendMessageFailure],
+
+    [actions.voterEmailConfirmRequest, handlers.voterEmailConfirmRequest],
+    [actions.voterEmailConfirmSuccess, handlers.voterEmailConfirmSuccess],
+    [actions.voterEmailConfirmFailure, handlers.voterEmailConfirmFailure],
   ]),
   initialState
 );

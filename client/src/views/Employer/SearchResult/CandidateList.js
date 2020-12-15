@@ -125,7 +125,6 @@ const CandidateList = (props) => {
   const user = JSON.parse(getUser());
   const filterID = getFilterID();
   const history = useHistory();
-  debugger;
   const addToCart = () => {
     let data = {
       id: user._id,

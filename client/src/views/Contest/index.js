@@ -210,7 +210,7 @@ const Contest = () => {
               hoverBack="##70ad47"
               color="white"
               fontSize={24}
-              onClick={(e) => history.push("/signup")}
+              onClick={(e) => history.push("/signup/voter")}
             ></MainButton>
           </Box>
         </Grid>

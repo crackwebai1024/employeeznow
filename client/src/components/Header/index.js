@@ -17,7 +17,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
 import { actions as authActions } from "@store/auth";
 import { bindActionCreators } from "redux";
-import { employeeRoutes, employerRoutes, noAuthRoutes } from "./HeaderUrls";
+import {
+  employeeRoutes,
+  employerRoutes,
+  noAuthRoutes,
+  voterRoutes,
+} from "./HeaderUrls";
 import logo from "@assets/logo2.png";
 import { Typography } from "@material-ui/core";
 
@@ -169,6 +174,7 @@ const Header = ({ actions, value, badge, setValue, isAuthenticated }) => {
   // create each tabs
   const employeeTabs = tabs(employeeRoutes);
   const employerTabs = tabs(employerRoutes);
+  const voterTabs = tabs(voterRoutes);
   const noAuthTabs = tabs(noAuthRoutes);
 
   // Setup drawer (drawer is visible in small screen with humberger icon)
@@ -224,6 +230,7 @@ const Header = ({ actions, value, badge, setValue, isAuthenticated }) => {
 
   const employeeDrawer = drawer(employeeRoutes);
   const employerDrawer = drawer(employerRoutes);
+  const voterDrawer = drawer(voterRoutes);
   const noAuthDrawer = drawer(noAuthRoutes);
 
   return (
@@ -262,6 +269,17 @@ const Header = ({ actions, value, badge, setValue, isAuthenticated }) => {
               localStorage.getItem("role") === "employer" &&
               matches &&
               employerDrawer}
+
+            {/* Voter Tab/Drawer */}
+            {isAuthenticated &&
+              localStorage.getItem("role") === "voter" &&
+              !matches &&
+              voterTabs}
+
+            {isAuthenticated &&
+              localStorage.getItem("role") === "voter" &&
+              matches &&
+              voterDrawer}
 
             {/* No Auth Tab/Drawer */}
             {!isAuthenticated && matches ? noAuthDrawer : null}

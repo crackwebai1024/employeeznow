@@ -68,6 +68,10 @@
   animation-timing-function: linear;
   }
 
+  .reactCodeInput > input {
+    padding-left: 0px !important;
+  }
+
   .line {
     width: 300;
     height: 200;
