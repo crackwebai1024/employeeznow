@@ -99,7 +99,7 @@ const PreferenceSchema = new mongoose.Schema({
       "Lead Bartender",
       "Fastfood Server",
       "Host/Hostess",
-      "Velet",
+      "Valet",
       "Casher",
       "Bar Manager",
       "Chef De Cuisine",
