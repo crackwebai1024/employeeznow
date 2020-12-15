@@ -13,6 +13,7 @@ import xss from "xss-clean";
 import authEmployeeRoutes from "./routes/auth/employee.routes";
 import authEmployerRoutes from "./routes/auth/employer.routes";
 import authCommonRoutes from "./routes/auth/common.routes";
+import authContestRoutes from "./routes/auth/contest.routes";
 import cartRoutes from "./routes/cart/cart.routes";
 import crudEmployeeRoutes from "./routes/crud/employee.routes";
 import crudEmployerRoutes from "./routes/crud/employer.routes";
@@ -53,6 +54,7 @@ app.use("/api/search", searchEmployeeRoutes);
 app.use("/api/auth/employee", authEmployeeRoutes);
 app.use("/api/auth/employer", authEmployerRoutes);
 app.use("/api/auth/common", authCommonRoutes);
+app.use("/api/auth/contest/", authContestRoutes);
 
 // data organization routes after signin
 app.use("/api/crud/employee", crudEmployeeRoutes);

@@ -55,17 +55,7 @@ const updateByID = async (Model, role, id, req, res) => {
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
-    if (req.file === undefined) {
-      return res.status(200).json(user);
-    } else {
-      let copy = {
-        photo: user.photo,
-        background: user.background,
-        employee: user.employee,
-        content: req.file.buffer,
-      };
-      return res.status(200).json(copy);
-    }
+    return res.status(200).json(user);
   } catch (err) {
     console.log("error", err);
     return res.status(400).json({

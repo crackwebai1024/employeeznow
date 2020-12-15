@@ -18,7 +18,7 @@ const isValidEmail = async (req, res) => {
       });
     } else {
       return res.status("403").json({
-        failed: "invalid email",
+        failed: "email is already used as an employee or a voter",
       });
     }
   } catch (err) {

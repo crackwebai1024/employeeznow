@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import Employee from "../../models/employee/basic.model";
 import Employer from "../../models/employer/basic.model";
+import Voter from "../../models/contest/voter.model";
 import { sendEmail } from "../utils/sendgridemail";
 import CRUD from "../utils/general";
 import jwt from "jsonwebtoken";
@@ -16,8 +17,10 @@ const createToken = (id) => {
 const create = async (req, res, next) => {
   if (req.body.role === "employee") {
     await CRUD.create(Employee, req, res, next);
-  } else {
+  } else if (req.body.role === "employer") {
     await CRUD.create(Employer, req, res, next);
+  } else {
+    await CRUD.create(Voter, req, res, next);
   }
 };
 
@@ -53,6 +56,10 @@ const signIn = async (req, res) => {
 
     if (role === "employer") {
       user = await Employer.findOne({ email: req.body.email });
+    }
+
+    if (role === "voter") {
+      user = await Voter.findOne({ email: req.body.email });
     }
 
     if (!user) {
