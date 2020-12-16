@@ -15,6 +15,7 @@ import FormatListBulletedOutlinedIcon from "@material-ui/icons/FormatListBullete
 import AutorenewOutlinedIcon from "@material-ui/icons/AutorenewOutlined";
 import { getUser, getRole } from "@helpers/auth-helpers";
 import ExampleProfile from "./ExampleProfile";
+import HowisWorks from "./HowisWorks";
 
 const useStyles = makeStyles((theme) => ({
   contestContainer: {
@@ -33,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
     },
+  },
+  howisworks: {
+    margin: "3rem 0 5rem 0",
+    textAlign: "left",
   },
   sectionIcon: {
     width: "42px",
@@ -148,11 +153,37 @@ const Home = () => {
                 <Grid container direction="column">
                   <Grid item className={classes.getStartedSection}>
                     <Typography variant="h1" className={classes.heading1}>
-                      A HOSPITALITY EMPLOYMENT PLATFORM
+                      A HOSPITALITY EMPLOYMENT NETWORK
                     </Typography>
                     <Typography variant="h2" className={classes.heading2}>
-                      Get EmployeezNow in just a few minutes!
+                      {/* Get EmployeezNow in just a few minutes! */}
                     </Typography>
+                    <Typography className="aboutme">
+                      <i>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Thank you for visiting EmployeezNow, the first
+                        employment network designed specifically for
+                        Hospitality. Our industry is obviously suffering from
+                        its most challenging time in history. This happens to be
+                        the perfect time to rollout our new platform. I know
+                        EmployeezNow can help you, because I have stood in your
+                        shoes! Over the last 33 years I’ve worked almost every
+                        position in the biz: dishwasher to fine dining server,
+                        assistant manager to GM and even owner. Please take a
+                        moment to see how it works, and you will see just how
+                        amazing EmployeezNow can be for you.
+                      </i>
+                    </Typography>
+                    <Typography className="aboutme name">
+                      <i>
+                        -Scott Gardiner &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+                        Founder
+                      </i>
+                    </Typography>
+                    <Box className={classes.howisworks}>
+                      <HowisWorks />
+                    </Box>
                     <Box className={classes.getStartedButton}>
                       <MainButton
                         background="green"

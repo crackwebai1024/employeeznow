@@ -99,6 +99,10 @@ const Login = ({
     return <Redirect to={`/employees/${slug}`} />;
   }
 
+  if (isAuthenticated && localStorage.getItem("role") === "voter") {
+    return <Redirect to={`/home`} />;
+  }
+
   return (
     <Container>
       <Grid
@@ -134,6 +138,15 @@ const Login = ({
                   label="EMPLOYEE"
                   name="role"
                   id="employee"
+                  inputRef={register({ required: true })}
+                />
+              </Grid>
+              <Grid item>
+                <FormControlLabel
+                  control={<Radio value="voter" />}
+                  label="VOUTER"
+                  name="role"
+                  id="voter"
                   inputRef={register({ required: true })}
                 />
               </Grid>
