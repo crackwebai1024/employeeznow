@@ -1,12 +1,24 @@
 import ContVideo from "../../../models/employee/video.model";
-import CRUD from "../../utils/general";
 import extend from "lodash/extend";
 
+// read the video by employeeid and type
 const find_ByID = async (req, res) => {
   try {
-  } catch (err) {}
+    const employee = req.params.id;
+    const type = req.query.type;
+    const video = await ContVideo.findOne({
+      employee,
+      type,
+    });
+    return res.status(200).json({ video });
+  } catch (err) {
+    return res.status(500).json({
+      error: "internal server error",
+    });
+  }
 };
 
+// create or update the video in db
 const updateByID = async (req, res) => {
   let bucketName = process.env.AWS_BUCKET_NAME;
   let fileName = req.body.id + req.body.type;

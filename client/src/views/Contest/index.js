@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 120,
     margin: "auto",
     width: "fit-content",
-    fontFamily: "Copper Black",
     [theme.breakpoints.down("sm")]: {
       fontSize: 80,
     },

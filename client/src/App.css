@@ -1,5 +1,5 @@
 .App {
-  background: '#f3f2ef'
+  background: "#f3f2ef";
 }
 .MuiMenu-paper {
   max-height: 300px !important;
@@ -7,11 +7,11 @@
 }
 
 .MuiPaper-elevation4 {
-  box-shadow: '4px 2px 8px -1px rgba(0, 0, 0, 0.25), 0px 4px 8px 0px rgba(0,0,200,0.14), 0px 1px 10px 0px rgba(0,0,200,0.12)';
+  box-shadow: "4px 2px 8px -1px rgba(0, 0, 0, 0.25), 0px 4px 8px 0px rgba(0,0,200,0.14), 0px 1px 10px 0px rgba(0,0,200,0.12)";
 }
 
 .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
-  border-color: "green" !important
+  border-color: "green" !important;
 }
 
 .Toastify__toast-container--top-center {
@@ -24,12 +24,12 @@
   top: 50%;
 }
 .Toastify__toast-body {
-  margin : 5px;
+  margin: 5px;
 }
 
 .Toastify__toast--success {
   background: #edf7ed;
-  color : #1e4620;
+  color: #1e4620;
 }
 
 .Toastify__close-button {
@@ -56,44 +56,50 @@
 
 .shine {
   background: #f6f7f8;
-  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
   background-repeat: no-repeat;
   display: inline-block;
-  position: relative; 
-  
+  position: relative;
+
   animation-duration: 1s;
-  animation-fill-mode: forwards; 
+  animation-fill-mode: forwards;
   animation-iteration-count: infinite;
   animation-name: placeholderShimmer;
   animation-timing-function: linear;
+}
+
+.reactCodeInput > input {
+  padding-left: 0px !important;
+}
+
+.line {
+  width: 300;
+  height: 200;
+  background: chartreuse;
+}
+
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
   }
 
-  .reactCodeInput > input {
-    padding-left: 0px !important;
+  100% {
+    background-position: 468px 0;
   }
-
-  .line {
-    width: 300;
-    height: 200;
-    background: chartreuse;
-  }
-
-  @keyframes placeholderShimmer {
-    0% {
-      background-position: -468px 0;
-    }
-    
-    100% {
-      background-position: 468px 0; 
-    }
-  }
+}
 
 @media (max-width: 548px) {
   .reactCodeInput > input {
     margin: 7px !important;
     width: 50px !important;
-    height: 65px  !important;
-    font-size: 34px  !important;
+    height: 65px !important;
+    font-size: 34px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
@@ -117,4 +123,13 @@
 
 .MuiPickersToolbar-toolbar > button > span > h4 {
   font-size: 1rem;
+}
+
+@font-face {
+  font-family: "cooperBlack";
+  src: url(COOPBL.ttf) format("truetype");
+}
+
+.makeStyles-winMark-25 {
+  font-family: "cooperBlack" !important;
 }
