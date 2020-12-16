@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
 
 const VideoSchema = new mongoose.Schema({
-  video: {
-    fname: String,
-    url: String,
-    createdAt: {
-      type: Date,
-      default: Date.now(),
-    },
+  type: String,
+  fname: String,
+  url: String,
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
   },
   stars: {
     type: Number,

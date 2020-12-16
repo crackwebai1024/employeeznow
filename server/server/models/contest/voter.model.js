@@ -54,7 +54,6 @@ const VoterSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    birthDay: Date,
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -71,7 +70,7 @@ const VoterSchema = new mongoose.Schema(
  * set passwordConfirm as a virtual passwordConfirm and make
  * hashed password from password
  */
-EmployeeSchema.virtual("password")
+VoterSchema.virtual("password")
   .set(function (password) {
     this._password = password;
     this.salt = this.makeSalt();
@@ -81,7 +80,7 @@ EmployeeSchema.virtual("password")
     return this._password;
   });
 
-EmployeeSchema.virtual("passwordConfirm")
+VoterSchema.virtual("passwordConfirm")
   .set(function (passwordConfirm) {
     this._passwordConfirm = passwordConfirm;
   })
@@ -89,7 +88,7 @@ EmployeeSchema.virtual("passwordConfirm")
     return this._passwordConfirm;
   });
 
-EmployeeSchema.path("hashed_password").validate(function (v) {
+VoterSchema.path("hashed_password").validate(function (v) {
   if (this._password && this._password.length < 8) {
     this.invalidate("password", "Password must be at least 8 characters.");
   }
@@ -102,7 +101,7 @@ EmployeeSchema.path("hashed_password").validate(function (v) {
 }, null);
 
 // methods for employee model
-EmployeeSchema.methods = {
+VoterSchema.methods = {
   authenticate: function (plainText) {
     return this.encryptPassword(plainText) === this.hashed_password;
   },
@@ -136,13 +135,10 @@ EmployeeSchema.methods = {
   },
 };
 // Create a slug
-EmployeeSchema.pre("save", function (next) {
-  this.slug = slugify(
-    `${this.firstName}-${this.lastName}-${this.employeezNowId}`,
-    {
-      lower: true,
-    }
-  );
+VoterSchema.pre("save", function (next) {
+  this.slug = slugify(`${this.firstName}-${this.lastName}-${this.voterId}`, {
+    lower: true,
+  });
   next();
 });
 

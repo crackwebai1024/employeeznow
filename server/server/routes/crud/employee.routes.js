@@ -10,6 +10,7 @@ import ImgCtrl from "../../controllers/crud/employee/img.crud";
 import PortCtrl from "../../controllers/crud/employee/portfolio.crud";
 import AWSCtrl from "../../controllers/utils/aws_ope";
 import ComCtrl from "../../controllers/crud/common/common.crud";
+import VideoCtrl from "../../controllers/crud/employee/video.crud";
 
 const router = express.Router();
 const { requireSignin, hasAuthorization } = authCtrl;
@@ -66,8 +67,14 @@ router
 router
   .route("/portfolio/delete")
   .post(requireSignin, hasAuthorization, AWSCtrl.del, PortCtrl.updateByID);
-// router
-//   .route("/portfolio/:fileid")
-//   .get(requireSignin, hasAuthorization, PortCtrl.get_file_ByID);
+
+// contest video crud
+router
+  .route("/contestvideo/:id")
+  .get(requireSignin, hasAuthorization, VideoCtrl.find_ByID);
+router
+  .route("/contestvideo")
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, VideoCtrl.updateByID)
+  .delete(requireSignin, hasAuthorization, AWSCtrl.del, VideoCtrl.deleteByID);
 
 export default router;
