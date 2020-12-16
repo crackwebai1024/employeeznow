@@ -17,6 +17,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { countryOptions } from "./AddressState";
 
 const invalidError = "This field is invalid!";
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   uploadImage: {
     width: "150px",
     height: "150px",
+    color: "lightGray",
   },
   heading1: {
     fontSize: "30px",
@@ -523,14 +525,19 @@ const EmployeeForm = ({
                     justify="center"
                     alignItems="center"
                   >
-                    <img
-                      className={classes.uploadImage}
-                      alt="img"
-                      src={
-                        veteranCard &&
-                        URL.createObjectURL(veteranCard.getAll("content")[0])
-                      }
-                    ></img>
+                    {veteranCard ? (
+                      <img
+                        className={classes.uploadImage}
+                        alt="img"
+                        src={
+                          veteranCard &&
+                          URL.createObjectURL(veteranCard.getAll("content")[0])
+                        }
+                      ></img>
+                    ) : (
+                      <CloudUploadIcon className={classes.uploadImage} />
+                    )}
+
                     <Grid>
                       <input
                         accept="*"
@@ -554,21 +561,6 @@ const EmployeeForm = ({
                         </Button>
                       </label>
                     </Grid>
-                    {/* formData.append("fname", e.target.files[0].name) */}
-                    {/* <TextField
-                      type="number"
-                      name="veteranId"
-                      helperText={veteranError ? veteranError : ""}
-                      error={veteranError ? true : false}
-                      id="veteran"
-                      label="Veteran ID"
-                      required
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      value={veteran.veteranId}
-                      onChange={(e) => onChange(e)}
-                    /> */}
                   </Grid>
                 ) : (
                   ""
