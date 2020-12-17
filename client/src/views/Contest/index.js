@@ -132,7 +132,7 @@ const Contest = () => {
             className={`${classes.center} ${classes.font12} ${classes.red}`}
           >
             THE BEST <br />
-            <span className={classes.font24}>BEVERACE</span>
+            <span className={classes.font24}>BEVERAGE</span>
           </Grid>
         </Grid>
         <Grid className={classes.font12} item xs={12}>

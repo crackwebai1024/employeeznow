@@ -65,7 +65,7 @@ const HowisWorks = () => {
             your area
           </li>
           <li className={classes.list}>
-            We'll keep tryig to show your profile to more employers and won't
+            We'll keep trying to show your profile to more employers and won't
             stop until you find a job
           </li>
         </ol>
@@ -79,9 +79,9 @@ const HowisWorks = () => {
         </Typography>
         <ol className={classes.orderList}>
           <li className={classes.list}>
-            Enter the details of your ideal condidate into our search filter
+            Enter the details of your ideal candidate into our search filter
             Grill Cook/ Has at least 4 years of experience / Has worked in
-            Fine-Dining / Has experence cooking seafood / Wants lunch or dinner
+            Fine-Dining / Has experience cooking seafood / Wants lunch or dinner
             / Wants $20 per hour
           </li>
           <li className={classes.list}>
@@ -92,8 +92,7 @@ const HowisWorks = () => {
             Review the profiles and choose your favorites in just minutes
           </li>
           <li className={classes.list}>
-            We'll ask who is interested, so you can set up intervieews right
-            away
+            We'll ask who is interested, so you can set up interviews right away
           </li>
         </ol>
         <Typography className={classes.listDeatail}>

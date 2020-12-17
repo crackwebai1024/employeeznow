@@ -513,12 +513,14 @@ const DashboardCandidate = ({
                       {experience.primaryJob.current ? (
                         <span>&nbsp;~ &nbsp;Present</span>
                       ) : (
-                        <span>
-                          &nbsp;~ &nbsp;
-                          {moment(
-                            new Date(experience.primaryJob.endDate)
-                          ).format("MM/YYYY")}
-                        </span>
+                        experience.primaryJob.endDate && (
+                          <span>
+                            &nbsp;~ &nbsp;
+                            {moment(
+                              new Date(experience.primaryJob.endDate)
+                            ).format("MM/YYYY")}
+                          </span>
+                        )
                       )}
                     </Typography>
                     <Typography className={classes.description}>
