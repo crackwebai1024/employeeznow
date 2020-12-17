@@ -66,15 +66,13 @@ function* onSignupConfirm({ payload }) {
         data.append("role", payload.confirmData.role);
         yield call(AuthAPI.onUploadVeteranCard, data);
       }
-      debugger;
+
       if (payload.confirmData.role === "employee") {
         window.location.pathname = `employees/${
           res.data[payload.confirmData.role].slug
         }`;
       } else if (payload.confirmData.role === "voter") {
-        window.location.pathname = `voters/${
-          res.data[payload.confirmData.role].slug
-        }`;
+        window.location.pathname = `/cocktail_contest`;
       }
 
       yield put(types.signupConfirmSuccess(res.data.employee));
@@ -95,6 +93,8 @@ function* onLogin({ payload }) {
         window.location.pathname = `employees/${res.data[payload.role].slug}`;
       } else if (payload.role === "employer") {
         window.location.pathname = `employers/${res.data[payload.role].slug}`;
+      } else if (payload.role === "voter") {
+        window.location.pathname = "/cocktail_contest";
       }
       yield put(types.loginSuccess(res.data.employee));
     }

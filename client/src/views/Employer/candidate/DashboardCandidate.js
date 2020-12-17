@@ -548,10 +548,8 @@ const DashboardCandidate = ({
                             <span>
                               &nbsp;~ &nbsp;
                               {moment(
-                                new Date(
-                                  experience.secondaryJob.endDate
-                                ).format("MM/YYYY")
-                              )}
+                                new Date(experience.secondaryJob.endDate)
+                              ).format("MM/YYYY")}
                             </span>
                           )}
                         </Typography>
