@@ -44,10 +44,28 @@ export const actions = createActions({
 
   UPLOAD_VETERAN_CARD: undefined,
   VIDEO_UPLOAD_SUCCESS: undefined,
+
+  UPLOAD_CONTEST_VIDEO: undefined,
+  UPLOAD_CONTEST_VIDEO_SUCCESS: undefined,
+  UPLOAD_CONTEST_VIDEO_FAILURE: undefined,
+
+  GET_CONTEST_VIDEO: undefined,
+  GET_CONTEST_VIDEO_FAILURE: undefined,
+
+  DELETE_CONTEST_VIDEO: undefined,
 });
 
 const reducer = handleActions(
   new Map([
+    [actions.uploadContestVideo, handlers.uploadContestVideo],
+    [actions.uploadContestVideoSuccess, handlers.uploadContestVideoSuccess],
+    [actions.uploadContestVideoFailure, handlers.uploadContestVideoFailure],
+
+    [actions.getContestVideo, handlers.getContestVideo],
+    [actions.getContestVideoFailure, handlers.getContestVideoFailure],
+
+    [actions.deleteContestVideo, handlers.deleteContestVideo],
+
     [actions.initiateSuccess, handlers.initiateSuccess],
     [actions.setSuccess, handlers.setSuccess],
     [actions.getUserDataRequest, handlers.getUserDataRequest],

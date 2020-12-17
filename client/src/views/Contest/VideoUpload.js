@@ -53,6 +53,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     width: "100%",
+    maxWidth: "300px",
+    height: "100%",
     maxHeight: "300px",
   },
   dropzoneText: {
@@ -160,7 +162,17 @@ const VideoUpload = ({
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           {fileNames ? (
-            <img src={fileNames.file} alt="image" className={classes.avatar} />
+            <video controls className={classes.avatar}>
+              <source
+                className={classes.avatar}
+                src={fileNames.file}
+                type="video/mp4"
+              />
+            </video>
+          ) : image ? (
+            <video controls className={classes.avatar}>
+              <source src={image} className={classes.avatar} type="video/mp4" />
+            </video>
           ) : (
             <div>
               <BackupIcon className={classes.uploadIcon} />
@@ -169,7 +181,7 @@ const VideoUpload = ({
         </Grid>
       </DialogContent>
       {/* accept file max size 1MB (1048576 Bytes) */}
-      <Dropzone onDrop={onDrop} accept="image/*, video/*" minSize={0}>
+      <Dropzone onDrop={onDrop} accept="video/*" minSize={0}>
         {({ getRootProps, getInputProps }) => (
           <div
             {...getRootProps({ className: `dropzoneStyle` })}

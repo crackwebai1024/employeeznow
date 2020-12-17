@@ -4,6 +4,7 @@ import { actions as types } from "./index";
 import * as EmployeeAPI from "@services/EmployeeAPI";
 import { _arrayBufferToBase64 } from "@helpers/utils";
 import { errorMessage, successMessage } from "@helpers/utils";
+import { getContestVideoSuccess } from "./handlers";
 
 function* getUserData({ payload }) {
   try {
@@ -225,6 +226,34 @@ function* onUploadVeteranCard({ payload }) {
   } catch {}
 }
 
+function* onContestVideoUpload({ payload }) {
+  try {
+    const res = yield call(EmployeeAPI.contestVideoUpload, payload);
+    if (res && res.data) {
+      yield put(types.uploadContestVideoSuccess(res.data));
+    }
+  } catch {}
+}
+
+function* onGetContestVideo({ payload }) {
+  try {
+    let queryString = `/${payload.id}?type=${payload.type}`;
+    const res = yield call(EmployeeAPI.onGetContestVideo, queryString);
+    if (res && res.data) {
+      yield put(types.uploadContestVideoSuccess(res.data.video));
+    }
+  } catch {}
+}
+
+function* onDeleteContestVideo({ payload }) {
+  try {
+    const res = yield call(EmployeeAPI.onDeleteContestVideo, payload);
+    if (res && res.data) {
+      yield put(types.uploadContestVideoSuccess(null));
+    }
+  } catch {}
+}
+
 const employeeSagas = [
   takeEvery(types.getUserDataRequest, getUserData),
   takeEvery(types.loadSkillData, onLoadSkill),
@@ -244,6 +273,9 @@ const employeeSagas = [
   takeEvery(types.getUserDocumentRequest, onGetUserDocument),
   takeEvery(types.updateBasicInfoRequest, onUpdateBasicInfo),
   takeEvery(types.uploadVeteranCard, onUploadVeteranCard),
+  takeEvery(types.uploadContestVideo, onContestVideoUpload),
+  takeEvery(types.getContestVideo, onGetContestVideo),
+  takeEvery(types.deleteContestVideo, onDeleteContestVideo),
 ];
 
 export default employeeSagas;

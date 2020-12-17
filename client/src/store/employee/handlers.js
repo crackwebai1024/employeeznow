@@ -7,6 +7,7 @@ const initialState = {
   success: "",
   updateSuccess: "NONE",
   videoUpload: "NONE",
+  cockTailVideo: null,
 };
 
 export const initiateSuccess = (state) => ({
@@ -173,7 +174,33 @@ export const setSuccess = (state) => ({
   ...state,
   success: true,
 });
+
 export const uploadVeteranCard = (state, { payload }) => ({
+  ...state,
+});
+
+export const uploadContestVideo = (state) => ({
+  ...state,
+});
+
+export const uploadContestVideoSuccess = (state, { payload }) => ({
+  ...state,
+  cockTailVideo: payload,
+});
+
+export const uploadContestVideoFailure = (state, { payload }) => ({
+  ...state,
+});
+
+export const getContestVideo = (state) => ({
+  ...state,
+});
+
+export const getContestVideoFailure = (state, { payload }) => ({
+  ...state,
+});
+
+export const deleteContestVideo = (state, { payload }) => ({
   ...state,
 });
 

@@ -77,3 +77,15 @@ export async function updateBasicInfo(data) {
 export async function onGetUserDocument(data) {
   return await Axios.get("/crud/employee/document" + data);
 }
+
+export async function contestVideoUpload(data) {
+  return await Axios.post("/crud/employee/contestvideo", data);
+}
+
+export async function onGetContestVideo(data) {
+  return await Axios.get("/crud/employee/contestvideo" + data);
+}
+
+export async function onDeleteContestVideo(data) {
+  return await Axios.post("/crud/employee/contestvideo/delete", data);
+}

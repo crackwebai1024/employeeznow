@@ -188,7 +188,7 @@ const PhotoDropZone = ({
               />
             ) : (
               <video controls className={classes.video}>
-                <source src={image.url}></source>
+                <source src={`${image.url}?${Date.now()}`}></source>
               </video>
             )
           ) : (
