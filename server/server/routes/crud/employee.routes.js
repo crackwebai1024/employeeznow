@@ -74,7 +74,9 @@ router
   .get(requireSignin, hasAuthorization, VideoCtrl.find_ByID);
 router
   .route("/contestvideo")
-  .post(requireSignin, hasAuthorization, AWSCtrl.save, VideoCtrl.updateByID)
-  .delete(requireSignin, hasAuthorization, AWSCtrl.del, VideoCtrl.deleteByID);
+  .post(requireSignin, hasAuthorization, AWSCtrl.save, VideoCtrl.updateByID);
+router
+  .route("/contestvideo/delete")
+  .post(requireSignin, hasAuthorization, AWSCtrl.del, VideoCtrl.deleteByID);
 
 export default router;

@@ -19,6 +19,7 @@ const SearchResultSchema = new mongoose.Schema(
         employeeskill: Object,
         employeepreference: Object,
         employeeexperience: Object,
+        employeeimg: Object,
         diffdist: Number,
         inSecondary: Number,
         commonShift: [String],

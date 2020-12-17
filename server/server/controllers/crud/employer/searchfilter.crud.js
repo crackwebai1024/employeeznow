@@ -7,7 +7,7 @@ import extend from "lodash/extend";
 const findByID = async (req, res) => {
   try {
     let se_filter = null;
-    console.log(req.query);
+    console.log(req.body);
     if (req.body.filterID || req.query.filterID) {
       let filterID =
         req.body.filterID === undefined
@@ -41,9 +41,6 @@ const updateByID = async (req, res, next) => {
         searchresult: searchres,
       },
     };
-    console.log(
-      "-----------------------------------------------------------------------------"
-    );
     await SearchRes.updateByID(reqbody, res);
     return;
     // await next();
