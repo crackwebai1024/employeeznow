@@ -314,7 +314,7 @@ const WorkHistory = ({ success, experience, actions }) => {
       id: user._id,
       exclude: {
         ...exclude,
-        address: exclude.address,
+        // address: exclude.address,
       },
     };
     // if(!data.primaryJob.title)
@@ -361,7 +361,7 @@ const WorkHistory = ({ success, experience, actions }) => {
 
   const [exclude, setExclude] = useState({
     name: [],
-    address: [],
+    // address: [],
   });
   const handleBusiness = (event, value, type) => {
     if (value.length > 4) {
@@ -372,13 +372,13 @@ const WorkHistory = ({ success, experience, actions }) => {
         ...exclude,
         [type]: value,
       });
-    if (type === "address") {
-      setExclude({
-        ...exclude,
-        [type]: value.map((address) => address.value),
-        // [type]: value
-      });
-    }
+    // if (type === "address") {
+    //   setExclude({
+    //     ...exclude,
+    //     [type]: value.map((address) => address.value),
+    //     // [type]: value
+    //   });
+    // }
   };
 
   console.log(summary, "payload");
@@ -867,7 +867,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                   )}
                 />
               </Grid>
-              <Grid item xs={12} style={{ display: "flex" }}>
+              {/* <Grid item xs={12} style={{ display: "flex" }}>
                 <Box className={classes.excludeIcon}>
                   <RoomIcon />
                   &nbsp;Address
@@ -888,7 +888,7 @@ const WorkHistory = ({ success, experience, actions }) => {
                     <TextField {...params} variant="standard" />
                   )}
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Grid item container xs={12}>
