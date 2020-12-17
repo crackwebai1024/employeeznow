@@ -4,9 +4,9 @@ import PurchaseCtrl from "../../controllers/payment/purchase";
 import authCtrl from "../../controllers/auth/common.auth";
 import StripeCtrl from "../../controllers/payment/stripe";
 
+const router = express.Router();
 const { requireSignin, hasAuthorization } = authCtrl;
 const { stripePay, charge } = StripeCtrl;
-const router = express.Router();
 const { getPurchaseRequest } = PurchaseCtrl;
 
 // employee interest first step to check if the employee is in the interestedemployees list

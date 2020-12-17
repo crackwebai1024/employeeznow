@@ -19,8 +19,8 @@ const VideoSchema = new mongoose.Schema({
   },
   voters: [
     {
-      firstName: String,
-      lastName: String,
+      role: String,
+      voterID: String,
       stars: Number,
     },
   ],

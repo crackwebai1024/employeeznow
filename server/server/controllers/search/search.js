@@ -39,7 +39,6 @@ const searchEmployee = async (filter) => {
   try {
     const employer = await Employer.findById(employerID);
     const name = employer.name;
-    const states = employer.address.state;
     const employeesInCart = await Cart.findOne({ employerID });
     const inCartIds = [];
     if (employeesInCart) {
@@ -162,7 +161,6 @@ const searchEmployee = async (filter) => {
             { inSecondary: { $gte: minimumExp } },
           ],
           "employeeexperience.exclude.name": { $nin: [name] },
-          "employeeexperience.exclude.address": { $nin: [states] },
         },
       },
       {
