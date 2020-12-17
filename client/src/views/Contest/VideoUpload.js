@@ -98,12 +98,12 @@ const VideoUpload = ({
   const [title, setTitle] = useState();
   const [titleError, setTitleError] = useState("");
 
-  useEffect(() => {
-    if (image) {
-      return setTitle(image.description);
-    }
-    setTitle("");
-  }, [image, open]);
+  // useEffect(() => {
+  //   if (image) {
+  //     return setTitle(image.description);
+  //   }
+  //   setTitle("");
+  // }, [image, open]);
 
   const handleClose = () => {
     setFileNames("");

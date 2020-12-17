@@ -235,6 +235,7 @@ const CockTailContest = (props) => {
                 <BackupIcon className={classes.uploadIcon} />
               </div>
             )}
+            {(cockTailVideo && cockTailVideo.url, Date.now())}
           </Grid>
           <Grid item xs={12}>
             <Button
