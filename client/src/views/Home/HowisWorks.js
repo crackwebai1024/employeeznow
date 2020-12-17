@@ -9,14 +9,33 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     textAlign: "center",
+    marginBottom: "1rem",
     fontSize: "24px",
     fontWeight: 600,
   },
   orderList: {
     paddingLeft: "100px",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "30px",
+    },
   },
   list: {
     paddingLeft: "20px",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "15px",
+    },
+  },
+  listDeatail: {
+    paddingLeft: "7.5rem",
+    marginBottom: "2rem",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "3rem",
+    },
+  },
+  spacing: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));
 
@@ -50,7 +69,7 @@ const HowisWorks = () => {
             stop until you find a job
           </li>
         </ol>
-        <Typography>
+        <Typography className={classes.listDeatail}>
           EmployeezNow is <b>FREE</b> for all hospitality workers to use!
         </Typography>
       </Grid>
@@ -77,7 +96,7 @@ const HowisWorks = () => {
             away
           </li>
         </ol>
-        <Typography>
+        <Typography className={classes.listDeatail}>
           You can find you perfect new hire that day, all for a cost under $10!
         </Typography>
       </Grid>
@@ -86,12 +105,15 @@ const HowisWorks = () => {
           <b>EMPLOYED</b> INDUSTRY WORKERS:
         </Typography>
         <Typography>
-          We are a venue for you to build a profile that's so much more than a
-          resume. A portfolio filled with videos of your skills, pics of your
-          creations, a snapshot of that great review or anything that might tell
-          employers more about you. This way, it's all in one place, ready for
-          the day you ask <b>EmployeezNow</b> to start bringing new employers to
-          you
+          <span className={classes.spacing}>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We are a venue
+          for you to build a profile that's so much more than a resume. A
+          portfolio filled with videos of your skills, pics of your creations, a
+          snapshot of that great review or anything that might tell employers
+          more about you. This way, it's all in one place, ready for the day you
+          ask <b>EmployeezNow</b> to start bringing new employers to you
         </Typography>
       </Grid>
     </Grid>

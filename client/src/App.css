@@ -113,6 +113,10 @@
   line-height: 1 !important;
 }
 
+.copper_font {
+  font-family: "Copper Black" !important;
+}
+
 @media (max-width: 548px) {
   .reactCodeInput > input {
     margin: 7px !important;

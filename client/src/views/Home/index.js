@@ -29,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {},
   },
   textLgContainer: {
-    marginTop: "10rem",
+    marginTop: "4rem",
     textAlign: "center",
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
     },
   },
   howisworks: {
-    margin: "3rem 0 5rem 0",
+    margin: "6rem 0 5rem 0",
     textAlign: "left",
   },
   sectionIcon: {
@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   heading2: {
-    marginTop: "2rem",
-    marginBottom: "0.5rem",
+    marginTop: "1.5rem",
+    marginBottom: "4rem",
     fontFamily: "Nunito Sans",
-    fontSize: "2rem",
+    fontSize: "24px",
     [theme.breakpoints.down("sm")]: {
       fontSize: "2rem",
       letterSpacing: "0.05rem",
@@ -130,6 +130,11 @@ const useStyles = makeStyles((theme) => ({
     background: "#FAFAFA",
     padding: "3rem 0 3rem 0",
   },
+  spacing: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 const Home = () => {
@@ -156,11 +161,13 @@ const Home = () => {
                       A HOSPITALITY EMPLOYMENT NETWORK
                     </Typography>
                     <Typography variant="h2" className={classes.heading2}>
-                      {/* Get EmployeezNow in just a few minutes! */}
+                      Where your job does the work of finding you!
                     </Typography>
                     <Typography className="aboutme">
                       <i>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span className={classes.spacing}>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Thank you for visiting EmployeezNow, the first
                         employment network designed specifically for
