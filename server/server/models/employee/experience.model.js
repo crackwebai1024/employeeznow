@@ -175,7 +175,6 @@ const ExperienceSchema = new mongoose.Schema({
   ],
   exclude: {
     name: [String],
-    address: [String],
   },
   employee: {
     type: mongoose.Schema.ObjectId,

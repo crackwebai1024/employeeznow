@@ -20,6 +20,7 @@ import crudEmployerRoutes from "./routes/crud/employer.routes";
 import mailSendRoutes from "./routes/mail/mail.routes";
 import paymentRoutes from "./routes/payment/payment.routes";
 import searchEmployeeRoutes from "./routes/search/search.routes";
+import contestRoutes from "./routes/contest/contest.routes";
 
 const CURRENT_WORKING_DIR = process.cwd();
 
@@ -69,6 +70,8 @@ app.use("/api/payment", paymentRoutes);
 //employer add employee to his cart
 app.use("/api/cart", cartRoutes);
 
+// for voting the video and functions for contest
+app.use("/api/contest", contestRoutes);
 // Catch unauthorised errors
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
