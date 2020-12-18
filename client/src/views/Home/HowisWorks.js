@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   listDeatail: {
     paddingLeft: "7.5rem",
     marginBottom: "2rem",
+    fontSize: "20px",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "3rem",
     },
@@ -80,9 +81,13 @@ const HowisWorks = () => {
         <ol className={classes.orderList}>
           <li className={classes.list}>
             Enter the details of your ideal candidate into our search filter
-            Grill Cook/ Has at least 4 years of experience / Has worked in
-            Fine-Dining / Has experience cooking seafood / Wants lunch or dinner
-            / Wants $20 per hour
+            <Typography style={{ maxWidth: "570px", width: "100%" }}>
+              <i>
+                Grill Cook/ Has at least 4 years of experience / Has worked in
+                Fine-Dining / Has experience cooking seafood / Wants lunch or
+                dinner / Wants $20 per hour
+              </i>
+            </Typography>
           </li>
           <li className={classes.list}>
             We'll <b>INSTANTLY</b> provide you a list of the best matching
