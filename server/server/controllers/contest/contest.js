@@ -29,7 +29,7 @@ const voteVideo = async (req, res) => {
     } else {
       if (req.body.stars !== 0) {
         video.voters.push({
-          role: "voter",
+          role: req.body.role,
           voterID: req.body.id,
           stars: req.body.stars,
         });
