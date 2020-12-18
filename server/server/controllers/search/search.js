@@ -117,6 +117,14 @@ const searchEmployee = async (filter) => {
           as: "employeeexperience",
         },
       },
+      {
+        $lookup: {
+          from: "employeeimgs",
+          localField: "_id",
+          foreignField: "employee",
+          as: "employeeimg",
+        },
+      },
       { $unwind: "$employeepreference" },
       { $unwind: "$employeeexperience" },
       {
@@ -161,6 +169,17 @@ const searchEmployee = async (filter) => {
             { inSecondary: { $gte: minimumExp } },
           ],
           "employeeexperience.exclude.name": { $nin: [name] },
+        },
+      },
+      {
+        $set: {
+          employeeimg: {
+            $cond: {
+              if: { $eq: ["$purchased", true] },
+              then: "$employeeimg",
+              else: [],
+            },
+          },
         },
       },
       {
