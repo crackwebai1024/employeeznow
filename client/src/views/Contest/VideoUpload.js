@@ -162,7 +162,7 @@ const VideoUpload = ({
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           {fileNames ? (
-            <video controls className={classes.avatar}>
+            <video controls className={classes.avatar} title="video_zzz">
               <source
                 className={classes.avatar}
                 src={fileNames.file}

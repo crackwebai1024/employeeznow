@@ -230,6 +230,7 @@ function* onContestVideoUpload({ payload }) {
   try {
     const res = yield call(EmployeeAPI.contestVideoUpload, payload);
     if (res && res.data) {
+      window.location.reload();
       yield put(types.uploadContestVideoSuccess(res.data));
     }
   } catch {}
