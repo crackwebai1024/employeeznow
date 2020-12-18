@@ -255,6 +255,23 @@ function* onDeleteContestVideo({ payload }) {
   } catch {}
 }
 
+function* onSearchCocktailVideo({ payload }) {
+  try {
+    const res = yield call(EmployeeAPI.onSearchCocktailVideo, payload);
+    if (res && res.data) {
+      yield put(types.searchCocktailVideoSuccess(res.data));
+    }
+  } catch {}
+}
+
+function* onGiveStar({ payload }) {
+  try {
+    const res = yield call(EmployeeAPI.onGiveStar, payload);
+    if (res && res.data) {
+    }
+  } catch {}
+}
+
 const employeeSagas = [
   takeEvery(types.getUserDataRequest, getUserData),
   takeEvery(types.loadSkillData, onLoadSkill),
@@ -277,6 +294,8 @@ const employeeSagas = [
   takeEvery(types.uploadContestVideo, onContestVideoUpload),
   takeEvery(types.getContestVideo, onGetContestVideo),
   takeEvery(types.deleteContestVideo, onDeleteContestVideo),
+  takeEvery(types.searchCocktailVideo, onSearchCocktailVideo),
+  takeEvery(types.giveStar, onGiveStar),
 ];
 
 export default employeeSagas;

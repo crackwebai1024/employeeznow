@@ -53,16 +53,26 @@ export const actions = createActions({
   GET_CONTEST_VIDEO_FAILURE: undefined,
 
   DELETE_CONTEST_VIDEO: undefined,
+
+  SEARCH_COCKTAIL_VIDEO: undefined,
+  SEARCH_COCKTAIL_VIDEO_SUCCESS: undefined,
+
+  GIVE_STAR: undefined,
 });
 
 const reducer = handleActions(
   new Map([
+    [actions.giveStar, handlers.giveStar],
+
     [actions.uploadContestVideo, handlers.uploadContestVideo],
     [actions.uploadContestVideoSuccess, handlers.uploadContestVideoSuccess],
     [actions.uploadContestVideoFailure, handlers.uploadContestVideoFailure],
 
     [actions.getContestVideo, handlers.getContestVideo],
     [actions.getContestVideoFailure, handlers.getContestVideoFailure],
+
+    [actions.searchCocktailVideo, handlers.searchCocktailVideo],
+    [actions.searchCocktailVideoSuccess, handlers.searchCocktailVideoSuccess],
 
     [actions.deleteContestVideo, handlers.deleteContestVideo],
 

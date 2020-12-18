@@ -117,14 +117,12 @@ const VideoUpload = ({
   const [type, setType] = useState();
 
   const onDrop = (acceptedFiles) => {
-    console.log(acceptedFiles[0], "acceptedfile");
     let type = acceptedFiles[0].type.split("/")[0];
     setType(type);
     //setFileNames(acceptedFiles.map((file) => file.name));  -- when there is multiple pictures
     const imgName = acceptedFiles.map((file) => file.name);
     console.log(imgName);
     // setPhoto({ photo: imgName[0] });
-    console.log("file upload object ==> ", acceptedFiles[0]);
     setFileNames({ file: URL.createObjectURL(acceptedFiles[0]) });
     // setFileNames(acceptedFiles[0].name);
     //setDropzoneStyle('dropped');
@@ -146,8 +144,6 @@ const VideoUpload = ({
     deleteFunc(photoType, sendPhoto, fileNames, title);
     handleClose();
   };
-
-  console.log(fileNames, "filenames");
 
   return (
     <Dialog

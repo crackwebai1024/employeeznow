@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import BackupIcon from "@material-ui/icons/Backup";
 import ContestHome from "./ContestHome";
 import VideoUpload from "./VideoUpload";
+import VideoItems from "./VideoItems";
 import { getUser, getRole } from "@helpers/auth-helpers";
 import SearchVideo from "./SearchVideo";
 
@@ -38,6 +39,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
   },
+  resultContainer: {
+    marginTop: "1rem",
+    border: "1px solid gray",
+  },
+  noResult: {
+    fontSize: "36px",
+    color: theme.palette.common.gray,
+  },
   button: {
     margin: "1rem",
     background: "#002060",
@@ -52,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CockTailContest = (props) => {
-  const { actions, cockTailVideo } = props;
+  const { actions, cockTailVideo, cockTailSearchResult } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [videoName, setVideoUpload] = useState();
@@ -82,6 +91,25 @@ const CockTailContest = (props) => {
     };
     actions.getContestVideo(data);
   }, []);
+
+  const searchFunction = (value) => {
+    const data = {
+      id: user._id,
+      type: "cocktail",
+      lastName: value,
+    };
+    actions.searchCocktailVideo(data);
+  };
+
+  const giveStarFunc = (value, id) => {
+    const data = {
+      videoID: id,
+      id: user._id,
+      role: role,
+      stars: value,
+    };
+    actions.giveStar(data);
+  };
 
   return (
     <Box>
@@ -131,14 +159,32 @@ const CockTailContest = (props) => {
       )}
 
       <Container width="sm" className={classes.videoContainer}>
-        <SearchVideo />
+        <SearchVideo searchFunc={searchFunction} />
+        <Grid container item xs={12} className={classes.resultContainer}>
+          {cockTailSearchResult && cockTailSearchResult.length > 0 ? (
+            cockTailSearchResult.map((result, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <VideoItems
+                  result={result}
+                  key={index}
+                  giveStarFunc={giveStarFunc}
+                />
+              </Grid>
+            ))
+          ) : (
+            <Box className={classes.noResult}>There is no result</Box>
+          )}
+        </Grid>
       </Container>
     </Box>
   );
 };
 
-const mapStateToProps = ({ employee: { cockTailVideo } }) => ({
+const mapStateToProps = ({
+  employee: { cockTailVideo, cockTailSearchResult },
+}) => ({
   cockTailVideo,
+  cockTailSearchResult,
 });
 
 const mapDispatchToProps = (dispatch) => ({

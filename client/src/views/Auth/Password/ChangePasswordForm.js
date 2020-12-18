@@ -57,7 +57,6 @@ const ChangePassfordForm = ({
   const onSubmit = (formData) => {
     formData.id = JSON.parse(localStorage.getItem("USER"))["_id"];
     formData.role = "employee";
-    console.log(formData);
     actions.changePasswordRequest(formData);
   };
 

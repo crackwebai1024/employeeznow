@@ -156,7 +156,6 @@ const PhoneVerification = ({
           };
           setPhoneData(data);
           actions.phoneVerifyRequestRequest(data);
-          console.log(data, "data is sent!");
         } else {
           setError("Phone number is invalid!");
         }
