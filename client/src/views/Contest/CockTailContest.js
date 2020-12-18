@@ -91,12 +91,11 @@ const CockTailContest = (props) => {
           <Grid container item xs={12}>
             <Grid item xs={12}>
               {cockTailVideo ? (
-                <video controls className={classes.uploadvideo}>
-                  <source
-                    src={`${cockTailVideo.url}?${Date.now()}`}
-                    alt="img"
-                  />
-                </video>
+                <video
+                  controls
+                  src={`${cockTailVideo.url}?${Date.now()}`}
+                  className={classes.uploadvideo}
+                ></video>
               ) : (
                 <div className={classes.uploadvideoBlank}>
                   <BackupIcon className={classes.uploadIcon} />

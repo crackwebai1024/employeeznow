@@ -162,17 +162,20 @@ const VideoUpload = ({
       <DialogContent>
         <Grid item className={classes.avatarContainer}>
           {fileNames ? (
-            <video controls className={classes.avatar} title="video_zzz">
-              <source
-                className={classes.avatar}
-                src={fileNames.file}
-                type="video/mp4"
-              />
-            </video>
+            <video
+              controls
+              src={fileNames.file}
+              type="video/mp4"
+              className={classes.avatar}
+              title="video_zzz"
+            ></video>
           ) : image ? (
-            <video controls className={classes.avatar}>
-              <source src={image} className={classes.avatar} type="video/mp4" />
-            </video>
+            <video
+              controls
+              className={classes.avatar}
+              src={image}
+              type="video/mp4"
+            ></video>
           ) : (
             <div>
               <BackupIcon className={classes.uploadIcon} />

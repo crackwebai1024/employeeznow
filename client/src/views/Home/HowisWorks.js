@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   listDeatail: {
     paddingLeft: "7.5rem",
     marginBottom: "2rem",
-    fontSize: "20px",
+    fontSize: "17px",
     [theme.breakpoints.down("sm")]: {
       paddingLeft: "3rem",
     },
