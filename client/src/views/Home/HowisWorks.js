@@ -50,7 +50,7 @@ const HowisWorks = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography className={classes.subtitle}>
-          <b>EMPLOYERS</b> NEEDING TO HIRE:
+          <b>WORKERS</b> IN NEED OF EMPLOYMENT:
         </Typography>
         <ol className={classes.orderList}>
           <li className={classes.list}>
@@ -62,7 +62,7 @@ const HowisWorks = () => {
             questions
           </li>
           <li className={classes.list}>
-            We'll add you resume and start showing your profile to employers in
+            We'll add your resume and start showing your profile to employers in
             your area
           </li>
           <li className={classes.list}>
@@ -76,7 +76,7 @@ const HowisWorks = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography className={classes.subtitle}>
-          <b>WORKERS</b> IN NEED OF EMPLOYMENT:
+          <b>EMPLOYERS</b> NEEDING TO HIRE:
         </Typography>
         <ol className={classes.orderList}>
           <li className={classes.list}>
