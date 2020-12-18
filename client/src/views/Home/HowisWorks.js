@@ -101,7 +101,7 @@ const HowisWorks = () => {
           </li>
         </ol>
         <Typography className={classes.listDeatail}>
-          You can find you perfect new hire that day, all for a cost under $10!
+          You can find your perfect new hire that day, all for a cost under $10!
         </Typography>
       </Grid>
       <Grid item xs={12}>
