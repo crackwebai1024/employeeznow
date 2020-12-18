@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, TextField, Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -26,20 +26,21 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "18px",
     marginRight: "1rem",
   },
-  noResult: {
-    fontSize: "36px",
-    color: theme.palette.common.gray,
-  },
-  resultContainer: {
-    marginTop: "1rem",
-    border: "1px solid gray",
-    padding: "1rem 0",
-  },
 }));
 
 const SearchVideo = (props) => {
-  const { searchResult } = props;
+  const { searchFunc } = props;
   const classes = useStyles();
+  const [searchValue, setSearchValue] = useState("");
+
+  const searchVideo = (e) => {
+    e.preventDefault();
+    if (e.target.value !== "") searchFunc(searchValue);
+  };
+
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <Box>
@@ -50,19 +51,18 @@ const SearchVideo = (props) => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <form className={classes.form}>
+          <form onSubmit={(e) => searchVideo(e)} className={classes.form}>
             <span className={classes.subtitle}>
               search for videos by last name:
             </span>
-            <TextField label="" size="small" variant="outlined" />
+            <TextField
+              label=""
+              size="small"
+              onChange={handleChange}
+              value={searchValue}
+              variant="outlined"
+            />
           </form>
-        </Grid>
-        <Grid item xs={12} className={classes.resultContainer}>
-          {searchResult ? (
-            <Box></Box>
-          ) : (
-            <Box className={classes.noResult}>There is not result</Box>
-          )}
         </Grid>
       </Grid>
     </Box>

@@ -76,7 +76,6 @@ const VideoDropzone = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(fileNames);
     connectFunc(sendVideo, fileNames);
   };
 

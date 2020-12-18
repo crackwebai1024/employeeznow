@@ -12,7 +12,6 @@ import { getToken, getRole } from "@helpers/auth-helpers";
 export default function AppRouter() {
   const token = getToken();
   const role = getRole();
-  console.log(role, "role");
   return (
     <Fragment>
       {!token ? (

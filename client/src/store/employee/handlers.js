@@ -204,4 +204,17 @@ export const deleteContestVideo = (state, { payload }) => ({
   ...state,
 });
 
+export const searchCocktailVideo = (state, { payload }) => ({
+  ...state,
+});
+
+export const searchCocktailVideoSuccess = (state, { payload }) => ({
+  ...state,
+  cockTailSearchResult: [...payload],
+});
+
+export const giveStar = (state) => ({
+  ...state,
+});
+
 export default initialState;

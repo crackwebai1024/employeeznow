@@ -117,11 +117,17 @@ const ContestHome = (props) => {
             <br />
             you must complete your profile's&nbsp;
             <span>
-              <Link className={classes.link}>Personal/Preferences</Link>&nbsp;
+              <Link to="#" className={classes.link}>
+                Personal/Preferences
+              </Link>
+              &nbsp;
             </span>
             & &nbsp;
             <span>
-              <Link className={classes.link}>Experiences</Link> sections
+              <Link to="#" className={classes.link}>
+                Experiences
+              </Link>{" "}
+              sections
             </span>
           </Typography>
         </Grid>

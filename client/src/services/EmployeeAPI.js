@@ -89,3 +89,11 @@ export async function onGetContestVideo(data) {
 export async function onDeleteContestVideo(data) {
   return await Axios.post("/crud/employee/contestvideo/delete", data);
 }
+
+export async function onSearchCocktailVideo(data) {
+  return await Axios.post("/contest/readvideo", data);
+}
+
+export async function onGiveStar(data) {
+  return await Axios.post("/contest/votevideo", data);
+}
