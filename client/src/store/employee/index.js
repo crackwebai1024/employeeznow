@@ -54,8 +54,9 @@ export const actions = createActions({
 
   DELETE_CONTEST_VIDEO: undefined,
 
-  SEARCH_COCKTAIL_VIDEO: undefined,
+  SEARCH_VIDEO: undefined,
   SEARCH_COCKTAIL_VIDEO_SUCCESS: undefined,
+  SEARCH_FOOD_VIDEO_SUCCESS: undefined,
 
   GIVE_STAR: undefined,
 });
@@ -71,8 +72,9 @@ const reducer = handleActions(
     [actions.getContestVideo, handlers.getContestVideo],
     [actions.getContestVideoFailure, handlers.getContestVideoFailure],
 
-    [actions.searchCocktailVideo, handlers.searchCocktailVideo],
+    [actions.searchVideo, handlers.searchVideo],
     [actions.searchCocktailVideoSuccess, handlers.searchCocktailVideoSuccess],
+    [actions.searchFoodVideoSuccess, handlers.searchFoodVideoSuccess],
 
     [actions.deleteContestVideo, handlers.deleteContestVideo],
 

@@ -15,20 +15,18 @@ const useStyles = makeStyles((theme) => ({
     height: 230,
     cursor: "pointer",
   },
-  // videoBox: {
-  //   cursor: "pointer",
-  //   boxShadow: "inset 0 0 15px",
-  //   width: "90%",
-  //   position: "absolute",
-  //   height: 230,
-  // },
+  totalStar: {
+    fontSize: "18px",
+    padding: "1rem",
+    textAlign: "right",
+    fontWeight: 600,
+  },
 }));
 
 const VideoItems = (props) => {
-  const { result, giveStarFunc } = props;
-  console.log(result, "result");
+  const { result, giveStarFunc, stars } = props;
   const classes = useStyles();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(stars);
   const changeStar = (e, value) => {
     if (value) {
       setValue(value);
@@ -39,6 +37,9 @@ const VideoItems = (props) => {
   return (
     <Box className={classes.videoWrapper}>
       <Card>
+        <Box className={classes.totalStar}>
+          Total Score: {result.stars} stars
+        </Box>
         <CardContent>
           <video className={classes.video} src={result.url} controls></video>
           <Rating max={3} value={value} onChange={changeStar} size="large" />

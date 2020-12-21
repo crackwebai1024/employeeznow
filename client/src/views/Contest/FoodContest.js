@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Grid, Container, Typography, Box, Button } from "@material-ui/core";
+import { Grid, Container, Box, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { actions as employeeActions } from "@store/employee";
@@ -9,12 +8,18 @@ import BackupIcon from "@material-ui/icons/Backup";
 import ContestHome from "./ContestHome";
 import VideoUpload from "./VideoUpload";
 import { getUser, getRole } from "@helpers/auth-helpers";
+import VideoItems from "./VideoItems";
 import SearchVideo from "./SearchVideo";
 
 const useStyles = makeStyles((theme) => ({
   videoContainer: {
     textAlign: "center",
     marginTop: "2rem",
+  },
+  noResult: {
+    fontSize: "36px",
+    margin: "auto",
+    color: theme.palette.common.gray,
   },
   uploadvideo: {
     maxWidth: "500px",
@@ -49,10 +54,14 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "0.7rem",
     width: "250px",
   },
+  resultContainer: {
+    marginTop: "1rem",
+    border: "1px solid gray",
+  },
 }));
 
 const FoodContest = (props) => {
-  const { actions, cockTailVideo } = props;
+  const { actions, cockTailVideo, FoodSearchResult } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [videoName, setVideoUpload] = useState();
@@ -83,6 +92,26 @@ const FoodContest = (props) => {
     };
     actions.getContestVideo(data);
   }, []);
+
+  const giveStarFunc = (value, id) => {
+    const data = {
+      videoID: id,
+      id: user._id,
+      role: role,
+      stars: value,
+    };
+    actions.giveStar(data);
+  };
+
+  const searchFunction = (value) => {
+    if (value === "") return;
+    const data = {
+      id: user._id,
+      type: "food",
+      lastName: value,
+    };
+    actions.searchVideo(data);
+  };
   return (
     <Box>
       <ContestHome title="FOOD" />
@@ -131,14 +160,40 @@ const FoodContest = (props) => {
         </Container>
       )}
       <Container Container width="sm" className={classes.videoContainer}>
-        <SearchVideo />
+        <SearchVideo searchFunc={searchFunction} />
+        <Grid container item xs={12} className={classes.resultContainer}>
+          {FoodSearchResult && FoodSearchResult.length > 0 ? (
+            FoodSearchResult.map((result, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <VideoItems
+                  result={result}
+                  key={index}
+                  stars={
+                    result.voters.filter(
+                      (voter) => voter.voterID === user._id
+                    )[0] &&
+                    result.voters.filter(
+                      (voter) => voter.voterID === user._id
+                    )[0].stars
+                  }
+                  giveStarFunc={giveStarFunc}
+                />
+              </Grid>
+            ))
+          ) : (
+            <Box className={classes.noResult}>There is no result</Box>
+          )}
+        </Grid>
       </Container>
     </Box>
   );
 };
 
-const mapStateToProps = ({ employee: { cockTailVideo } }) => ({
+const mapStateToProps = ({
+  employee: { cockTailVideo, FoodSearchResult },
+}) => ({
   cockTailVideo,
+  FoodSearchResult,
 });
 
 const mapDispatchToProps = (dispatch) => ({

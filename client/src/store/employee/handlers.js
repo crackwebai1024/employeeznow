@@ -8,6 +8,7 @@ const initialState = {
   updateSuccess: "NONE",
   videoUpload: "NONE",
   cockTailVideo: null,
+  FoodSearchResult: null,
 };
 
 export const initiateSuccess = (state) => ({
@@ -204,13 +205,18 @@ export const deleteContestVideo = (state, { payload }) => ({
   ...state,
 });
 
-export const searchCocktailVideo = (state, { payload }) => ({
+export const searchVideo = (state, { payload }) => ({
   ...state,
 });
 
 export const searchCocktailVideoSuccess = (state, { payload }) => ({
   ...state,
   cockTailSearchResult: [...payload],
+});
+
+export const searchFoodVideoSuccess = (state, { payload }) => ({
+  ...state,
+  FoodSearchResult: [...payload],
 });
 
 export const giveStar = (state) => ({

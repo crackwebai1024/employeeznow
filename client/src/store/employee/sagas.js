@@ -255,11 +255,15 @@ function* onDeleteContestVideo({ payload }) {
   } catch {}
 }
 
-function* onSearchCocktailVideo({ payload }) {
+function* onSearchVideo({ payload }) {
   try {
     const res = yield call(EmployeeAPI.onSearchCocktailVideo, payload);
     if (res && res.data) {
-      yield put(types.searchCocktailVideoSuccess(res.data));
+      if (payload.type === "cocktail") {
+        yield put(types.searchCocktailVideoSuccess(res.data));
+      } else if (payload.type === "food") {
+        yield put(types.searchFoodVideoSuccess(res.data));
+      }
     }
   } catch {}
 }
@@ -294,7 +298,7 @@ const employeeSagas = [
   takeEvery(types.uploadContestVideo, onContestVideoUpload),
   takeEvery(types.getContestVideo, onGetContestVideo),
   takeEvery(types.deleteContestVideo, onDeleteContestVideo),
-  takeEvery(types.searchCocktailVideo, onSearchCocktailVideo),
+  takeEvery(types.searchVideo, onSearchVideo),
   takeEvery(types.giveStar, onGiveStar),
 ];
 

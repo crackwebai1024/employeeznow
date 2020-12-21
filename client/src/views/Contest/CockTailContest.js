@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   noResult: {
     fontSize: "36px",
+    margin: "auto",
     color: theme.palette.common.gray,
   },
   button: {
@@ -93,12 +94,13 @@ const CockTailContest = (props) => {
   }, []);
 
   const searchFunction = (value) => {
+    if (value === "") return;
     const data = {
       id: user._id,
       type: "cocktail",
       lastName: value,
     };
-    actions.searchCocktailVideo(data);
+    actions.searchVideo(data);
   };
 
   const giveStarFunc = (value, id) => {
@@ -167,6 +169,14 @@ const CockTailContest = (props) => {
                 <VideoItems
                   result={result}
                   key={index}
+                  stars={
+                    result.voters.filter(
+                      (voter) => voter.voterID === user._id
+                    )[0] &&
+                    result.voters.filter(
+                      (voter) => voter.voterID === user._id
+                    )[0].stars
+                  }
                   giveStarFunc={giveStarFunc}
                 />
               </Grid>
