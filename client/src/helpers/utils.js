@@ -45,3 +45,36 @@ export const descendingComparator = (a, b, orderBy) => {
   }
   return 0;
 };
+
+// updatedAt
+
+export const objectSort = (data, condition) => {
+  let direction = true;
+  let key = "updatedAt";
+  switch (condition) {
+    case "new":
+      break;
+    case "old":
+      direction = false;
+      break;
+    case "most":
+      key = "stars";
+      break;
+    case "least":
+      direction = false;
+      key = "stars";
+      break;
+    default:
+      break;
+  }
+
+  data.sort(function (first, second) {
+    if (direction) {
+      if (first[key] > second[key]) return -1;
+      return 1;
+    }
+    if (first[key] > second[key]) return 1;
+    return -1;
+  });
+  return data;
+};

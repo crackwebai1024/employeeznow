@@ -257,7 +257,10 @@ const EmployeeForm = ({
           </Avatar>
           <Typography className={classes.heading1}>Employee Sign Up</Typography>
         </Grid>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          onChange={(e) => setEmailError("")}
+        >
           <Grid item container direction="row" spacing={1}>
             <Grid item xs={12}>
               <TextField
