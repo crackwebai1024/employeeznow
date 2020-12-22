@@ -14,7 +14,7 @@ const sendEmail = async (options) => {
 
   console.log(msg);
   try {
-    await sgMail.send(msg);
+    let result = await sgMail.send(msg);
     return true;
   } catch (err) {
     console.log("email sending error ==> ", err.response.body);
