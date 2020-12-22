@@ -27,7 +27,7 @@ const SearchFilterSchema = new mongoose.Schema({
   primary: {
     type: String,
     enum: [
-      "Director of Ops",
+      "Director of F&B",
       "General Manager",
       "Executive Chef",
       "Sous Chef",

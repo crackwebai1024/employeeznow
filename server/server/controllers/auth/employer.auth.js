@@ -39,6 +39,7 @@ const sendCodetoEmail = async (req, res) => {
   // send six digit code to user's email address
   try {
     let sendResult = await sendEmail(emailData);
+    console.log(sendResult.toString());
     if (sendResult) {
       return res.status(200).json({
         status: "success",

@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import config from "../../../config/config";
 import errorHandler from "../../helpers/dbErrorHandler";
+import emailExistence from "email-existence";
 
 // create token for signin user
 const createToken = (id) => {
@@ -222,6 +223,11 @@ const isValidEmail = async (req, res, next) => {
     let user = await Model.findOne({
       email: req.body.email,
     });
+    // let isExistEmail = await emailExistence.check(req.body.email);
+    // return res.status("500").json({
+    //   error: "server error",
+    // });
+    // console.log("check email existence", isExistEmail);
     if (!user && req.body.role === "employee") {
       return res.status("200").json({
         success: "valid email",
@@ -234,6 +240,7 @@ const isValidEmail = async (req, res, next) => {
       });
     }
   } catch (err) {
+    console.log(err);
     return res.status("500").json({
       error: "server error",
     });

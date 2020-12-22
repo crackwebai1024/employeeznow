@@ -10,7 +10,7 @@ const EmployeeSkillSchema = new mongoose.Schema(
       title: {
         type: String,
         enum: [
-          "Director of Ops",
+          "Director of F&B",
           "General Manager",
           "Executive Chef",
           "Sous Chef",
@@ -59,7 +59,7 @@ const EmployeeSkillSchema = new mongoose.Schema(
         title: {
           type: String,
           enum: [
-            "Director of Ops",
+            "Director of F&B",
             "General Manager",
             "Executive Chef",
             "Sous Chef",

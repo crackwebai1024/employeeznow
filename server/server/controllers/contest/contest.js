@@ -49,6 +49,7 @@ const voteVideo = async (req, res) => {
 const searchByLName = async (req, res) => {
   let lastName = req.body.lastName;
   let videotype = req.body.type;
+  lastName === "" ? (lastName = null) : lastName;
   let lnreg = new RegExp(lastName, "i");
   try {
     let videodata = await Video.aggregate([

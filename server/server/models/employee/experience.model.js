@@ -7,7 +7,7 @@ const ExperienceSchema = new mongoose.Schema({
     title: {
       type: String,
       enum: [
-        "Director of Ops",
+        "Director of F&B",
         "General Manager",
         "Executive Chef",
         "Sous Chef",
@@ -66,7 +66,7 @@ const ExperienceSchema = new mongoose.Schema({
     title: {
       type: String,
       enum: [
-        "Director of Ops",
+        "Director of F&B",
         "General Manager",
         "Executive Chef",
         "Sous Chef",
@@ -122,7 +122,7 @@ const ExperienceSchema = new mongoose.Schema({
       title: {
         type: String,
         enum: [
-          "Director of Ops",
+          "Director of F&B",
           "General Manager",
           "Executive Chef",
           "Sous Chef",
