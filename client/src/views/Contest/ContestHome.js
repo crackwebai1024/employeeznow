@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme) => ({
     background: "#c00000",
     marginTop: "-3rem",
     paddingTop: "1rem",
-    paddingBottom: "3rem",
+    paddingBottom: "2rem",
   },
   arizonaContainer: {
-    maxWidth: "1100px",
+    maxWidth: "700px",
     margin: "auto",
   },
   link: {
@@ -41,12 +41,18 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     fontSize: "18px",
-    fontWeight: 600,
-    lineHeight: "1",
+    maxWidth: 600,
+    margin: "auto",
+    fontWeight: 900,
+    lineHeight: "1.3",
+  },
+  content1: {
+    fontSize: "24px",
+    fontWeight: 900,
   },
   arizona: {
     color: "white",
-    fontSize: "42px",
+    fontSize: "60px",
   },
   lineHeight: {
     lineHeight: "1.3 !important",
@@ -61,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
   },
   white: {
     color: "white",
-    fontWeight: 500,
   },
 }));
 
@@ -73,7 +78,7 @@ const ContestHome = (props) => {
         <Grid container item xs={12} className={classes.arizonaContainer}>
           <Grid item xs={12} className={classes.section1}>
             <Typography
-              className={`${classes.lineHeight} ${classes.content} ${classes.white}`}
+              className={`${classes.lineHeight} ${classes.content1} ${classes.white}`}
             >
               CAN YOU MAKE
             </Typography>
@@ -83,7 +88,7 @@ const ContestHome = (props) => {
               THE BEST {props.title}
             </Typography>
             <Typography
-              className={`${classes.lineHeight} ${classes.content} ${classes.white}`}
+              className={`${classes.lineHeight} ${classes.content1} ${classes.white}`}
             >
               IN THE PHOENIX AREA?
             </Typography>
@@ -96,12 +101,12 @@ const ContestHome = (props) => {
           <Grid item container xs={12}>
             <Grid item xs={12} sm={6}>
               <Typography className={classes.font20}>
-                SECOND PLAGE: $1500
+                2<sup style={{ fontWeight: 400 }}>ND</sup> PLAGE - $1500
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography className={classes.font20}>
-                THIRD PLACE: $750
+                3<sup style={{ fontWeight: 400 }}>RD</sup> PLACE - $750
               </Typography>
             </Grid>
           </Grid>
@@ -109,56 +114,46 @@ const ContestHome = (props) => {
       </Box>
       <Container width="sm" className={classes.container}>
         <Grid item xs={12}>
+          <Typography className={classes.subTitle}>ENTER YOUR VIDEO</Typography>
+          <Typography className={classes.content}>
+            Upload a video of you mixing, pouring or talking about your cocktail
+            that BEST re presents Arizona! <br />
+            (videos can't be longer than 1 minute)
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
           <Typography className={classes.subTitle}>
-            LET US KNOW HOW YOU ARE
+            WINNER CHOSEN BY THE PUBLIC
           </Typography>
           <Typography className={classes.content}>
-            To be eligible to win,
+            Anyone can vote by signing up and verifying your cell phone.
             <br />
-            you must complete your profile's&nbsp;
+            The Winner will be the video with the most stars.
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Typography className={classes.subTitle}>
+            TELL US KNOW HOW YOU ARE
+          </Typography>
+          <Typography className={classes.content}>
+            To be eligible to win, you must sign up a partial profile:
+            <br />
+            Complete the
             <span>
               <Link to="#" className={classes.link}>
-                Personal/Preferences
+                &nbsp;Who you are
               </Link>
               &nbsp;
             </span>
             & &nbsp;
             <span>
               <Link to="#" className={classes.link}>
-                Experiences
+                What you want
               </Link>{" "}
               sections
             </span>
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.subTitle}>ENTER YOUR VIDEO</Typography>
-          <Typography className={classes.content}>
-            Upload a video of you making/pouring your cocktail (no longer than 1
-            minute)
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.subTitle}>THEME</Typography>
-          <Typography className={classes.content}>
-            The cocktail that best represents Arizona
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.subTitle}>
-            WINNER CHOSEN BY THE PUBLIC
-          </Typography>
-          <Typography className={classes.content}>
-            Anyone can vote, just enter through ‘employee’ sign up and verify
-            your cell phone
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography className={classes.subTitle}>
-            THE MOST STARS WINS
-          </Typography>
-          <Typography className={classes.content}>
-            Voters select 1,2 or 3 stars for the videos the choose to vote on
           </Typography>
         </Grid>
       </Container>
