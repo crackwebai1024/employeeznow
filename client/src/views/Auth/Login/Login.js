@@ -99,9 +99,9 @@ const Login = ({
     return <Redirect to={`/employees/${slug}`} />;
   }
 
-  if (isAuthenticated && localStorage.getItem("role") === "voter") {
-    return <Redirect to={`/home`} />;
-  }
+  // if (isAuthenticated && localStorage.getItem("role") === "voter") {
+  //   return <Redirect to={`/home`} />;
+  // }
 
   return (
     <Container>
@@ -141,7 +141,7 @@ const Login = ({
                   inputRef={register({ required: true })}
                 />
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <FormControlLabel
                   control={<Radio value="voter" />}
                   label="VOUTER"
@@ -149,7 +149,7 @@ const Login = ({
                   id="voter"
                   inputRef={register({ required: true })}
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <FormHelperText
               error={errors.role ? true : false}
