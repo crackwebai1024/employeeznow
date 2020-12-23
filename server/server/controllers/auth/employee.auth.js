@@ -13,9 +13,14 @@ const isValidPhone = async (req, res) => {
   let phoneNumber = req.body.phoneNumber;
   let countryCode = req.body.countryCode;
   let codeLength = 6;
+  // let cell = countryCode + phoneNumber;
   // try {
-  //   let user = await Employee.findOne({ cell: countryCode + phoneNumber });
-  //   if (!user) {
+  //   let user, voter;
+  //   [user, voter] = [
+  //     await Employee.findOne({ cell }),
+  //     await Voter.findOne({ cell }),
+  //   ];
+  //   if (!user && !voter) {
   //     _authy
   //       .phones()
   //       .verification_start(
@@ -46,6 +51,7 @@ const isValidPhone = async (req, res) => {
   //   });
   // }
 
+  // fake result for local test
   return res.status(200).json({
     success:
       "valid phone number, we already sent 6 digit codes to your phonenumber",

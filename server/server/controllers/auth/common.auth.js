@@ -108,6 +108,10 @@ const forgotPassword = async (req, res) => {
     user = await Employer.findOne({ email: req.body.email });
   }
 
+  if (req.body.role === "voter") {
+    user = await Voter.findOne({ email: req.body.email });
+  }
+
   if (!user) {
     return res.status(404).json({
       error: "There is no user with this email address",
@@ -158,20 +162,22 @@ const resetPassword = async (req, res) => {
   // Encrypt request token and compare with db
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
-  let user;
-  if (role === "employee") {
-    user = await Employee.findOne({
-      passwordResetToken: hashedToken,
-      passwordResetExpires: { $gt: Date.now() },
-    });
+  let Model = Employee;
+  switch (role) {
+    case "employer":
+      Model = Employer;
+      break;
+    case "voter":
+      Model = Voter;
+      break;
+    default:
+      break;
   }
 
-  if (role === "employer") {
-    user = Employer.findOne({
-      passwordResetToken: hashedToken,
-      passwordResetExpires: { $gt: Date.now() },
-    });
-  }
+  let user = await Model.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
 
   //  if token has not expired, and there is user, set the new password
   if (!user) {
@@ -188,12 +194,6 @@ const resetPassword = async (req, res) => {
 
   try {
     await user.save();
-    // Log the user in
-    // const token = createToken(user.employeezNowId);
-    // console.log("after token");
-    // res.cookie("t", token, {
-    //   expire: new Date() + 3600,
-    // });
 
     return res.status(200).json({
       token,
@@ -263,13 +263,18 @@ const isValidEmail = async (req, res, next) => {
 
 // change password(this is not the case that forget the password, but just change old one)
 const changePassword = async (req, res) => {
-  let Model;
   let role = req.body.role;
+  let Model = Employee;
 
-  if (role === "employee") {
-    Model = Employee;
-  } else {
-    Model = Employer;
+  switch (role) {
+    case "employer":
+      Model = Employer;
+      break;
+    case "voter":
+      Model = Voter;
+      break;
+    default:
+      break;
   }
 
   console.log("request", req.body);
