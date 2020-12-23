@@ -9,12 +9,24 @@ const initialState = {
   videoUpload: "NONE",
   cockTailVideo: null,
   FoodSearchResult: null,
+  sortCocktail: "new",
+  sortFood: "new",
 };
 
 export const initiateSuccess = (state) => ({
   ...state,
   success: "",
   updateSuccess: "NONE",
+});
+
+export const setSortCocktail = (state, { payload }) => ({
+  ...state,
+  sortCocktail: payload.value,
+});
+
+export const setSortFood = (state, { payload }) => ({
+  ...state,
+  sortFood: payload.value,
 });
 
 export const getUserDataRequest = (state, { payload }) => ({

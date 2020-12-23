@@ -6,13 +6,17 @@ import Rating from "@material-ui/lab/Rating";
 const useStyles = makeStyles((theme) => ({
   videoWrapper: {
     cursor: "pointer",
-    padding: "0 1rem",
-    margin: "1rem 0",
+    margin: "1rem auto",
     alignItems: "center",
+    maxWidth: 700,
+  },
+  cardContainer: {
+    padding: "0px",
   },
   video: {
     width: "100%",
-    height: 230,
+    maxHeight: 400,
+    height: "90vw",
     cursor: "pointer",
   },
   totalStar: {
@@ -40,10 +44,10 @@ const VideoItems = (props) => {
         <Box className={classes.totalStar}>
           Total Score: {result.stars} stars
         </Box>
-        <CardContent>
+        <Box classes={classes.cardContainer}>
           <video className={classes.video} src={result.url} controls></video>
           <Rating max={3} value={value} onChange={changeStar} size="large" />
-        </CardContent>
+        </Box>
         <CardActions></CardActions>
       </Card>
     </Box>

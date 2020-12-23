@@ -11,6 +11,7 @@ import VideoUpload from "./VideoUpload";
 import VideoItems from "./VideoItems";
 import { getUser, getRole } from "@helpers/auth-helpers";
 import SearchVideo from "./SearchVideo";
+import Sort from "./Sort";
 
 const useStyles = makeStyles((theme) => ({
   videoContainer: {
@@ -40,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   resultContainer: {
-    marginTop: "1rem",
-    border: "1px solid gray",
+    margin: "1rem auto",
+    maxWidth: 700,
   },
   noResult: {
     fontSize: "36px",
@@ -62,10 +63,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CockTailContest = (props) => {
-  const { actions, cockTailVideo, cockTailSearchResult } = props;
+  const { actions, cockTailVideo, cockTailSearchResult, sortCocktail } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [videoName, setVideoUpload] = useState();
+  const [sortValue, setSortValue] = useState();
   const user = JSON.parse(getUser());
   const role = getRole();
 
@@ -89,6 +91,7 @@ const CockTailContest = (props) => {
     const data = {
       id: user._id,
       type: "cocktail",
+      sort: sortCocktail,
     };
     actions.getContestVideo(data);
   }, []);
@@ -99,6 +102,7 @@ const CockTailContest = (props) => {
       id: user._id,
       type: "cocktail",
       lastName: value,
+      sort: sortCocktail,
     };
     actions.searchVideo(data);
   };
@@ -111,6 +115,15 @@ const CockTailContest = (props) => {
       stars: value,
     };
     actions.giveStar(data);
+  };
+
+  const setSortCocktail = (e) => {
+    const data = {
+      value: e.target.value,
+      type: "cocktail",
+      data: cockTailSearchResult,
+    };
+    actions.setSortCocktail(data);
   };
 
   return (
@@ -142,9 +155,6 @@ const CockTailContest = (props) => {
                 UPLOAD YOUR <br /> VIDEO
               </Button>
             </Grid>
-            <Grid item xs={12}>
-              <hr className={classes.hr} />
-            </Grid>
           </Grid>
           <VideoUpload
             open={open}
@@ -159,13 +169,18 @@ const CockTailContest = (props) => {
           />
         </Container>
       )}
-
+      <Container width="sm" className={classes.videoContainer}>
+        <Grid item xs={12}>
+          <hr className={classes.hr} />
+        </Grid>
+      </Container>
       <Container width="sm" className={classes.videoContainer}>
         <SearchVideo searchFunc={searchFunction} />
+        <Sort value={sortCocktail} onChange={setSortCocktail} />
         <Grid container item xs={12} className={classes.resultContainer}>
           {cockTailSearchResult && cockTailSearchResult.length > 0 ? (
             cockTailSearchResult.map((result, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid item xs={12} key={index}>
                 <VideoItems
                   result={result}
                   key={index}
@@ -191,10 +206,11 @@ const CockTailContest = (props) => {
 };
 
 const mapStateToProps = ({
-  employee: { cockTailVideo, cockTailSearchResult },
+  employee: { cockTailVideo, cockTailSearchResult, sortCocktail },
 }) => ({
   cockTailVideo,
   cockTailSearchResult,
+  sortCocktail,
 });
 
 const mapDispatchToProps = (dispatch) => ({

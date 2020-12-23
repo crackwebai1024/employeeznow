@@ -522,7 +522,6 @@ const EmployerForm = ({
                 })}
               />
             </Grid>
-
             <Grid item xs={12} className={classes.policy}>
               <FormControlLabel
                 control={<Checkbox id="check" size="small" />}

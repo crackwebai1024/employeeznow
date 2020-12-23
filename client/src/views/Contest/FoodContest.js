@@ -8,6 +8,7 @@ import BackupIcon from "@material-ui/icons/Backup";
 import ContestHome from "./ContestHome";
 import VideoUpload from "./VideoUpload";
 import { getUser, getRole } from "@helpers/auth-helpers";
+import Sort from "./Sort";
 import VideoItems from "./VideoItems";
 import SearchVideo from "./SearchVideo";
 
@@ -55,13 +56,13 @@ const useStyles = makeStyles((theme) => ({
     width: "250px",
   },
   resultContainer: {
-    marginTop: "1rem",
-    border: "1px solid gray",
+    margin: "1rem auto",
+    maxWidth: 700,
   },
 }));
 
 const FoodContest = (props) => {
-  const { actions, cockTailVideo, FoodSearchResult } = props;
+  const { actions, cockTailVideo, FoodSearchResult, sortFood } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [videoName, setVideoUpload] = useState();
@@ -109,9 +110,19 @@ const FoodContest = (props) => {
       id: user._id,
       type: "food",
       lastName: value,
+      sort: sortFood,
     };
     actions.searchVideo(data);
   };
+
+  const setSortFood = (e) => {
+    const data = {
+      value: e.target.value,
+      data: FoodSearchResult,
+    };
+    actions.setSortFood(data);
+  };
+
   return (
     <Box>
       <ContestHome title="FOOD" />
@@ -161,10 +172,11 @@ const FoodContest = (props) => {
       )}
       <Container Container width="sm" className={classes.videoContainer}>
         <SearchVideo searchFunc={searchFunction} />
+        <Sort value={sortFood} onChange={setSortFood} />
         <Grid container item xs={12} className={classes.resultContainer}>
           {FoodSearchResult && FoodSearchResult.length > 0 ? (
             FoodSearchResult.map((result, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid item xs={12} key={index}>
                 <VideoItems
                   result={result}
                   key={index}
@@ -190,10 +202,11 @@ const FoodContest = (props) => {
 };
 
 const mapStateToProps = ({
-  employee: { cockTailVideo, FoodSearchResult },
+  employee: { cockTailVideo, FoodSearchResult, sortFood },
 }) => ({
   cockTailVideo,
   FoodSearchResult,
+  sortFood,
 });
 
 const mapDispatchToProps = (dispatch) => ({

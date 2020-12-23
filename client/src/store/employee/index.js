@@ -59,11 +59,15 @@ export const actions = createActions({
   SEARCH_FOOD_VIDEO_SUCCESS: undefined,
 
   GIVE_STAR: undefined,
+  SET_SORT_COCKTAIL: undefined,
+  SET_SORT_FOOD: undefined,
 });
 
 const reducer = handleActions(
   new Map([
     [actions.giveStar, handlers.giveStar],
+    [actions.setSortCocktail, handlers.setSortCocktail],
+    [actions.setSortFood, handlers.setSortFood],
 
     [actions.uploadContestVideo, handlers.uploadContestVideo],
     [actions.uploadContestVideoSuccess, handlers.uploadContestVideoSuccess],

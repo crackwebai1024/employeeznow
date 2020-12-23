@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   container: {
     paddingTop: "2rem",
-    maxWidth: "1100px",
+    maxWidth: "1000px",
     margin: "auto",
   },
   form: {
@@ -35,7 +35,7 @@ const SearchVideo = (props) => {
 
   const searchVideo = (e) => {
     e.preventDefault();
-    if (e.target.value !== "") searchFunc(searchValue);
+    if (searchValue !== "") searchFunc(searchValue);
   };
 
   const handleChange = (e) => {

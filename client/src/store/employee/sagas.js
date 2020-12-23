@@ -2,9 +2,12 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 import { actions as types } from "./index";
 import * as EmployeeAPI from "@services/EmployeeAPI";
-import { _arrayBufferToBase64 } from "@helpers/utils";
-import { errorMessage, successMessage } from "@helpers/utils";
-import { getContestVideoSuccess } from "./handlers";
+import {
+  _arrayBufferToBase64,
+  errorMessage,
+  successMessage,
+  objectSort,
+} from "@helpers/utils";
 
 function* getUserData({ payload }) {
   try {
@@ -259,21 +262,32 @@ function* onSearchVideo({ payload }) {
   try {
     const res = yield call(EmployeeAPI.onSearchCocktailVideo, payload);
     if (res && res.data) {
+      let newArray = [];
+      newArray = objectSort(res.data, payload.sort);
       if (payload.type === "cocktail") {
-        yield put(types.searchCocktailVideoSuccess(res.data));
+        yield put(types.searchCocktailVideoSuccess(newArray));
       } else if (payload.type === "food") {
-        yield put(types.searchFoodVideoSuccess(res.data));
+        yield put(types.searchFoodVideoSuccess(newArray));
       }
     }
   } catch {}
 }
 
 function* onGiveStar({ payload }) {
-  try {
-    const res = yield call(EmployeeAPI.onGiveStar, payload);
-    if (res && res.data) {
-    }
-  } catch {}
+  const res = yield call(EmployeeAPI.onGiveStar, payload);
+}
+
+function* onSortCocktail({ payload }) {
+  let newArray = [];
+  newArray = objectSort(payload.data, payload.value);
+
+  yield put(types.searchCocktailVideoSuccess(newArray));
+}
+
+function* onSortFood({ payload }) {
+  let newArray = [];
+  newArray = objectSort(payload.data, payload.value);
+  yield put(types.searchFoodVideoSuccess(newArray));
 }
 
 const employeeSagas = [
@@ -300,6 +314,8 @@ const employeeSagas = [
   takeEvery(types.deleteContestVideo, onDeleteContestVideo),
   takeEvery(types.searchVideo, onSearchVideo),
   takeEvery(types.giveStar, onGiveStar),
+  takeEvery(types.setSortCocktail, onSortCocktail),
+  takeEvery(types.setSortFood, onSortFood),
 ];
 
 export default employeeSagas;
