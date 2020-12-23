@@ -6,6 +6,9 @@ import MainButton from "@components/Element/Button/MainButton";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  white: {
+    color: "white",
+  },
   flex: {
     display: "flex",
   },
@@ -14,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     fontFamily: "Calibri",
-    maxWidth: "900px",
+    maxWidth: "1100px",
     margin: "auto",
     paddingTop: "3rem",
     paddingBottom: "3rem",
@@ -32,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 24,
     },
   },
+
   font12: {
     color: "white",
     fontSize: 24,
-    margin: "auto",
-    textAlign: "center",
+    // margin: "auto",
     maxWidth: "700px",
     fontWeight: 550,
     [theme.breakpoints.down("xs")]: {
@@ -58,8 +61,9 @@ const useStyles = makeStyles((theme) => ({
     color: "rgb(255,180,0)",
     fontSize: 120,
     margin: "auto",
-    marginTop: "-2rem",
+    marginTop: "-1rem",
     width: "fit-content",
+    textAlign: "center",
     [theme.breakpoints.down("sm")]: {
       fontSize: 80,
     },
@@ -86,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     color: "rgb(157, 4,5)",
   },
   m2: {
-    margin: "3rem 0px",
+    margin: "3rem auto",
     fontWeight: 900,
   },
   font24: {
@@ -121,6 +125,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "25px",
     fontWeight: "600",
     textDecoration: "none",
+    float: "right",
   },
   li: {
     "&::marker": {
@@ -139,6 +144,27 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     paddingLeft: "20px",
   },
+  descriptionRight: {
+    paddingLeft: "40px",
+    paddingBottom: "20px",
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "20px",
+    },
+  },
+  description: {
+    display: "flex",
+    paddingLeft: "30px",
+    [theme.breakpoints.down("sm")]: {
+      display: "block",
+    },
+  },
+  font18: {
+    fontSize: "18px",
+  },
+  descriptionLeft: {
+    minWidth: "140px",
+    maxWidth: "140px",
+  },
 }));
 
 const Contest = () => {
@@ -153,14 +179,14 @@ const Contest = () => {
           <img src={smallLogo} alt="img" className={classes.image} />
         </Grid>
         <Grid item xs={12} className={classes.m4}>
-          <Typography className={`${classes.font12}`}>
+          <Typography className={`${classes.font12} ${classes.center}`}>
             is a hospitality network whose mission is to bring employers
             together with the best matching industry workers. As we rollout in
             the Phoenix area, we want to start by finding the best!
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography className={`${classes.font12}`}>
+          <Typography className={`${classes.font12} ${classes.center}`}>
             THERE ARE TWO CHANCES TO
           </Typography>
         </Grid>
@@ -187,7 +213,7 @@ const Contest = () => {
             <span className={classes.font24}>BEVERAGE</span>
           </Grid>
         </Grid>
-        <Grid className={classes.font12} item xs={12}>
+        <Grid className={`${classes.font12} ${classes.center}`} item xs={12}>
           <Typography
             className={`${classes.font16_un} ${classes.yellow} ${classes.bold}`}
           >
@@ -216,42 +242,44 @@ const Contest = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} className={classes.flex}>
-          {/* <Box className={classes.flex}> */}
-          <Grid item xs={2}>
-            <Typography className={`${classes.font12} ${classes.yellow}`}>
-              TO ENTER:{" "}
-            </Typography>{" "}
+        <Grid item xs={12}>
+          <Grid item xs={12} className={classes.description}>
+            <Grid className={classes.descriptionLeft}>
+              <Typography className={`${classes.font12} ${classes.yellow}`}>
+                TO ENTER:{" "}
+              </Typography>{" "}
+            </Grid>
+            <Grid>
+              <Typography
+                className={`${classes.font12} ${classes.descriptionRight}`}
+              >
+                Upload a video of your cooking, plating, pouring or discussing
+                your best food item or cocktail that bests represents Arizona.
+              </Typography>
+              <i className={`${classes.font12}`} style={{ textAlign: "left" }}>
+                <ul>
+                  <li className={classes.li}>
+                    Videos cannot be longer than 1 minute.
+                  </li>
+                  <li className={classes.li}>
+                    Contest page opens on January 8th and closes after January
+                    31st.
+                  </li>
+                  <li className={classes.li}>
+                    Voting will continue for a week and end after February 7th.
+                  </li>
+                  <li className={classes.li}>
+                    The vidoes with the most total stars at the end, are the
+                    winners.
+                  </li>
+                  <li className={classes.li}>
+                    You must register an EmployeezNow partial profile to be
+                    eligible for prizes.
+                  </li>
+                </ul>
+              </i>
+            </Grid>
           </Grid>
-          <Grid item xs={10}>
-            <i className={`${classes.font12}`} style={{ textAlign: "left" }}>
-              <ul>
-                <li className={`${classes.font12} ${classes.content}`}>
-                  Upload a video of your cooking, plating, pouring or discussing
-                  your best food item or cocktail that bests represents Arizona.
-                </li>
-                <li className={classes.li}>
-                  Videos cannot be longer than 1 minute.
-                </li>
-                <li className={classes.li}>
-                  Contest page opens on January 8th and closes after January
-                  31st.
-                </li>
-                <li className={classes.li}>
-                  Voting will continue for a week and end after February 7th.
-                </li>
-                <li className={classes.li}>
-                  The vidoes with the most total stars at the end, are the
-                  winners.
-                </li>
-                <li className={classes.li}>
-                  You must register an EmployeezNow partial profile to be
-                  eligible for prizes.
-                </li>
-              </ul>
-            </i>
-          </Grid>
-          {/* </Box> */}
         </Grid>
         <Grid item xs={12} className={classes.flex}>
           <Hidden xsDown>
@@ -266,43 +294,37 @@ const Contest = () => {
             <Typography className={classes.toleft}>ANYONE CAN VOTE</Typography>
           </Grid>
         </Grid>
-        <Grid item xs={12} className={classes.flex}>
-          <Grid item xs={2}>
+        <Grid item xs={12} className={classes.description}>
+          <Grid className={classes.descriptionLeft}>
             <Typography>
               <span className={`${classes.font12} ${classes.yellow}`}>
                 TO VOTE:{" "}
               </span>
             </Typography>
           </Grid>
-          <Grid item xs={10} className={classes.align}>
-            <Typography className={`${classes.font12} ${classes.align}`}>
+          <Grid className={classes.descriptionRight}>
+            <Typography className={`${classes.font12}`}>
               Anyone can register to vote, it takes less than 30 seconds.
             </Typography>
-            <i
-              className={`${classes.font12} ${classes.align}`}
-              style={{ marginBottom: "20px" }}
-            >
-              Sign up wiht your name & verify your cell phone.
-            </i>
-            <Typography className={`${classes.font12} ${classes.align}`}>
+            <Typography style={{ marginBottom: "20px" }}>
+              <i className={`${classes.font12}`}>
+                Sign up with your name & verify your cell phone.
+              </i>
+            </Typography>
+            <Typography className={`${classes.font12}`}>
               Voters can search for someone's video by last name.
               <br /> Vote 1, 2 or 3 stars (3 being the highest vote).
-              <br /> Changes can be made anytime, voting closes 12 am 02/01/21.
+              <br /> Changes can be made anytime, voting closes 12 am 02/08/21.
             </Typography>
-            <i
-              className={`${classes.font12} ${classes.align}`}
-              style={{
-                fontSize: "18px",
-                marginLeft: "-20px",
-                marginTop: "20px",
-              }}
-            >
-              Official rules can be requested by emailing
-              Questions@EmployeezNow.com
-            </i>
+            <Typography style={{ marginTop: "20px" }}>
+              <i className={`${classes.font18} ${classes.white}`}>
+                Official rules can be requested by emailing
+                Questions@EmployeezNow.com
+              </i>
+            </Typography>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box className={classes.buttonWrapper}>
             <MainButton
               label="SIGN TO VOTE"
@@ -317,7 +339,7 @@ const Contest = () => {
               onClick={(e) => history.push("/signup/voter")}
             ></MainButton>
           </Box>
-        </Grid>
+        </Grid> */}
       </Container>
     </Box>
   );
