@@ -8,7 +8,8 @@ import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import config from "../../../config/config";
 import errorHandler from "../../helpers/dbErrorHandler";
-import emailExistence from "email-existence";
+import axios from "axios";
+// import emailExistence from "email-existence";
 
 // create token for signin user
 const createToken = (id) => {
@@ -202,6 +203,7 @@ const resetPassword = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       error: "sorry! server error, please reset password again",
     });
@@ -223,11 +225,23 @@ const isValidEmail = async (req, res, next) => {
     let user = await Model.findOne({
       email: req.body.email,
     });
-    // let isExistEmail = await emailExistence.check(req.body.email);
-    // return res.status("500").json({
-    //   error: "server error",
-    // });
-    // console.log("check email existence", isExistEmail);
+    const v3url = "https://api.sendgrid.com/v3/validations/email";
+    const headers = {
+      headers: {
+        Authorization:
+          "Bearer " + process.env.SENDGRID_EMAIL_ADDRESS_VALIDATION_KEY,
+      },
+    };
+    const confbody = {
+      email: req.body.email,
+    };
+    let isEmailAddressExist = await axios.post(v3url, confbody, headers);
+    console.log(isEmailAddressExist.data.result);
+    if (isEmailAddressExist.data.result.verdict !== "Valid") {
+      return res.status("403").json({
+        failed: "invalid email",
+      });
+    }
     if (!user && req.body.role === "employee") {
       return res.status("200").json({
         success: "valid email",
@@ -240,7 +254,7 @@ const isValidEmail = async (req, res, next) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log("error --->", err);
     return res.status("500").json({
       error: "server error",
     });
