@@ -8,7 +8,8 @@ import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import config from "../../../config/config";
 import errorHandler from "../../helpers/dbErrorHandler";
-import emailExistence from "email-existence";
+import axios from "axios";
+// import emailExistence from "email-existence";
 
 // create token for signin user
 const createToken = (id) => {
@@ -107,6 +108,10 @@ const forgotPassword = async (req, res) => {
     user = await Employer.findOne({ email: req.body.email });
   }
 
+  if (req.body.role === "voter") {
+    user = await Voter.findOne({ email: req.body.email });
+  }
+
   if (!user) {
     return res.status(404).json({
       error: "There is no user with this email address",
@@ -157,20 +162,22 @@ const resetPassword = async (req, res) => {
   // Encrypt request token and compare with db
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
-  let user;
-  if (role === "employee") {
-    user = await Employee.findOne({
-      passwordResetToken: hashedToken,
-      passwordResetExpires: { $gt: Date.now() },
-    });
+  let Model = Employee;
+  switch (role) {
+    case "employer":
+      Model = Employer;
+      break;
+    case "voter":
+      Model = Voter;
+      break;
+    default:
+      break;
   }
 
-  if (role === "employer") {
-    user = Employer.findOne({
-      passwordResetToken: hashedToken,
-      passwordResetExpires: { $gt: Date.now() },
-    });
-  }
+  let user = await Model.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
 
   //  if token has not expired, and there is user, set the new password
   if (!user) {
@@ -187,12 +194,6 @@ const resetPassword = async (req, res) => {
 
   try {
     await user.save();
-    // Log the user in
-    // const token = createToken(user.employeezNowId);
-    // console.log("after token");
-    // res.cookie("t", token, {
-    //   expire: new Date() + 3600,
-    // });
 
     return res.status(200).json({
       token,
@@ -202,6 +203,7 @@ const resetPassword = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       error: "sorry! server error, please reset password again",
     });
@@ -223,11 +225,23 @@ const isValidEmail = async (req, res, next) => {
     let user = await Model.findOne({
       email: req.body.email,
     });
-    // let isExistEmail = await emailExistence.check(req.body.email);
-    // return res.status("500").json({
-    //   error: "server error",
-    // });
-    // console.log("check email existence", isExistEmail);
+    const v3url = "https://api.sendgrid.com/v3/validations/email";
+    const headers = {
+      headers: {
+        Authorization:
+          "Bearer " + process.env.SENDGRID_EMAIL_ADDRESS_VALIDATION_KEY,
+      },
+    };
+    const confbody = {
+      email: req.body.email,
+    };
+    let isEmailAddressExist = await axios.post(v3url, confbody, headers);
+    console.log(isEmailAddressExist.data.result);
+    if (isEmailAddressExist.data.result.verdict !== "Valid") {
+      return res.status("403").json({
+        failed: "invalid email",
+      });
+    }
     if (!user && req.body.role === "employee") {
       return res.status("200").json({
         success: "valid email",
@@ -240,7 +254,7 @@ const isValidEmail = async (req, res, next) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log("error --->", err);
     return res.status("500").json({
       error: "server error",
     });
@@ -249,13 +263,18 @@ const isValidEmail = async (req, res, next) => {
 
 // change password(this is not the case that forget the password, but just change old one)
 const changePassword = async (req, res) => {
-  let Model;
   let role = req.body.role;
+  let Model = Employee;
 
-  if (role === "employee") {
-    Model = Employee;
-  } else {
-    Model = Employer;
+  switch (role) {
+    case "employer":
+      Model = Employer;
+      break;
+    case "voter":
+      Model = Voter;
+      break;
+    default:
+      break;
   }
 
   console.log("request", req.body);

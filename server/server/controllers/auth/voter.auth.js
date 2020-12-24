@@ -4,6 +4,13 @@ import Voter from "../../models/contest/voter.model";
 // check if the voter email is used before
 const isValidEmail = async (req, res) => {
   try {
+    let isEmailAddressExist = await axios.post(v3url, confbody, headers);
+    console.log(isEmailAddressExist.data.result);
+    if (isEmailAddressExist.data.result.verdict !== "Valid") {
+      return res.status("403").json({
+        failed: "invalid email",
+      });
+    }
     let [user, voter] = [
       await Employee.findOne({
         email: req.body.email,

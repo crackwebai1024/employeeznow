@@ -17,6 +17,7 @@ import authContestRoutes from "./routes/auth/contest.routes";
 import cartRoutes from "./routes/cart/cart.routes";
 import crudEmployeeRoutes from "./routes/crud/employee.routes";
 import crudEmployerRoutes from "./routes/crud/employer.routes";
+import crudVoterRoutes from "./routes/crud/voter.routes";
 import mailSendRoutes from "./routes/mail/mail.routes";
 import paymentRoutes from "./routes/payment/payment.routes";
 import searchEmployeeRoutes from "./routes/search/search.routes";
@@ -60,6 +61,7 @@ app.use("/api/auth/contest/", authContestRoutes);
 // data organization routes after signin
 app.use("/api/crud/employee", crudEmployeeRoutes);
 app.use("/api/crud/employer", crudEmployerRoutes);
+app.use("/api/crud/voter", crudVoterRoutes);
 
 //send mail to employee and employer
 app.use("/api/mail", mailSendRoutes);
