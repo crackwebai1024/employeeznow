@@ -35,12 +35,14 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 24,
     },
   },
-
+  font24: {
+    fontSize: 30,
+  },
   font12: {
     color: "white",
     fontSize: 24,
     // margin: "auto",
-    maxWidth: "700px",
+    // maxWidth: "700px",
     fontWeight: 550,
     [theme.breakpoints.down("xs")]: {
       fontSize: 18,
@@ -87,14 +89,14 @@ const useStyles = makeStyles((theme) => ({
     color: "rgb(255, 180,0)",
   },
   red: {
-    color: "rgb(157, 4,5)",
+    color: "rgb(130, 4,5)",
   },
   m2: {
     margin: "3rem auto",
     fontWeight: 900,
   },
-  font24: {
-    fontSize: 40,
+  font48: {
+    fontSize: 48,
   },
   gray: {
     color: "rgb(169, 169, 169)",
@@ -180,9 +182,9 @@ const Contest = () => {
         </Grid>
         <Grid item xs={12} className={classes.m4}>
           <Typography className={`${classes.font12} ${classes.center}`}>
-            is a hospitality network whose mission is to bring employers
-            together with the best matching industry workers. As we rollout in
-            the Phoenix area, we want to start by finding the best!
+            The first employment network designed specifically for the
+            hospitality industry, is not launching in the Phoenix area! So, we
+            are having a contest and letting the public vote for the winners.
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -199,18 +201,18 @@ const Contest = () => {
           <Grid
             item
             xs={6}
-            className={`${classes.center} ${classes.font12} ${classes.red} ${classes.bold}`}
+            className={`copper_font ${classes.center} ${classes.font24} ${classes.red} ${classes.bold}`}
           >
             THE BEST <br />
-            <span className={classes.font24}>PLATE</span>
+            <span className={`copper_font ${classes.font48}`}>PLATE</span>
           </Grid>
           <Grid
             item
             xs={6}
-            className={`${classes.center} ${classes.font12} ${classes.red} ${classes.bold}`}
+            className={`copper_font ${classes.center} ${classes.font24} ${classes.red} ${classes.bold}`}
           >
             THE BEST <br />
-            <span className={classes.font24}>BEVERAGE</span>
+            <span className={`copper_font ${classes.font48}`}>BEVERAGE</span>
           </Grid>
         </Grid>
         <Grid className={`${classes.font12} ${classes.center}`} item xs={12}>
