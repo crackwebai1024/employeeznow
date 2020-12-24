@@ -328,7 +328,7 @@ const SkillsForm = ({
             cuisine[idx].years = value;
             newArray = [...cuisine];
           } else {
-            if (cuisine.length > 3) return;
+            if (cuisine.length > 5) return;
             cuisine.push({ type: id, years: value });
             newArray = [...cuisine];
           }

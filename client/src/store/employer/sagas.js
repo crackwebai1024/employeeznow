@@ -198,13 +198,12 @@ function* onChargeRequest({ payload }) {
         purchasenum = 50;
         break;
       case "BUY_SELECT":
-        purchasenum = payload.employees.length;
+        purchasenum = payload.buyCount;
         break;
       default:
         break;
     }
 
-    let freeRes = undefined;
     if (payload.purchasenum === "BUY_SELECT") {
       let freeData = {
         id: payload.id,
@@ -213,20 +212,17 @@ function* onChargeRequest({ payload }) {
           payload.employees.length - payload.buyCount
         ),
       };
-      freeRes = yield put(types.freePurchase(freeData));
+      const result = yield call(EmployerAPI.onFreePurchase, freeData);
     }
-
-    if (freeRes) {
-      let data = {
-        employees: payload.employees,
-        id: payload.id,
-        token: payload.token,
-        purchasenum: purchasenum,
-      };
-      const res = yield call(EmployerAPI.onChargeRequest, data);
-      if (res && res.data) {
-        yield put(types.chargeSuccess(res.data));
-      }
+    let data = {
+      employees: payload.employees,
+      id: payload.id,
+      token: payload.token,
+      purchasenum: purchasenum,
+    };
+    const res = yield call(EmployerAPI.onChargeRequest, data);
+    if (res && res.data) {
+      yield put(types.chargeSuccess(res.data));
     }
   } catch {
     yield put(types.chargeFailure());

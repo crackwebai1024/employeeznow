@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme) => ({
     width: "20px",
     height: "20px",
     borderRadius: "50%",
-    right: '0px',
-    top: '15px',
+    right: "0px",
+    top: "15px",
     background: "green",
-    color: 'white',
-    position: 'absolute',
-    textAlign: 'center'
+    color: "white",
+    position: "absolute",
+    textAlign: "center",
   },
   LinkItem: {
     color: theme.palette.common.black,
@@ -37,9 +37,11 @@ const LinkTab = ({ to, title, badge }) => {
   return (
     <Fragment>
       <Link to={to} className={styles.link_item}>
-        {
-          title === "My Cart" && <div className={badge !== undefined && classes.badge}>{badge}</div>
-        }
+        {title === "My Cart" && (
+          <div className={badge !== undefined ? classes.badge : ""}>
+            {badge}
+          </div>
+        )}
         <div className={cx(classes.LinkItem, styles.LinkItem)}>{title}</div>
         <div className={styles.link_item_bottom}></div>
       </Link>

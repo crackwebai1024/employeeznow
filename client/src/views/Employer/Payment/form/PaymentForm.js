@@ -102,7 +102,7 @@ const PaymentForm = (props) => {
           alignItems="center"
         >
           <Grid container item xs={12}>
-            <Grid item xs={12} justify="space-between">
+            <Grid item xs={12}>
               {cardsLogo.map((e) => (
                 <img
                   key={e}

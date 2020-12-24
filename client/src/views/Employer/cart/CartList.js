@@ -11,6 +11,7 @@ import RestoreFromTrashIcon from "@material-ui/icons/RestoreFromTrash";
 import IconButton from "@material-ui/core/IconButton";
 import Payment from "./Payment";
 import ChargeBalance from "./ChargeBalance";
+import LoadingCircular from "@components/LoadingCircular";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -72,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "440px",
     overflowY: "auto",
     background: "#fafafa",
+    position: "relative",
   },
   cartActions: {
     textAlign: "right",
@@ -89,10 +91,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CartList = (props) => {
   const classes = useStyles();
-  const { actions, cartItems } = props;
+  const { actions, cartItems, charging } = props;
   const [freeNum, setFreeNum] = useState(0);
   const user = JSON.parse(getUser());
-  const [isSelected, setIsSelected] = useState([]);
+  const [isSelected, setIsSelected] = useState({});
   const [selCount, setSelCount] = useState(0);
   const [buyCount, setBuyCount] = useState(0);
 
@@ -105,24 +107,44 @@ const CartList = (props) => {
   }, []);
 
   useEffect(() => {
-    if (props.freeNum) setFreeNum(props.freeNum);
-  }, [cartItems, props.freeNum]);
+    if (props.freeNum !== undefined) setFreeNum(props.freeNum);
+    let selCount = 0;
+    for (let select in isSelected) {
+      if (isSelected[select]) {
+        cartItems.forEach((cart) => {
+          if (cart._id === select) selCount++;
+        });
+      }
+    }
+    setSelCount(selCount);
+    if (props.freeNum - selCount >= 0) {
+      setFreeNum(props.freeNum - selCount);
+      setBuyCount(0);
+    } else {
+      setBuyCount(selCount - props.freeNum);
+    }
+  }, [cartItems, props.freeNum, charging]);
 
-  const deleteCart = (key) => {
+  const deleteCart = (key, selected) => {
     let data = {
       id: user._id,
       employeeID: cartItems[key]._id,
     };
     actions.removeCart(data);
+    if (selected) setSelCount(selCount - 1);
   };
 
-  const onItemClick = (e, key) => {
-    isSelected[key] = isSelected[key] ? false : true;
-    setIsSelected([...isSelected]);
+  const onItemClick = (key) => {
+    isSelected[key] = !isSelected[key];
+    setIsSelected(isSelected);
     let selCount = 0;
-    isSelected.forEach((item) => {
-      if (item) selCount++;
-    });
+    for (let select in isSelected) {
+      if (isSelected[select]) {
+        cartItems.forEach((cart) => {
+          if (cart._id === select) selCount++;
+        });
+      }
+    }
     setSelCount(selCount);
     if (props.freeNum - selCount >= 0) {
       setFreeNum(props.freeNum - selCount);
@@ -157,23 +179,24 @@ const CartList = (props) => {
 
         <Grid item xs={12} md={8}>
           <Box className={classes.content} id="cartList">
+            {charging && <LoadingCircular />}
             {cartItems.map((cart, key) => (
               <Card
                 key={`cart_${key}`}
                 className={`${classes.cartContainer} ${
-                  isSelected[key] && classes.isSelected
+                  isSelected[cart._id] ? classes.isSelected : ""
                 }`}
               >
-                <Box className={isSelected[key] && classes.isSelected}>
+                <Box className={isSelected[cart._id] ? classes.isSelected : ""}>
                   <CardContent className={classes.cartContent}>
                     <Grid>
                       <FormControlLabel
                         control={
                           <Checkbox
                             name="status"
-                            checked={isSelected[key] ? true : false}
-                            value={isSelected[key] ? true : false}
-                            onClick={(e) => onItemClick(e, key)}
+                            checked={isSelected[cart._id] ? true : false}
+                            value={isSelected[cart._id]}
+                            onClick={(e) => onItemClick(cart._id)}
                           />
                         }
                         className={classes.checkboxText}
@@ -206,7 +229,7 @@ const CartList = (props) => {
                         className={classes.margin}
                         name="trash"
                         size="large"
-                        onClick={(e) => deleteCart(key)}
+                        onClick={(e) => deleteCart(key, isSelected[key])}
                       >
                         <RestoreFromTrashIcon />
                       </IconButton>
@@ -236,9 +259,10 @@ const CartList = (props) => {
   );
 };
 
-const mapStateToProps = ({ employer: { cartItems, freeNum } }) => ({
+const mapStateToProps = ({ employer: { cartItems, freeNum, charging } }) => ({
   cartItems,
   freeNum,
+  charging,
 });
 
 const mapDispatchToProps = (dispatch) => ({

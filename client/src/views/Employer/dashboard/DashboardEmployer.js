@@ -204,7 +204,6 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
         >
           {searchQueries.map((searchQuery, i) => (
             <li
-              item
               key={searchQuery._id}
               onClick={(e) => handleSubmit(e, i)}
               className={classes.filterList}
@@ -250,7 +249,7 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
         </Grid>
 
         <Grid item xs={12} md={8}>
-          <Box item className={classes.leftSection}>
+          <Box className={classes.leftSection}>
             {name && (
               <Grid item className={classes.companyName}>
                 <Typography variant="h5">{name}</Typography>

@@ -26,6 +26,7 @@ const initialState = {
   addCartSuccess: "NONE",
   badge: undefined,
   purchasedEmployees: [],
+  freeNum: 0,
 };
 
 export const getEmployerData = (state) => ({
@@ -272,6 +273,7 @@ export const getEvent = (state, { payload }) => ({
 
 export const chargeRequest = (state, { payload }) => ({
   ...state,
+  charging: true,
 });
 
 export const chargeSuccess = (state, { payload }) => {
@@ -280,6 +282,7 @@ export const chargeSuccess = (state, { payload }) => {
     freeNum: payload.canPurchaseFreeNum,
     cartItems: [...payload.cartItems],
     badge: payload.cartItems.length,
+    charging: false,
   };
 };
 export const chargeFailure = (state, { payload }) => ({
