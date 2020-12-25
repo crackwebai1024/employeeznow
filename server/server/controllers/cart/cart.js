@@ -102,7 +102,7 @@ const addToInterest = async (req, res) => {
     console.log("here");
     [(await employer.save(), await cartItem.save())];
     return res.status(200).json({
-      freeNum: employer.canPurchaseFreeNum,
+      canPurchaseFreeNum: employer.canPurchaseFreeNum,
       cartItems: cartItem.cartItems,
     });
   } catch (err) {
