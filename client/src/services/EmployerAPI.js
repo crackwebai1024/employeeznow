@@ -35,7 +35,7 @@ export async function onGetEmployerData(data) {
 export async function onPurhcaseEmployee(data) {
   return await Axios.post("/payment/sendrequest", data);
 }
-
+// pay purchase
 export async function onPayRequest(data) {
   return await Axios.post("/payment/purchase", data);
 }
@@ -51,7 +51,7 @@ export async function onAddToCart(data) {
 export async function onLoadCartList(data) {
   return await Axios.get("/cart/read" + data);
 }
-
+// charge
 export async function onChargeRequest(data) {
   return await Axios.post("/payment/charge", data);
 }
@@ -60,6 +60,7 @@ export async function onRemoveCart(data) {
   return await Axios.post("/cart/deleteone", data);
 }
 
+// free purchase
 export async function onFreePurchase(data) {
   return await Axios.post("/cart/purchase", data);
 }

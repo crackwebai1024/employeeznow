@@ -33,10 +33,10 @@ const ChargeBalance = (props) => {
     <>
       <Grid item container xs={12} className={classes.container}>
         <Grid container item xs={12} className={classes.buyCommand}>
-          <Grid sm={12} md={8}>
+          <Grid item sm={12} md={8}>
             Buy Selections
           </Grid>
-          <Grid sm={12} md={4}>
+          <Grid item sm={12} md={4}>
             {count > 0 && (
               <MainButton
                 background="dodgerBlue"
@@ -59,10 +59,10 @@ const ChargeBalance = (props) => {
         </Typography>
 
         <Grid container item xs={12} className={classes.buyCommand}>
-          <Grid xs={12} sm={12} md={8}>
+          <Grid item xs={12} sm={12} md={8}>
             Buy 10 profiles now... Get 4 Free
           </Grid>
-          <Grid xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <MainButton
               background="dodgerBlue"
               pd={10}
@@ -101,10 +101,10 @@ const ChargeBalance = (props) => {
         </Grid>
 
         <Grid container item xs={12} className={classes.buyCommand}>
-          <Grid xs={12} sm={12} md={8}>
+          <Grid item xs={12} sm={12} md={8}>
             Buy 50 profiles now... Get 25 Free
           </Grid>
-          <Grid xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <MainButton
               background="dodgerBlue"
               pd={10}

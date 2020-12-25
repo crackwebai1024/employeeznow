@@ -363,8 +363,8 @@ const SearchResults = (props) => {
                   <ProfileShimmer />
                 </Box>
               ) : filterResult.length > 0 ? (
-                filterResult.map((result) => (
-                  <CandidateList actions={actions} result={result} />
+                filterResult.map((result, i) => (
+                  <CandidateList actions={actions} result={result} key={i} />
                 ))
               ) : (
                 <Typography className={classes.no_result}>

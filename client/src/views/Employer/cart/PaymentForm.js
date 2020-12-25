@@ -105,8 +105,8 @@ const PaymentForm = (props) => {
     setError("");
     // e.preventDefault()
     let employeeId = [];
-    items.forEach((item, key) => {
-      if (selected[key]) {
+    items.forEach((item) => {
+      if (selected[item._id]) {
         employeeId.push(item._id);
       }
     });
