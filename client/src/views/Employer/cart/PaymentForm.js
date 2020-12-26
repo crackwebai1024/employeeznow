@@ -95,7 +95,7 @@ const PaymentForm = (props) => {
 
   useEffect(() => {
     setProfilePrice(buyCount * 8.99);
-  }, [selected]);
+  }, [buyCount]);
 
   useEffect(() => {
     if (payEvent) handleSubmit();

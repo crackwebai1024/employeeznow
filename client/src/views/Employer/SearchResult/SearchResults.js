@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "-2.5rem",
     display: "none",
     transition: "0.3s",
+    marginBottom: "3rem",
     "&:hover": {
       background: theme.palette.common.darkgray,
     },
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   filterTitleContainer: {
-    marginTop: "50px",
+    marginTop: "100px",
     marginBottom: "0.5rem",
   },
   filterTitle: {
@@ -82,9 +83,10 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.grey[200]}`,
   },
   no_result: {
-    fontSize: "20px",
+    fontSize: "24px",
+    color: "gray",
     textAlign: "center",
-    paddingTop: "100px",
+    padding: "50px 10px",
   },
   filterList: {
     width: "100%",
@@ -368,7 +370,8 @@ const SearchResults = (props) => {
                 ))
               ) : (
                 <Typography className={classes.no_result}>
-                  There is no search result. Pleast try with different search.
+                  There is no search result. <br />
+                  Please try with different search.
                 </Typography>
               )}
             </Box>

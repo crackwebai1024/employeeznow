@@ -197,10 +197,11 @@ const Contest = () => {
             WIN $2500
           </Typography>
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} spacing={3}>
           <Grid
             item
-            xs={6}
+            xs={12}
+            sm={6}
             className={`copper_font ${classes.center} ${classes.font24} ${classes.red} ${classes.bold}`}
           >
             THE BEST <br />
@@ -208,7 +209,8 @@ const Contest = () => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
+            sm={6}
             className={`copper_font ${classes.center} ${classes.font24} ${classes.red} ${classes.bold}`}
           >
             THE BEST <br />

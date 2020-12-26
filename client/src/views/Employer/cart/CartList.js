@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
   nodata: {
     textAlign: "center",
     fontSize: 30,
-    color: "gray",
+    paddingTop: "3rem",
+    height: 440,
   },
   cartContent: {
     minHeight: "75px",
@@ -179,7 +180,7 @@ const CartList = (props) => {
 
         <Grid item xs={12} md={8}>
           <Box className={classes.content} id="cartList">
-            {charging && <LoadingCircular />}
+            {charging && <LoadingCircular height="440px" />}
             {cartItems.map((cart, key) => (
               <Card
                 key={`cart_${key}`}

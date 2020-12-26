@@ -9,15 +9,15 @@ const LoadingWrapper = styled.div`
   display: flex;
   margin: auto;
   align-items: center;
-  height: 100vh;
+  height: ${(props) => props.height};
   background: RGB(255, 255, 255, 0.8);
   padding-left: 45%;
   z-index: 10000;
 `;
 
-export default function LoadingCircular({ text }) {
+export default function LoadingCircular(props) {
   return (
-    <LoadingWrapper>
+    <LoadingWrapper height={props.height}>
       <div disableShrink size={100}>
         <img
           src={`${process.env.PUBLIC_URL}/img/test/loading.jpg`}
