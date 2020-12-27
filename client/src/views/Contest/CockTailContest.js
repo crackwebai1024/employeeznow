@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
   uploadvideo: {
     maxWidth: "500px",
     width: "100%",
+    maxHeight: "400px",
+    minHeight: "400px",
   },
   hr: {
     borderWidth: "3px",
