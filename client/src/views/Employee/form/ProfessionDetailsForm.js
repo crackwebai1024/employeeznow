@@ -429,10 +429,6 @@ const ProfessionDetailsForm = ({
   );
 };
 
-ProfessionDetailsForm.propTypes = {
-  createProfessionDetails: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = ({ employee: { preference, loading, success } }) => ({
   preference,
   loading,

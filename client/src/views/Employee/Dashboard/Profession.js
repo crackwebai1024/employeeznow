@@ -149,7 +149,9 @@ const Profession = ({ profession }) => {
               </Grid>
               <Grid item xs={9} md={7}>
                 {shift.map((sh, i) => (
-                  <span className={classes.item}>{sh}</span>
+                  <span key={i} className={classes.item}>
+                    {sh}
+                  </span>
                 ))}
               </Grid>
             </Grid>
@@ -222,7 +224,7 @@ const Profession = ({ profession }) => {
               </Grid>
               <Grid item xs={5} md={7}>
                 {systems.map((sy, i) => (
-                  <Typography className={classes.item} variant="body1">
+                  <Typography key={i} className={classes.item} variant="body1">
                     {sy}{" "}
                   </Typography>
                 ))}

@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditEmployerAccountForm = ({ employerData, actions }) => {
   // const [formData, setFormData] = useState({})
-  const { register, handleSubmit, errors } = useForm({
+  let { register, handleSubmit, errors } = useForm({
     defaultValues: employerData,
   });
   const user = JSON.parse(getUser());

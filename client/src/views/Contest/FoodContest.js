@@ -105,7 +105,7 @@ const FoodContest = (props) => {
   };
 
   const searchFunction = (value) => {
-    if (value === "") return;
+    // if (value === "") return;
     const data = {
       id: user._id,
       type: "food",
@@ -170,7 +170,7 @@ const FoodContest = (props) => {
           />
         </Container>
       )}
-      <Container Container width="sm" className={classes.videoContainer}>
+      <Container width="sm" className={classes.videoContainer}>
         <SearchVideo searchFunc={searchFunction} />
         <Sort value={sortFood} onChange={setSortFood} />
         <Grid container item xs={12} className={classes.resultContainer}>

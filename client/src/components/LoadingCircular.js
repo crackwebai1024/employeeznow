@@ -18,7 +18,7 @@ const LoadingWrapper = styled.div`
 export default function LoadingCircular(props) {
   return (
     <LoadingWrapper height={props.height}>
-      <div disableShrink size={100}>
+      <div size={100}>
         <img
           src={`${process.env.PUBLIC_URL}/img/test/loading.jpg`}
           alt="img"

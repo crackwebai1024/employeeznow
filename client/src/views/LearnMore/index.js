@@ -318,10 +318,10 @@ const LearnMore = () => {
                     width: "100%",
                     height: "100%",
                   }}
-                  frameborder="0"
+                  frameBorder="0"
                   title="iframe"
                   allow="autoplay; fullscreen"
-                  allowfullscreen
+                  allowFullScreen
                 ></iframe>
               </div>
               <script src="https://player.vimeo.com/api/player.js"></script>
@@ -339,7 +339,7 @@ const LearnMore = () => {
                   }}
                 ></img>
               </Typography>
-              <Typography style={{ margin: "auto", maxWidth: "500px" }}>
+              <Box style={{ margin: "auto", maxWidth: "500px" }}>
                 Serving out Employer & Employee Clients Nationwide!
                 <ul>
                   <li>THE FASTEST WAY TO EMPLOYEE SEARCH</li>
@@ -353,7 +353,7 @@ const LearnMore = () => {
                   </li>
                   <li>EMPLOYEES WILL REGISTER MORE THAN JUST A RESUME!</li>
                 </ul>
-              </Typography>
+              </Box>
             </Box>
           </Grid>
         </Grid>

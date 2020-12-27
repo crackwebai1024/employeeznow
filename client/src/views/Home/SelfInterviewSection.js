@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +57,7 @@ export default function SelfInterviewSection() {
       </Grid> */}
 
       <Grid item xs={12} md={12}>
-        <Typography className={classes.listText}>
+        <Box className={classes.listText}>
           <ul>
             <li>I got into hospitality…</li>
             <li>I love the hospitality industry because…</li>
@@ -76,7 +77,7 @@ export default function SelfInterviewSection() {
             <li>The person that influenced me the most was…</li>
             <li>My ‘death row’ meal would be…</li>
           </ul>
-        </Typography>
+        </Box>
       </Grid>
     </Fragment>
   );

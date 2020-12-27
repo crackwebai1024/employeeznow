@@ -306,7 +306,7 @@ const SkillsForm = ({
             secondaryJob[idx].years = value;
             newArray = [...secondaryJob];
           } else {
-            if (secondaryJob.length > 2) return;
+            if (secondaryJob.length > 3) return;
             secondaryJob.push({ title: id, years: value });
             newArray = [...secondaryJob];
             console.log(newArray);

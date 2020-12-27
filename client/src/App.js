@@ -50,7 +50,7 @@ function App(props) {
             // selectedIndex={selectedIndex}
             // setSelectedIndex={setSelectedIndex}
           />
-          {loading && <LoadingCircular />}
+          {loading && <LoadingCircular height="100vh" />}
           <Box minHeight={getBoxSize()} className={classes.content}>
             <Switch>
               <AppRouter />
