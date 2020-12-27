@@ -1,8 +1,19 @@
 import Employee from "../../models/employee/basic.model";
 import Voter from "../../models/contest/voter.model";
+import axios from "axios";
 
 // check if the voter email is used before
 const isValidEmail = async (req, res) => {
+  const v3url = "https://api.sendgrid.com/v3/validations/email";
+  const headers = {
+    headers: {
+      Authorization:
+        "Bearer " + process.env.SENDGRID_EMAIL_ADDRESS_VALIDATION_KEY,
+    },
+  };
+  const confbody = {
+    email: req.body.email,
+  };
   try {
     let isEmailAddressExist = await axios.post(v3url, confbody, headers);
     console.log(isEmailAddressExist.data.result);
@@ -29,6 +40,7 @@ const isValidEmail = async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err);
     return res.status("500").json({
       error: "server error",
     });
