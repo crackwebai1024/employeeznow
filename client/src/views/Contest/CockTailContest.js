@@ -99,7 +99,7 @@ const CockTailContest = (props) => {
   }, []);
 
   const searchFunction = (value) => {
-    if (value === "") return;
+    // if (value === "") return;
     const data = {
       id: user._id,
       type: "cocktail",

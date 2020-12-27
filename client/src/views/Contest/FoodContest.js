@@ -91,7 +91,7 @@ const FoodContest = (props) => {
       id: user._id,
       type: "food",
     };
-    return () => actions.getContestVideo(data);
+    actions.getContestVideo(data);
   }, []);
 
   const giveStarFunc = (value, id) => {
@@ -105,7 +105,7 @@ const FoodContest = (props) => {
   };
 
   const searchFunction = (value) => {
-    if (value === "") return;
+    // if (value === "") return;
     const data = {
       id: user._id,
       type: "food",
