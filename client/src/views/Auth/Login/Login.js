@@ -141,7 +141,7 @@ const Login = ({
                   inputRef={register({ required: true })}
                 />
               </Grid>
-              {/* <Grid item>
+              <Grid item>
                 <FormControlLabel
                   control={<Radio value="voter" />}
                   label="VOUTER"
@@ -149,7 +149,7 @@ const Login = ({
                   id="voter"
                   inputRef={register({ required: true })}
                 />
-              </Grid> */}
+              </Grid>
             </Grid>
             <FormHelperText
               error={errors.role ? true : false}

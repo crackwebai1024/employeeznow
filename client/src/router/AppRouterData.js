@@ -83,8 +83,8 @@ export const AppPrivateRouteeEmployeeData = [
   { path: `/contactus`, component: Contact },
   { path: `/sendmail/employerint/:slug`, component: Interest },
   { path: `/sendmail/employernoint/:slug`, component: NoInterest },
-  // { path: "/cocktail_contest", component: CockTailContest },
-  // { path: "/food_contest", component: FoodContest },
+  { path: "/cocktail_contest", component: CockTailContest },
+  { path: "/food_contest", component: FoodContest },
 ];
 
 export const AppPrivateRouteVoterData = [
