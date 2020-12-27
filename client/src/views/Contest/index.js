@@ -328,7 +328,7 @@ const Contest = () => {
             </Typography>
           </Grid>
         </Grid>
-        {/* <Grid item xs={12}>
+        <Grid item xs={12}>
           <Box className={classes.buttonWrapper}>
             <MainButton
               label="SIGN TO VOTE"
@@ -343,7 +343,7 @@ const Contest = () => {
               onClick={(e) => history.push("/signup/voter")}
             ></MainButton>
           </Box>
-        </Grid> */}
+        </Grid>
       </Container>
     </Box>
   );

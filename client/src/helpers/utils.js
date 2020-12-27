@@ -17,7 +17,7 @@ export const _arrayBufferToBase64 = (buffer) => {
 export const successMessage = (title) => {
   toast.success(title, {
     position: "top-center",
-    autoClose: 2000,
+    autoClose: 200000,
     hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: true,

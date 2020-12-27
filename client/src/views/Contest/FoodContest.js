@@ -91,7 +91,7 @@ const FoodContest = (props) => {
       id: user._id,
       type: "food",
     };
-    actions.getContestVideo(data);
+    return () => actions.getContestVideo(data);
   }, []);
 
   const giveStarFunc = (value, id) => {
@@ -170,7 +170,7 @@ const FoodContest = (props) => {
           />
         </Container>
       )}
-      <Container Container width="sm" className={classes.videoContainer}>
+      <Container width="sm" className={classes.videoContainer}>
         <SearchVideo searchFunc={searchFunction} />
         <Sort value={sortFood} onChange={setSortFood} />
         <Grid container item xs={12} className={classes.resultContainer}>

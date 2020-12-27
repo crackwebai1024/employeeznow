@@ -229,7 +229,7 @@ const CartList = (props) => {
                       <IconButton
                         className={classes.margin}
                         name="trash"
-                        size="large"
+                        size="medium"
                         onClick={(e) => deleteCart(key, isSelected[key])}
                       >
                         <RestoreFromTrashIcon />

@@ -144,7 +144,7 @@ const Login = ({
               <Grid item>
                 <FormControlLabel
                   control={<Radio value="voter" />}
-                  label="VOUTER"
+                  label="VOTER"
                   name="role"
                   id="voter"
                   inputRef={register({ required: true })}

@@ -95,14 +95,14 @@ const Contact = ({ actions, sendMessage }) => {
           spacing={0}
           style={{ paddingBottom: "6rem" }}
         >
-          <Grid xs={12} className={classes.servingImage}>
+          <Grid item xs={12} className={classes.servingImage}>
             <img
               style={{ width: "100%" }}
               alt="img"
               src={`${process.env.PUBLIC_URL}/img/test/serving.svg`}
             />
           </Grid>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <Typography className={classes.sub_title}>
               EmployeezNow is not just another job site, but
             </Typography>
@@ -124,7 +124,7 @@ const Contact = ({ actions, sendMessage }) => {
                 onSubmit={(e) => e.preventDefault()}
                 className={classes.formContainer}
               >
-                <Grid container xs={12} spacing={3}>
+                <Grid container item xs={12} spacing={3}>
                   <Grid item xs={12}>
                     <Typography className={classes.title}>
                       Contact Us
@@ -225,16 +225,16 @@ const Contact = ({ actions, sendMessage }) => {
                   width: "100%",
                   height: "100%",
                 }}
-                frameborder="0"
+                frameBorder="0"
                 allow="autoplay; fullscreen"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
             </div>
             <script src="https://player.vimeo.com/api/player.js"></script>
           </Grid>
         </Grid>
         <Grid container item xs={12} className={classes.contactInfo}>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <Typography className={classes.contactInfoTitle}>
               Contact Information
             </Typography>
@@ -249,12 +249,7 @@ const Contact = ({ actions, sendMessage }) => {
               EMAIL: QUESTIONS@EMPLOYEEZNOW
             </Typography>
           </Grid>
-          <Box
-            item
-            xs={12}
-            sm={12}
-            style={{ display: "flex", paddingTop: "1rem", margin: "auto" }}
-          >
+          <Box style={{ display: "flex", paddingTop: "1rem", margin: "auto" }}>
             <Typography style={{ fontWeight: "600" }}>
               ADDRESS : &nbsp;
             </Typography>

@@ -183,7 +183,7 @@ const PaymentForm = (props) => {
             <Typography className={classes.acceptPay}>
               ACCEPTED METHODS OF PAYMENTS
             </Typography>
-            <Grid item xs={12} justify="space-between">
+            <Grid item xs={12} container justify="space-between">
               {cardsLogo.map((e) => (
                 <img
                   key={e}
