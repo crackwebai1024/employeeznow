@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import BusinessIcon from "@material-ui/icons/Business";
 import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
+import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +88,7 @@ const Signup = () => {
         </Typography>
       </Grid>
 
-      <Grid container xs={12} spacing={3}>
+      <Grid style={{ marginLeft: "0px" }} container xs={12} spacing={3}>
         <Grid item xs={12} sm={6}>
           <Card className={`${classes.signupCard}`}>
             <CardContent className={classes.cardContent}>
@@ -122,6 +123,23 @@ const Signup = () => {
               className={classes.button}
             >
               Register as candidate
+            </Button>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          <Card className={`${classes.signupCard}`}>
+            <CardContent>
+              <HowToVoteIcon className={classes.icon} />
+              <Typography variant="h5">I am a voter</Typography>
+            </CardContent>
+            <Button
+              component={Link}
+              to="/signup/voter"
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+            >
+              REGISTER TO VOTE
             </Button>
           </Card>
         </Grid>
