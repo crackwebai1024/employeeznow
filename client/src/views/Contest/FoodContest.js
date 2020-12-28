@@ -125,7 +125,7 @@ const FoodContest = (props) => {
 
   return (
     <Box>
-      <ContestHome title="FOOD" />
+      <ContestHome title="FOOD" color="#001c50" />
       {role === "employee" && (
         <Container width="sm" className={classes.videoContainer}>
           <Grid container item xs={12}>

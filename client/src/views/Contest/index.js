@@ -197,6 +197,7 @@ const Contest = () => {
             WIN $2500
           </Typography>
         </Grid>
+
         <Grid container item xs={12} spacing={3}>
           <Grid
             item
@@ -217,6 +218,7 @@ const Contest = () => {
             <span className={`copper_font ${classes.font48}`}>BEVERAGE</span>
           </Grid>
         </Grid>
+
         <Grid className={`${classes.font12} ${classes.center}`} item xs={12}>
           <Typography
             className={`${classes.font16_un} ${classes.yellow} ${classes.bold}`}
@@ -328,7 +330,7 @@ const Contest = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box className={classes.buttonWrapper}>
             <MainButton
               label="SIGN TO VOTE"
@@ -343,7 +345,7 @@ const Contest = () => {
               onClick={(e) => history.push("/signup/voter")}
             ></MainButton>
           </Box>
-        </Grid>
+        </Grid> */}
       </Container>
     </Box>
   );

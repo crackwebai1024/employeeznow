@@ -482,6 +482,7 @@ const DashboardCandidate = ({
           onClose={(e) => setModal(false)}
           aria-labelledby="dialog-title"
           fullWidth
+          maxWidth="lg"
           className={classes.dialog}
         >
           <DialogTitle>
@@ -569,7 +570,7 @@ const DashboardCandidate = ({
                   experience.otherJob.map(
                     (job, i) =>
                       job.title && (
-                        <Grid item xs={12} md={6} key={i}>
+                        <Grid item xs={12} key={i}>
                           <Typography className={classes.jobtitle}>
                             {job.title}
                           </Typography>

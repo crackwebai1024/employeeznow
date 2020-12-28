@@ -130,7 +130,7 @@ const CockTailContest = (props) => {
 
   return (
     <Box>
-      <ContestHome title="COCKTAIL" />
+      <ContestHome title="COCKTAIL" color="#c00000" />
       {role === "employee" && (
         <Container width="sm" className={classes.videoContainer}>
           <Grid container item xs={12}>

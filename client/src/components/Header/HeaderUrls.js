@@ -19,33 +19,33 @@ export const employeeRoutes = [
     activeIndex: 1,
     icon: <BusinessOutlinedIcon />,
   },
-  {
-    name: "CockTail Contest",
-    link: "/cocktail_contest",
-    activeIndex: 2,
-  },
-  {
-    name: "Food Contest",
-    link: "/food_contest",
-    activeIndex: 3,
-  },
+  // {
+  //   name: "CockTail Contest",
+  //   link: "/cocktail_contest",
+  //   activeIndex: 2,
+  // },
+  // {
+  //   name: "Food Contest",
+  //   link: "/food_contest",
+  //   activeIndex: 3,
+  // },
   {
     name: "Dashboard",
     link: `/employees/${slug}`,
-    activeIndex: 4,
+    activeIndex: 2,
     icon: <LineStyleOutlinedIcon />,
   },
   {
     name: "Log Out",
     link: "/",
     onClick: "handleLogout",
-    activeIndex: 5,
+    activeIndex: 3,
     icon: <LockOutlinedIcon />,
   },
   {
     name: "Contact Us",
     link: "/contactus",
-    activeIndex: 6,
+    activeIndex: 4,
     icon: <LockOutlinedIcon />,
   },
 ];

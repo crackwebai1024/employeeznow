@@ -74,7 +74,10 @@ const ContestHome = (props) => {
   const classes = useStyles();
   return (
     <Fragment>
-      <Box className={classes.arizonaWrapper}>
+      <Box
+        className={classes.arizonaWrapper}
+        style={{ background: props.color }}
+      >
         <Grid container item xs={12} className={classes.arizonaContainer}>
           <Grid item xs={12} className={classes.section1}>
             <Typography
