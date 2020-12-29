@@ -1,9 +1,21 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, Grid, CardHeader, GridList, GridListTile, CardContent, Box, Typography, GridListTileBar } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import {
+  Card,
+  Grid,
+  CardHeader,
+  GridList,
+  GridListTile,
+  CardContent,
+  Box,
+  Typography,
+  GridListTileBar,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-
   note: {
     fontSize: 20,
     color: "RGB(23,41, 64)",
@@ -29,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     margin: 10,
     border: "solid 1px gray",
-    height: 300,
     paddingBottom: 0,
     borderRadius: "0px",
   },
@@ -42,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "2rem 4rem",
   },
   gridList: {
-    height: 300,
+    // height: 300,
     overflow: "hidden",
     transform: "translateZ(0)",
   },
@@ -66,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
   imagewrapper: {
     height: 230,
     overflow: "hidden",
+    position: "relative",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -108,70 +120,79 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Portfolio(props) {
   const { portfolios } = props;
-  const classes = useStyles()
+  const classes = useStyles();
+
+  const [modalImageUrl, setModalImage] = useState();
+  const [imageModal, openImageModal] = useState(false);
+
+  const onImageClick = (image) => {
+    setModalImage(image);
+    openImageModal(true);
+  };
+
   return (
     <Fragment>
-      <Card className={classes.section}>
-        <CardHeader
-          title="Portfolio"
+      <Dialog fullWidth={true} maxWidth="md" open={imageModal}>
+        <img
+          className={classes.modalImage}
+          src={`${modalImageUrl}?${Date.now()}`}
+          alt="img"
         />
+        <IconButton
+          className={classes.closeIcon}
+          onClick={(e) => openImageModal(false)}
+        >
+          <HighlightOffIcon />
+        </IconButton>
+      </Dialog>
+      <Card className={classes.section}>
+        <CardHeader title="Portfolio" />
         <CardContent>
           {portfolios && (
-            <Grid item container xs={12}>
+            <Grid
+              item
+              container
+              xs={12}
+              spacing={1}
+              style={{ marginLeft: "0px" }}
+            >
               {portfolios.map((p, i) => {
                 return (
                   <Grid item xs={12} md={6} key={i}>
                     <Card className={classes.portfolio}>
-                      <CardContent className={classes.content}>
-                        <GridList
-                          cellHeight={200}
-                          spacing={1}
-                          className={classes.gridList}
-                        >
-                          <GridListTile cols={2} rows={2}>
-                            {p && (
+                      {p && (
+                        <Fragment>
+                          <Box className={classes.imagewrapper}>
+                            {p.style === "video" ? (
                               <Fragment>
-                                <Box className={classes.imagewrapper}>
-                                  {p.style === "video" ? (
-                                    <Fragment>
-                                      <Box className={classes.videoBox}></Box>
-                                      <video controls className={classes.video}>
-                                        <source
-                                          src={
-                                            p.url && `${p.url}?${Date.now()}`
-                                          }
-                                          type="video/mp4"
-                                        ></source>
-                                      </video>
-                                    </Fragment>
-                                  ) : (
-                                      <Fragment>
-                                        <Box
-                                          className={classes.imageBox}
-                                        ></Box>
-                                        <img
-                                          src={p.url && `${p.url}?${Date.now()}`}
-                                          className={classes.image}
-                                          alt="img"
-                                        />
-                                      </Fragment>
-                                    )}
-                                </Box>
-
-                                <Typography className={classes.note}>
-                                  {p.note}
-                                </Typography>
-                                <GridListTileBar
-                                  title=""
-                                  titlePosition="top"
-                                  actionPosition="right"
-                                  className={classes.titleBar}
+                                <Box className={classes.videoBox}></Box>
+                                <video controls className={classes.video}>
+                                  <source
+                                    src={p.url && `${p.url}?${Date.now()}`}
+                                    type="video/mp4"
+                                  ></source>
+                                </video>
+                              </Fragment>
+                            ) : (
+                              <Fragment>
+                                <Box
+                                  className={classes.imageBox}
+                                  onClick={(e) => onImageClick(p.url)}
+                                ></Box>
+                                <img
+                                  src={p.url && `${p.url}?${Date.now()}`}
+                                  className={classes.image}
+                                  alt="img"
                                 />
                               </Fragment>
                             )}
-                          </GridListTile>
-                        </GridList>
-                      </CardContent>
+                          </Box>
+
+                          <Typography className={classes.note}>
+                            {p.note}
+                          </Typography>
+                        </Fragment>
+                      )}
                     </Card>
                   </Grid>
                 );
@@ -181,5 +202,5 @@ export default function Portfolio(props) {
         </CardContent>
       </Card>
     </Fragment>
-  )
+  );
 }

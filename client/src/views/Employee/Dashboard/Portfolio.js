@@ -57,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     margin: 10,
     border: "solid 1px gray",
-    height: 300,
     paddingBottom: 0,
     borderRadius: "0px",
   },
@@ -97,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     cursor: "pointer",
     display: "flex",
+    position: "relative",
     alignItems: "center",
   },
   icon: {
@@ -231,12 +231,12 @@ function Portfolio({ actions, portfolios, videoUpload }) {
 
   return (
     <Fragment>
-      <Dialog
-        open={imageModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <img src={modalImageUrl} className={classes.modalImage} alt="img" />
+      <Dialog fullWidth={true} maxWidth="md" open={imageModal}>
+        <img
+          className={classes.modalImage}
+          src={`${modalImageUrl}?${Date.now()}`}
+          alt="img"
+        />
         <IconButton
           className={classes.closeIcon}
           onClick={(e) => openImageModal(false)}
@@ -303,7 +303,7 @@ function Portfolio({ actions, portfolios, videoUpload }) {
         </Fragment>
       )}
       <Card className={classes.section}>
-        {videoUpload === "REQUEST" && <LoadingCircular />}
+        {videoUpload === "REQUEST" && <LoadingCircular height="100%" />}
         <CardHeader
           action={
             <Button
@@ -325,72 +325,60 @@ function Portfolio({ actions, portfolios, videoUpload }) {
                 return (
                   <Grid item xs={12} md={6} key={i}>
                     <Card className={classes.portfolio}>
-                      <CardContent className={classes.content}>
-                        <GridList
-                          cellHeight={200}
-                          spacing={1}
-                          className={classes.gridList}
-                        >
-                          <GridListTile cols={2} rows={2}>
-                            {p && (
+                      {p && (
+                        <Fragment>
+                          <Box className={classes.imagewrapper}>
+                            {p.style === "video" ? (
                               <Fragment>
-                                <Box className={classes.imagewrapper}>
-                                  {p.style === "video" ? (
-                                    <Fragment>
-                                      <Box className={classes.videoBox}></Box>
-                                      <video controls className={classes.video}>
-                                        <source
-                                          src={
-                                            p.url && `${p.url}?${Date.now()}`
-                                          }
-                                          type="video/mp4"
-                                        ></source>
-                                      </video>
-                                    </Fragment>
-                                  ) : (
-                                    <Fragment>
-                                      <Box
-                                        className={classes.imageBox}
-                                        onClick={(e) => onImageClick(p.url)}
-                                      ></Box>
-                                      <img
-                                        src={p.url && `${p.url}?${Date.now()}`}
-                                        className={classes.image}
-                                        alt="img"
-                                      />
-                                    </Fragment>
-                                  )}
-                                </Box>
-
-                                <Typography className={classes.note}>
-                                  {p.note}
-                                </Typography>
-                                <GridListTileBar
-                                  title=""
-                                  titlePosition="top"
-                                  actionIcon={
-                                    <IconButton
-                                      onClick={(e) =>
-                                        handleUpdateOpen(
-                                          p.index,
-                                          p.url,
-                                          p.note,
-                                          p.style
-                                        )
-                                      }
-                                      aria-label={`star Morning`}
-                                    >
-                                      <CreateIcon className={classes.icon} />
-                                    </IconButton>
-                                  }
-                                  actionPosition="right"
-                                  className={classes.titleBar}
+                                <Box className={classes.videoBox}></Box>
+                                <video controls className={classes.video}>
+                                  <source
+                                    src={p.url && `${p.url}?${Date.now()}`}
+                                    type="video/mp4"
+                                  ></source>
+                                </video>
+                              </Fragment>
+                            ) : (
+                              <Fragment>
+                                <Box
+                                  className={classes.imageBox}
+                                  onClick={(e) => onImageClick(p.url)}
+                                ></Box>
+                                <img
+                                  src={p.url && `${p.url}?${Date.now()}`}
+                                  className={classes.image}
+                                  alt="img"
                                 />
                               </Fragment>
                             )}
-                          </GridListTile>
-                        </GridList>
-                      </CardContent>
+                            <GridListTileBar
+                              title=""
+                              titlePosition="top"
+                              actionIcon={
+                                <IconButton
+                                  onClick={(e) =>
+                                    handleUpdateOpen(
+                                      p.index,
+                                      p.url,
+                                      p.note,
+                                      p.style
+                                    )
+                                  }
+                                  aria-label={`star Morning`}
+                                >
+                                  <CreateIcon className={classes.icon} />
+                                </IconButton>
+                              }
+                              actionPosition="right"
+                              className={classes.titleBar}
+                            />
+                          </Box>
+
+                          <Typography className={classes.note}>
+                            {p.note}
+                          </Typography>
+                        </Fragment>
+                      )}
                     </Card>
                   </Grid>
                 );
