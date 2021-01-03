@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   button: {
-    marginTop: 30,
     marginBottom: 25,
   },
   linkContainer: {
@@ -161,11 +160,9 @@ const EditEmployeeAccountForm = (props) => {
   };
 
   const onSubmit = async (formData) => {
-    // if (veteran.status && veteran.veteranId == "") {
-    //   return setVeteranError("This field is required")
-    // }
     if (veteran.status && veteranCard == null) {
-      return setVeteranError("please Upload Veteran Card Image!");
+      if (!props.veteranCard)
+        return setVeteranError("please Upload Veteran Card Image!");
     }
     const sendData = {
       ...formData,
@@ -173,14 +170,18 @@ const EditEmployeeAccountForm = (props) => {
       address: { ...formData.address, state: updatedState },
     };
     if (veteran.status) {
-      veteranCard.append("id", user._id);
-      veteranCard.append("role", "employee");
-      await actions.uploadVeteranCard(veteranCard);
+      if (veteranCard) {
+        veteranCard.append("id", user._id);
+        veteranCard.append("role", "employee");
+        await actions.uploadVeteranCard(veteranCard);
+      }
     }
     await actions.updateBasicInfoRequest(sendData);
   };
 
-  console.log(props);
+  // useEffect(() => {
+  //   if (!updateLoading) setVeteranCard(null);
+  // }, [updateLoading]);
 
   return (
     <div>
@@ -480,7 +481,7 @@ const EditEmployeeAccountForm = (props) => {
               </Grid>
             </Grid>
 
-            {/* <Grid item container direction="row" spacing={2}>
+            <Grid item container direction="row" spacing={2}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -548,7 +549,7 @@ const EditEmployeeAccountForm = (props) => {
               ) : (
                 ""
               )}
-            </Grid> */}
+            </Grid>
 
             <Grid item className={classes.invalidMessage}>
               {veteranError}

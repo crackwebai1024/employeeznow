@@ -212,7 +212,9 @@ function* onUpdateBasicInfo({ payload }) {
   try {
     const res = yield call(EmployeeAPI.updateBasicInfo, payload);
     if (res && res.data) {
+      console.log(res.data);
       yield put(types.updateBasicInfoSuccess(res.data));
+      window.location.reload();
     }
   } catch {
     yield put(types.updateBasicInfoFailure());

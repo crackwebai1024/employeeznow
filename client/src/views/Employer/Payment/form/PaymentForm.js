@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     margin: "auto",
   },
+  container: {
+    marginLeft: "0px",
+  },
   description: {
     fontSize: "24px",
     textAlign: "center",
@@ -38,6 +41,16 @@ const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
     marginTop: "1rem",
     marginBottom: "1rem",
+  },
+  priceContainer: {
+    maxWidth: "400px",
+    // margin: "auto",
+  },
+  flexL: {
+    float: "left",
+  },
+  flexR: {
+    float: "right",
   },
 }));
 
@@ -101,8 +114,31 @@ const PaymentForm = (props) => {
           justify="space-around"
           alignItems="center"
         >
-          <Grid container item xs={12}>
+          <Grid item xs={12}>
+            <Typography className={classes.description}>
+              Your total to purchase this
+              <br /> profile will be $9.67
+            </Typography>
+          </Grid>
+
+          <Grid container item xs={12} className={classes.priceContainer}>
             <Grid item xs={12}>
+              <Typography className={classes.flexL}>Convenience fee</Typography>
+              <Typography className={classes.flexR}>$0.28</Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography className={classes.flexL}>Profile</Typography>
+              <Typography className={classes.flexR}>$8.99</Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography className={classes.flexL}>Sales tax(5.6%)</Typography>
+              <Typography className={classes.flexR}>$0.50</Typography>
+            </Grid>
+          </Grid>
+          <Grid container item xs={12}>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
               {cardsLogo.map((e) => (
                 <img
                   key={e}
@@ -115,25 +151,13 @@ const PaymentForm = (props) => {
               ))}
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography className={classes.description}>
-              Your total to purchase this profile will be $9.67
-            </Typography>
-          </Grid>
-          <Grid container item xs={12} spacing={3}>
-            <Grid item xs={12}>
-              <TextField
-                label="Email"
-                name="email"
-                required
-                fullWidth
-                variant="outlined"
-                size="small"
-                value={email}
-                InputLabelProps={{ shrink: true }}
-                onChange={(e) => setEmail(e.target.value)}
-              ></TextField>
-            </Grid>
+          <Grid
+            container
+            item
+            xs={12}
+            spacing={3}
+            className={classes.container}
+          >
             <Grid item xs={12}>
               <TextField
                 label="Credit Card Number"

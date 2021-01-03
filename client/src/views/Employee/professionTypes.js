@@ -2,9 +2,12 @@
 
 //export const jobs = ['primaryJob', 'secondaryJob'];
 export const jobTypes = [
+  "Regional Manager",
+  "Director of Ops",
   "Director of F&B",
   "General Manager",
   "Executive Chef",
+  "Kitchen Manager",
   "Chef de Cuisine",
   "Sous Chef",
   "Banquet Chef",
