@@ -253,7 +253,7 @@ const searchEmployee = async (filter) => {
                   if: { $eq: ["$employeeskill.primaryJob.title", primaryJob] },
                   then: { $multiply: ["$employeeskill.primaryJob.years", 2.5] },
                   else: {
-                    $multiply: ["$inSecondary", 2.0],
+                    $multiply: ["$inSecondary", 1.0],
                   },
                 },
               },

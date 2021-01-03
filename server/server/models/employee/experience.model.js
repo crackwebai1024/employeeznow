@@ -7,9 +7,12 @@ const ExperienceSchema = new mongoose.Schema({
     title: {
       type: String,
       enum: [
+        "Regional Manager",
+        "Director of Ops",
         "Director of F&B",
         "General Manager",
         "Executive Chef",
+        "Kitchen Manager",
         "Sous Chef",
         "Pastry Chef",
         "Banquet Chef",
@@ -66,9 +69,12 @@ const ExperienceSchema = new mongoose.Schema({
     title: {
       type: String,
       enum: [
+        "Regional Manager",
+        "Director of Ops",
         "Director of F&B",
         "General Manager",
         "Executive Chef",
+        "Kitchen Manager",
         "Sous Chef",
         "Pastry Chef",
         "Banquet Chef",
@@ -122,9 +128,12 @@ const ExperienceSchema = new mongoose.Schema({
       title: {
         type: String,
         enum: [
+          "Regional Manager",
+          "Director of Ops",
           "Director of F&B",
           "General Manager",
           "Executive Chef",
+          "Kitchen Manager",
           "Sous Chef",
           "Pastry Chef",
           "Banquet Chef",
