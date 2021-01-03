@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,6 +18,7 @@ import { bindActionCreators } from "redux";
 import { getUser } from "@helpers/auth-helpers";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -171,7 +172,6 @@ const EditEmployeeAccountForm = (props) => {
       id: user._id,
       address: { ...formData.address, state: updatedState },
     };
-    console.log(sendData);
     if (veteran.status) {
       veteranCard.append("id", user._id);
       veteranCard.append("role", "employee");
@@ -179,6 +179,8 @@ const EditEmployeeAccountForm = (props) => {
     }
     await actions.updateBasicInfoRequest(sendData);
   };
+
+  console.log(props);
 
   return (
     <div>
@@ -333,11 +335,7 @@ const EditEmployeeAccountForm = (props) => {
                       id: "address.state",
                       inputRef: (ref) => {
                         if (!ref) return;
-                        console.log(ref.value);
-                        register(
-                          //{ required: !ref.value, minLength: 2 }, // *does not work,
-                          { name: "address.state", value: ref.value }
-                        );
+                        register({ name: "address.state", value: ref.value });
                       },
                     }}
                   >
@@ -435,11 +433,11 @@ const EditEmployeeAccountForm = (props) => {
               </Grid>
             </Grid>
 
-            {/* <Grid item container direction="row" spacing={2}>
+            <Grid item container direction="row" spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   error={errors.cell ? true : false}
-                  helperText={errors.cell ? 'Phone number is Invalid' : ''}
+                  helperText={errors.cell ? "Phone number is Invalid" : ""}
                   required
                   variant="outlined"
                   margin="normal"
@@ -458,7 +456,7 @@ const EditEmployeeAccountForm = (props) => {
                   })}
                 />
               </Grid>
-            </Grid> */}
+            </Grid>
             <Grid item container direction="row" spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -481,7 +479,8 @@ const EditEmployeeAccountForm = (props) => {
                 />
               </Grid>
             </Grid>
-            <Grid item container direction="row" spacing={2}>
+
+            {/* <Grid item container direction="row" spacing={2}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -503,16 +502,25 @@ const EditEmployeeAccountForm = (props) => {
                   justify="center"
                   alignItems="center"
                 >
-                  <img
-                    className={classes.uploadImage}
-                    alt="img"
-                    src={
-                      !veteranCard
-                        ? props.veteranCard &&
-                          `data:image/png;base64, ${props.veteranCard}`
-                        : URL.createObjectURL(veteranCard.getAll("content")[0])
-                    }
-                  ></img>
+                  {veteranCard ? (
+                    <img
+                      className={classes.uploadImage}
+                      alt="img"
+                      src={
+                        veteranCard &&
+                        URL.createObjectURL(veteranCard.getAll("content")[0])
+                      }
+                    ></img>
+                  ) : props.veteranCard ? (
+                    <img
+                      className={classes.uploadImage}
+                      alt="img"
+                      src={`data:image/png;base64, ${props.veteranCard}`}
+                    ></img>
+                  ) : (
+                    <CloudUploadIcon className={classes.uploadImage} />
+                  )}
+
                   <Grid>
                     <input
                       accept="*"
@@ -530,35 +538,18 @@ const EditEmployeeAccountForm = (props) => {
                         component="span"
                         className={classes.uploadButton}
                       >
-                        {/* <PublishIcon />Upload Image */}
                         Upload Image
                         <br />
                         (Military ID or DD214)
                       </Button>
                     </label>
                   </Grid>
-                  {/* formData.append("fname", e.target.files[0].name) */}
-                  {/* <TextField
-                    type="text"
-                    name="veteranId"
-                    helperText={
-                      veteranError ? veteranError : ''
-                    }
-                    error={veteranError ? true : false}
-                    id="veteran"
-                    label="Veteran ID"
-                    required
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    value={veteran.veteranId}
-                    onChange={(e) => onChange(e)}
-                  /> */}
                 </Grid>
               ) : (
                 ""
               )}
-            </Grid>
+            </Grid> */}
+
             <Grid item className={classes.invalidMessage}>
               {veteranError}
             </Grid>

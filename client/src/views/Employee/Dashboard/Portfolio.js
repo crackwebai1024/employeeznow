@@ -19,8 +19,6 @@ import { actions as employeeActions } from "@store/employee";
 import { bindActionCreators } from "redux";
 import CreateIcon from "@material-ui/icons/Create";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
 import IconButton from "@material-ui/core/IconButton";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
