@@ -93,7 +93,9 @@ const Signup = () => {
           <Card className={`${classes.signupCard}`}>
             <CardContent className={classes.cardContent}>
               <BusinessIcon className={classes.icon} />
-              <Typography variant="h5">I am an employer</Typography>
+              <Typography variant="h5">
+                I am a <br /> Hospitality Employer
+              </Typography>
               <p>Search for ideal candidates</p>
             </CardContent>
             <Button
@@ -111,7 +113,9 @@ const Signup = () => {
           <Card className={`${classes.signupCard}`}>
             <CardContent>
               <EmojiPeopleIcon className={classes.icon} />
-              <Typography variant="h5">I am an employee</Typography>
+              <Typography variant="h5">
+                I am an <br /> Industry Worker
+              </Typography>
 
               <p>Start your next chapter</p>
             </CardContent>
@@ -122,7 +126,7 @@ const Signup = () => {
               color="secondary"
               className={classes.button}
             >
-              Register as candidate
+              Register as employee
             </Button>
           </Card>
         </Grid>
