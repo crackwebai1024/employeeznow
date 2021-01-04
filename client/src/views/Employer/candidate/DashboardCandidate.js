@@ -271,7 +271,7 @@ const DashboardCandidate = ({
     history.push(`/payment/${slug}`);
   }
 
-  console.log(employeeData, "employeeData");
+  console.log(employeeData);
 
   return !_.isEmpty(employeeData) ? (
     <Fragment>
@@ -306,6 +306,8 @@ const DashboardCandidate = ({
                   onAskInterest={onAskInterest}
                   purchased={purchased}
                   purchaseProfile={purchaseProfile}
+                  incart={employeeData.inCart}
+                  id={slug}
                 />
               </Grid>
             </Grid>

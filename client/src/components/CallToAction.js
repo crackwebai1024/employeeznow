@@ -8,7 +8,8 @@ import { bindActionCreators } from "redux";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { getFilterID, getUser } from "@helpers/auth-helpers";
-import { Typography } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
   buttonContainer: {
@@ -43,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-
+  cartButtons: {
+    marginTop: "2rem",
+  },
   button1: {
     border: `1px solid ${theme.palette.secondary.main}`,
     color: theme.palette.secondary.main,
@@ -58,20 +61,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Only employer can access
-const CallToAction = ({
-  actions,
-  onAskInterest,
-  purchaseProfile,
-  purchased,
-}) => {
+const CallToAction = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const filterID = getFilterID();
   const user = JSON.parse(getUser());
+  const {
+    actions,
+    onAskInterest,
+    purchaseProfile,
+    purchased,
+    incart,
+    purchasedEmployees,
+    id,
+  } = props;
+
   const backToFilter = () => {
     history.goBack();
   };
 
+  const addToCart = () => {
+    let data = {
+      id: user._id,
+      filterID: filterID,
+      employeeID: id,
+    };
+    actions.addToCartRequest(data);
+  };
+
+  console.log(incart, "incart");
   return (
     <Grid container justify="space-evenly">
       {!purchased && (
@@ -110,6 +128,31 @@ const CallToAction = ({
         >
           <ReplayIcon /> Return
         </Button>
+        <Box className={classes.cartButtons}>
+          {!purchased && incart && (
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="small"
+              className={`${classes.button} ${classes.button1}`}
+              onClick={(e) => history.push("/carts")}
+            >
+              In Cart
+            </Button>
+          )}
+          {!purchased && !incart && !purchasedEmployees && (
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="small"
+              onClick={addToCart}
+              className={`${classes.button} ${classes.button1}`}
+            >
+              <ShoppingCartIcon />
+              Add To Cart
+            </Button>
+          )}
+        </Box>
       </Grid>
     </Grid>
   );
@@ -117,21 +160,10 @@ const CallToAction = ({
 
 const mapStateToProps = ({
   employer: { employerData, filter, searchLoading, filterResult, filterID },
-}) => ({
-  employerData,
-  filter,
-  searchLoading,
-  filterResult,
-  filterID,
-});
+}) => ({ employerData, filter, searchLoading, filterResult, filterID });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(
-    {
-      ...employerActions,
-    },
-    dispatch
-  ),
+  actions: bindActionCreators({ ...employerActions }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CallToAction);

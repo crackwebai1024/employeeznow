@@ -226,16 +226,7 @@ export const addToCartSuccess = (state, { payload }) => {
     ...state,
     badge: payload.cartItems.length,
     addCartSuccess: "SUCCESS",
-    filterResult: [
-      ...state.filterResult.map((filter) => {
-        if (filter._id === payload.id)
-          return {
-            ...filter,
-            incart: true,
-          };
-        return filter;
-      }),
-    ],
+    employeeData: { ...state.employeeData, inCart: true },
   };
 };
 

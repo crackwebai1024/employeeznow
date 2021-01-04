@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { actions as types } from "./index";
 import * as EmployerAPI from "@services/EmployerAPI";
-import { successMessage } from "@helpers/utils";
+import { successMessage, errorMessage } from "@helpers/utils";
 import { setFilterID } from "@helpers/auth-helpers";
 
 function* onGetEmployerData({ payload }) {
@@ -167,10 +167,12 @@ function* onAddToCart({ payload }) {
         id: payload.employeeID,
       };
       yield put(types.addToCartSuccess(data));
+      successMessage("Add to cart");
       // yield put(types.updateCartItems(payload.employeeID))
     }
   } catch {
     yield put(types.addToCartFailure());
+    errorMessage();
   }
 }
 
