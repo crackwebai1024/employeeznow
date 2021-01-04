@@ -6,7 +6,6 @@ import { Grid, Button, Box } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { getUser, getFilterID, setReturnPage } from "@helpers/auth-helpers";
 import Avatar from "@material-ui/core/Avatar";
@@ -125,14 +124,15 @@ const CandidateList = (props) => {
   const user = JSON.parse(getUser());
   const filterID = getFilterID();
   const history = useHistory();
-  const addToCart = () => {
-    let data = {
-      id: user._id,
-      filterID: filterID,
-      employeeID: id,
-    };
-    actions.addToCartRequest(data);
-  };
+
+  // const addToCart = () => {
+  //   let data = {
+  //     id: user._id,
+  //     filterID: filterID,
+  //     employeeID: id,
+  //   };
+  //   actions.addToCartRequest(data);
+  // };
 
   return (
     <Card key={id} className={classes.wrapper}>
@@ -286,27 +286,6 @@ const CandidateList = (props) => {
         )}
         <div className={classes.buttonContainer}>
           <Box className={classes.cartButtons}>
-            {!purchased && incart && (
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="small"
-                onClick={(e) => history.push("/carts")}
-              >
-                In Cart
-              </Button>
-            )}
-            {!purchased && !incart && !purchasedEmployees && (
-              <Button
-                variant="outlined"
-                color="secondary"
-                size="small"
-                onClick={addToCart}
-              >
-                <ShoppingCartIcon />
-                Add To Cart
-              </Button>
-            )}
             <Button
               size="small"
               onClick={(e) => {

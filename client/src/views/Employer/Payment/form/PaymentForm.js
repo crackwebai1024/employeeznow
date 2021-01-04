@@ -110,9 +110,9 @@ const PaymentForm = (props) => {
           container
           xs={12}
           spacing={3}
-          // direction="column"
           justify="space-around"
           alignItems="center"
+          style={{ marginLeft: "0px" }}
         >
           <Grid item xs={12}>
             <Typography className={classes.description}>

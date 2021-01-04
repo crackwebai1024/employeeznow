@@ -366,19 +366,10 @@ const DashboardEmployer = ({ employerData, actions, filter }) => {
 
 const mapStateToProps = ({
   employer: { employerData, filter, searchLoading },
-}) => ({
-  employerData,
-  filter,
-  searchLoading,
-});
+}) => ({ employerData, filter, searchLoading });
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(
-    {
-      ...employerActions,
-    },
-    dispatch
-  ),
+  actions: bindActionCreators({ ...employerActions }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardEmployer);

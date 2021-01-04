@@ -215,15 +215,6 @@ const SearchResults = (props) => {
     actions.searchEmployee(searchData);
   }, []);
 
-  useEffect(() => {
-    if (addCartSuccess === "SUCCESS") {
-      successMessage("Add to cart");
-      actions.initCartSuccess();
-    } else if (addCartSuccess === "FAILURE") {
-      errorMessage("Add to cart failed!");
-    }
-  }, [addCartSuccess]);
-
   const setFilterUpdate = (data) => {
     setOpenSearchForm(true);
     setSearchFormdata(data);
@@ -326,6 +317,8 @@ const SearchResults = (props) => {
     </Box>
   );
 
+  console.log(filterResult, "filterResult");
+
   return (
     <Box>
       <Box>
@@ -365,9 +358,16 @@ const SearchResults = (props) => {
                   <ProfileShimmer />
                 </Box>
               ) : filterResult.length > 0 ? (
-                filterResult.map((result, i) => (
-                  <CandidateList actions={actions} result={result} key={i} />
-                ))
+                filterResult.map((result, i) => {
+                  if (result.employeeskill)
+                    return (
+                      <CandidateList
+                        actions={actions}
+                        result={result}
+                        key={i}
+                      />
+                    );
+                })
               ) : (
                 <Typography className={classes.no_result}>
                   There is no search result. <br />

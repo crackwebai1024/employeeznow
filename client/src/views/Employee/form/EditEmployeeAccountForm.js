@@ -451,8 +451,8 @@ const EditEmployeeAccountForm = (props) => {
                   autoComplete="cell"
                   inputRef={register({
                     required: true,
-                    minLength: 10,
-                    maxLength: 10,
+                    minLength: 11,
+                    maxLength: 11,
                     pattern: /^[0-9]*$/,
                   })}
                 />

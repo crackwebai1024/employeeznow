@@ -144,7 +144,7 @@ export default function RegisterSection() {
             to="/signup/employee"
             startIcon={<AddCircleIcon />}
           >
-            Register candidate
+            Register as employee
           </Button>
         </Paper>
       </Grid>
