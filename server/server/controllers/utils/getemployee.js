@@ -7,7 +7,7 @@ import EmployeeSkill from "../../models/employee/skills.model";
 
 const { find_ByID } = CRUD;
 
-const getPurchasedEmployee = async (req, res, id, purchased) => {
+const getPurchasedEmployee = async (req, res, id, purchased, inCart) => {
   let basicData = find_ByID(Employee, "_id", id, res);
   let experienceData = find_ByID(EmployeeExperience, "employee", id, res);
   let portfolioData = find_ByID(EmployeePortfolio, "employee", id, res);
@@ -43,6 +43,7 @@ const getPurchasedEmployee = async (req, res, id, purchased) => {
         preference: values[3],
         skill: values[4],
         purchased,
+        inCart,
       });
     })
     .catch((err) => {

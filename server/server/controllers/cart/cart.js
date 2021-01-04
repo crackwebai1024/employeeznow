@@ -19,6 +19,7 @@ const addToCart = async (req, res) => {
     });
     await searchRes.save();
     let employerCart = await Cart.findOne({ employerID });
+    console.log(employerCart, "add cart without employer id");
     if (!employerCart) {
       employerCart = new Cart({
         cartItems: [],
